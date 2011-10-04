@@ -1,0 +1,55 @@
+﻿@model MileageStats.Web.Models.FillupEntryFormModel
+@Html.AntiForgeryToken()
+<ul>
+    <li class="psuedo-date">
+        <label for="due-date">Date <em>(mm/dd/yyyy)</em></label>
+        @Html.MonthPickerFor(model => model.DateMonth, Model.Date, true)
+        @Html.DayPickerFor(model => model.DateDay, Model.Date, true)
+        @Html.YearPickerFor(model => model.DateYear, Model.Date, true)
+        @Html.ValidationMessageFor(model => model.Date)
+    </li>
+    <li>
+        @Html.LabelFor(model => model.Odometer)
+        @Html.TextBoxFor(model => model.Odometer, new { maxlength = "7", type = "number" })
+        @Html.ValidationMessageFor(model => model.Odometer)
+    </li>
+    <li>
+        @Html.LabelFor(model => model.PricePerUnit)
+        @Html.TextBoxFor(model => model.PricePerUnit, new { maxlength = "6", type = "number", step = "0.01" })
+        @Html.ValidationMessageFor(model => model.PricePerUnit)
+    </li>
+    <li>
+        @Html.LabelFor(model => model.TotalUnits)
+        @Html.TextBoxFor(model => model.TotalUnits, new { maxlength = "7", type = "number", step = "0.01" })
+        @Html.ValidationMessageFor(model => model.TotalUnits)
+    </li>
+    <li>
+        @Html.LabelFor(model => model.Vendor)
+        @Html.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) @Html.ValidationMessageFor(model => model.Vendor)
+    </li>
+    <li>
+        @Html.LabelFor(model => model.TransactionFee)
+        @Html.TextBoxFor(model => model.TransactionFee, new { maxlength = "6", type = "number", step = "0.01" })
+        @Html.ValidationMessageFor(model => model.TransactionFee)
+    </li>
+    <li>
+        @Html.LabelFor(model => model.Remarks)
+        @Html.TextBoxFor(model => model.Remarks, new { maxlength = "250" }) @Html.ValidationMessageFor(model => model.Remarks)
+    </li>
+</ul>
+@if (ViewBag.IsFirstFillup)
+{ 
+
+    <div class="flash notify">
+        <p>
+            This is your first fill up. This odometer reading will establish your mileage starting
+            point. Vehicle statistics will be displayed beginning on your next fill up.</p>
+    </div>
+}
+
+@Html.ValidationSummary(true)
+
+<ol class="buttons boolean">
+	<li><button type="submit"><span>Save</span></button></li>
+	<li class="false"><a href="@Url.Action("List", "Fillup", new { vehicleId = Model.VehicleId })"><span>Cancel</span></a></li>
+</ol>

@@ -1,0 +1,1 @@
+﻿This placeholder ensures the App_Data directory is created during web publication.

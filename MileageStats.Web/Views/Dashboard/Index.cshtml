@@ -1,0 +1,107 @@
+﻿@model MileageStats.Web.Models.DashboardViewModel       
+@{
+    ViewBag.Title = "Dashboard";
+}
+<script>
+    window.mileageStatsOnDashboard = 1;
+</script>
+<div id="dashboard-page">
+    <div id="scrollable">
+        <div>
+            @{ Html.RenderAction("ListPartial", "Vehicle", new { vehicleId = Model.VehicleListViewModel.SelectedVehicle != null ? Model.VehicleListViewModel.SelectedVehicle.VehicleId : 0, isCollapsed = false }); }
+            <div id="main-chart" class="article framed" data-chart-url="@Url.Action("JsonGetFleetStatisticSeries")">
+                <div>
+                    <div id="chart-area" class="section">
+                        <div id="nav">
+                            <a id="fuel-efficiency-link" href="chart/fuel-efficiency">Average Fuel Efficiency</a>
+                            | <a id="distance-link" href="chart/distance">Total Distance</a> | <a id="cost-link"
+                                href="chart/cost">Total Cost</a>
+                        </div>
+                        <div id="main-chart-plot">
+                        </div>
+                        <div id="vehicle-selection">
+                            <h3>
+                                Vehicles</h3>
+                            <div id="vehicle-selection-list">
+                            </div>
+                        </div>
+                        <div id="date-range-selection">
+                            <h3>
+                                Date Range</h3>
+                            <div id="slider">
+                            </div>
+                            <div id="label">
+                                <div id="lower">
+                                </div>
+                                &nbsp;to&nbsp;
+                                <div id="upper">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="unavailable-message">
+                        No chart data available.</div>
+                    <div id="loading-message">
+                        Loading chart data. Please wait...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="fixed">
+        <div>
+            <div id="summary" class="article framed">
+                <div id="summary-content">
+                    @if (!Model.User.HasRegistered)
+                    { 
+                       <div id="registration" data-url="@Url.Action("Edit", "Profile")">
+                            <div id="registration-content">
+                                <h1>
+                                    Complete your Registration</h1>
+                                <div class="editor article">
+                                    @using (Html.BeginForm("Edit", "Profile"))
+                                    {
+										Html.RenderPartial("_ProfileForm", Model.User);
+									}
+                                </div>
+                            </div>
+                       </div>
+					}
+                    <!-- Complete your registration form goes here -->
+                    <div id="statistics" class="statistics section" data-url="@Url.Action("JsonFleetStatistics", "Dashboard")">
+                        <div id="statistics-content">
+                            <h1>
+                                Summary Statistics</h1>
+                            <div class="statistic mile-per-gallon">@string.Format("{0:N0}", Model.FleetSummaryStatistics.AverageFuelEfficiency)<span
+                                class="units">mpg</span></div>
+                            <div class="statistic cost-per-month">@string.Format("{0:N0}", Model.FleetSummaryStatistics.AverageCostToDrive * 100)&cent;<span
+                                class="units">per mile</span></div>
+                            <div class="statistic cost-per-mile">@string.Format("${0:N0}", Model.FleetSummaryStatistics.AverageCostPerMonth)<span
+                                class="units">per month</span></div>
+                        </div>
+                    </div>
+                    <div class="section" id="reminders" data-url="@Url.Action("ImminentReminders", "Reminder")">
+                        <div id="summary-reminders-content">
+                            <h1>
+                                Reminders</h1>
+                            <div class="list nav">
+                                @foreach (var item in Model.ImminentReminders)
+								{
+                                 <a class="list-item @(item.Reminder.IsOverdue ? "overdue" : null)" href="@Url.Action("Details", "Reminder", new { id = item.Reminder.ReminderId })" data-vehicle-id="@item.VehicleId">
+                                    <h1>@item.Reminder.Title</h1>
+                                    <p>Due @item.Reminder.DueOnFormatted</p>
+                                    <p>@item.VehicleMakeName @item.VehicleModelName</p>
+                                </a>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="info" class="framed empty article" 
+                 data-details-url="@Url.Action("JsonDetails", "Vehicle")"
+                 data-fillups-url="@HttpUtility.UrlDecode(@Url.Action("List", "Fillup", new { vehicleId = "{0}" }))"
+                 data-reminders-url="@HttpUtility.UrlDecode(Url.Action("ListPartial", "Reminder", new { vehicleId = "{0}" }))">
+                <div />
+            </div>
+        </div>
+    </div>
+</div>

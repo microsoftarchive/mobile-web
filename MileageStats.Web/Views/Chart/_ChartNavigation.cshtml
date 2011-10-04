@@ -1,0 +1,11 @@
+﻿@using MileageStats.Domain.Properties
+@model MileageStats.Web.Models.ChartFormModel
+           
+<div id="nav">
+    @Html.ActionLink(@Resources.ChartController_AverageFuelEfficiencyChart_Title, "Index", "Chart", new { id = Model.UserId }, new { id = "mainFuelEfficiencyChart-link" })
+    |
+    @Html.ActionLink(@Resources.ChartController_TotalDistance_Title, "TotalDistance", "Chart", new { id = Model.UserId }, new { id = "mainDistanceChart-link" })
+    |
+    @Html.ActionLink(@Resources.ChartController_TotalCost_Title, "TotalCost", "Chart", new { id = Model.UserId }, new { id = "mainCostChart-link" })
+</div>            
+

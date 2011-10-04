@@ -1,0 +1,50 @@
+@using System.Text
+@model MileageStats.Web.Models.ChartFormModel
+@{
+    ViewBag.Title = "Charts";
+    Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+
+    var vehicleIdQueryStringBuilder = new StringBuilder();
+    foreach (int vehicleId in Model.VehicleIds)
+    {
+        vehicleIdQueryStringBuilder.AppendFormat("&VehicleIds={0}", vehicleId);
+    }
+}
+
+<nav>
+    <ol class="tabs">
+        <li><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+        <li><a href="@Url.Action("Index", "Chart")" class="selected">Charts</a></li>
+    </ol>
+</nav>
+
+<div class="view">
+
+    @using (Html.BeginForm("Index", "Chart"))
+    {
+        @Html.DropDownListFor(model => model.ChartName, Model.AllCharts)                           
+
+        <img src="@Url.Action("GetChartImage", new { UserId = Model.UserId, ChartName = Model.ChartName, StartDate = Model.StartDate, EndDate = Model.EndDate })@vehicleIdQueryStringBuilder.ToString()" title="@Model.ChartName" alt="@Model.ChartName" />
+
+        <ol>
+            <li>
+                <label>Vehicles</label>
+                @foreach (var vehicle in Model.AllVehicleModels)
+                {
+                    <input name="VehicleIds" type="checkbox" value="@vehicle.VehicleId" @(Model.VehicleIds.Contains(vehicle.VehicleId) ? "checked" : "")>@vehicle.Name</input>
+                }
+            </li>
+            <li>
+                <label>Date Range</label>
+                @Html.PriorMonthYearPickerFor(model => model.StartDate, Model.StartDate, false)
+                @Html.PriorMonthEndYearPickerFor(model => model.EndDate, Model.EndDate, false)
+            </li>
+            
+        </ol>
+        <ol class="buttons single">
+            <li class="refresh">
+                <button type="submit"><span>Refresh</span></button>     
+            </li>
+        </ol>                    
+    }
+</div>

@@ -1,0 +1,27 @@
+﻿@model MileageStats.Domain.Models.User
+@{
+	ViewBag.Title = "Edit your Profile";
+}
+
+<div id="account-page">
+    <div id="scrollable">
+        <div>
+        </div>
+    </div>
+    <div id="fixed">
+        <div>
+            <div id="account" class="framed article">
+                <div>
+                    <h1>Your Profile</h1>
+                    <div class="editor article">
+                    @using (Html.BeginForm("Edit", "Profile"))
+					{
+						Html.RenderPartial("_ProfileForm", Model);
+                    }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

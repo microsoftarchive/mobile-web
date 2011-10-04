@@ -1,0 +1,45 @@
+﻿@model MileageStats.Web.Models.FillupEntryFormModel
+@{
+    ViewBag.Title = "Add Fill up";
+}
+<div id="details-page">
+    <div id="scrollable">
+        <div>
+            @{ Html.RenderAction("ListPartial", "Vehicle", new { vehicleId = Model.VehicleId, isCollapsed=true }); }
+        </div>
+    </div>
+    <div id="fixed">
+        <div>
+            <div id="info" class="framed article">
+                <div>
+                    <div id="details-pane" class="tab opened section">
+                        @Html.ActionLink(" ", "Details", "Vehicle", new { id = Model.VehicleId }, new { @class = "trigger" })
+                    </div>
+                    <div id="fillups-pane" class="tab opened section">
+
+                        <a></a>
+                        <div class="content">
+                            <div class="header">
+                            </div>
+                            <div class="aside">
+                                @{ Html.RenderAction("ListPartial", new { vehicleId = Model.VehicleId }); }
+                            </div>
+                            <div class="editor article">
+                                @using(Html.BeginForm()) { 
+                                     if (Model != null) 
+                                     { 
+                                         @Html.Partial("FillupForm", Model) 
+                                     }
+                                 }
+                            </div>
+                        </div>
+                    </div>
+                    <div id="reminders-pane" class="tab section">
+                        @Html.ActionLink(" ", "List", "Reminder", new { vehicleId = Model.VehicleId }, new { @class = "trigger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

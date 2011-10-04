@@ -1,0 +1,37 @@
+﻿@using MileageStats.Domain.Models
+@model MileageStats.Web.Models.ReminderDetailsViewModel
+@{
+    ViewBag.Title = "Reminders for " + ViewBag.VehicleName;
+    Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+    var reminder = Model.Reminder;
+}
+<nav>
+    <ol class="title">
+        <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
+        <li>@ViewBag.VehicleName</li>
+    </ol>
+    <ol class="breadcrumbs">
+	    <li><a href="@Url.Action("List", "Reminder", new { vehicleId = reminder.VehicleId })">Reminders</a></li>
+	    <li>@reminder.Title</li>
+    </ol>
+</nav>
+
+<div class="view">
+    @if (reminder != null)
+    {
+        Html.RenderPartial("DetailsPartial.Mobile", reminder);
+    }
+    <ol class="buttons boolean">
+        <li>
+            @using (Html.BeginForm("Fulfill", "Reminder", new { id = reminder.ReminderId }, FormMethod.Post))
+            {
+                <button type="submit" value="fulfill" name="action" class="false" @(reminder.IsFulfilled ? "disabled" : "")>
+                    <span>Fulfill</span></button>
+    
+            }
+        </li>
+        <li class="false"><a href="@Url.Action("List", "Reminder", new { vehicleId = reminder.VehicleId })"><span>Cancel</span></a></li>
+	</ol>
+</div>
+
+                        

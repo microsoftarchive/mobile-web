@@ -1,0 +1,49 @@
+﻿@model MileageStats.Web.Models.VehicleFormModel
+@{
+    ViewBag.Title = "Add Vehicle";
+}
+
+<div id="details-page">
+    <div id="scrollable">
+        <div>
+            @{ Html.RenderAction("ListPartial", "Vehicle", new { isCollapsed=true }); }
+        </div>
+    </div>
+    <div id="fixed">
+        <div>
+            <div id="info" class="framed article">
+                <div>
+                    <div id="add-vehicle-pane" class="tab opened section">
+                        <div class="content">
+                            <div class="header">
+                            </div>
+                            <div class="editor article">
+                                @using (Html.BeginForm("Add", "Vehicle", 
+                                        FormMethod.Post, 
+                                        new { 
+                                              enctype = "multipart/form-data"
+                                        }))
+                                {
+									Html.RenderPartial("VehicleForm", Model);
+                                    <label id="Instructions">
+                                        Note: Year, Make, Model and Photo are optional, but by providing them you get access to vehicle performance reports.
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            var dropDownMonitor = new mstats.VehicleDropDownMonitor(mstats.pubsub.publish, mstats.dataManager.sendRequest);
+            dropDownMonitor.initialize();
+        });
+    </script>
+}
+

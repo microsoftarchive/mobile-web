@@ -1,0 +1,81 @@
+﻿@model MileageStats.Web.Models.VehicleListViewModel
+@using MileageStats.Web.Helpers
+@{
+    var compactClass = Model.IsCollapsed ? "compact" : String.Empty;
+}
+           
+<div id="vehicles" class="article @compactClass" data-list-url="@Url.Action("JsonList","Vehicle")" data-sort-url="@Url.Action("UpdateSortOrder", "Vehicle")">
+    <div id="vehicle-list-content">
+        @foreach (var vehicle in Model.Vehicles)
+        {               
+            <div class="wrapper">
+                <div data-vehicle-id="@vehicle.VehicleId" class="vehicle section @Html.CssClassForTile(Model,vehicle)">
+                    <div class="content">
+                        <div class="header">
+                            <div class="overlay"></div>
+                            <div class="data-model">
+                                <span class="year">@if (vehicle.Year.HasValue){ @vehicle.Year.Value }</span>
+                                <span class="make">@vehicle.MakeName</span>
+                                <span class="model">@vehicle.ModelName</span>
+                            </div>
+                            <div class="data-name" data-field="vehicle-name">@vehicle.Name</div>
+                            <div class="glass"></div>
+                        </div>
+                        <div class="actions">
+                            <a href="@Url.Action("Details", "Vehicle", new { id = vehicle.VehicleId })" class="avatar" data-action="vehicle-details-selected">
+                                @if (vehicle.PhotoId > 0)
+                                {
+                                    <img src="@Url.RouteUrl("VehiclePhotoRoute", new { vehiclePhotoId = vehicle.PhotoId})" alt="Vehicle Photo for @vehicle.Name" title="Photo" />
+								}
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/vehicle.png")" alt="Default Vehicle Photo"/>
+                                }
+                            </a>
+                            <div class="nav">
+                                <a href="@Url.Action("Details", "Vehicle", new { id = vehicle.VehicleId })" data-action="vehicle-details-selected" alt="Details" title="Details">
+                                    <div class="hover"></div>
+                                    <div class="active"></div>
+                                    <img alt="Details" src="@Url.Content("~/Content/command-details.png")" />
+                                    <div class="glass"></div>
+                                </a>
+                                <a href="@Url.Action("List", "Fillup", new { vehicleId = vehicle.VehicleId })" data-action="vehicle-fillups-selected" alt="Fill ups" title="Fill ups">
+                                    <div class="hover"></div>
+                                    <div class="active"></div>
+                                    <img alt="Fill ups" src="@Url.Content("~/Content/command-fillups.png")" />
+                                    <div class="glass"></div>
+                                </a>
+                                <a href="@Url.Action("List", "Reminder", new { vehicleId = vehicle.VehicleId })" data-action="vehicle-reminders-selected" alt="Reminders" title="Reminders">
+                                    <div class="hover"></div>
+                                    <div class="active"></div>
+                                    <img alt="Reminders" src="@Url.Content("~/Content/command-reminders.png")" />
+                                    <div class="glass"></div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="statistics footer">
+                            <div class="statistic mile-per-gallon @Html.AverageFuelEfficiencyMagnitude(vehicle)">
+                                <div class="quantity">@Html.AverageFuelEfficiencyText(vehicle)</div>
+                                <div class="unit">mpg</div>
+                            </div>
+                            <div class="statistic cost-per-mile">
+                                <div class="quantity">@string.Format("{0:N0}", vehicle.Statistics.AverageCostToDrive * 100)&cent;</div>
+                                <div class="unit">per mile</div>
+                            </div>
+                            <div class="statistic cost-per-month">
+                                <div class="quantity">$@string.Format("{0:N0}", vehicle.Statistics.AverageCostPerMonth)</div>
+                                <div class="unit">per month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="framed command section">
+            <div>
+                @Html.ActionLink("+ Add Vehicle", "Add", "Vehicle", null, new { @data_action = "vehicle-add-selected" })
+            </div>
+        </div>
+    </div>
+</div>

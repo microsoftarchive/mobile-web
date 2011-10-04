@@ -1,0 +1,13 @@
+﻿@model MileageStats.Web.Models.ReminderFormModel
+<dl class="list">
+	<dt>@Html.LabelFor(model => model.Title)</dt>
+    <dd>@Model.Title</dd>
+
+	<dt>@Html.LabelFor(model => model.DueDate)</dt>
+    <dd>@(Model == null || Model.DueDate == null ? "(not entered)" : String.Format("{0:d MMM yyyy}", Model.DueDate))</dd>
+
+	<dt>@Html.LabelFor(model => model.DueDistance)</dt>
+    <dd>@(Model == null || Model.DueDistance == null ? "(not entered)" : String.Format("{0}", Model.DueDistance))</dd>
+	<dt>@Html.LabelFor(model => model.Remarks)</dt>
+    <dd>@(Model == null || Model.Remarks == null ? "(not entered)" : Model.Remarks)</dd>
+</dl>

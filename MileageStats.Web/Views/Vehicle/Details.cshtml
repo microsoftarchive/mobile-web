@@ -1,0 +1,120 @@
+﻿@model MileageStats.Web.Models.VehicleDetailsViewModel
+@{
+    ViewBag.Title = "Details for " + @Model.Vehicle.Name;    
+}
+<div id="details-page">
+    <div id="scrollable">
+        <div>
+            @{ Html.RenderAction("ListPartial", "Vehicle", new { vehicleId = Model.Vehicle.VehicleId, isCollapsed = true }); }          
+        </div>
+    </div>
+    <div id="fixed">
+        <div>
+            <div id="info" class="framed article">
+            <div>
+
+                <div id="details-pane" class="tab opened section">
+                    @Html.ActionLink(" ", "Details", "Vehicle", new { id = Model.Vehicle.VehicleId }, new { @class = "trigger" })
+                    <div class="content">
+                        <div class="header">
+                            @using (Html.BeginForm("Edit", "Vehicle", new { id = Model.Vehicle.VehicleId }, FormMethod.Get))
+                            {
+                                <button data-action="vehicle-edit-selected" class="button generic small" type="submit">
+                                    <img src="@Url.Content("~/Content/button-edit.png")" title="Edit Vehicle" alt="Edit" />
+                                </button>
+                            }
+
+                            @using (Html.BeginForm("Delete", "Vehicle", new { id = Model.Vehicle.VehicleId }, FormMethod.Post))
+                            {
+                                <button data-action="vehicle-delete-selected" class="button generic small" type="submit">
+                                    <img src="@Url.Content("~/Content/button-delete.png")" title="Delete Vehicle" alt="Delete" />
+                                </button>
+                            }
+                        
+                        </div>
+                        
+                        <div class="statistics aside">
+                            <div>
+                                <h1>Last 12 Months</h1>
+                                <div id="vehicle-charts" data-chart-url="@Url.RouteUrl("JsonGetVehicleStatisticSeriesRoute", new { id = Model.Vehicle.VehicleId })">
+                                    <div class="display-label">
+                                        Average Fuel Efficiency
+                                    </div>        
+                                    <div id="vehicle-fuel-efficiency-chart" class="display-chart fuelEfficiencyChart">
+                                        <img src="@Url.RouteUrl("VehicleFuelEfficiencyChartRoute", new { userId = Model.UserId, vehicleId = Model.Vehicle.VehicleId })" title="Fuel Efficiency Chart" alt="Fuel Efficiency Chart"/>
+                                    </div>
+                                    <div class="display-label">
+                                        Total Distance Travelled
+                                    </div>        
+                                    <div id="vehicle-distance-chart" class="display-chart distanceChart">
+                                        <img src="@Url.RouteUrl("VehicleTotalDistanceChartRoute", new { userId = Model.UserId, vehicleId = Model.Vehicle.VehicleId })" title="Total Distances Chart" alt="Total Distances Chart"/>
+                                    </div>
+                                    <div class="display-label">
+                                        Total Cost
+                                    </div>        
+                                    <div id="vehicle-cost-chart" class="display-chart costChart">
+                                        <img src="@Url.RouteUrl("VehicleTotalCostChartRoute", new { userId = Model.UserId, vehicleId = Model.Vehicle.VehicleId })" title="Total Cost Chart" alt="Total Cost Chart"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="display article">
+                            <div class="display-label">
+                                    @Html.LabelFor(model => Model.Vehicle.Name)
+                                </div>
+                                <div class="display-field name wrap">
+                                    @Model.Vehicle.Name
+                                </div>
+                                <div class="display-label">
+                                    @Html.LabelFor(model => Model.Vehicle.Year)
+                                </div>
+                                <div class="display-field year">
+                                    @(Model.Vehicle.Year.HasValue ? Model.Vehicle.Year.ToString() : "n/a")
+                                </div>
+                                <div class="display-label">
+                                    @Html.LabelFor(model => Model.Vehicle.MakeName)
+                                </div>
+                                <div class="display-field makeName">
+                                    @(Model.Vehicle.MakeName ?? "n/a")
+                                </div>
+                                <div class="display-label">
+                                    @Html.LabelFor(model => Model.Vehicle.ModelName)
+                                </div>
+                                <div class="display-field modelName">
+                                    @(Model.Vehicle.ModelName ?? "n/a")
+                                </div>
+                                <div class="display-label">
+                                    @Html.LabelFor(model => Model.Vehicle.Odometer)
+                                </div>
+                                <div class="display-field odometer">
+                                    @String.Format("{0:g}", Model.Vehicle.Odometer ?? 0) miles
+                                </div>
+                            </div>
+                            
+                           <div class="article reminder-list">
+                            <div class="list nav">
+                                @foreach (var item in Model.OverdueReminders)
+                                {
+                                    <a class="list-item @(item.IsOverdue ? "overdue" : null)" href="@Url.Action("Details", "Reminder", new { id = item.ReminderId })">    
+                                        <h1>@item.Title</h1>
+                                        <p class="title">Due @item.DueOnFormatted </p>    
+                                    </a>                   
+                                }
+                            </div>
+                        </div> 
+                                
+                    </div>
+                </div>
+                <div id="fillups-pane" class="tab section">
+                    @Html.ActionLink(" ", "List", "Fillup", new { vehicleId = Model.Vehicle.VehicleId }, new { @class = "trigger" })
+                </div>
+                <div id="reminders-pane" class="tab section">
+                    @Html.ActionLink(" ", "List", "Reminder", new { vehicleId = Model.Vehicle.VehicleId }, new { @class = "trigger" })
+                </div>
+
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

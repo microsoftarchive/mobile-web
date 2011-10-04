@@ -1,0 +1,73 @@
+﻿@model MileageStats.Web.Controllers.MockAuthenticationViewModel
+           
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Mock Authentication</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+    @@media all and (min-width: 400px) {
+    #container 
+    {
+        width: 400px;
+        margin: 100px auto 0;
+    }
+    }
+    h1, h2
+    {
+        text-align: center;
+    }
+    
+    h2 
+    {
+        font-size: 1.3em;
+        font-weight: normal;
+    }
+    
+    input 
+    {
+        display: block;
+        font-size: 1.3em;
+        width: 100%;
+    }
+    
+    input[type=submit] 
+    {
+        width: 300px;
+        margin: 40px auto;
+    }
+    
+    label
+    {
+        display: block;
+        font-weight: bold;
+        margin: 10px 0 5px;
+    }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Mock Authentication</h1>
+        <p>
+            This simulates the response from an OpenId provider.  You can change to using a real OpenId provider by
+            modifying the unity.config file.
+        </p>
+        <form id="authentication_response" action="@Model.ReturnUrl"  enctype="multipart/form-data" method="post">
+            <h2>&mdash; Login As &mdash;</h2>
+            @Html.AntiForgeryToken()
+
+            @Html.LabelFor(model => model.claimed_identifier)
+            @Html.TextBoxFor(model => model.claimed_identifier, new { maxlength = 200 })
+            
+            <input type="submit" value="Sign In" />
+        </form>
+    </div>
+</body>
+</html>

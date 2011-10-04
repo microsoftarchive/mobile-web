@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/MsBuild/2003">
+
+    <UsingTask
+        TaskName="CompressorTask"
+        AssemblyFile="$(SolutionDir)packages\YUICompressor.NET-MsBuild-Task.1.7.0.0\lib\NET35\Yahoo.Yui.Compressor.MsBuildTask.dll" />
+
+    <PropertyGroup>
+        <JavaScriptOutputFile Condition=" '$(JavaScriptOutputFile)'=='' ">Scripts\MileageStats.min.js</JavaScriptOutputFile>
+
+        <BuildDependsOn>
+            $(BuildDependsOn);
+            MinifyJavaScript;
+        </BuildDependsOn>
+
+    </PropertyGroup>
+    
+    <Target Name="MinifyJavaScript">
+        <ItemGroup>
+            <JavaScriptFiles Include="Scripts\Debug\*.js" />
+        </ItemGroup>
+
+        <CompressorTask
+            JavaScriptFiles="@(JavaScriptFiles)"
+            ObfuscateJavaScript="False"
+            PreserveAllSemicolons="False"
+            DisableOptimizations="True"
+            EncodingType="Default"
+            DeleteJavaScriptFiles="false"
+            LineBreakPosition="-1"
+            JavaScriptOutputFile="$(JavaScriptOutputFile)"
+            LoggingType="ALittleBit"
+            ThreadCulture="en-us"
+            IsEvalIgnored="false"
+            />
+    </Target>
+</Project>

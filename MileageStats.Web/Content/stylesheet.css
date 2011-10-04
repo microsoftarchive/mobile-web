@@ -1,0 +1,1494 @@
+@charset "utf-8";
+
+/******************************************************************************
+ Common Styles
+******************************************************************************/
+
+html
+{
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+body
+{
+    background: #666 url(background.jpg) no-repeat center top fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
+    font-size: 16px;
+}
+
+a
+{
+    color: #004677;
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: #0077C9;
+}
+
+p
+{
+    margin-bottom: 10px;
+}
+
+/******************************************************************************
+ Typography Styles
+
+ Consolidated to be in a single place and can be changed together without
+ worrying about missing things.
+******************************************************************************/
+body, #header, #vehicles .nav a, #vehicles .units, #vehicles .cost-per-mile,
+#vehicles .cost-per-month, #summary .units, #details-pane .units,
+.editor .field-validation-valid, .editor .field-validation-error,
+.editor .validation-summary-errors, button, input[type=submit], .button,
+#homepage button, .vehicle .header .data-model
+{
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+#header .nav, #vehicles .header, .display .display-label, .editor .editor-label,
+.vehicle .cost-per-month .unit, .vehicle .cost-per-mile .unit,
+.vehicle .mile-per-gallon .unit
+{
+    font-family: "Segoe UI Semibold", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+#vehicles .header .name, #vehicles .mile-per-gallon, #statistics h1,
+#account h1, .aside > div > h1, #summary #statistics,
+#details-pane .statistics, .display .display-field, .editor .editor-field,
+.editor .editor-field select, .editor .editor-field input[type=text],
+.editor .editor-field input[type=file], #homepage #header h1, #registration h1
+{
+    font-family: "Segoe UI Light", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/******************************************************************************
+ Structure Styles
+******************************************************************************/
+
+/* overlapping #scrollable and #fixed to pin part of the page */
+#scrollable
+{
+    margin-top: 42px;
+}
+
+#fixed
+{
+    position: fixed;
+    
+    top: 42px;
+    left: 0;
+    right: 0;
+    
+    width: 100%;
+    height: 0px;
+    
+    overflow: visible;
+}
+
+/* so that the fixed div doesn't block clicks to the scrollable tiles */
+#fixed > div
+{
+    height: 0;
+}
+
+
+/* centers content within #scrollable, #fixed, and #header */
+#scrollable > div, #fixed > div, #header > div > div
+{
+    position: relative;
+    
+    width: 960px;	
+    margin: 0 auto;
+}
+
+.framed
+{	
+    position: relative;
+    margin-left: 0;
+    
+    background: #e9e9e9;
+    background: rgba( 200, 200, 200, 0.50 );
+    
+    border: 1px solid #e9e9e9;
+    border-color: rgba( 233, 233, 233, 0.50 );
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    
+    box-shadow: 0px 0px 10px rgba( 0, 0, 0, 0.80 );
+    -webkit-box-shadow: 0px 0px 10px rgba( 0, 0, 0, 0.50 );
+    -moz-box-shadow: 0px 0px 10px rgba( 0, 0, 0, 0.50 );
+    -o-box-shadow: 0px 0px 10px rgba( 0, 0, 0, 0.50 );
+}
+
+.framed > div
+{
+    position: absolute;	
+    
+    top: 8px;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    
+    background: #e6e6e6;
+    
+    border: 1px solid #f1f1f1;
+    border-bottom-color: #959595;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    
+    box-shadow: 0px 0px 10px #555;
+    -webkit-box-shadow: 0px 0px 10px rgba( 50, 50, 50, 0.4 );
+    -moz-box-shadow: 0px 0px 10px rgba( 50, 50, 50, 0.4 );
+    -o-box-shadow: 0px 0px 10px rgba( 50, 50, 50, 0.4 );
+}
+
+
+#fixed .framed > div
+{
+    overflow: auto;
+}
+
+#scrollable .framed > div
+{
+    overflow: hidden;   
+}
+
+/******************************************************************************
+ .header Styles
+******************************************************************************/
+
+#header
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 29px;
+    background-image: url(nav-background.png);
+    
+    z-index: 10;
+}
+
+#header h1
+{
+    font-weight: normal;
+    font-size: 21px;
+    margin: 1px 10px;
+    padding-bottom: 0.2em;
+}
+
+#header .nav
+{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    bottom: 0px;
+    
+    height: 28px;
+    
+    font-size: 14px;
+    line-height: 23px;
+}
+
+#header .nav img
+{
+    vertical-align: middle;
+}
+
+#view_switcher 
+{
+	font-size: 14px;
+}
+
+/******************************************************************************
+ Vehicle Tile Styles
+******************************************************************************/
+
+/* Vehicle List */
+#vehicles
+{
+    position: absolute;
+    right: auto;
+    left: 400px;
+    width: 530px;
+    overflow: visible;
+}
+
+#vehicles.compact
+{
+    width: 250px;
+    left: 0px;
+}
+
+#vehicles .wrapper
+{
+    float: left;
+    position: relative;
+    height: 300px;
+    margin: 0 20px 0 0;
+    padding: 0 0 20px;
+}
+
+#vehicles.compact .wrapper
+{
+    float: left;
+    position: relative;
+    min-height: 100px;
+    height: auto;
+    margin: 0 20px 0 0;
+}
+
+/* Individual Vehicle */
+.vehicle
+{
+    position: relative;
+    width: 220px;
+    
+    overflow: hidden;
+    padding: 9px;
+    
+    background-color: #bbb;
+    background: rgba( 233, 233, 233, 0.6 );
+    border: 1px solid #bababa;
+    border: 1px solid rgba( 233, 233, 233, 0.8 );
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    
+    box-shadow: 0px 0px 12px rgba( 0, 0, 0, 0.4 ), inset 0px 0px 10px rgba( 233, 233, 233, 0.4 );
+    -webkit-box-shadow: 0px 0px 12px rgba( 0, 0, 0, 0.4 ), inset 0px 0px 10px rgba( 233, 233, 233, 0.4 );
+    -moz-box-shadow: 0px 0px 12px rgba( 0, 0, 0, 0.4 ), inset 0px 0px 10px rgba( 233, 233, 233, 0.4 );
+    -o-box-shadow: 0px 0px 12px rgba( 0, 0, 0, 0.4 ), inset 0px 0px 10px rgba( 233, 233, 233, 0.4 );
+    
+    z-index: 0;
+}
+
+.vehicle .content
+{	
+    width: 220px;
+    
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba( 0, 0, 0, 0.5 );
+    
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    
+    -webkit-box-shadow: 0px 0px 10px rgba( 0, 0, 0, 0.5 );
+    -moz-box-shadow: 0px 0px 10px rgba( 0, 0, 0, 0.5 );
+    -o-box-shadow: 0px 0px 10px rgba( 0, 0, 0, 0.5 );
+}
+
+/* the header becomes draggable when in js mode */
+html.js .vehicle .header
+{
+    cursor: move;
+    background-image: url(title-background.png);
+}
+
+.vehicle .header
+{
+    background-image: url(title-background-nodrag.png);
+    position: relative;
+    height: 46px;
+}
+
+.vehicle .header .overlay
+{
+    background-image: url(title-hover.png);
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    
+    opacity: 0;
+    visibility: hidden;
+
+    -webkit-transition: opacity 0.5s linear;
+    -moz-transition: opacity 0.5s linear;
+    -o-transition: opacity 0.5s linear;
+}
+
+html.js .vehicle .header:hover .overlay
+{
+    opacity: 1;
+    visibility: visible;
+
+    -webkit-transition: opacity 0.1s linear;
+    -moz-transition: opacity 0.1s linear;
+    -o-transition: opacity 0.1s linear;
+}
+
+.vehicle .header .glass
+{
+    background-image: url(title-glass.png);
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+.vehicle .header .data-model
+{
+    line-height: 1em;
+    font-size: 13px;
+    
+    
+    position: absolute;
+    top: 3px;
+    left: 7px;
+    right: 7px;
+    
+    padding-bottom: 0.3em;
+    
+    z-index: 3;
+}
+
+.vehicle .header .data-name
+{
+    line-height: 1em;
+    font-family: "Segoe UI Light";
+    font-size: 25px;
+    
+    height: 30px;
+    
+    position: absolute;
+    bottom: -1px;
+    left: 5px;
+    right: 5px;
+    
+    z-index: 1;
+    padding-bottom: 4px;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+html.no-js .vehicle.compact .actions
+{
+    display: none;
+}
+
+.vehicle .actions
+{
+    background-color: #777;
+    
+    position: relative;
+    height: 120px;
+}
+
+.vehicle .actions .avatar
+{
+    background-color: #999;
+    
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    top: 5px;
+    left: 6px;
+    display: block;
+    
+    box-shadow: 0px 0px 6px rgba( 0, 0, 0, 0.6 );
+    -webkit-box-shadow: 0px 0px 6px rgba( 0, 0, 0, 0.6 );
+    -moz-box-shadow: 0px 0px 6px rgba( 0, 0, 0, 0.6 );
+    -o-box-shadow: 0px 0px 6px rgba( 0, 0, 0, 0.6 );
+}
+
+.vehicle .actions .avatar img
+{
+    width: 110px;
+    height: 110px;
+}
+
+.vehicle .actions .nav
+{
+    position: absolute;
+    right: 0;
+    top: 8px;
+    bottom: 7px;
+}
+
+.vehicle .actions .nav a
+{
+    background-color: #67949b;
+    background-image: url(command-background.jpg);
+    
+    display: block;
+    
+    position: relative;
+    width: 97px;
+    height: 33px;
+    margin-bottom: 3px;
+    
+    box-shadow: 0px 0px 4px rgba( 0, 0, 0, 0.6 );
+    -webkit-box-shadow: 0px 0px 4px rgba( 0, 0, 0, 0.6 );
+    -moz-box-shadow: 0px 0px 4px rgba( 0, 0, 0, 0.6 );
+    -o-box-shadow: 0px 0px 4px rgba( 0, 0, 0, 0.6 );
+}
+
+.vehicle .actions .nav img, .vehicle .actions .nav div
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    width: 97px;
+    height: 33px;
+}
+
+.vehicle .actions .nav .glass
+{
+    background-image: url(command-glass.png);	
+}
+
+.vehicle .actions .nav .hover
+{
+    background-image: url(command-hover.jpg);
+    visibility: hidden;
+    opacity: 0;
+
+    transition: opacity 0.4s linear;
+    -webkit-transition: opacity 0.4s linear;
+    -moz-transition: opacity 0.4s linear;
+    -o-transition: opacity 0.4s linear;
+}
+
+.vehicle .actions .nav a:hover .hover
+{
+    visibility: visible;
+    opacity: 1;
+    
+    transition: opacity 0.1s linear;
+    -webkit-transition: opacity 0.1s linear;
+    -moz-transition: opacity 0.1s linear;
+    -o-transition: opacity 0.1s linear;
+}
+
+.vehicle .actions .nav .active
+{
+    background-image: url(command-active.jpg);
+    visibility: hidden;
+    opacity: 0;
+    
+    transition: opacity 0.3s linear;
+    -webkit-transition: opacity 0.3s linear;
+    -moz-transition: opacity 0.3s linear;
+    -o-transition: opacity 0.3s linear;
+}
+
+.vehicle .actions .nav :active .active
+{
+    visibility: visible;
+    opacity: 1;
+}
+
+.vehicle.compact .statistics
+{
+    display: none;
+}
+ 
+.vehicle .statistics
+{
+    background-image: url(info-background.png);
+    
+    position: relative;
+    height: 115px;	
+    
+    text-shadow: 0px 1px 0px #fff;
+    -webkit-text-shadow: 0px 1px 0px #fff;
+    -moz-text-shadow: 0px 1px 0px #fff;
+    -o-text-shadow: 0px 1px 0px #fff;
+    
+    color: #555;
+    line-height: 1;
+}
+
+.vehicle .mile-per-gallon
+{
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 103px;
+    padding-bottom: 5px;
+    text-align: right;	
+}
+
+.vehicle .mile-per-gallon .quantity
+{
+    font-size: 96px;
+    line-height: 75px;
+}
+
+#vehicles .mile-per-gallon.hundreds .quantity
+{
+    font-size: 64px;
+}
+
+#vehicles .mile-per-gallon.thousands .quantity
+{
+    font-size: 44px;
+}
+
+.vehicle .mile-per-gallon .unit
+{
+    margin-right: 5px;
+}
+
+.vehicle .cost-per-month, .vehicle .cost-per-mile
+{
+    position: absolute;
+    right: 10px;
+    width: 85px;
+    height: 42px;
+}
+
+.vehicle .cost-per-month .quantity, .vehicle .cost-per-mile .quantity
+{
+    font-size: 30px;
+    line-height: 26px;
+}
+
+.vehicle .cost-per-mile
+{
+    top: 10px;	
+}
+
+.vehicle .cost-per-month
+{
+    padding-bottom: 5px;
+    bottom: 10px;	
+}
+
+.vehicle.compact .quick
+{
+    display: block;
+}
+
+html.js .vehicle .quick
+{
+    display: none;
+}
+
+.vehicle .quick
+{
+    height: 35px;
+    display: none;	
+}
+
+.vehicle .quick a
+{
+    background-image: url(quick-normal.png);	
+    background-attach: top left;
+    display: inline-block;
+    height: 35px;
+    width: 65px;
+}
+
+.vehicle .quick a:hover
+{
+    background-image: url(quick-hover.png);	
+}
+
+.vehicle .quick a:active
+{
+    background-image: url(quick-active.png);	
+}
+
+.vehicle .quick a:focus
+{
+    background-image: url(quick-focus.png);	
+}
+
+.vehicle .quick a[data-command=details]
+{
+    background-position: 0px 0;
+}
+
+.vehicle .quick a[data-command=fillups]
+{
+    background-position: -65px 0;
+    width: 63px;
+}
+
+.vehicle .quick a[data-command=reminders]
+{
+    background-position: -128px 0;
+    width:92px;
+}
+
+
+/* Command Tiles */
+#vehicles .command
+{
+    text-align: center;
+    line-height: 36px;
+    width: 238px;
+    height: 56px;
+}
+
+#vehicles .command 
+{
+    float: left;
+}
+
+#vehicle-list-contents
+{
+    position: relative;
+}
+
+/******************************************************************************
+ Panel Styles
+******************************************************************************/
+
+#error
+{
+    width: 600px;
+    height: 450px;
+    margin: 100px auto 0;
+    font-size: 20px;
+}
+
+#error > div
+{
+    background-image: url(error-pane.jpg);
+    padding: 10px 30px 0;
+}
+
+#error h1
+{
+    font-weight: normal;
+    font-size: 25px;
+    margin: 20px 0;
+}
+
+#error p
+{
+    margin-bottom: 16px;
+}
+
+#login
+{
+    width: 295px;
+    margin: 100px auto 0;
+    font-size: 16px;
+}
+
+#login > div 
+{
+    position:relative;
+    margin: 8px;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+#login h1
+{
+    font-weight: normal;
+    text-align: center;
+    font-size: 20px;
+    margin: 10px;
+    
+    text-align: center;
+}
+
+#login p
+{
+    line-height: 1.3em;
+    margin: 4px 10px 8px;
+}
+
+#login .actions
+{		
+    margin: 13px;
+}
+
+#login .actions .external
+{
+    margin: 0 0 10px;
+    text-align: center;
+}
+
+#login .text
+{
+    margin: 4px 0 10px;
+    padding: 2px;
+    background-color: #fff;
+}
+
+#login input
+{
+    
+    font-size: 18px;
+    font-family: "Segoe UI", serif;
+    display: block;
+    width: 245px;	
+    padding: 0 0;
+    border: none;
+    outline: none;
+}
+
+#login button
+{
+    border: 1px solid #AAA;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: #67949B;
+	background-image:url(application-signin-button.png);
+	display: block;
+	width: 249px;
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+	height: 33px;
+	cursor: pointer;
+}
+
+#login button:hover
+{
+    background-position: 0 -33px;
+}
+
+#login button:active
+{
+    background-position: 0 -66px;
+}
+
+#login button:focus
+{
+    background-position: 0 -99px;
+}
+
+#login button:focus:hover
+{
+    background-position: 0 -132px;
+}
+
+#login button:focus:active
+{
+    background-position: 0 -165px;
+}
+
+#summary
+{
+    width: 350px;
+    height: 640px;   
+        position: absolute; left: 0px; opacity: 1; display: block; 
+}
+
+#summary.framed > div
+{
+    padding: 6px;
+    padding-left: 38px;
+    background-color: #888;
+    background-image: url(summary-pane.jpg);
+    background-position: top left;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+}
+
+#summary .section
+{
+    margin-bottom: 20px;
+}
+
+#statistics h1, #registration h1 , #account h1, .aside > div > h1
+{
+    font-weight: normal;
+    font-size: 24px;
+    margin: 6px 0 4px;
+}
+
+#summary #statistics
+{
+    font-size: 60px;
+}
+
+#summary .units, #details-pane .units
+{
+    font-size: 23px;
+    font-weight: normal;
+}
+
+/* ... more statistics styling ... */
+
+#info
+{
+    left: 258px;
+    width: 700px;
+    height: 640px;
+}
+
+#info #details-pane
+{
+    background-image: url(details-pane.jpg);
+}
+
+#info #details-pane .article
+{
+    margin-left: 350px;
+}
+
+#info #fillups-pane
+{
+    background-image: url(fillups-pane.jpg);
+}
+
+#info #reminders-pane
+{
+    background-image: url(reminders-pane.jpg);
+}
+
+#info #add-vehicle-pane
+{
+    background-image: url(add-vehicle-pane.jpg);
+   left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 682px;
+}
+
+#info #edit-vehicle-pane
+{
+    background-image: url(details-pane.jpg);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 682px;
+}
+
+#main-chart
+{
+    width: 958px;
+    height: 644px;
+    display: none;
+}
+
+#main-chart > div
+{
+    padding: 6px;
+    padding-left: 36px;
+    background-image: url(graph-pane.jpg);	
+}
+
+#main-chart #nav
+{
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+#main-chart #main-chart-plot
+{
+    text-align: center;
+    float: right;
+    text-align: left;
+    margin-top: 10px;
+    margin-left: 50px; 
+    padding-right: 10px;
+    width: 620px; 
+    height: 450px;
+}
+
+#main-chart #vehicle-selection
+{
+    margin-top: 10px;
+}
+
+#main-chart #vehicle-selection-list
+{
+    padding-top: 10px;
+    width: 220px;
+}
+
+#main-chart #vehicle-selection > h3
+{
+    font-family: "Segoe UI Light", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    padding-top: 12px;
+    margin: 3px 5px;
+}
+
+.chart-selectable-vehicle
+{
+    display:block;
+}
+
+.chart-selectable-vehicle-color
+{
+    width: 10px;
+    height: 10px;
+    display:inline-block;
+    margin-bottom: 2px;
+}
+
+.chart-selectable-vehicle-checkbox
+{   
+   display:inline;
+}
+
+#main-chart #date-range-selection > h3
+{
+    font-family: "Segoe UI Light", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    clear: both;
+    margin: 5px;
+}
+
+#main-chart #date-range-selection #slider
+{
+    margin: 10px 25px 10px 30px;
+}
+
+#main-chart #date-range-selection #label
+{
+    margin-left: 30px;
+    text-align: center;
+}
+
+#main-chart #date-range-selection #lower
+{
+    display: inline-block;
+}
+
+#main-chart #date-range-selection #upper
+{
+    display: inline-block;
+}
+
+#main-chart #unavailable-message
+{
+    margin-left: 30px;
+    display:none;
+}
+
+#main-chart #message
+{
+    text-align: center;
+    width: 800px;
+    margin: 40px;
+}
+
+.jqplot-axis 
+{
+    font-size: 0.85em;
+}
+
+.jqplot-title
+{
+    font-size: 1.1em;
+    margin: 5px;
+}
+
+.jqplot-xaxis
+{
+    font-size: 0.85em;
+    margin: 5px;
+}
+
+.jqplot-yaxis
+{
+    font-size: 0.85em;
+    margin: 5px;
+}
+
+.empty 
+{
+    display: none;
+}
+
+.check-list-item
+{
+    padding: 4px;
+    margin: 6px 0;
+    display: block;
+    border-bottom: 1px solid #999;
+    padding-bottom: 10px;
+}
+
+.check-list-item:last-child
+{
+    border-bottom: 0;
+}
+
+.check-list-item input
+{
+    width: 30px;
+}
+
+.check-list-item span
+{
+    font-size: 14px;	
+}
+
+.check-list-item div
+{
+    margin-left: 40px;	
+    font-size: 20px;
+}
+
+.display-chart
+{
+    width: 250px;
+    height: 120px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-right: 10px;
+    overflow:hidden;
+}
+
+.fuelEfficiencyChart, .distanceChart ,.costChart 
+{
+    height: 120px;
+}
+
+#account
+{   
+    width: 400px;
+    height: 640px;
+}
+
+#account > div
+{
+    padding: 6px;
+    padding-left: 38px;
+    background-image: url(account-pane.jpg);
+}
+
+/******************************************************************************
+ Detail Tab Styles
+******************************************************************************/
+
+.tab
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 36px;
+    overflow: hidden;
+    background-color: #e6e6e6;
+}
+
+.tab.opened
+{
+    width: 612px;
+}
+
+.tab .content
+{
+    position: absolute;
+    width: 576px;
+    left: 36px;	
+}
+
+.tab#details-pane
+{
+    right: 72px;
+    z-index: 1;
+}
+
+.tab#fillups-pane
+{
+    right: 36px;
+    z-index: 2;
+}
+
+.tab#reminders-pane
+{
+    right: 0px;
+    z-index: 3;
+}
+
+.tab .trigger
+{
+    width: 35px;
+    float: left;
+    height: 622px;
+    overflow: hidden;
+    
+    display: block;
+    border-left: 1px solid #bbb;
+}
+
+/* Tab Commands */
+.tab .header
+{
+    margin-left: 36px;
+    margin-bottom: 12px;
+    height: 36px;
+    padding: 0 4px;
+    text-align: right;
+}
+
+.tab .header form
+{
+    display: inline;
+}
+
+/* Tab Item List */
+.tab .aside
+{
+    margin-left: 8px;
+    width: 236px;
+    float: left;
+    
+    height: 560px;
+    overflow: auto;
+    overflow-x: hidden;
+    
+}
+
+/* Tab Item Detail */
+.tab .article
+{
+    margin-left: 270px;
+    margin-right: 10px;
+    max-height: 560px;
+    overflow: auto;
+    overflow-x: hidden;
+    width: 290px;
+    height: 560px;
+}
+
+.tab#details-pane .aside
+{
+    width: 336px;
+}
+
+.tab#details-pane .article
+{
+    width: 206px;
+}
+
+.tab#details-pane .article.display
+{
+    height: 350px;
+}
+
+/******************************************************************************
+ List + Items Styles
+******************************************************************************/
+
+.list
+{
+    border-top: 1px solid #ccc;
+    margin: 10px 0 0;
+}
+
+.list .list-item
+{
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid transparent;
+    display: block;
+    padding: 4px 2px 0;
+    background: rgba( 255, 255, 255, 0.3 );
+}
+
+.list .list-item:hover
+{
+    background-color: #ccc;
+    background: rgba( 255, 255, 255, 0.5 );
+}
+
+.list .list-item:active
+{
+    background-color: #ddd;
+    background: rgba( 255, 255, 255, 0.7 );
+}
+
+.list .list-item.selected
+{
+    background-color: #ddd;
+    background: rgba( 255, 255, 255, 0.6 );
+    border-left: 3px solid #aaa;	
+    padding-left: 0px;
+}
+
+.list .list-item.overdue
+{
+    color: #a31a10;   
+}
+
+.list .list-item h1
+{
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 6px;
+    padding: 0 0 0.2em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    
+}
+
+.list .list-item p
+{
+    font-size: 13px;
+    line-height: 1.2em;
+    padding: 0 3px 0.15em;
+    margin: 0 3px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.list .list-item .icon
+{
+    float: left;
+    height: 42px;
+    width: 28px;
+}
+
+/******************************************************************************
+ Form Styles
+******************************************************************************/
+
+fieldset
+{
+    overflow: hidden;
+    display: block;
+}
+
+.editor
+{
+    padding: 0 0 10pt;
+}
+
+.display .display-label, .editor .editor-label
+{
+    text-transform: uppercase;	
+    font-size: 13px;
+}
+
+.display .display-field, .editor .editor-field
+{
+    font-size: 28px;
+    line-height: 30px;
+    margin-bottom: 4px;
+    padding: 4px 0;
+    width: 95%;
+    white-space: nowrap;
+    
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+.display .display-field
+{
+    overflow: hidden;
+}
+
+.display-field.wrap
+{
+    word-wrap: break-word; 
+    white-space: normal;
+    
+    text-overflow: clip;
+    -o-text-overflow: clip;
+}
+
+.editor .editor-field select 
+{
+    font-size: 20px;
+    width: 90%;
+}
+
+.editor .editor-field textarea
+{
+    width: 90%;
+}
+
+.editor .editor-field input[type=text]
+{
+    font-size: 20px;
+    width: 90%;
+    display: block;
+    border: 1px solid #bbb;
+}
+
+.editor .editor-field input[type=file]
+{
+    font-size: 14px;
+    width: 90%;
+    display: block;
+}
+
+.editor .editor-field input[type=text]:focus
+{
+    background-color: #f0f7ff;
+}
+
+.editor .field-validation-valid
+{
+    font-size: 14px;
+    line-height: 16px;
+    display: block;
+    white-space: normal;
+}
+
+.editor .field-validation-error, .editor .validation-summary-errors
+{
+    color: #c00000;
+    font-size: 14px;
+    line-height: 16px;
+    display: block;
+    white-space: normal;
+}
+
+button, input[type=submit], .button
+{
+    
+    border: 1px solid #aaa;
+    font-size: 16px;
+    line-height: 25px;
+    padding: 1px 7px 2px;
+    margin: 5px 3px;
+    color: #004677;
+    background: #eee;
+    background: rgba( 222, 222, 222, 0.1 );
+    cursor: pointer;
+    
+    /* inline block for ie, otherwise no display declaration */
+    display:inline-block;
+    
+    border-radius: 2px;
+    -wenkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    
+    box-shadow: 0px 0px 3px rgba( 160, 160, 160, 0.50 );
+    -webkit-box-shadow: 0px 0px 3px rgba( 160, 160, 160, 0.50 );
+    -moz-box-shadow: 0px 0px 3px rgba( 160, 160, 160, 0.50 );
+    -o-box-shadow: 0px 0px 3px rgba( 160, 160, 160, 0.50 );
+}
+
+button.generic
+{
+    float: left;
+}
+
+button:hover, input[type=submit]:hover, .button:hover
+{
+    background-color: #f7f7f7;
+}
+
+button:active,  input[type=submit]:active, .button:active
+{
+    background-color: #e0e0e0;
+}
+
+button.small
+{
+    background-image: url(button-small.png);
+    width: 97px;
+    height: 33px;
+    border: 0;
+    padding: 0;
+    margin: 4px;
+}
+
+button.small:hover
+{
+    background-position: 0 -33px;
+}
+
+button.small:active
+{
+    background-position: 0 -66px;
+}
+
+button.small:focus
+{
+    background-position: 0 -99px;
+}
+
+button.small:focus:hover
+{
+    background-position: 0 -132px;
+}
+
+button.small:focus:active
+{
+    background-position: 0 -165px;
+}
+
+#Instructions
+{
+    clear: both;
+    display: block;
+}
+
+/******************************************************************************
+ Page Specific Styles
+******************************************************************************/
+
+.header
+{
+    margin-top: 0;	
+}
+
+.openid-provider
+{
+    border: 1px solid #aaa;
+    display: inline-block;
+    padding: 4px 2px 0;
+    margin: 10px 0;
+    
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+svg
+{
+    overflow: hidden;
+}
+
+/******************************************************************************
+ Status widget
+******************************************************************************/
+
+#notification
+{
+    position: absolute;
+    top: 0;
+    height: 20px;
+    left: 250px;
+    padding: 1px 15px;
+    min-width: 100px;
+    background-color: white;
+    background: rgba( 240, 250, 255, 0.8 );
+    z-index: 200;
+    text-align: center;
+    border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    -o-border-radius: 0 0 5px 5px;
+    
+    display: none;
+}

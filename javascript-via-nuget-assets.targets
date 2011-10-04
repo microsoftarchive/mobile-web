@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/MsBuild/2003">
+
+    <PropertyGroup>
+        <BuildDependsOn>
+          $(BuildDependsOn);
+          CopyAssets;
+        </BuildDependsOn>
+    </PropertyGroup>
+
+    <Target Name="CopyAssets" AfterTargets="BuildPackage">
+
+        <ItemGroup>
+            <jqPlotFiles Include="$(SolutionDir)packages\jqPlot.1.0.0\Content\Scripts\jqPlot\*.*" />
+            <jqPlotPluginFiles Include="$(SolutionDir)packages\jqPlot.1.0.0\Content\Scripts\jqPlot\plugins\*.*" />
+            <QUnitFiles Include="$(SolutionDir)packages\QUnit-MVC.1.6.2.0\content\**\*.*" />
+        </ItemGroup>
+    
+        <Message 
+            Text="Copying jqPlot assets for project..."
+            Importance="high" />
+
+        <Copy
+            SkipUnchangedFiles="true"
+            SourceFiles="@(jqPlotFiles)"
+            DestinationFolder="$(ProjectDir)Scripts\jqPlot" >
+            <Output
+                TaskParameter="CopiedFiles"
+                ItemName="jqPlotCopiedFiles" />
+        </Copy>
+
+        <Copy
+            SkipUnchangedFiles="true"
+            SourceFiles="@(jqPlotPluginFiles)"
+            DestinationFolder="$(ProjectDir)Scripts\jqPlot\plugins" >
+        <Output
+            TaskParameter="CopiedFiles"
+            ItemName="jqPlotCopiedFiles" />
+        </Copy>
+
+        <Message
+            Text="@(jqPlotCopiedFiles)"
+            Importance="high" />
+
+        <Message 
+            Text="Copying QUnit assets for project..."
+            Importance="high" />
+
+        <Copy
+            SkipUnchangedFiles="true"
+            SourceFiles="@(QUnitFiles)"
+            DestinationFiles="@(QUnitFiles->'$(ProjectDir)%(RecursiveDir)%(Filename)%(Extension)')" >
+            <Output
+                TaskParameter="CopiedFiles"
+                ItemName="QUnitCopiedFiles" />
+        </Copy>
+
+        <Message
+            Text="@(QUnitCopiedFiles)"
+            Importance="high" />
+
+    </Target>
+</Project>

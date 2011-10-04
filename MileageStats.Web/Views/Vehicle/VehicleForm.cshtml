@@ -1,0 +1,60 @@
+﻿@model MileageStats.Web.Models.VehicleFormModel
+
+@Html.AntiForgeryToken()
+<div id="vehicleEditForm" class="editor-area" data-makes-url="@Url.Action("MakesForYear", "MakeAndModel")" data-models-url="@Url.Action("ModelsForMake", "MakeAndModel")">
+    <div class="editor-row">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Name, new { @class = "editor-textbox", maxlength = "20" })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+    </div>
+    <div class="editor-row">
+        <label class="editor-label">
+            @Html.LabelFor(model => model.Year)
+        </label>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Year, ViewBag.Years as SelectList, "--Select a Year--", new { @class = "editor-textbox" })
+            @Html.ValidationMessageFor(model => model.Year)
+        </div>
+        <button type="submit" name="action" value="UpdateMakes" class="editor-updateList hide-when-js-enabled">Update Makes</button>
+    </div>
+    <div class="editor-row">
+        <label class="editor-label">
+            @Html.LabelFor(model => model.MakeName)
+        </label>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.MakeName, ViewBag.Makes as SelectList, "--Select a Make--", new { @class = "editor-textbox" })
+            @Html.ValidationMessageFor(model => model.MakeName)
+        </div>
+        <button type="submit" name="action" value="UpdateModels" class="editor-updateList hide-when-js-enabled">UpdateModels</button>
+    </div>
+    <div class="editor-row">
+        <label class="editor-label">
+            @Html.LabelFor(model => model.ModelName)
+        </label>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ModelName, ViewBag.Models as SelectList, "--Select a Model--", new { @class = "editor-textbox" })
+            @Html.ValidationMessageFor(model => model.ModelName)
+        </div>
+    </div>    
+       <div class="editor-row">
+        <label class="editor-label-disabled">
+            Photo
+        </label>
+        <div class="editor-field">
+            <input type="file" name="photoFile" class="editor-textbox" />
+            @Html.ValidationMessage("photoFile")
+        </div>
+    </div>                      
+    <button data-action="vehicle-save-submitted" name="action" value="Save" class="button generic small" type="submit" class="editor-submit" >
+        <img src="@Url.Content("~/Content/button-save.png")" title="Save Vehicle" alt="Save" />
+    </button>
+
+    @Html.ValidationSummary(true)
+    @Html.ValidationMessage("Save")
+
+
+</div>

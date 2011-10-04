@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://dev.virtualearth.net/webservices/v1/search/contracts" elementFormDefault="qualified" targetNamespace="http://dev.virtualearth.net/webservices/v1/search/contracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://dev.virtualearth.net/webservices/v1/metadata/searchservice/dev.virtualearth.net.webservices.v1.search.xsd" namespace="http://dev.virtualearth.net/webservices/v1/search" />
+  <xs:element name="Search">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://dev.virtualearth.net/webservices/v1/search" minOccurs="0" name="request" nillable="true" type="q1:SearchRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://dev.virtualearth.net/webservices/v1/search" minOccurs="0" name="SearchResult" nillable="true" type="q2:SearchResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

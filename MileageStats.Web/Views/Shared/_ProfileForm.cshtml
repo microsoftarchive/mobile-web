@@ -1,0 +1,30 @@
+﻿@model MileageStats.Domain.Models.User
+@Html.AntiForgeryToken()
+
+@Html.HiddenFor(model => model.UserId)
+@Html.HiddenFor(model => model.AuthorizationId)
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.DisplayName)
+</div>
+<div class="editor-field">
+    @Html.TextBoxFor(model => model.DisplayName, new { maxlength = "15" })
+    @Html.ValidationMessageFor(model => model.DisplayName)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Country)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.Country, ViewBag.CountryList as SelectList, "-- Select country --", new { @class = "editor-textbox" })
+    @Html.ValidationMessageFor(model => model.Country)
+</div>
+
+<div class="editor-commands">
+    <button data-action="profile-save" class="button generic small editor-submit" type="submit">
+        <img src="@Url.Content("~/Content/button-save.png")" title="Save Profile" alt="Save" />
+    </button>
+</div>
+<div style="clear:both;"></div>
+@Html.ValidationSummary(true)
+

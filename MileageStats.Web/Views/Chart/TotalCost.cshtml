@@ -1,0 +1,24 @@
+﻿@using MileageStats.Domain.Properties
+@model MileageStats.Web.Models.ChartFormModel           
+@{
+    ViewBag.Title = "Charts";
+}
+<div id="charts-page">
+    <div id="scrollable">
+        <div>
+            <div id="main-chart" class="article framed" style="display: block">
+                <div>
+                    <div id="chart-area" class="section">                        
+                        @{Html.RenderPartial("_ChartNavigation");}
+                        <div id="plot">
+                            <img src="@Url.Action("TotalCostChart", new { id = Model.UserId })" title="Total Cost Chart" alt="Total Cost Chart" />                                
+                        </div>
+                        <div id="message">Chart shown is for the last 12 months.</div>
+                    </div>   
+                </div>             
+            </div>
+        </div>
+    </div>
+    <div id="fixed">
+    </div>
+</div> 

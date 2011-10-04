@@ -1,0 +1,39 @@
+﻿@model MileageStats.Web.Models.ReminderFormModel
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Title, new { id = "ReminderTitle", maxlength = "50" })
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Remarks)
+            @Html.ValidationMessageFor(model => model.Remarks)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DueDate)<span> (mm/dd/yyyy)</span>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.DueDate, new { maxlength = "10" })
+            @Html.ValidationMessageFor(model => model.DueDate)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DueDistance)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.DueDistance, new { maxlength = "7" })
+            @Html.ValidationMessageFor(model => model.DueDistance)
+        </div>
+        
+        <p>
+            <button data-action="reminder-add-submitted" class="button generic small" type="submit" class="editor-submit" >
+                <img src="@Url.Content("~/Content/button-save.png")" title="Save Reminder" alt="Save" />
+            </button>
+        </p>
+        @Html.ValidationSummary(true)
+    </fieldset>

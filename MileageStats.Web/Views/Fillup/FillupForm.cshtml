@@ -1,0 +1,65 @@
+﻿@model MileageStats.Web.Models.FillupEntryFormModel
+    @Html.AntiForgeryToken()
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Date)<span> (mm/dd/yyyy)</span>
+    </div>
+    <div class="editor-field">
+        @Html.TextBox("Date", Model == null || Model.Date == null ? string.Empty : Model.Date.ToShortDateString(), new { maxlength = "10" })
+        @Html.ValidationMessageFor(model => model.Date)
+    </div>   
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Odometer)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.Odometer, new { maxlength = "7" })
+        @Html.ValidationMessageFor(model => model.Odometer)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.PricePerUnit)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.PricePerUnit, new { maxlength = "6" })
+        @Html.ValidationMessageFor(model => model.PricePerUnit)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.TotalUnits)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.TotalUnits, new { maxlength = "7" })
+        @Html.ValidationMessageFor(model => model.TotalUnits)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Vendor)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.Vendor, new { maxlength = "20" })
+        @Html.ValidationMessageFor(model => model.Vendor)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.TransactionFee)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.TransactionFee, new { maxlength = "6" })
+        @Html.ValidationMessageFor(model => model.TransactionFee)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Remarks)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.Remarks, new { maxlength = "250" })
+        @Html.ValidationMessageFor(model => model.Remarks)
+    </div>
+
+   @if (ViewBag.IsFirstFillup)
+   { 
+        <div class="editor-message">
+            This is your first fill up. This odometer reading will establish your mileage starting
+            point. Vehicle statistics will be displayed beginning on your next fill up.
+        </div>
+   }   
+    <p>
+        <button data-action="fillup-add-submitted" class="button generic small" type="submit" class="editor-submit" >
+            <img src="@Url.Content("~/Content/button-save.png")" title="Save Fill up" alt="Save" />
+        </button>
+    </p>
+    @Html.ValidationSummary(true)

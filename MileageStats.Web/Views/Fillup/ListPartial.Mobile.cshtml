@@ -1,0 +1,29 @@
+﻿@model System.Collections.Generic.List<MileageStats.Web.Models.FillupViewModel>
+@{
+    var groups = from fillup in Model
+            let ym = new { DateTime.Parse(fillup.Date).Year, month = DateTime.Parse(fillup.Date).ToString("MMMM")}
+            group fillup by ym
+            into grouping
+            select new {month = grouping.Key.month, year=grouping.Key.Year, fillups = grouping};
+}
+<dl class="fillup widget">
+
+@foreach (var item in groups.ToList())
+{
+    <dt><h2><a href="">@item.month @item.year</a></h2></dt>
+    <dd>
+		<table>
+            <thead><tr><th>Date</th><th>Location</th><th>Cost</th></tr></thead>
+            @foreach(var fillup in item.fillups)
+            {
+                var url = Url.Action("Details", "Fillup", new {id = fillup.FillupEntryId});
+                <tr>
+                    <td><a href="@url">@fillup.Date</a></td>
+                    <td><a href="@url">@fillup.Vendor</a></td>
+                    <td><a href="@url">@fillup.TotalCost</a></td>
+                </tr>
+            }
+		</table>
+	</dd>
+}
+</dl>

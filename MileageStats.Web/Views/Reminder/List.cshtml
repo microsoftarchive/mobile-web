@@ -1,0 +1,55 @@
+﻿@model MileageStats.Web.Models.ReminderDetailsViewModel
+@{
+    ViewBag.Title = "Reminders for " + ViewBag.VehicleName;
+}
+<div id="details-page">
+    <div id="scrollable">
+        <div>
+            @{ Html.RenderAction("ListPartial", "Vehicle", new { vehicleId = ViewBag.VehicleId, isCollapsed = true }); }
+        </div>
+    </div>
+    <div id="fixed">
+        <div>
+            <div id="info" class="framed article">
+                <div>
+                    <div id="details-pane" class="tab opened section">
+                        @Html.ActionLink(" ", "Details", "Vehicle", new { id = ViewBag.VehicleId }, new { @class = "trigger" })
+                    </div>
+                    <div id="fillups-pane" class="tab opened section">
+                        @Html.ActionLink(" ", "List", "Fillup", new { vehicleId = ViewBag.VehicleId }, new { @class = "trigger" })
+                    </div>
+                    <div id="reminders-pane" class="tab opened section">
+                        @Html.ActionLink(" ", "List", "Reminder", new { vehicleId = ViewBag.VehicleId }, new { @class = "trigger" })
+                        <div class="content">
+                            <div class="header">
+                                @using (Html.BeginForm("Add", "Reminder", new { vehicleId = ViewBag.VehicleId }, FormMethod.Get))
+                                {
+                                    <button data-action="reminder-add-selected" class="button generic small" type="submit"><img src="@Url.Content("~/Content/button-add.png")" title="Add Reminder" alt="Add" /></button>
+                                }
+                            </div>
+                            <div class="aside">
+                                @Html.Partial("ListPartial", Model.Reminders)
+                            </div>
+                            <div class="display article">
+                                @{if (Model.Reminder != null)
+                                  {
+                                    @Html.Partial("DetailsPartial", Model.Reminder)
+                                    <div>
+                                        @using (Html.BeginForm("Fulfill", "Reminder", new { id = Model.Reminder.ReminderId }, FormMethod.Post))
+                                        {
+                                            <button data-action="reminder-fulfill-selected" class="button generic small" type="submit">
+                                                <img src="@Url.Content("~/Content/button-fulfill.png")" title="Fulfill Reminder" alt="Fulfill" />
+                                            </button>                    
+                                        }
+                                    </div>                               
+                                }}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

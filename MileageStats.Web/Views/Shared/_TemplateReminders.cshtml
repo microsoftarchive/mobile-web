@@ -1,0 +1,52 @@
+﻿<script id="mstats-reminders-template" type="text/x-jquery-tmpl">
+    <a class="trigger" data-info-nav="reminders" href="@HttpUtility.UrlDecode(Url.Action("List", "Reminder", new { vehicleId = "${VehicleId}" }))"></a>
+    <div class="content">
+        <div class="header">
+            <form action="@HttpUtility.UrlDecode(Url.Action("Add", "Reminder", new { vehicleId = "${VehicleId}" }))" method="get">
+            <button data-action="reminder-add-selected" class="button generic small" type="submit">
+                <img src="@Url.Content("~/Content/button-add.png")" title="Add Reminder" alt="Add" /></button>
+            </form>
+        </div>
+        <div class="aside">
+            <div class="list nav">
+                {{each Reminders}}
+                <a class="list-item 
+                        {{if $value.IsOverdue}}overdue{{/if}} 
+                        {{if SelectedReminder && $value.ReminderId === SelectedReminder.ReminderId}}selected{{/if}}"
+                        href="@HttpUtility.UrlDecode(Url.Action("Details", "Reminder", new { vehicleId = "${VehicleId}", id = "${$value.ReminderId}" }))"
+                        data-vehicle-id="${$VehicleId}"
+                        data-reminder-id="${$value.ReminderId}"
+                        data-action="select-reminder">
+                    <h1>${$value.Title}</h1>
+                        {{if $value.DueDate && $value.DueDistance}}
+                            <p>Due on ${$value.DueDate} or at ${$value.DueDistance} miles.</p>
+                        {{else $value.DueDate}}
+                            <p>Due on ${$value.DueDate}.</p>
+                        {{else $value.DueDistance}}
+                            <p>Due at ${$value.DueDistance} miles.</p>
+                        {{/if}}
+                </a>
+                {{/each}}                
+            </div>
+        </div>
+        <div class="display article">
+            {{if SelectedReminder }}
+            <div class="display-label"><label for="Title">Title</label></div>
+            <div class="display-field title wrap">${SelectedReminder.Title}</div>
+            <div class="display-label"><label for="DueDate">Date Due</label></div>
+            <div class="display-field due-date">{{if SelectedReminder.DueDate }}${SelectedReminder.DueDate} {{else}} (not entered) {{/if}}</div>
+            <div class="display-label"><label for="DueDistance">Distance Due</label></div>
+            <div class="display-field due-distance">{{if SelectedReminder.DueDistance }}${SelectedReminder.DueDistance} {{else}} (not entered) {{/if}}</div>
+            <div class="display-label"><label for="Remarks">Remarks</label></div>
+            <div class="display-field remarks wrap">{{if SelectedReminder.Remarks }}${SelectedReminder.Remarks} {{else}} (not entered) {{/if}}</div>
+            <div>
+                <form action="@HttpUtility.UrlDecode(Url.Action("Fulfill", "Reminder", new { vehicleId = "${VehicleId}", id = "${SelectedReminder.ReminderId}"}))" method="post">
+                <button data-action="reminder-fulfill-selected" data-action-url="@HttpUtility.UrlDecode(Url.Action("Fulfill", "Reminder", new { vehicleId = "${VehicleId}", id = "${SelectedReminder.ReminderId}"}))" class="button generic small" type="submit">
+                    <img src="@Url.Content("~/Content/button-fulfill.png")" title="Fulfill Reminder" alt="Fulfill" />
+                </button>
+                </form>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</script>

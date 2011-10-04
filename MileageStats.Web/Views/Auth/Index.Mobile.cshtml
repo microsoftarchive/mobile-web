@@ -1,0 +1,32 @@
+﻿@{
+	Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+}
+<div class="view">
+    <h1>
+        Sign In / Register
+    </h1>
+
+    <p>You can register or sign in using your existing OpenId provider. If this is your first time, we'll create a new account for you!</p>
+
+    <ul id="external">
+        <li><a href="@Url.Action("SignInWithProvider", "Auth", new { providerUrl = "http://www.myopenid.com" })" class="openid-provider button">myOpenID</a></li>
+        <li><a href="@Url.Action("SignInWithProvider", "Auth", new { providerUrl = "http://www.yahoo.com" })" class="openid-provider button">Yahoo!</a></li>
+    </ul>
+
+    @using (Html.BeginForm("SignInWithProvider", "Auth"))
+    {    
+        <ul>
+            <li>
+                <label for="persistCookie">Remember me ?</label>
+                @Html.CheckBox("rememberMe")
+            </li>
+            <li>
+                <label for="providerUrl">or OpenId URL:</label>
+                @Html.TextBox("providerUrl", null, new { maxlength = 200 })
+            </li>
+            <ol class="buttons">
+                <li><button type="submit"><span>Sign-in or Register</span></button></li>
+            </ol>
+        </ul>
+    }
+</div>

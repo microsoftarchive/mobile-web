@@ -1,0 +1,137 @@
+﻿@using MileageStats.Web.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- http://msdn.microsoft.com/en-us/library/ms533876(VS.85).aspx -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="@Url.Content("~/Content/reset.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/stylesheet.css")" rel="stylesheet" />
+
+    <link href="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+    
+    <link href="@Url.Content("~/Scripts/jqPlot/jquery.jqplot.min.css")" rel="stylesheet" />    
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/favicon.ico")" />
+    <link rel="icon" type="image/ico" href="@Url.Content("~/favicon.ico")" />
+    <meta name="application-name" content="Mileage Stats" />
+    <meta name="msapplication-tooltip" content="Mileage Stats Reference Implementation" />
+    <meta name="msapplication-window" content="width=1100;height=800" />
+    <meta name="msapplication-navbutton-color" content="#ff4e00" />
+
+    <![if gt IE 7]>
+    <script>
+        // We want to hide certain UI element that are not applicable when javascript is enabled.
+        // The following injects a style that will hide elements tagged with the class.
+        // Of course, this class is only present when javascript is enabled.
+        // We aren't using jQuery for this, because we don't load jQuery until the bottom of the page.
+        // We add our class to styleSheets[1], which generally resolves to stylesheet.css. That is
+        // the second style linked in the html.
+        // We don't use styleSheets[0] because it does not resolve correctly in Internet Explorer 7.
+        document.styleSheets[1].addRule('.hide-when-js-enabled', 'display: none !important;');
+    </script>
+    <![endif]>
+    @RenderSection("Stylesheets", false)
+</head>
+<body>
+    <div class="header" id="header" data-url="@Url.Action("Index", "Dashboard")">
+        <div>
+            <div>
+                <h1>@Html.Partial("_ViewSwitcher") <span data-title>@ViewBag.Title</span></h1>
+                <div id="notification"><p>@TempData["Message"]</p></div>
+                <div class="nav">
+                    @if(Request.IsAuthenticated) {
+                        <span id="welcome">Welcome <span data-display-name>@Html.Raw(((MileageStatsIdentity)User.Identity).DisplayName)</span></span>
+                        @:[ @Html.ActionLink("Dashboard", "Index", "Dashboard", null, new { id = "dashboard-link" })        
+                        @:| @Html.ActionLink("Charts", "Index", "Chart", null, new { id = "charts-link"})
+                        @:| @Html.ActionLink("Profile", "Edit", "Profile", null, new { id = "profile-link" })
+                        @:| @Html.ActionLink("Sign Out", "SignOut", "Auth", null, new { id = "login-link"}) ]
+                    }
+                    else {
+                        @:[ @Html.ActionLink("Sign In", "SignIn", "Auth", null, new { id = "login-link" }) ]
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+
+    @if (User.Identity.IsAuthenticated)
+    { 
+        @Html.Partial("_TemplateFillups");
+        @Html.Partial("_TemplateVehicleList");
+        @Html.Partial("_TemplateVehicleDetails");
+        @Html.Partial("_TemplateReminders");
+        @Html.Partial("_TemplateFleetStatistics");
+        @Html.Partial("_TemplateImminentReminders");
+        
+        <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+        <script src="//cachedcommons.org/cache/jquery-bbq/1.2.1/javascripts/jquery-bbq-min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>
+        <script src="//ajax.cdnjs.com/ajax/libs/modernizr/1.7/modernizr-1.7.min.js"></script>
+        
+        @* These are the 1.0 version of jqplot, currently cachedcommons.org has 0.97 *@
+        <![if gt IE 7]>
+        <script src="@Url.Content("~/Scripts/jqPlot/excanvas.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/jqPlot/jquery.jqplot.min.js")"></script>
+@*        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasTextRenderer.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasAxisTickRenderer.min.js")"></script>  *@  
+        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.dateAxisRenderer.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.cursor.min.js")"></script>
+ 
+        <script type="text/javascript">
+            // allowing the server to set the root URL for the site, 
+            // which is used by the client code for server requests.
+            $(function (mstats) {
+                mstats.rootUrl = '@Url.Content("~")';
+            } (this.mstats = this.mstats || {}));
+        </script>
+        }        
+@if (User.Identity.IsAuthenticated && HttpContext.Current.IsDebuggingEnabled)
+{
+        <script src="@Url.Content("~/Scripts/Debug/mstats.validation.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.utils.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.events.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.pubsub.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.data.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.status.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.header.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.tile.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle-list.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle-details.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.fillups.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.reminders.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.info-pane.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.registration.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle-charts.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.charts.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.pinnedsite.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.statistics.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.imminent-reminders.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.summary.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.layout-manager.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle-dropdown-monitor.js")"></script>
+        <script src="@Url.Content("~/Scripts/Debug/mileagestats.js")"></script>
+}
+@if (User.Identity.IsAuthenticated && !HttpContext.Current.IsDebuggingEnabled)
+{
+        <script src="@Url.Content("~/Scripts/mileagestats.min.js")"></script>
+}
+
+@if (User.Identity.IsAuthenticated)
+{           
+        @RenderSection("Scripts", false);
+        <![endif]>
+}
+
+
+</body>
+</html>

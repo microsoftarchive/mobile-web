@@ -1,0 +1,13 @@
+﻿@using MileageStats.Web.Models
+@model SelectedItemList<MileageStats.Domain.Models.ReminderSummaryModel>
+<div class="list nav">
+    @foreach (var item in Model)
+    {
+        var selectedId = (Model.SelectedItem == null) ? -1 : Model.SelectedItem.ReminderId;
+        <a class="list-item @(item.ReminderId == selectedId ? "selected" : String.Empty) @(item.IsOverdue ? "overdue": null)" href="@Url.Action("Details", "Reminder", new { id = item.ReminderId })">
+            <h1>@item.Title</h1>
+            <p class="title">Due @item.DueOnFormatted
+            </p>            
+        </a>
+    }
+</div>

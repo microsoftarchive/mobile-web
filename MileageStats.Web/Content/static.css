@@ -1,0 +1,338 @@
+@charset "utf-8";
+/* CSS Document */
+
+a img
+{
+	border: 0;
+	outline: 0;
+}
+
+html
+{
+	overflow-y: scroll;
+}
+
+body
+{
+	background-color: #323232;	
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+	background-image: url(application-gradient.png);
+	background-position: top center;
+	background-repeat: no-repeat;
+}
+
+#error
+{
+	background-image: url(error-gradient.png);
+}
+
+#center
+{
+	width: 878px;
+	margin: 0 auto;
+}
+
+#header
+{
+	height: 120px;
+	background-image: url(application-title.png);
+	background-position: center right;
+	background-repeat: no-repeat;
+	margin: 0 40px 0 330px;
+}
+
+#error #header
+{
+	margin: 0 185px;
+}
+
+#header img
+{
+	margin: 15px;	
+}
+
+#content .header
+{
+	background-image: url(application-top.png);
+	position: relative;
+	height: 50px;
+}
+
+#content .header .tile
+{
+	position: absolute;
+	background-image: url(tile-image.png);
+	left: 60px;
+	top: -100px;
+	width: 260px;
+	height: 320px;
+}
+
+#content .tagline
+{
+	background-image: url(application-tagline.jpg);
+	height: 379px;
+}
+
+#error #content .tagline
+{
+	background-image: url(error-tagline.jpg);
+}
+
+#login
+{
+	background-image: url(application-login.png);
+	height: 333px;
+	width: 275px;
+	float: right;
+	margin: 20px 25px;
+	color: #fff;
+}
+
+#login h1
+{
+	text-align: center;
+	margin: 10px;
+	padding: 0;
+    font-family: "Segoe UI Light", "Segoe UI", Helvetica, Arial, sans-serif;
+	font-size: 22px;
+}
+
+#login p
+{
+	margin: 15px;
+	text-align: justify;
+}
+
+#login .actions
+{		
+	margin: 13px;
+}
+
+#login .actions .external
+{
+	margin: 0 0 10px;
+	text-align: center;
+}
+
+#login .actions a
+{
+    background-image: url(button-small.png);
+    width: 97px;
+    height: 33px;
+    border: 0;
+    padding: 0;
+    margin: 4px;
+    display: inline-block;
+}
+
+#login .actions a:hover
+{
+    background-position: 0 -33px;
+}
+
+#login .actions a:active
+{
+    background-position: 0 -66px;
+}
+
+#login .actions a:focus
+{
+    background-position: 0 -99px;
+}
+
+#login .actions a:focus:hover
+{
+    background-position: 0 -132px;
+}
+
+#login .actions a:focus:active
+{
+    background-position: 0 -165px;
+}
+
+#login .text
+{
+	margin: 4px 0 10px;
+	padding: 2px;
+	background-color: #fff;
+}
+
+#login input
+{
+	
+	font-size: 18px;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+	display: block;
+	width: 245px;	
+	padding: 0 0;
+	border: none;
+	outline: none;
+}
+
+#login button
+{
+    border: 1px solid #AAA;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: #67949B;
+	background-image:url(application-signin-button.png);
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+	height: 33px;
+	cursor: pointer;
+}
+
+#login button:hover
+{
+    background-position: 0 -33px;
+}
+
+#login button:active
+{
+    background-position: 0 -66px;
+}
+
+#login button:focus
+{
+    background-position: 0 -99px;
+}
+
+#login button:focus:hover
+{
+    background-position: 0 -132px;
+}
+
+#login button:focus:active
+{
+    background-position: 0 -165px;
+}
+
+#content .info
+{
+	background-image: url(application-background.png);
+	height: 334px;
+	position: relative;
+	text-shadow: 0 1px 0 #fff;
+	font-size: 22px;
+}
+
+#error #content .info
+{
+	background-image: url(error-background.png);
+	height: 208px;
+}
+
+#content .info .left
+{
+	float: left;
+	width: 285px;
+	margin: 12px;
+	text-align: right;
+}
+
+#content .info .left-video
+{
+	float: left;
+}
+
+#content .info .left-video video, #content .info .left-video div
+{
+    width: 470px;
+	height: 264px;
+	margin: 12px;
+	padding: 22px;
+	background-color: #333;
+	color: #eee;
+}
+
+#content .info .right
+{
+	float: right;
+	width: 285px;
+	margin: 12px;
+}
+
+#error #content .info .left, #error #content .info .right
+{
+	margin: 25px;	
+}
+
+#error #content .info img
+{
+	margin-top: 15px;	
+}
+
+#content .info .center
+{
+	text-align: center;
+	width: 200px;
+	margin: 0 auto;
+}
+
+#content .info h1
+{
+    font-family: "Segoe UI Light", "Segoe UI", Helvetica, Arial, sans-serif;
+	padding: 0;
+	margin: 0;
+	font-size: 48px;
+	font-weight: normal;
+}
+
+#content .info p
+{
+	padding: 0;
+	margin: 0;
+}
+
+#content .image 
+{
+	background-image: url(application-phone.png);	
+	position: relative;
+	width: 249px;
+	height: 448px;
+	margin: 0 auto;
+	top: -40px;
+}
+
+#footer
+{
+    font-family: "Segoe UI Semibold", "Segoe UI", Helvetica, Arial, sans-serif;
+	margin: 20px 0 50px;	
+	text-align: center;
+	color: #fff;
+}
+
+#error #footer
+{
+	margin-top: 100px;	
+}
+
+#html5
+{	
+	width: 258px;
+	height: 82px;
+	margin: 0 0 20px 590px;
+}
+
+#pinnedSiteImage.active
+{
+    cursor: pointer;
+    box-shadow: 0px 0px 15px #6Dffff, inset 0px 0px 10px #6Dffff;
+    border-radius: 12px;
+}
+
+#pinnedSiteCallout
+{
+    font-family: "Segoe UI Semibold", "Segoe UI", Helvetica, Arial, sans-serif;
+    position: relative;
+    z-index: 100;
+    top: 13px;
+    left: 15px;
+    font-size:20px;
+    display: none;
+}

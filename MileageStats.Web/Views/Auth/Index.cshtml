@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Mileage Stats";
+    ViewBag.BodyIdentifier = "homepage";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Mileage Stats | Know where your gas takes you</title>
+    <link href="@Url.Content("~/Content/static.css")" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/favicon.ico")" />
+    <link rel="icon" type="image/ico" href="@Url.Content("~/favicon.ico")" />
+    <meta name="application-name" content="Mileage Stats" />
+    <meta name="msapplication-tooltip" content="Mileage Stats Reference Implementation" />
+    <meta name="msapplication-window" content="width=1100;height=800" />
+    <meta name="msapplication-navbutton-color" content="#6DE3E3" />
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Debug/mstats.pinnedsite.js")"></script>
+</head>
+<body>
+    <div id="center">
+        <div id="header">
+            <div id="pinnedSiteContainer">
+                <img id="pinnedSiteImage" class="msPinSite" src="@Url.Content("~/Content/application-icon.png")" alt="Mileage Stats Icon" />
+                <div id="pinnedSiteCallout">
+                    Drag the above icon to your taskbar to pin this site!</div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="header">
+                <div class="tile">
+                </div>
+            </div>
+            <div class="tagline">
+                <div id="login">
+                    <h1>
+                        <img src="@Url.Content("~/Content/application-openid.png")" alt="OpenID Icon" />
+                        Sign In / Register
+                    </h1>
+                    <p>
+                        You can register or sign in using your existing OpenId provider. If this is your
+                        first time, we'll create a new account for you!
+                    </p>
+                    <div class="actions">
+                        <div class="external">
+                            <a href="@Url.Action("SignInWithProvider", "Auth", new { providerUrl = "http://www.myopenid.com" })" class="openid-provider button">
+                                <img src="@Url.Content("~/Content/button-openid.png")" alt="My OpenID" /></a>&ensp;
+                            <a href="@Url.Action("SignInWithProvider", "Auth", new { providerUrl = "http://www.yahoo.com" })" class="openid-provider button">
+                                <img src="@Url.Content("~/Content/button-yahoo.png")" alt="Yahoo" /></a>
+                        </div>
+                        @using (Html.BeginForm("SignInWithProvider", "Auth"))
+                        {    
+                            <label>
+                                or OpenId URL:</label><br />
+                            <div class="text">
+                                @Html.TextBox("providerUrl", null, new { maxlength = 200 })
+                            </div>
+                            <button type="submit">
+                                <img src="@Url.Content("~/Content/application-signin-text.png")" title="Sign In or Register" alt="Sign In or Register" />
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="info">
+                <div class="left-video">
+                    <video poster="@Url.Content("~/Content/video-poster.png")" controls preload="none">
+                      <source src="http://media.ch9.ms/ch9/c23e/6c4ecf24-e9fd-46f4-ae07-9f12015ac23e/ProjectSilkMileageStats_low_ch9.mp4" />
+                      <div class="no-video">
+                            <h1>Video</h1>
+                            <p>:-(</p>
+                            <p>Your browser doesn't support the &lt;video&gt; tag.</p>
+                            <p>But don't worry! You can still <a href="http://channel9.msdn.com/posts/Project-Silk-Mileage-Stats-Application">watch the video on Channel 9.</a></p>
+                        </div>
+                    </video>
+                </div>
+                <div class="right">
+                    <h1>About</h1>
+                    <p>Mileage Stats is a reference implementation that is part of <a href="http://silk.codeplex.com/">
+                            Project Silk</a> from <a href="http://www.microsoft.com/practices">patterns &amp; practices</a>
+                        that illustrates the use of a number of web technologies working together. <BR />Hi-res video <a href="http://channel9.msdn.com/posts/Project-Silk-Mileage-Stats-Application">here.</a></p>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div id="html5">
+                <a href="http://www.w3.org/html/logo/" target="_blank">
+                    <img src="@Url.Content("~/Content/application-html5.png")" alt="HTML5 logo and icons" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            mstats.pinnedSite.initializePinnedSiteImage();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿<script id="summary-imminent-reminders-template" type="text/x-jquery-tmpl">
+    <h1>Reminders</h1>
+    <div class="list nav">
+        {{each ReminderList}}
+             <a class="list-item {{if $value.IsOverdue}}overdue{{/if}}"
+             href="${$item.createRemindersLink($value.VehicleId)}"
+             data-vehicle-id="${$value.VehicleId}">
+                <h1>${$value.Reminder.Title}</h1>
+                <p>${$value.Reminder.DueOnFormatted}</p>
+                <p>${$value.VehicleMakeName} ${$value.VehicleModelName}</p>
+            </a>
+        {{/each}}
+    </div>
+</script>

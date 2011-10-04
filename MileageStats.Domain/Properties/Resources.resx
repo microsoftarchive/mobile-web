@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="UnableToDeleteVehicleExceptionMessage" xml:space="preserve">
+    <value>Unable to delete vehicle</value>
+  </data>
+  <data name="UnableToUpdateVehicleExceptionMessage" xml:space="preserve">
+    <value>Unable to update vehicle</value>
+  </data>
+  <data name="CannotFindVehicleToUpdateExceptionMessage" xml:space="preserve">
+    <value>Cannot find vehicle to update.</value>
+  </data>
+  <data name="UnableToGetVehiclesExceptionMessage" xml:space="preserve">
+    <value>Unable to get vehicles.</value>
+  </data>
+  <data name="UnableToCreateVehicleExceptionMessage" xml:space="preserve">
+    <value>Unable to create vehicle.</value>
+  </data>
+  <data name="UnableToCreateUserExceptionMessage" xml:space="preserve">
+    <value>Unable to create user</value>
+  </data>
+  <data name="UnableToFindUserExceptionMessage" xml:space="preserve">
+    <value>Unable to find user</value>
+  </data>
+  <data name="UnableToUpdateUserExceptionMessage" xml:space="preserve">
+    <value>Unable to update user.</value>
+  </data>
+  <data name="UnableToRetireveFillupsExceptionMessage" xml:space="preserve">
+    <value>Unable to retrieve fill up information</value>
+  </data>
+  <data name="UnableToAddFillupToVehicleExceptionMessage" xml:space="preserve">
+    <value>Unable to add fill up to vehicle.</value>
+  </data>
+  <data name="UnableToRetrieveServiceHistory" xml:space="preserve">
+    <value>Unable to retrieve service history.</value>
+  </data>
+  <data name="UnableToAddReminderToVehicleExceptionMessage" xml:space="preserve">
+    <value>Unable to add reminder to vehicle.</value>
+  </data>
+  <data name="UnableToRetrieveReminderExceptionMessage" xml:space="preserve">
+    <value>Unable to retieve reminder.</value>
+  </data>
+  <data name="UnableToFulfillReminder" xml:space="preserve">
+    <value>Unable to fulfill reminder.</value>
+  </data>
+  <data name="UnableToDeleteReminder" xml:space="preserve">
+    <value>Unable to delete reminder.</value>
+  </data>
+  <data name="UnableToRetrieveUnfulfilledReminders" xml:space="preserve">
+    <value>Unable to retrieve unfulfilled reminders</value>
+  </data>
+  <data name="UnableToRetrieveOverdueReminders" xml:space="preserve">
+    <value>Unable to retrieve overdue reminders.</value>
+  </data>
+  <data name="UnableToRetrieveUpcomingReminders" xml:space="preserve">
+    <value>Unable to retrieve upcoming reminders</value>
+  </data>
+  <data name="UnableToRetrieveFulfilledReminders" xml:space="preserve">
+    <value>Unable to retrieve fulfilled reminders</value>
+  </data>
+  <data name="UnableToRetrieveVehiclePhoto" xml:space="preserve">
+    <value>Unable to retrieve vehicle photo.</value>
+  </data>
+  <data name="NewUserDefaultDisplayName" xml:space="preserve">
+    <value>New User</value>
+  </data>
+  <data name="TooManyVehicles" xml:space="preserve">
+    <value>The maximum number of vehicles is 10.</value>
+  </data>
+  <data name="VehicleNotFound" xml:space="preserve">
+    <value>The vehicle was not found.</value>
+  </data>
+  <data name="UnableToUpdateVehicleSortOrderExceptionMessage" xml:space="preserve">
+    <value>Unable to update vehicle sort order.</value>
+  </data>
+  <data name="InvalidVehiclePhoto" xml:space="preserve">
+    <value>File uploaded for vehicle photo is not an image or is not a supported image format.</value>
+  </data>
+  <data name="OdometerNotGreaterThanPrior" xml:space="preserve">
+    <value>The odometer must be greater than the prior value of {0}.</value>
+  </data>
+  <data name="VehicleMakeInvalid" xml:space="preserve">
+    <value>Make is not valid.</value>
+  </data>
+  <data name="VehicleMissingMakeForModel" xml:space="preserve">
+    <value>Missing make for specified model.</value>
+  </data>
+  <data name="VehicleMissingYearForMake" xml:space="preserve">
+    <value>Missing year for specified make.</value>
+  </data>
+  <data name="VehicleMissingYearForModel" xml:space="preserve">
+    <value>Missing year for specified model.</value>
+  </data>
+  <data name="VehicleModelInvalid" xml:space="preserve">
+    <value>Model is not valid.</value>
+  </data>
+  <data name="VehiclePhotoTooLarge" xml:space="preserve">
+    <value>The photo uploaded must be less than 1 MB.</value>
+  </data>
+  <data name="VehicleYearInvalid" xml:space="preserve">
+    <value>Year is not valid.</value>
+  </data>
+  <data name="UnableToGetCountryListExceptionMessage" xml:space="preserve">
+    <value>Unable to retrieve countries and regions list.</value>
+  </data>
+  <data name="DueDistanceNotGreaterThanOdometer" xml:space="preserve">
+    <value>The due distance must be greater than the current odometer of {0}.</value>
+  </data>
+  <data name="AuthController_SignInResponse_Unable_to_authenticate" xml:space="preserve">
+    <value>Unable to authenticate at this time.</value>
+  </data>
+  <data name="AuthController_SignIn_UnableToAuthenticateWithProvider" xml:space="preserve">
+    <value>We are unable to authenticate you with provider at this time.  Please check your provider URL and try again.</value>
+  </data>
+  <data name="VehicleController_ValidateCanAdd_OdometerGreaterThanPrior" xml:space="preserve">
+    <value>The odometer must be greater than the prior value of {0}.</value>
+  </data>
+  <data name="VehicleController_ValidateCreate_TooManyVehicles" xml:space="preserve">
+    <value>Could not add vehicle.  The maximum number of vehciles is 10.</value>
+  </data>
+  <data name="VehicleController_ValidatePhoto_NotAPhoto" xml:space="preserve">
+    <value>File uploaded for vehicle photo is not an image or is not a supported image format.</value>
+  </data>
+  <data name="VehicleController_ValidatePhoto_TooLarge" xml:space="preserve">
+    <value>The photo uploaded must be less than 1MB (1048576 bytes)</value>
+  </data>
+  <data name="AuthController_CreateOrGetUser_New_User" xml:space="preserve">
+    <value>New User</value>
+  </data>
+  <data name="VehicleController_AddFillupSuccessMessage" xml:space="preserve">
+    <value>Successfully added fill up</value>
+  </data>
+  <data name="ChartController_AverageFuelEfficiencyChart_Title" xml:space="preserve">
+    <value>Average Fuel Efficiency</value>
+  </data>
+  <data name="ChartController_TotalCost_Title" xml:space="preserve">
+    <value>Total Cost</value>
+  </data>
+  <data name="ChartController_TotalDistance_Title" xml:space="preserve">
+    <value>Total Distance</value>
+  </data>
+  <data name="AtLeastOneNonNullPropertyValidationAttribute_IsValid_OnePropertyMustHaveValue" xml:space="preserve">
+    <value>One of the properties must have a value.</value>
+  </data>
+  <data name="InternationalPostalCodeRegex" xml:space="preserve">
+    <value>^[\d\w]{0,10}$</value>
+  </data>
+  <data name="InternationalPostalCodeValidationErrorMessage" xml:space="preserve">
+    <value>Postal codes must be alphanumeric and ten characters or less.</value>
+  </data>
+  <data name="InvalidInputCharacter" xml:space="preserve">
+    <value>Only alpha-numeric characters and [.,_-'] are allowed.</value>
+  </data>
+  <data name="InvalidMultilineInput" xml:space="preserve">
+    <value>Only alpha-numeric characters, new lines, and [.,_-'] are allowed.</value>
+  </data>
+  <data name="UnitedStatesDisplayString" xml:space="preserve">
+    <value>United States</value>
+  </data>
+  <data name="UserAuthorizationIdLabelText" xml:space="preserve">
+    <value>OpenID Url</value>
+  </data>
+  <data name="UserCountryLabelText" xml:space="preserve">
+    <value>Country or Region</value>
+  </data>
+  <data name="UserDisplayNameLabelText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="VehicleMakeLabelText" xml:space="preserve">
+    <value>Make</value>
+  </data>
+  <data name="VehicleModelLabelText" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="VehicleNameLabelText" xml:space="preserve">
+    <value>Vehicle Name</value>
+  </data>
+  <data name="VehicleYearLabelText" xml:space="preserve">
+    <value>Model Year</value>
+  </data>
+  <data name="FillupEntryCostPerUnitLabelText" xml:space="preserve">
+    <value>Cost Per Unit</value>
+  </data>
+  <data name="FillupEntryFuelEfficiencyLabelText" xml:space="preserve">
+    <value>Fuel Efficiency</value>
+  </data>
+  <data name="FillupEntryPricePerUnitLabelText" xml:space="preserve">
+    <value>Price Per Unit (ex. 3.75)</value>
+  </data>
+  <data name="FillupEntryTotalCostLabelText" xml:space="preserve">
+    <value>Total Cost</value>
+  </data>
+  <data name="FillupEntryTotalFuelCostLabelText" xml:space="preserve">
+    <value>Total Fuel Cost</value>
+  </data>
+  <data name="FillupEntryTotalUnitsLabelText" xml:space="preserve">
+    <value>Total Units (ex. 10.123)</value>
+  </data>
+  <data name="FillupEntryTransactionFeeLabelText" xml:space="preserve">
+    <value>Transaction Fee (ex. 0.45)</value>
+  </data>
+  <data name="FillupEntryUnitOfMeasureLabelText" xml:space="preserve">
+    <value>Unit Of Measure</value>
+  </data>
+  <data name="ReminderDueDateLabelText" xml:space="preserve">
+    <value>Due Date</value>
+  </data>
+  <data name="ReminderDueDistanceLabelText" xml:space="preserve">
+    <value>Due when odometer reads</value>
+  </data>
+  <data name="PastDateValidationMessage" xml:space="preserve">
+    <value>This date can not be in the future.</value>
+  </data>
+  <data name="StoreRestrictedDateValidationMessage" xml:space="preserve">
+    <value>Date must be between {0:d} and {1:d}.</value>
+  </data>
+  <data name="FillupEntryOdometerRangeValidationError" xml:space="preserve">
+    <value>The odometer must be between 1 and 1,000,000.</value>
+  </data>
+  <data name="FillupEntryPricePerUnitRangeValidationError" xml:space="preserve">
+    <value>The price per gallon must be between 0.1 and 100.</value>
+  </data>
+  <data name="FillupEntryTotalUnitsRangeValidationError" xml:space="preserve">
+    <value>The total gallons must be between 1 and 1000.</value>
+  </data>
+  <data name="FillupEntryTransactionFeeRangeValidationError" xml:space="preserve">
+    <value>The transaction fee must be between 0 and 100.</value>
+  </data>
+  <data name="ReminderDueDistanceRangeValidationError" xml:space="preserve">
+    <value>The odometer due distance must be between 1 and 1,000,000.</value>
+  </data>
+  <data name="VehicleSortOrderLabelText" xml:space="preserve">
+    <value>Sort Order</value>
+  </data>
+  <data name="VehicleSortOrderRangeValidationError" xml:space="preserve">
+    <value>The sort order must be between 0 and 10,000.</value>
+  </data>
+  <data name="VehicleYearRangeValidationError" xml:space="preserve">
+    <value>The year must be between 1900 and 2100.</value>
+  </data>
+  <data name="TextMultilineValidatorRegEx" xml:space="preserve">
+    <value>^(?!.*--)([A-Za-z0-9\.,'_ \-]|\r|\n)*$</value>
+  </data>
+  <data name="TextLineInputValidatorRegEx" xml:space="preserve">
+    <value>^(?!.*--)[A-Za-z0-9\.,'_ \-]*$</value>
+  </data>
+  <data name="FillupEntryVendorStringLengthValidationError" xml:space="preserve">
+    <value>Fill up station must be fewer than 20 characters.</value>
+  </data>
+  <data name="FutureDateValidationMessage" xml:space="preserve">
+    <value>This date must be a date in the future.</value>
+  </data>
+  <data name="FillupEntryDateRequired" xml:space="preserve">
+    <value>Date is required.</value>
+  </data>
+  <data name="FillupEntryOdometerRequired" xml:space="preserve">
+    <value>Odometer is required.</value>
+  </data>
+  <data name="FillupEntryPricePerUnitRequired" xml:space="preserve">
+    <value>Price per unit is required.</value>
+  </data>
+  <data name="FillupEntryTotalUnitsRequired" xml:space="preserve">
+    <value>Total units are required.</value>
+  </data>
+  <data name="FillUpEntryUnitOfMeasureRequired" xml:space="preserve">
+    <value>Unit of measure is required.</value>
+  </data>
+  <data name="ReminderTitleRequired" xml:space="preserve">
+    <value>Title is required.</value>
+  </data>
+  <data name="UserAuthorizationIdRequired" xml:space="preserve">
+    <value>Authorization ID is required.</value>
+  </data>
+  <data name="UserDisplayNameRequired" xml:space="preserve">
+    <value>Name is required.</value>
+  </data>
+  <data name="VehicleNameRequired" xml:space="preserve">
+    <value>Name is required.</value>
+  </data>
+  <data name="VehiclePhotoImageMimeTypeRequired" xml:space="preserve">
+    <value>Image MIME type is required.</value>
+  </data>
+  <data name="VehiclePhotoImageRequired" xml:space="preserve">
+    <value>Image is required.</value>
+  </data>
+  <data name="FillupEntryRemarksStringLengthValidationError" xml:space="preserve">
+    <value>Remarks must be fewer than 250 characters.</value>
+  </data>
+  <data name="FillupEntryTransactionFeeRequired" xml:space="preserve">
+    <value>Transaction fee is required.</value>
+  </data>
+  <data name="ReminderRemarksStringLengthValidationError" xml:space="preserve">
+    <value>Remarks must be fewer than 250 characters.</value>
+  </data>
+  <data name="ReminderTitleStringLengthValidationError" xml:space="preserve">
+    <value>Title must be fewer than 50 characters.</value>
+  </data>
+  <data name="UserCountryStringLengthValidationError" xml:space="preserve">
+    <value>Country must be less than 50 characters.</value>
+  </data>
+  <data name="UserDisplayNameStringLengthValidationError" xml:space="preserve">
+    <value>Name must be less than 15 characters.</value>
+  </data>
+  <data name="VehicleMakeStringLengthValidationError" xml:space="preserve">
+    <value>Make must be less than 50 characters.</value>
+  </data>
+  <data name="VehicleModelStringLengthValidationError" xml:space="preserve">
+    <value>Model must be less than 50 characters.</value>
+  </data>
+  <data name="VehicleNameStringLengthValidationError" xml:space="preserve">
+    <value>Name must be less than 20 characters.</value>
+  </data>
+  <data name="FillUpEntryVendorLabelText" xml:space="preserve">
+    <value>Fill up Station</value>
+  </data>
+  <data name="UpdateReminderUnauthorized" xml:space="preserve">
+    <value>You don't have permissions to update the reminder</value>
+  </data>
+</root>

@@ -1,0 +1,12 @@
+﻿@model System.Collections.Generic.List<MileageStats.Web.Models.FillupViewModel>
+<div class="list nav">
+    @foreach (var item in Model)
+    {
+		var selectedId = (ViewBag.SelectedFillup == null) ? -1 : ViewBag.SelectedFillup.FillupEntryId;
+        <a class="list-item @(item.FillupEntryId == selectedId ? "selected" : String.Empty)" href="@Url.Action("Details", "Fillup", new { id = item.FillupEntryId })">
+            <h1 class="date">@item.Date</h1>
+            <p class="vendor">@item.Vendor</p>
+            <p class="total-cost">@item.TotalCost</p>
+        </a>
+    }
+</div>

@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A90A6E16-E9F0-49DC-88B2-82882DF86DC3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MileageStats.Domain</RootNamespace>
+    <AssemblyName>MileageStats.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BingMapService.cs" />
+    <Compile Include="ChartDataService.cs" />
+    <Compile Include="Contracts\BusinessServicesException.cs" />
+    <Compile Include="Contracts\Data\ICountryRepository.cs" />
+    <Compile Include="Contracts\Data\IFillupRepository.cs" />
+    <Compile Include="Contracts\Data\IReminderRepository.cs" />
+    <Compile Include="Contracts\Data\IUserRepository.cs" />
+    <Compile Include="Contracts\Data\IVehicleManufacturerRepository.cs" />
+    <Compile Include="Contracts\Data\IVehiclePhotoRepository.cs" />
+    <Compile Include="Contracts\Data\IVehicleRepository.cs" />
+    <Compile Include="Contracts\IHasIdentity.cs" />
+    <Compile Include="Contracts\UnauthorizedException.cs" />
+    <Compile Include="Contracts\ValidationResult.cs" />
+    <Compile Include="Contracts\IChartDataService.cs" />
+    <Compile Include="Handlers\AddFillupToVehicle.cs" />
+    <Compile Include="Handlers\AddReminderToVehicle.cs" />
+    <Compile Include="Handlers\CalculateStatistics.cs" />
+    <Compile Include="Handlers\CanAddFillup.cs" />
+    <Compile Include="Handlers\CanAddPhoto.cs" />
+    <Compile Include="Handlers\CanAddReminder.cs" />
+    <Compile Include="Handlers\CanAddVehicle.cs" />
+    <Compile Include="Handlers\CanValidateVehicleYearMakeAndModel.cs" />
+    <Compile Include="Handlers\CreateUser.cs" />
+    <Compile Include="Handlers\CreateVehicle.cs" />
+    <Compile Include="Handlers\DeleteVehicle.cs" />
+    <Compile Include="Handlers\FulfillReminder.cs" />
+    <Compile Include="Handlers\GetCountries.cs" />
+    <Compile Include="Handlers\GetFillupById.cs" />
+    <Compile Include="Handlers\GetFillupsForVehicle.cs" />
+    <Compile Include="Handlers\GetFleetSummaryStatistics.cs" />
+    <Compile Include="Handlers\GetImminentRemindersForUser.cs" />
+    <Compile Include="Handlers\GetOverdueRemindersForUser.cs" />
+    <Compile Include="Handlers\GetOverdueRemindersForVehicle.cs" />
+    <Compile Include="Handlers\GetReminder.cs" />
+    <Compile Include="Handlers\GetUnfulfilledRemindersForVehicle.cs" />
+    <Compile Include="Handlers\GetUserByClaimId.cs" />
+    <Compile Include="Handlers\GetVehicleById.cs" />
+    <Compile Include="Handlers\GetVehicleListForUser.cs" />
+    <Compile Include="Handlers\GetVehiclePhoto.cs" />
+    <Compile Include="Handlers\GetYearsMakesAndModels.cs" />
+    <Compile Include="Contracts\ICreateFillupEntryCommand.cs" />
+    <Compile Include="Contracts\ICreateReminderCommand.cs" />
+    <Compile Include="Handlers\UpdateUser.cs" />
+    <Compile Include="Handlers\UpdateVehicleSortOrder.cs" />
+    <Compile Include="Handlers\ViewModelExtensions.cs" />
+    <Compile Include="Contracts\IMapService.cs" />
+    <Compile Include="MockMapService.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\FillupEntry.cs" />
+    <Compile Include="Models\FleetStatistics.cs" />
+    <Compile Include="Contracts\ICreateVehicleCommand.cs" />
+    <Compile Include="Models\ImminentReminderModel.cs" />
+    <Compile Include="Models\Reminder.cs" />
+    <Compile Include="Models\ReminderModel.cs" />
+    <Compile Include="Models\ReminderSummaryModel.cs" />
+    <Compile Include="Models\StatisticSeries.cs" />
+    <Compile Include="Models\StatisticSeriesEntry.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VehicleManufacturerInfo.cs" />
+    <Compile Include="Models\VehiclePhoto.cs" />
+    <Compile Include="Models\VehicleStatisticsModel.cs" />
+    <Compile Include="Models\VehicleModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Handlers\UpdateVehicle.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Service References\GeocodeService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SearchService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Validators\AtLeastOneNonNullPropertyValidationAttribute.cs" />
+    <Compile Include="Validators\FutureDateAttribute.cs" />
+    <Compile Include="Validators\PastDateAttribute.cs" />
+    <Compile Include="Validators\StoreRestrictedDateAttribute.cs" />
+    <Compile Include="Validators\TextLineValidatorAttribute.cs" />
+    <Compile Include="Validators\TextMultilineValidatorAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GeocodeService\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\contracts.wsdl" />
+    <None Include="Service References\GeocodeService\contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\geocode.wsdl" />
+    <None Include="Service References\GeocodeService\geocode.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\MileageStats.Domain.GeocodeService.GeocodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GeocodeService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SearchService\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SearchService\common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SearchService\contracts.wsdl" />
+    <None Include="Service References\SearchService\contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SearchService\MileageStats.Domain.SearchService.SearchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SearchService\search.wsdl" />
+    <None Include="Service References\SearchService\search.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SearchService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\GeocodeService\" />
+    <WCFMetadataStorage Include="Service References\SearchService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GeocodeService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GeocodeService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GeocodeService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SearchService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SearchService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SearchService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

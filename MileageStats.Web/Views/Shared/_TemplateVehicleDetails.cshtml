@@ -1,0 +1,75 @@
+﻿<script id="mstats-vehicle-details-template" type="text/x-jquery-tmpl">
+
+    <a class="trigger" href="@Url.Action("Details", "Vehicle")/${VehicleId}" data-info-nav="details"></a>
+    <div class="content">
+        <div class="header">
+            <form action="@Url.Action("Edit", "Vehicle")/${VehicleId}" method="get">
+            <button data-action="vehicle-edit-selected" class="button generic small" type="submit">
+                <img src="@Url.Content("~/Content/button-edit.png")" title="Edit Vehicle" alt="Edit" />
+            </button>
+            </form>
+            <form action="@Url.Action("Delete", "Vehicle")/${VehicleId}" method="post">
+            <button data-action="vehicle-delete-selected" data-action-url="@Url.Action("Delete", "Vehicle")/${VehicleId}" class="button generic small" type="submit">
+                <img src="@Url.Content("~/Content/button-delete.png")" title="Delete Vehicle" alt="Delete" />
+            </button>
+            </form>
+        </div>
+        <div class="statistics aside">
+            <div>
+                <h1>Last 12 Months</h1>
+                <div id="vehicle-charts" data-chart-url="@Url.RouteUrl("JsonGetVehicleStatisticSeriesRoute")/${VehicleId}">
+                    <div class="display-label">
+                        Average Fuel Efficiency
+                    </div>
+                    <div id="vehicle-fuel-efficiency-chart" class="fuelEfficiencyChart">
+                        
+                    </div>
+                    <div class="display-label">
+                        Total Distance Travelled
+                    </div>
+                    <div id="vehicle-distance-chart" class="distanceChart">
+                    </div>
+                    <div class="display-label">
+                        Total Cost
+                    </div>
+                    <div id="vehicle-cost-chart" class="costChart">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="display article">
+            <div class="display-label">
+                <label for="Vehicle_Name">Vehicle Name</label>
+            </div>
+            <div class="display-field name wrap">${Name}</div>
+            <div class="display-label">
+                <label for="Vehicle_Year">Model Year</label>
+            </div>
+            <div class="display-field year">${Year}</div>
+            <div class="display-label">
+                <label for="Vehicle_MakeName">Make</label>
+            </div>
+            <div class="display-field makeName">${MakeName}</div>
+            <div class="display-label">
+                <label for="Vehicle_ModelName">Model</label>
+            </div>
+            <div class="display-field modelName">${ModelName}</div>
+            <div class="display-label">
+                <label for="Vehicle_Odometer">Odometer</label>
+            </div>
+            <div class="display-field odometer">${ $data.Odometer || 0} miles</div>
+        </div>
+        <div class="article reminder-list">
+            <div class="list nav">
+                {{each OverdueReminders}}
+                     <a class="list-item {{if $value.IsOverdue}}overdue{{/if}}"
+                     href="${$item.createRemindersLink($value.VehicleId)}"
+                     data-vehicle-id="${$value.VehicleId}">
+                        <h1>${$value.Title}</h1>
+                        <p>${$value.DueOnFormatted}</p>
+                    </a>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</script>

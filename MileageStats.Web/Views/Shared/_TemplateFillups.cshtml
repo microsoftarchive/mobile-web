@@ -1,0 +1,59 @@
+﻿<script id="mstats-fillups-template" type="text/x-jquery-tmpl">
+    <a class="trigger" href="@HttpUtility.UrlDecode(Url.Action("List", "Fillup", new { vehicleId = "${VehicleId}"}))" data-info-nav="fillups"></a>
+    <div class="content">
+        <div class="header">
+            <form action="@HttpUtility.UrlDecode(Url.Action("Add", "Fillup", new { vehicleId = "${VehicleId}"}))" method="get">
+    			<button class="button generic small" type="submit" data-action="fillup-add-selected">
+    				<img title="Add Fill up" alt="Add" src="@Url.Content("~/Content/button-add.png")" />
+    			</button>
+    		</form>
+        </div>
+        <div class="aside">
+            <div class="list nav">
+                {{each Fillups}}
+                    <a class="list-item {{if SelectedFillup && $value.FillupEntryId === SelectedFillup.FillupEntryId}}selected{{/if}}"
+                        href="@HttpUtility.UrlDecode(@Url.Action("Details", "Fillup", new { vehicleId = "${VehicleId}", id = "${$value.FillupEntryId}" }))"
+                        data-vehicle-id="${$VehicleId}"
+                        data-fillup-id="${$value.FillupEntryId}"
+                        data-action="select-fillup">
+                        <h1 class="date">${$value.Date}</h1>
+                        <p class="vendor">${$value.Vendor}</p>
+                        <p class="total-cost">${$value.TotalCost}</p>
+                    </a>
+                {{/each}}
+            </div>
+        </div>
+        <div class="display article">
+        {{if SelectedFillup }}
+        <div class="display-label"><label for="Date">Date</label></div>
+        <div class="display-field date">${SelectedFillup.Date}</div>
+
+        <div class="display-label"><label for="TotalCost">Total Cost</label></div>
+        <div class="display-field total-cost">${SelectedFillup.TotalCost}</div>
+
+        <div class="display-label"><label for="TotalUnits">Total Gallons</label></div>
+        <div class="display-field total-units">${SelectedFillup.TotalUnits}</div>
+
+        <div class="display-label"><label for="PricePerUnit">Price Per Gallon</label></div>
+        <div class="display-field price-per-unit">${SelectedFillup.PricePerUnit}</div>
+
+        <div class="display-label"><label for="Vendor">Fill up Station</label></div>
+        <div class="display-field vendor wrap">${SelectedFillup.Vendor}</div>
+
+        <div class="display-label"><label for="Odometer">Odometer</label></div>
+        <div class="display-field odometer">${SelectedFillup.Odometer}</div>
+
+        {{if SelectedFillup.TransactionFee == '$0.00'}}
+        <div class="display-label"><label for="TransactionFee">Transaction Fee</label></div>
+        <div class="display-field transaction-fee">${SelectedFillup.TransactionFee}</div>
+        {{/if}}
+
+        {{if SelectedFillup.Remarks}}
+        <div class="display-label"><label for="Remarks">Remarks</label> </div>
+        <div class="display-field remarks wrap">${SelectedFillup.Remarks}</div>
+        {{/if}}
+
+        {{/if}}
+    </div>
+    </div>
+</script>

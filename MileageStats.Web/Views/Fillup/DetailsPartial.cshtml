@@ -1,0 +1,56 @@
+﻿@model MileageStats.Web.Models.FillupViewModel
+<div class="display-label">
+    @Html.LabelFor(model => model.Date)
+</div>
+<div class="display-field date">
+    @Model.Date
+</div>
+
+<div class="display-label">
+    @Html.LabelFor(model => model.TotalCost)
+</div>
+<div class="display-field total-cost">
+    @Model.TotalCost
+</div>
+
+<div class="display-label">
+    @Html.LabelFor(model => model.TotalUnits)
+</div>
+<div class="display-field total-units">
+    @Model.TotalUnits
+</div>
+
+<div class="display-label">
+    @Html.LabelFor(model => model.PricePerUnit)
+</div>
+<div class="display-field price-per-unit">
+    @Model.PricePerUnit
+</div>
+
+<div class="display-label">
+    @Html.LabelFor(model => model.Vendor)
+</div>
+<div class="display-field vendor wrap">
+    @Model.Vendor
+</div>
+
+<div class="display-label">
+    @Html.LabelFor(model => model.Odometer)
+</div>
+<div class="display-field odometer">
+    @Model.Odometer
+</div>
+
+<div class="display-label">
+    @Html.LabelFor(model => model.TransactionFee)
+</div>
+<div class="display-field transaction-fee">
+    @Model.TransactionFee
+</div>
+
+<div class="display-label">
+    @Html.LabelFor(model => model.Remarks)
+</div>
+<div class="display-field remarks wrap">
+    @Model.Remarks
+</div>

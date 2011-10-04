@@ -1,0 +1,9 @@
+﻿<script id="fleet-statistics-template" type="text/x-jquery-tmpl">
+    <h1>Summary Statistics</h1>
+    <div class="statistic mile-per-gallon">${mstats.makeMPGDisplay(AverageFuelEfficiency)}<span
+        class="units">mpg</span></div>
+    <div class="statistic cost-per-mile">${mstats.makeCostToDriveDisplay(AverageCostToDrive)}&cent;<span
+        class="units">per mile</span></div>
+    <div class="statistic cost-per-month">$${mstats.makeCostPerMonthDisplay(AverageCostPerMonth)}<span
+        class="units">per month</span></div>
+</script>

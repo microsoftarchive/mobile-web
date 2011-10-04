@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://dev.virtualearth.net/webservices/v1/search" elementFormDefault="qualified" targetNamespace="http://dev.virtualearth.net/webservices/v1/search" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://dev.virtualearth.net/webservices/v1/metadata/searchservice/dev.virtualearth.net.webservices.v1.common.xsd" namespace="http://dev.virtualearth.net/webservices/v1/common" />
+  <xs:import schemaLocation="http://dev.virtualearth.net/webservices/v1/metadata/searchservice/schemas.microsoft.com.2003.10.Serialization.Arrays.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="SearchRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://dev.virtualearth.net/webservices/v1/common" base="q1:RequestBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Query" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SearchOptions" nillable="true" type="tns:SearchOptions" />
+          <xs:element minOccurs="0" name="StructuredQuery" nillable="true" type="tns:StructuredSearchQuery" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchRequest" nillable="true" type="tns:SearchRequest" />
+  <xs:complexType name="SearchOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AutocorrectQuery" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Count" nillable="true" type="xs:int" />
+      <xs:element xmlns:q3="http://dev.virtualearth.net/webservices/v1/common" minOccurs="0" name="Filters" nillable="true" type="q3:FilterExpressionBase" />
+      <xs:element minOccurs="0" name="ListingType" type="tns:ListingType" />
+      <xs:element minOccurs="0" name="ParseOnly" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Radius" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="SortOrder" type="tns:SortOrder" />
+      <xs:element minOccurs="0" name="StartingIndex" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchOptions" nillable="true" type="tns:SearchOptions" />
+  <xs:simpleType name="ListingType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Business" />
+      <xs:enumeration value="CommunityContent" />
+      <xs:enumeration value="Person" />
+      <xs:enumeration value="Unknown" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ListingType" nillable="true" type="tns:ListingType" />
+  <xs:simpleType name="SortOrder">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Relevance" />
+      <xs:enumeration value="Distance" />
+      <xs:enumeration value="Rating" />
+      <xs:enumeration value="Popularity" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SortOrder" nillable="true" type="tns:SortOrder" />
+  <xs:complexType name="StructuredSearchQuery">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StructuredSearchQuery" nillable="true" type="tns:StructuredSearchQuery" />
+  <xs:complexType name="SearchResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://dev.virtualearth.net/webservices/v1/common" base="q4:ResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="QuerySuggestion" nillable="true" type="tns:QuerySuggestion" />
+          <xs:element minOccurs="0" name="ResultSets" nillable="true" type="tns:ArrayOfSearchResultSet" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchResponse" nillable="true" type="tns:SearchResponse" />
+  <xs:complexType name="QuerySuggestion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Query" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StructuredQuery" nillable="true" type="tns:StructuredSearchQuery" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QuerySuggestion" nillable="true" type="tns:QuerySuggestion" />
+  <xs:complexType name="ArrayOfSearchResultSet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SearchResultSet" nillable="true" type="tns:SearchResultSet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSearchResultSet" nillable="true" type="tns:ArrayOfSearchResultSet" />
+  <xs:complexType name="SearchResultSet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AlternateSearchRegions" nillable="true" type="tns:ArrayOfSearchRegion" />
+      <xs:element minOccurs="0" name="AvailableFilters" nillable="true" type="tns:ArrayOfAvailableFilter" />
+      <xs:element minOccurs="0" name="CategoryCounts" nillable="true" type="tns:ArrayOfCategoryCount" />
+      <xs:element minOccurs="0" name="EstimatedMatches" type="xs:int" />
+      <xs:element minOccurs="0" name="ListingType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Parse" nillable="true" type="tns:Parse" />
+      <xs:element minOccurs="0" name="QueryCategory" nillable="true" type="tns:Category" />
+      <xs:element minOccurs="0" name="QueryCorrected" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Results" nillable="true" type="tns:ArrayOfSearchResultBase" />
+      <xs:element minOccurs="0" name="SearchRegion" nillable="true" type="tns:SearchRegion" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchResultSet" nillable="true" type="tns:SearchResultSet" />
+  <xs:complexType name="ArrayOfSearchRegion">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SearchRegion" nillable="true" type="tns:SearchRegion" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSearchRegion" nillable="true" type="tns:ArrayOfSearchRegion" />
+  <xs:complexType name="SearchRegion">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://dev.virtualearth.net/webservices/v1/common" minOccurs="0" name="BoundingArea" nillable="true" type="q5:ShapeBase" />
+      <xs:element xmlns:q6="http://dev.virtualearth.net/webservices/v1/common" minOccurs="0" name="GeocodeLocation" nillable="true" type="q6:GeocodeResult" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchRegion" nillable="true" type="tns:SearchRegion" />
+  <xs:complexType name="ArrayOfAvailableFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AvailableFilter" nillable="true" type="tns:AvailableFilter" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAvailableFilter" nillable="true" type="tns:ArrayOfAvailableFilter" />
+  <xs:complexType name="AvailableFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PropertyId" type="xs:int" />
+      <xs:element minOccurs="0" name="PropertyName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AvailableFilter" nillable="true" type="tns:AvailableFilter" />
+  <xs:complexType name="ValueListFilter">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AvailableFilter">
+        <xs:sequence>
+          <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Values" nillable="true" type="q7:ArrayOfanyType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ValueListFilter" nillable="true" type="tns:ValueListFilter" />
+  <xs:complexType name="Neighborhood">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Neighborhood" nillable="true" type="tns:Neighborhood" />
+  <xs:complexType name="FilterValue">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FilterValue" nillable="true" type="tns:FilterValue" />
+  <xs:complexType name="Category">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Category" nillable="true" type="tns:Category" />
+  <xs:complexType name="RangeFilter">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AvailableFilter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MaximumValue" nillable="true" type="xs:anyType" />
+          <xs:element minOccurs="0" name="MinimumValue" nillable="true" type="xs:anyType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RangeFilter" nillable="true" type="tns:RangeFilter" />
+  <xs:complexType name="ArrayOfCategoryCount">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CategoryCount" nillable="true" type="tns:CategoryCount" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategoryCount" nillable="true" type="tns:ArrayOfCategoryCount" />
+  <xs:complexType name="CategoryCount">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Category" nillable="true" type="tns:Category" />
+      <xs:element minOccurs="0" name="Count" type="xs:int" />
+      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CountByNeighborhood" nillable="true" type="q8:ArrayOfKeyValueOfNeighborhoodintkC8b0tr6" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CategoryCount" nillable="true" type="tns:CategoryCount" />
+  <xs:complexType name="Parse">
+    <xs:sequence>
+      <xs:element xmlns:q9="http://dev.virtualearth.net/webservices/v1/common" minOccurs="0" name="Address" nillable="true" type="q9:Address" />
+      <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Landmark" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationSeparator" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Parse" nillable="true" type="tns:Parse" />
+  <xs:complexType name="ArrayOfSearchResultBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SearchResultBase" nillable="true" type="tns:SearchResultBase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSearchResultBase" nillable="true" type="tns:ArrayOfSearchResultBase" />
+  <xs:complexType name="SearchResultBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Distance" type="xs:double" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationData" nillable="true" type="tns:LocationData" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchResultBase" nillable="true" type="tns:SearchResultBase" />
+  <xs:complexType name="LocationData">
+    <xs:sequence>
+      <xs:element xmlns:q10="http://dev.virtualearth.net/webservices/v1/common" minOccurs="0" name="Confidence" type="q10:Confidence" />
+      <xs:element xmlns:q11="http://dev.virtualearth.net/webservices/v1/common" minOccurs="0" name="Locations" nillable="true" type="q11:ArrayOfGeocodeLocation" />
+      <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MatchCodes" nillable="true" type="q12:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocationData" nillable="true" type="tns:LocationData" />
+  <xs:complexType name="CommunityContentSearchResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SearchResultBase">
+        <xs:sequence>
+          <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AdditionalProperties" nillable="true" type="q13:ArrayOfKeyValueOfstringanyType" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CommunityContentSearchResult" nillable="true" type="tns:CommunityContentSearchResult" />
+  <xs:complexType name="BusinessSearchResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SearchResultBase">
+        <xs:sequence>
+          <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AdditionalProperties" nillable="true" type="q14:ArrayOfKeyValueOfstringanyType" />
+          <xs:element xmlns:q15="http://dev.virtualearth.net/webservices/v1/common" minOccurs="0" name="Address" nillable="true" type="q15:Address" />
+          <xs:element minOccurs="0" name="Categories" nillable="true" type="tns:ArrayOfCategory" />
+          <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CategorySpecificProperties" nillable="true" type="q16:ArrayOfKeyValueOfintCategorySpecificPropertySetn6Q9q_P9s" />
+          <xs:element minOccurs="0" name="Neighborhoods" nillable="true" type="tns:ArrayOfNeighborhood" />
+          <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RatingCount" type="xs:int" />
+          <xs:element minOccurs="0" name="ReviewCount" type="xs:int" />
+          <xs:element minOccurs="0" name="UserRating" type="xs:double" />
+          <xs:element minOccurs="0" name="Website" nillable="true" type="xs:anyURI" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BusinessSearchResult" nillable="true" type="tns:BusinessSearchResult" />
+  <xs:complexType name="ArrayOfCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Category" nillable="true" type="tns:Category" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategory" nillable="true" type="tns:ArrayOfCategory" />
+  <xs:complexType name="CategorySpecificPropertySet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Properties" nillable="true" type="q17:ArrayOfKeyValueOfstringanyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CategorySpecificPropertySet" nillable="true" type="tns:CategorySpecificPropertySet" />
+  <xs:complexType name="ArrayOfNeighborhood">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Neighborhood" nillable="true" type="tns:Neighborhood" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNeighborhood" nillable="true" type="tns:ArrayOfNeighborhood" />
+  <xs:complexType name="PersonSearchResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SearchResultBase">
+        <xs:sequence>
+          <xs:element xmlns:q18="http://dev.virtualearth.net/webservices/v1/common" minOccurs="0" name="Address" nillable="true" type="q18:Address" />
+          <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PersonSearchResult" nillable="true" type="tns:PersonSearchResult" />
+</xs:schema>

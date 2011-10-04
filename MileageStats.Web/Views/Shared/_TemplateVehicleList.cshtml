@@ -1,0 +1,65 @@
+﻿<script id="mstats-add-vehicle-button-template" type="text/x-jquery-tmpl">
+    <div class="framed command section">
+        <div>
+            <a data-action="vehicle-add-selected" href="@Url.Action("add", "vehicle")">+ Add Vehicle</a>
+        </div>
+    </div>
+</script>
+
+<script id="mstats-vehicle-list-template" type="text/x-jquery-tmpl">
+    <div class="wrapper">
+        <div class="vehicle" data-vehicle-id="${VehicleId}">
+            <div class="content">
+                <div class="header">
+                    <div class="overlay"></div>
+                    <div class="data-model">
+                        <span class="year">${Year}</span>
+                        <span class="make">${MakeName}</span>
+                        <span class="model">${ModelName}</span>
+                    </div>
+                    <div class="data-name" data-field="vehicle-name">${Name}</div>
+                    <div class="glass"></div>
+                </div>
+                <div class="actions">
+                    <a href="@Url.Action("Details", "Vehicle")/${VehicleId}" class="avatar" data-action="vehicle-details-selected">
+                        <img src="@Url.RouteUrl("VehiclePhotoRoute")/${PhotoId}" alt="Vehicle Photo for ${Name}" title="Photo" />
+                    </a>
+                    <div class="nav">
+                        <a href="@Url.Action("Details", "Vehicle")/${VehicleId}" data-action="vehicle-details-selected" alt="Details" title="Details">
+                            <div class="hover"></div>
+                            <div class="active"></div>
+                            <img alt="Details" src="@Url.Content("~/Content/command-details.png")" />
+                            <div class="glass"></div>
+                        </a>
+                        <a href="@Url.Action("List", "Fillup")/${VehicleId}" data-action="vehicle-fillups-selected" alt="Fill ups" title="Fill ups">
+                            <div class="hover"></div>
+                            <div class="active"></div>
+                            <img alt="Fill ups" src="@Url.Content("~/Content/command-fillups.png")" />
+                            <div class="glass"></div>
+                        </a>
+                        <a href="@Url.Action("List", "Reminder")/${VehicleId}" data-action="vehicle-reminders-selected" alt="Reminders" title="Reminders">
+                            <div class="hover"></div>
+                            <div class="active"></div>
+                            <img alt="Reminders" src="@Url.Content("~/Content/command-reminders.png")" />
+                            <div class="glass"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="statistics footer">
+                    <div class="statistic mile-per-gallon">
+                        <div class="quantity">${mstats.makeMPGDisplay(LastTwelveMonthsStatistics.AverageFuelEfficiency)}</div>
+                        <div class="unit">mpg</div>
+                    </div>
+                    <div class="statistic cost-per-mile">
+                        <div class="quantity">${mstats.makeCostToDriveDisplay(LastTwelveMonthsStatistics.AverageCostToDrive)}&cent;</div>
+                        <div class="unit">per mile</div>
+                    </div>
+                    <div class="statistic cost-per-month">
+                        <div class="quantity">$${mstats.makeCostPerMonthDisplay(LastTwelveMonthsStatistics.AverageCostPerMonth)}</div>
+                        <div class="unit">per month</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,34 @@
+﻿@model MileageStats.Web.Models.ReminderFormModel
+@Html.AntiForgeryToken()
+<ul>
+    <li>
+        @Html.LabelFor(model => model.Title)
+        @Html.TextBoxFor(model => model.Title, new { id = "ReminderTitle", maxlength = "50" })
+        @Html.ValidationMessageFor(model => model.Title)
+    </li>
+    <li>
+        @Html.LabelFor(model => model.Remarks)
+        @Html.TextAreaFor(model => model.Remarks)
+        @Html.ValidationMessageFor(model => model.Remarks)
+    </li>
+    <li class="psuedo-date">
+        <label for="due-date">Date <em>(mm/dd/yyyy)</em></label>
+        @Html.MonthPickerFor(model => model.DueDateMonth, Model.DueDate.GetValueOrDefault(), false)
+        @Html.DayPickerFor(model => model.DueDateDay, Model.DueDate.GetValueOrDefault(), false)
+        @Html.YearPickerFor(model => model.DueDateYear, Model.DueDate.GetValueOrDefault(), false)
+        @Html.ValidationMessageFor(model => model.DueDate)
+    </li>
+    <li>
+        @Html.LabelFor(model => model.DueDistance)
+        @Html.TextBoxFor(model => model.DueDistance, new { maxlength = "7", type = "number" })
+        @Html.ValidationMessageFor(model => model.DueDistance)
+    </li>
+</ul>
+
+@Html.ValidationSummary(true)
+
+<ol class="buttons boolean">
+	<li><button type="submit"><span>Save</span></button></li>
+	<li class="false"><a href="@Url.Action("List", "Reminder", new { vehicleId = Model.VehicleId })"><span>Cancel</span></a></li>
+</ol>
+

@@ -1,0 +1,12 @@
+﻿@*
+ the values here map to css classes
+ in addition, they are the keys used 
+ to set message in TempData
+*@
+
+@foreach (var pair in TempData.Where(x => new []{"alert","notify","confirm"}.Contains(x.Key)))
+{
+<div class="flash @pair.Key">
+	<p>@pair.Value</p>
+</div>
+}

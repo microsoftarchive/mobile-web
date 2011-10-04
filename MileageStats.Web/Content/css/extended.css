@@ -1,0 +1,1 @@
+#content{width:100%;display:table;table-layout:fixed}#content #main{width:100%;float:left;display:table-cell}#content #extended{width:52.5%;display:table-cell;border-left:1px solid #999;vertical-align:top}#content #extended .title li:last-child{display:block;text-align:center;background-image:none}@media screen and (min-width: 1020px){#content #extended{width:67.5%}}
