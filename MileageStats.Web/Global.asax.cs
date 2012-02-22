@@ -34,6 +34,7 @@ using WURFL;
 using WURFL.Config;
 using MileageStats.Web.MobileProfiler.ClientProfile;
 using MileageStats.Domain.Handlers;
+using MileageStats.Web.Infrastructure;
 
 namespace MileageStats.Web
 {
@@ -160,6 +161,9 @@ namespace MileageStats.Web
             RegisterRoutes(RouteTable.Routes);
 
             InitializeDependencyInjectionContainer();
+
+            // Sets a custom controller factory for overriding the default settings like the TempDataProvider
+            ControllerBuilder.Current.SetControllerFactory(new CustomControllerFactory());
 
             // Initializes the manager that represents the entry point for the WURLF database
             container.RegisterType<IWURFLManager>( new InjectionFactory(c => InitializeWURFLManager()));

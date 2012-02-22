@@ -88,6 +88,7 @@
     <Compile Include="Controllers\VehicleControllerFixture.cs" />
     <Compile Include="Forms\VehicleFormModelFixture.cs" />
     <Compile Include="Helpers\VehicleHelperFixture.cs" />
+    <Compile Include="Infrastructure\CookieTempDataProviderFixture.cs" />
     <Compile Include="MileageStatsIdentityFixture.cs" />
     <Compile Include="Mocks\ControllerMockHelpers.cs" />
     <Compile Include="Mocks\MockRelyingParty.cs" />

@@ -145,11 +145,13 @@
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Authentication\LocalFakeRelyingParty.cs" />
     <Compile Include="Controllers\ViewSwitcherController.cs" />
+    <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Helpers\VehicleHtmlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Infrastructure\CustomControllerFactory.cs" />
     <Compile Include="Properties\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
