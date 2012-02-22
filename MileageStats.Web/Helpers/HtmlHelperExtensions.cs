@@ -142,5 +142,20 @@ namespace System.Web.Mvc.Html
             }
             return helper.DropDownListFor(expression, months);
         }
+
+        public static IHtmlString FixedValueTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
+           Expression<Func<TModel, TProperty>> expression, object htmlAttributes)
+        {
+            return FixedValueTextBoxFor(helper, expression, null, htmlAttributes);
+        }
+
+        public static IHtmlString FixedValueTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
+            Expression<Func<TModel, TProperty>> expression, object value, object htmlAttributes)
+        {
+            var name = ExpressionHelper.GetExpressionText(expression);
+            return helper.TextBox(name, (value == null) ? "" : value, htmlAttributes);
+        }
+
+        
     }
 }

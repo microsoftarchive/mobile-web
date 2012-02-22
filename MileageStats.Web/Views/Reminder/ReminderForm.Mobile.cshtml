@@ -20,7 +20,7 @@
     </li>
     <li>
         @Html.LabelFor(model => model.DueDistance)
-        @Html.TextBoxFor(model => model.DueDistance, new { maxlength = "7", type = "number" })
+        @Html.FixedValueTextBoxFor(model => model.DueDistance, new { maxlength = "7", type = "number", placeholder = Model.DueDistance })
         @Html.ValidationMessageFor(model => model.DueDistance)
     </li>
 </ul>

@@ -10,36 +10,37 @@
     </li>
     <li>
         @Html.LabelFor(model => model.Odometer)
-        @Html.TextBoxFor(model => model.Odometer, new { maxlength = "7", type = "number" })
+        @Html.FixedValueTextBoxFor(model => model.Odometer, (Model.Odometer > 0) ? Model.Odometer.ToString() : null, new { maxlength = "7", type = "number" })
         @Html.ValidationMessageFor(model => model.Odometer)
     </li>
     <li>
         @Html.LabelFor(model => model.PricePerUnit)
-        @Html.TextBoxFor(model => model.PricePerUnit, new { maxlength = "6", type = "number", step = "0.01" })
+        @Html.FixedValueTextBoxFor(model => model.PricePerUnit, new { maxlength = "6", type = "number", step = "0.01", placeholder = Model.PricePerUnit })
         @Html.ValidationMessageFor(model => model.PricePerUnit)
     </li>
     <li>
         @Html.LabelFor(model => model.TotalUnits)
-        @Html.TextBoxFor(model => model.TotalUnits, new { maxlength = "7", type = "number", step = "0.01" })
+        @Html.FixedValueTextBoxFor(model => model.TotalUnits, new { maxlength = "7", type = "number", step = "0.01", placeholder = Model.TotalUnits })
         @Html.ValidationMessageFor(model => model.TotalUnits)
     </li>
     <li>
         @Html.LabelFor(model => model.Vendor)
-        @Html.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) @Html.ValidationMessageFor(model => model.Vendor)
+        @Html.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) 
+		@Html.ValidationMessageFor(model => model.Vendor)
     </li>
     <li>
         @Html.LabelFor(model => model.TransactionFee)
-        @Html.TextBoxFor(model => model.TransactionFee, new { maxlength = "6", type = "number", step = "0.01" })
+        @Html.FixedValueTextBoxFor(model => model.TransactionFee, new { maxlength = "6", type = "number", step = "0.01", placeholder = Model.TransactionFee })
         @Html.ValidationMessageFor(model => model.TransactionFee)
     </li>
     <li>
         @Html.LabelFor(model => model.Remarks)
-        @Html.TextBoxFor(model => model.Remarks, new { maxlength = "250" }) @Html.ValidationMessageFor(model => model.Remarks)
+        @Html.TextBoxFor(model => model.Remarks, new { maxlength = "250" }) 
+		@Html.ValidationMessageFor(model => model.Remarks)
     </li>
 </ul>
 @if (ViewBag.IsFirstFillup)
 { 
-
     <div class="flash notify">
         <p>
             This is your first fill up. This odometer reading will establish your mileage starting
