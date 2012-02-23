@@ -81,8 +81,8 @@
         <![if gt IE 7]>
         <script src="@Url.Content("~/Scripts/jqPlot/excanvas.min.js")"></script>
         <script src="@Url.Content("~/Scripts/jqPlot/jquery.jqplot.min.js")"></script>
-@*        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasTextRenderer.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasAxisTickRenderer.min.js")"></script>  *@  
+        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasTextRenderer.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasAxisTickRenderer.min.js")"></script>    
         <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.dateAxisRenderer.min.js")"></script>
         <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.cursor.min.js")"></script>
  
@@ -96,30 +96,30 @@
         }        
 @if (User.Identity.IsAuthenticated && HttpContext.Current.IsDebuggingEnabled)
 {
-        <script src="@Url.Content("~/Scripts/Debug/mstats.validation.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.utils.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.events.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.pubsub.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.data.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.status.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.header.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.tile.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle-list.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle-details.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.fillups.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.reminders.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.info-pane.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.registration.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle-charts.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.charts.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.pinnedsite.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.statistics.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.imminent-reminders.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.summary.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.layout-manager.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mstats.vehicle-dropdown-monitor.js")"></script>
-        <script src="@Url.Content("~/Scripts/Debug/mileagestats.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.validation.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.utils.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.events.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.pubsub.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.data.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.status.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.header.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.tile.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-list.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-details.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.fillups.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.reminders.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.info-pane.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.registration.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-charts.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.charts.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.pinnedsite.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.statistics.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.imminent-reminders.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.summary.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.layout-manager.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-dropdown-monitor.js")"></script>
+        <script src="@Url.Content("~/Scripts/desktop-debug/mileagestats.js")"></script>
 }
 @if (User.Identity.IsAuthenticated && !HttpContext.Current.IsDebuggingEnabled)
 {

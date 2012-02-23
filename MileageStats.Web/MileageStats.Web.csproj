@@ -271,9 +271,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Profiles\Generic.xml" />
-    <Content Include="Scripts\Debug\mstats.tile.js" />
-    <Content Include="Scripts\Debug\mstats.vehicle-dropdown-monitor.js" />
-    <Content Include="Scripts\Debug\mstats.vehicle-charts.js" />
+    <Content Include="Scripts\desktop-debug\mstats.tile.js" />
+    <Content Include="Scripts\desktop-debug\mstats.vehicle-dropdown-monitor.js" />
+    <Content Include="Scripts\desktop-debug\mstats.vehicle-charts.js" />
     <Content Include="Scripts\jqPlot\excanvas.min.js" />
     <Content Include="Scripts\jqPlot\jquery.jqplot.min.css" />
     <Content Include="Scripts\jqPlot\jquery.jqplot.min.js" />
@@ -282,17 +282,17 @@
     <Content Include="Scripts\jqPlot\plugins\jqplot.cursor.min.js" />
     <Content Include="Scripts\jqPlot\plugins\jqplot.dateAxisRenderer.min.js" />
     <Content Include="Scripts\MileageStats.min.js" />
-    <Content Include="Scripts\Debug\mstats.fillups.js" />
-    <Content Include="Scripts\Debug\mstats.header.js" />
-    <Content Include="Scripts\Debug\mstats.imminent-reminders.js" />
-    <Content Include="Scripts\Debug\mstats.info-pane.js" />
-    <Content Include="Scripts\Debug\mstats.reminders.js" />
-    <Content Include="Scripts\Debug\mstats.statistics.js" />
-    <Content Include="Scripts\Debug\mstats.status.js" />
-    <Content Include="Scripts\Debug\mstats.summary.js" />
-    <Content Include="Scripts\Debug\mstats.validation.js" />
-    <Content Include="Scripts\Debug\mstats.vehicle-details.js" />
-    <Content Include="Scripts\Debug\mstats.vehicle.js" />
+    <Content Include="Scripts\desktop-debug\mstats.fillups.js" />
+    <Content Include="Scripts\desktop-debug\mstats.header.js" />
+    <Content Include="Scripts\desktop-debug\mstats.imminent-reminders.js" />
+    <Content Include="Scripts\desktop-debug\mstats.info-pane.js" />
+    <Content Include="Scripts\desktop-debug\mstats.reminders.js" />
+    <Content Include="Scripts\desktop-debug\mstats.statistics.js" />
+    <Content Include="Scripts\desktop-debug\mstats.status.js" />
+    <Content Include="Scripts\desktop-debug\mstats.summary.js" />
+    <Content Include="Scripts\desktop-debug\mstats.validation.js" />
+    <Content Include="Scripts\desktop-debug\mstats.vehicle-details.js" />
+    <Content Include="Scripts\desktop-debug\mstats.vehicle.js" />
     <Content Include="Scripts\qunit.js" />
     <Content Include="Scripts\desktop-tests\mstats.vehicle-dropdown-monitor.tests.js" />
     <Content Include="Scripts\desktop-tests\mstats.fillups.tests.js" />
@@ -300,16 +300,16 @@
     <Content Include="Scripts\desktop-tests\mstats.imminent-reminders.tests.js" />
     <Content Include="Scripts\desktop-tests\mstats.info-pane.tests.js" />
     <Content Include="Scripts\desktop-tests\mstats.registration.tests.js" />
-    <Content Include="Scripts\Debug\mileagestats.js" />
-    <Content Include="Scripts\Debug\mstats.data.js" />
-    <Content Include="Scripts\Debug\mstats.layout-manager.js" />
-    <Content Include="Scripts\Debug\mstats.pinnedsite.js" />
-    <Content Include="Scripts\Debug\mstats.pubsub.js" />
-    <Content Include="Scripts\Debug\mstats.registration.js" />
-    <Content Include="Scripts\Debug\mstats.utils.js" />
-    <Content Include="Scripts\Debug\mstats.events.js" />
-    <Content Include="Scripts\Debug\mstats.vehicle-list.js" />
-    <Content Include="Scripts\Debug\mstats.charts.js" />
+    <Content Include="Scripts\desktop-debug\mileagestats.js" />
+    <Content Include="Scripts\desktop-debug\mstats.data.js" />
+    <Content Include="Scripts\desktop-debug\mstats.layout-manager.js" />
+    <Content Include="Scripts\desktop-debug\mstats.pinnedsite.js" />
+    <Content Include="Scripts\desktop-debug\mstats.pubsub.js" />
+    <Content Include="Scripts\desktop-debug\mstats.registration.js" />
+    <Content Include="Scripts\desktop-debug\mstats.utils.js" />
+    <Content Include="Scripts\desktop-debug\mstats.events.js" />
+    <Content Include="Scripts\desktop-debug\mstats.vehicle-list.js" />
+    <Content Include="Scripts\desktop-debug\mstats.charts.js" />
     <Content Include="Scripts\jquery.simulate.js" />
     <Content Include="Scripts\desktop-tests\mstats.charts.tests.js" />
     <Content Include="Scripts\desktop-tests\mstats.pinnedsite.tests.js" />
@@ -491,7 +491,10 @@
   <ItemGroup>
     <Content Include="Views\Reminder\List.Mobile.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\mobile-debug\" />
+    <Folder Include="Scripts\mobile-tests\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Fillup\Details.Mobile.cshtml" />
   </ItemGroup>

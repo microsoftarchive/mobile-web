@@ -17,7 +17,7 @@
     
     <Target Name="MinifyJavaScript">
         <ItemGroup>
-            <JavaScriptFiles Include="Scripts\Debug\*.js" />
+            <JavaScriptFiles Include="Scripts\desktop-debug\*.js" />
         </ItemGroup>
 
         <CompressorTask
