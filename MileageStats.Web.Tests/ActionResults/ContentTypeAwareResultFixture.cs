@@ -39,10 +39,10 @@ namespace MileageStats.Web.Tests.ActionResults
             var viewmodel = new {apples = 1, oranges = "tasty"};
             return new ContentTypeAwareResult(viewmodel)
                        {
-                           WhenJson = data => new JsonResult {Data = data}, 
+                           WhenJson = (data,viewdata) => new JsonResult {Data = data}, 
                            // this way if we don't want the default behavior 
                            // we can customize it
-                           WhenHtml = model =>
+                           WhenHtml = (model, viewdata) =>
                                       {
                                           var result = new ViewResult();
                                           if (model != null)
@@ -83,7 +83,7 @@ namespace MileageStats.Web.Tests.ActionResults
             var controller = new ExampleController();
             var action = controller.DefaultActionResult();
 
-            var context = new Mock<ControllerContext>();
+            var context = MockContextFor(controller);
             var response = new Mock<HttpResponseBase>();
 
             context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "application/json" });
@@ -103,9 +103,9 @@ namespace MileageStats.Web.Tests.ActionResults
             var view = new Mock<ViewResult>();
             view.Setup(x => x.ExecuteResult(It.IsAny<ControllerContext>()))
                 .Verifiable();
-            action.WhenHtml = x => view.Object;
+            action.WhenHtml = (x,v) => view.Object;
 
-            var context = new Mock<ControllerContext>();
+            var context = MockContextFor(controller);
             context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "text/html" });
 
             action.ExecuteResult(context.Object);
@@ -114,7 +114,7 @@ namespace MileageStats.Web.Tests.ActionResults
         }
 
         [Fact]
-        public void x()
+        public void when_type_contains_additional_data_it_is_still_recognized()
         {
             var controller = new ExampleController();
             var action = (ContentTypeAwareResult)controller.DefaultActionResult();
@@ -122,14 +122,21 @@ namespace MileageStats.Web.Tests.ActionResults
             var view = new Mock<ViewResult>();
             view.Setup(x => x.ExecuteResult(It.IsAny<ControllerContext>()))
                 .Verifiable();
-            action.WhenHtml = x => view.Object;
+            action.WhenHtml = (x,v) => view.Object;
 
-            var context = new Mock<ControllerContext>();
+            var context = MockContextFor(controller);
             context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "text/html; q=0.90" });
 
             action.ExecuteResult(context.Object);
 
             view.VerifyAll();
+        }
+
+        private static Mock<ControllerContext> MockContextFor(ControllerBase controller)
+        {
+            var context = new Mock<ControllerContext>();
+            context.Setup(x => x.Controller).Returns(controller);
+            return context;
         }
     }
 }

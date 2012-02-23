@@ -23,13 +23,13 @@ using System.Web.Mvc;
 
 namespace MileageStats.Web
 {
-    public class ContentTypeAwareResult : ActionResult
+    public sealed class ContentTypeAwareResult : ActionResult, ITestableContentTypeAwareResult
     {
         private readonly object _model;
-        private Dictionary<string, Func<object, ActionResult>> _supportedTypes;
+        private Dictionary<string, Func<object,ViewDataDictionary, ActionResult>> _supportedTypes;
 
-        public Func<object, ActionResult> WhenJson { get; set; }
-        public Func<object, ActionResult> WhenHtml { get; set; }
+        public Func<object,ViewDataDictionary, JsonResult> WhenJson { get; set; }
+        public Func<object,ViewDataDictionary, ActionResult> WhenHtml { get; set; }
 
         public ContentTypeAwareResult()
             : this(null)
@@ -51,11 +51,12 @@ namespace MileageStats.Web
             // these should behave the same as calling the corresponding 
             // convenience method on Controller
 
-            WhenJson = x => new JsonResult { Data = model };
+            WhenJson = (x,v) => new JsonResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
 
-            WhenHtml = x =>
+            WhenHtml = (x,v) =>
                        {
                            var result = new ViewResult();
+                           result.ViewData = v;
                            if (model != null)
                            {
                                result.ViewData.Model = model;
@@ -64,10 +65,10 @@ namespace MileageStats.Web
                        };
         }
 
-        public override void ExecuteResult(ControllerContext context)
+        private ActionResult GetActionResultFor(ControllerContext context)
         {
             // map supported content-types to a provider
-            _supportedTypes = new Dictionary<string, Func<object, ActionResult>>
+            _supportedTypes = new Dictionary<string, Func<object, ViewDataDictionary, ActionResult>>
                                   {
                                       {"application/json", WhenJson},
                                       {"text/html", WhenHtml}
@@ -88,13 +89,32 @@ namespace MileageStats.Web
             {
                 //note: if more than one support type is found, what should we do?
                 var getResult = providers.First();
-                getResult(_model).ExecuteResult(context);
-            } else
+                return getResult(_model, context.Controller.ViewData);
+            }
+            else
             {
                 var msg = string.Format("An unsupported media type was requested. The request types were: {0}", String.Join(",", types));
-                new HttpStatusCodeResult(415,msg).ExecuteResult(context);
+                return new HttpStatusCodeResult(415, msg);
             }
-            
         }
+
+        public override void ExecuteResult(ControllerContext context)
+        {
+            GetActionResultFor(context).ExecuteResult(context);
+        }
+
+        ActionResult ITestableContentTypeAwareResult.GetActionResultFor(ControllerContext context)
+        {
+            return GetActionResultFor(context);
+        }
+    }
+
+    // this interface is used to hide a member of ContentTypeAwareResult
+    // that is only meant to be used in unit tests.
+    // we named the interface with the prefix "Testable" in order to make
+    // the purpose more explicit
+    public interface ITestableContentTypeAwareResult
+    {
+        ActionResult GetActionResultFor(ControllerContext context);
     }
 }

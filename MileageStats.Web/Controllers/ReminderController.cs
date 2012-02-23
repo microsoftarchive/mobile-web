@@ -154,17 +154,9 @@ namespace MileageStats.Web.Controllers
             Using<FulfillReminder>().Execute(CurrentUserId, id);
 
             return new ContentTypeAwareResult
-            {
-                WhenHtml = x =>
-                {
-                    var reminder = Using<GetReminder>().Execute(id);
-                    return RedirectToAction("List", "Reminder", new { vehicleId });
-                },
-                WhenJson = x =>
-                {
-                    return new HttpStatusCodeResult((int)HttpStatusCode.OK);
-                }
-            };
+                       {
+                           WhenHtml = (x,v) => RedirectToAction("List", "Reminder", new {vehicleId})
+                       };
         }
 
         [HttpPost]

@@ -18,6 +18,7 @@ limitations under the License. */
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
 using MileageStats.Domain.Handlers;
@@ -93,6 +94,17 @@ namespace MileageStats.Web.Tests
 
             var mock = ctrs.First().Invoke(new[] { args });
             return (Mock<T>)mock;
+        }
+
+        public static Mock<ControllerContext> MockRequestForMediaType(this ControllerBase controller, string mediaType)
+        {
+            var context = new Mock<ControllerContext>();
+            var response = new Mock<HttpResponseBase>();
+
+            context.SetupGet(x => x.HttpContext.Response).Returns(() => response.Object);
+            context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { mediaType });
+            context.Setup(x => x.Controller).Returns(controller);
+            return context;
         }
     }
 }

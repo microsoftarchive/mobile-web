@@ -65,7 +65,7 @@ namespace MileageStats.Web.Controllers
 
             ViewBag.CountryList = getCountries.GetCountrySelectList();
 
-            return View(model);
+            return new ContentTypeAwareResult(model);
         }
 
         // POST: /Vehicle/JsonFleetStatistics

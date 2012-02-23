@@ -52,8 +52,8 @@ namespace MileageStats.Web.Controllers
 
             return new ContentTypeAwareResult(model)
             {
-                WhenJson = m => Json(m, JsonRequestBehavior.AllowGet),
-                WhenHtml = m => View(m)
+                WhenJson = (m,v) => Json(m, JsonRequestBehavior.AllowGet),
+                WhenHtml = (m,v) => View(m)
             };
         }
 
@@ -100,7 +100,7 @@ namespace MileageStats.Web.Controllers
                 var errors = Using<CanAddFillup>()
                     .Execute(CurrentUserId, vehicleId, model);
 
-                if (errors.Count() > 0)
+                if (errors.Any())
                 {
                     ModelState.AddModelErrors(errors, "AddFillup");
                 }

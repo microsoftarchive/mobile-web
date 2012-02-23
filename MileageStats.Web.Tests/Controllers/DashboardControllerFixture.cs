@@ -95,9 +95,11 @@ namespace MileageStats.Web.Tests.Controllers
                             .Verifiable("handler wasn't invoked.")
                 );
 
-            TestableDashboardController controller = GetTestableDashboardController();
+            var controller = GetTestableDashboardController();
+            var context = controller.MockRequestForMediaType("text/html");
 
-            ActionResult result = controller.Index();
+            var proxy = (ITestableContentTypeAwareResult)controller.Index();
+            var result = proxy.GetActionResultFor(context.Object);
 
             Assert.IsType<ViewResult>(result);
 

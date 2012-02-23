@@ -100,7 +100,7 @@ namespace MileageStats.Web.Controllers
         {
             ViewBag.CountryList = _getCountries.GetCountrySelectList();
 
-            return View(user);
+            return new ContentTypeAwareResult(user);
         }
     }
 }

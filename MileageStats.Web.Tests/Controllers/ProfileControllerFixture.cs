@@ -21,7 +21,6 @@ using System.Security;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Models;
 using MileageStats.Web.Authentication;
 using MileageStats.Web.Controllers;
@@ -170,12 +169,17 @@ namespace MileageStats.Web.Tests.Controllers
         public void WhenDriverUpdatesProfileWithInvalidData_ThenEditViewIsReturned()
         {
             profileController.ModelState.AddModelError("key", "error message");
-            
+
+            var context = profileController.MockRequestForMediaType("text/html");
+
             var updatedUser = new User { DisplayName = "Updated name", AuthorizationId = "CleverClaimsId", UserId = 1 };
 
-            var result = profileController.Edit(updatedUser);
+            var proxy = (ITestableContentTypeAwareResult)profileController.Edit(updatedUser);
+            var result = proxy.GetActionResultFor(context.Object);
 
             Assert.IsType<ViewResult>(result);
         }
+
+
     }
 }
