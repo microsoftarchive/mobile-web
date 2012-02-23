@@ -28,7 +28,7 @@ namespace MileageStats.Web
         private readonly object _model;
         private Dictionary<string, Func<object,ViewDataDictionary, ActionResult>> _supportedTypes;
 
-        public Func<object,ViewDataDictionary, JsonResult> WhenJson { get; set; }
+        public Func<object,ViewDataDictionary, ActionResult> WhenJson { get; set; }
         public Func<object,ViewDataDictionary, ActionResult> WhenHtml { get; set; }
 
         public ContentTypeAwareResult()

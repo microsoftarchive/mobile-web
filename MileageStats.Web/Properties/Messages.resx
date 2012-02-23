@@ -165,6 +165,9 @@
   <data name="VehicleController_VehicleDeleted" xml:space="preserve">
     <value>Successfully deleted vehicle</value>
   </data>
+  <data name="VehicleController_VehicleNotFound" xml:space="preserve">
+    <value>Vehicle not found</value>
+  </data>
   <data name="VehicleController_VehicleUpdated" xml:space="preserve">
     <value>Successfully updated vehicle</value>
   </data>

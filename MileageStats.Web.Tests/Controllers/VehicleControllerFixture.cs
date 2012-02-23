@@ -29,6 +29,7 @@ using MileageStats.Web.Models;
 using MileageStats.Web.Tests.Mocks;
 using Moq;
 using Xunit;
+using System.Web;
 
 namespace MileageStats.Web.Tests.Controllers
 {
@@ -267,7 +268,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             var controller = GetTestableVehicleController();
 
-            Assert.Throws<InvalidOperationException>(() => { controller.Details(DefaultVehicleId); });
+            Assert.Throws<HttpException>(() => { controller.Details(DefaultVehicleId); });
         }
 
         [Fact]
@@ -403,24 +404,6 @@ namespace MileageStats.Web.Tests.Controllers
             var model = result.Extract<VehicleFormModel>();
 
             Assert.IsType<VehicleFormModel>(model);
-        }
-
-        [Fact]
-        public void WhenVehicleDeleted_ThenRedirectsToDashboard()
-        {
-            MockHandlerFor<DeleteVehicle>(
-                mock => mock.Setup(h => h.Execute(defaultUser.UserId, DefaultVehicleId))
-                );
-
-            TestableVehicleController controller = GetTestableVehicleController();
-            ActionResult result = controller.Delete(DefaultVehicleId);
-
-            Assert.IsType<RedirectToRouteResult>(result);
-            var redirect = (RedirectToRouteResult)result;
-
-            Assert.Equal("Dashboard", redirect.RouteValues["controller"]);
-            Assert.Equal("Index", redirect.RouteValues["action"]);
-
         }
 
         [Fact]

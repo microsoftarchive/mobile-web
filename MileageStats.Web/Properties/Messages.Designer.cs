@@ -205,6 +205,15 @@ namespace MileageStats.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vehicle not found.
+        /// </summary>
+        internal static string VehicleController_VehicleNotFound {
+            get {
+                return ResourceManager.GetString("VehicleController_VehicleNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully updated vehicle.
         /// </summary>
         internal static string VehicleController_VehicleUpdated {

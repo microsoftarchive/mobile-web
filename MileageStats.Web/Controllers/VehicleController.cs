@@ -48,7 +48,13 @@ namespace MileageStats.Web.Controllers
                 .Execute(this.CurrentUserId);
 
             var selected = vehicles
-                .Single(x => x.VehicleId == id);
+                .FirstOrDefault(x => x.VehicleId == id);
+
+            if (selected == null)
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound,
+                    Messages.VehicleController_VehicleNotFound);
+            }
 
             // we are limiting this to 3 reminders 
             // after we retrieve the full set from the server
@@ -119,7 +125,10 @@ namespace MileageStats.Web.Controllers
                 .FirstOrDefault(x => x.VehicleId == id);
 
             if (selected == null)
-                return new HttpStatusCodeResult((int)HttpStatusCode.NotFound);
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound,
+                    Messages.VehicleController_VehicleNotFound);
+            }
 
             var vehicleForm = new VehicleFormModel
             {
@@ -158,16 +167,13 @@ namespace MileageStats.Web.Controllers
         {
             Using<DeleteVehicle>().Execute(CurrentUserId, id);
 
-            if (Request.IsAjaxRequest())
-            {
-                return new HttpStatusCodeResult((int)HttpStatusCode.OK, Messages.VehicleController_VehicleDeleted);
-            }
-            else
-            {
-                this.SetConfirmationMessage(Messages.VehicleController_VehicleDeleted);
+            this.SetConfirmationMessage(Messages.VehicleController_VehicleDeleted);
 
-                return RedirectToAction("Index", "Dashboard");
-            }
+            return new ContentTypeAwareResult
+            {
+                WhenHtml = (m, v) => RedirectToAction("Index", "Dashboard"),
+                WhenJson = (m, v) => new HttpStatusCodeResult((int)HttpStatusCode.OK, Messages.VehicleController_VehicleDeleted)
+            };
         }
 
         [Authorize]
