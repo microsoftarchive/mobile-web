@@ -35,6 +35,8 @@ using WURFL.Config;
 using MileageStats.Web.MobileProfiler.ClientProfile;
 using MileageStats.Domain.Handlers;
 using MileageStats.Web.Infrastructure;
+using System.Net;
+using MileageStats.Domain.Contracts;
 
 namespace MileageStats.Web
 {
@@ -43,7 +45,13 @@ namespace MileageStats.Web
         private static IUnityContainer container;
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new CustomHandleErrorFilter(new Dictionary<Type, HttpStatusCode>()
+                {
+                    { typeof(UnauthorizedException), HttpStatusCode.Forbidden }
+                })
+                {
+                    View = "_Error"
+                }); 
         }
 
         public static void RegisterRoutes(RouteCollection routes)
