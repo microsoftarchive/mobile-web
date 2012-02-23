@@ -35,7 +35,7 @@
     </li>
     <li>
         @Html.LabelFor(model => model.Remarks)
-        @Html.TextBoxFor(model => model.Remarks, new { maxlength = "250" }) 
+        @Html.TextAreaFor(model => model.Remarks, new { maxlength = "250", wrap="soft" }) 
 		@Html.ValidationMessageFor(model => model.Remarks)
     </li>
 </ul>

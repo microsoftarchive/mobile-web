@@ -8,7 +8,7 @@
     </li>
     <li>
         @Html.LabelFor(model => model.Remarks)
-        @Html.TextAreaFor(model => model.Remarks)
+        @Html.TextAreaFor(model => model.Remarks, new { wrap = "soft" })
         @Html.ValidationMessageFor(model => model.Remarks)
     </li>
     <li class="psuedo-date">
