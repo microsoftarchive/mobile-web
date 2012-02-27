@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="cache-control" content="no-cache" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    <title>Mileage Stats Mobile Testing</title>
+    <link href="../../Content/qunit.css" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
+
+    <script src="../mustache.js"></script>
+
+    <script src="../qunit.js"></script>
+</head>
+<body>
+    <h1 id="qunit-header">QUnit - Widget Testing</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture">test markup, will be hidden</div>
+    
+    <script src="../mobile-tests/tests.mocks.js"></script>
+
+    <!-- Code under test -->
+    <script src="../mobile-debug/router.js"></script>
+
+    <!-- Unit tests -->
+    <script src="router.tests.js"></script>    
+    
+    <script>
+
+        // translate our test format to QUnit
+        function run_test(specId, spec) {
+            test(specId, function () {
+                return spec(equal, expect);
+            });
+        }
+
+        function run_module(suiteId, suite) {
+            var specId;
+            module(suiteId);
+            for (specId in suite) {
+                run_test(specId, suite[specId]);
+            }
+        }
+
+        $(function () {
+            var suiteId;
+            for (suiteId in window.specs) {
+                run_module(suiteId, window.specs[suiteId]);
+            }
+
+        } ());
+        
+    </script>
+
+</body>
+</html>

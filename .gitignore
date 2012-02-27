@@ -36,8 +36,9 @@ Ankh.NoLoad
 *.orig
 
 #Project specific
-!MileageStats.Web/Scripts/Debug*/
+!MileageStats.Web/Scripts/*debug*/
 MileageStats.min.js
+MileageStats.Mobile.min.js
 !LICENSE.TXT
 *License.txt
 App_Data/
@@ -45,6 +46,7 @@ App_Readme/
 MileageStats.Web/Scripts/jqPlot/*
 qunit.*
 jquery.simulate.js
+mustache.js
 
 #Tooling
 _ReSharper*/

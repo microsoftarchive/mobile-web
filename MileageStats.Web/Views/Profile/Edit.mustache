@@ -1,0 +1,49 @@
+﻿@model MileageStats.Domain.Models.User
+           
+<input id="UserId" name="UserId" type="hidden" value="{{Model.UserId}}"></input>
+<input id="AuthorizationId" name="AuthorizationId" type="hidden" value="{{Model.AuthorizationId}}"></input>
+
+<ul>
+    <li>
+        @Html.TextBoxFor(model => model.DisplayName, new { maxlength = "15", placeholder="your name" })
+        @Html.ValidationMessageFor(model => model.DisplayName)
+		<label for="DisplayName">{{Model.DisplayName}}</label>
+        <input class="input-validation-error" data-val="true" data-val-length="Name must be less than 15 characters." data-val-length-max="15" data-val-required="Name is required." data-val-textlineinput="Only alpha-numeric characters and [.,_-&amp;#39;] are allowed." data-val-textlineinput-pattern="^(?!.*--)[A-Za-z0-9\.,&#39;_ \-]*$" id="DisplayName" maxlength="15" name="DisplayName" placeholder="your name" type="text" value="" />
+        <span class="field-validation-error" data-valmsg-for="DisplayName" data-valmsg-replace="true">Name is required.</span>
+    </li>
+    <li>
+        @Html.LabelFor(model => model.Country)
+        @Html.DropDownListFor(model => model.Country, ViewBag.CountryList as SelectList, "-- Select country --", new { @class = "editor-textbox" })
+        @Html.ValidationMessageFor(model => model.Country)
+    </li>
+    <ol class="buttons boolean">
+        <li>
+            <button type="submit">
+                <span>Save</span></button></li>
+        <li class="false">
+            <button type="submit" value="cancel" name="action">
+                <span>No thanks, I'll do it later</span></button></li>
+    </ol>
+    @Html.ValidationSummary(true)
+</ul>
+
+
+@if (Request.Browser.IsWow() & string.IsNullOrEmpty(Model.Country))
+    {
+        <script type="text/javascript">
+            var selectedCountry = $('#Country').val();
+            
+            if (selectedCountry == '' && navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+
+                    //Get country name from GeoLocationController
+                    var getCountryActionUrl = '@Url.Action("GetCountry", "GeoLocation")?latitude=' + position.coords.latitude + "&longitude=" + position.coords.longitude;
+
+                    $.getJSON(getCountryActionUrl, function (data) {
+                        $('#Country').val(data);
+                    });
+                });
+
+            }
+        </script>
+    }

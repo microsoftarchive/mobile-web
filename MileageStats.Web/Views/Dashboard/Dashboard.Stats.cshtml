@@ -1,0 +1,81 @@
+﻿@model MileageStats.Web.Models.DashboardViewModel  
+           
+<div class="stats">
+    <dl>
+        <dt class="mpg-label">MPG</dt>
+        <dd class="mpg">
+            @Html.Mustache(m => m.FleetSummaryStatistics.AverageFuelEfficiency)
+        </dd>
+        <dt class="mile-label">/mile</dt>
+        <dd class="mile">
+            @Html.Mustache(m => m.FleetSummaryStatistics.AverageFillupPrice)
+        </dd>
+        <dt class="month-label">/month</dt>
+        <dd class="month">
+            @Html.Mustache(m => m.FleetSummaryStatistics.AverageCostPerMonth)
+        </dd>
+    </dl>
+</div>
+
+@using (Html.MustacheSection(m => m.VehicleListViewModel.Vehicles))
+{
+    foreach (var vehicle in Html.MustacheLoop(m => m.VehicleListViewModel.Vehicles))
+    {
+    <dl class="vehicle widget">
+    <dt>
+        <h2>
+            <a href="@Url.Action("Details", "Vehicle")/@Html.Mustache(vehicle, i => i.VehicleId)">@Html.Mustache(vehicle, i => i.Name)</a></h2>
+    </dt>
+    <dd>
+        <table>
+            <tr>
+                <td>
+                    Average Fuel Efficiency
+                </td>
+                <td>@Html.Mustache(vehicle, i => i.Statistics.AverageFuelEfficiency)/mpg
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Total Distance Travelled
+                </td>
+                <td>@Html.Mustache(vehicle, i => i.Statistics.TotalDistance) mi
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Total Cost
+                </td>
+                <td>
+                    @Html.Mustache(vehicle, i => i.Statistics.TotalCost)
+                </td>
+            </tr>
+        </table>
+        <ol class="buttons">
+            <li><a href="@Url.Action("Details", "Vehicle")/@Html.Mustache(vehicle, i => i.VehicleId)"><span>
+                Details</span></a></li>
+            <li><a href="@Url.Action("List", "Fillup")/@Html.Mustache(vehicle, i => i.VehicleId)"><span>
+                Fill Ups</span></a></li>
+            <li><a href="@Url.Action("List", "Reminder")/@Html.Mustache(vehicle, i => i.VehicleId)">
+                <span>Reminders</span></a></li>
+        </ol>
+    </dd>
+</dl>
+    }
+}
+
+<ol class="buttons">
+    <li><a href="@Url.Action("Add", "Vehicle")"><span class="add">Add New Vehicle</span></a></li>
+</ol>
+
+<h2>
+    Imminent Reminders</h2>
+@using (Html.MustacheSection(m => m.ImminentReminders))
+{
+    <ul>
+    @foreach (var reminder in Html.MustacheLoop(m => m.ImminentReminders))
+    {
+        <li><a href="@Url.Action("Details", "Reminder")/@Html.Mustache(reminder, i => i.Reminder.ReminderId)">@Html.Mustache(reminder, i => i.Reminder.Title)</a></li>
+    }
+    </ul>
+}

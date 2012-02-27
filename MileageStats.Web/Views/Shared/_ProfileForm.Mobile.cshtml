@@ -7,27 +7,28 @@
 <ul>
     <li>
         @Html.LabelFor(model => model.DisplayName)
-        @Html.TextBoxFor(model => model.DisplayName, new { maxlength = "15", placeholder="your name" })
+        @Html.MTextBoxFor(model => model.DisplayName, new { maxlength = "15", placeholder="your name" })
         @Html.ValidationMessageFor(model => model.DisplayName)
     </li>
     <li>
         @Html.LabelFor(model => model.Country)
-        @Html.DropDownListFor(model => model.Country, ViewBag.CountryList as SelectList, "-- Select country --", new { @class = "editor-textbox" })
+        @Html.MDropDownListFor(model => model.Country, ViewBag.CountryList as SelectList, "-- Select country --", new { @class = "editor-textbox" })
         @Html.ValidationMessageFor(model => model.Country)
     </li>
-    <ol class="buttons boolean">
-        <li>
-            <button type="submit">
-                <span>Save</span></button></li>
-        <li class="false">
-            <button type="submit" value="cancel" name="action">
-                <span>No thanks, I'll do it later</span></button></li>
-    </ol>
-    @Html.ValidationSummary(true)
 </ul>
 
+<ol class="buttons boolean">
+    <li>
+        <button type="submit">
+            <span>Save</span></button></li>
+    <li class="false">
+        <button type="submit" value="cancel" name="action">
+            <span>No thanks, I'll do it later</span></button></li>
+</ol>
 
-@if (Request.Browser.IsWow() & string.IsNullOrEmpty(Model.Country))
+@Html.ValidationSummary(true)
+
+@*@if (Request.Browser.IsWow() & string.IsNullOrEmpty(Model.Country))
     {
         <script type="text/javascript">
             var selectedCountry = $('#Country').val();
@@ -45,4 +46,4 @@
 
             }
         </script>
-    }
+    }*@

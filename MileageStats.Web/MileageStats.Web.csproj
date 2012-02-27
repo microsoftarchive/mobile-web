@@ -63,13 +63,13 @@
     <Reference Include="EcmaScript.NET.modified, Version=0.1.1.0, Culture=neutral, PublicKeyToken=7d53ba4f537753a5, processorArchitecture=MSIL">
       <HintPath>..\packages\YUICompressor.NET-MsBuild-Task.1.7.0.0\lib\net35\EcmaScript.NET.modified.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -147,11 +147,13 @@
     <Compile Include="Controllers\ViewSwitcherController.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Helpers\VehicleHtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\MustacheTemplateExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\CustomControllerFactory.cs" />
+    <Compile Include="MustacheModel.cs" />
     <Compile Include="Properties\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -271,7 +273,10 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Profiles\Generic.xml" />
+    <Content Include="Scripts\MileageStats.Mobile.min.js" />
     <Content Include="Scripts\desktop-debug\mstats.tile.js" />
+    <Content Include="Scripts\mobile-debug\router.js" />
+    <Content Include="Scripts\mobile-debug\app.js" />
     <Content Include="Scripts\desktop-debug\mstats.vehicle-dropdown-monitor.js" />
     <Content Include="Scripts\desktop-debug\mstats.vehicle-charts.js" />
     <Content Include="Scripts\jqPlot\excanvas.min.js" />
@@ -293,6 +298,10 @@
     <Content Include="Scripts\desktop-debug\mstats.validation.js" />
     <Content Include="Scripts\desktop-debug\mstats.vehicle-details.js" />
     <Content Include="Scripts\desktop-debug\mstats.vehicle.js" />
+    <Content Include="Scripts\mobile-tests\tests.mocks.js" />
+    <Content Include="Scripts\mobile-tests\router.tests.js" />
+    <Content Include="Scripts\mobile-tests\tests.htm" />
+    <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\qunit.js" />
     <Content Include="Scripts\desktop-tests\mstats.vehicle-dropdown-monitor.tests.js" />
     <Content Include="Scripts\desktop-tests\mstats.fillups.tests.js" />
@@ -328,6 +337,7 @@
     <Content Include="Scripts\desktop-tests\tests.htm" />
     <Content Include="Views\Chart\Index.Mobile.cshtml" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <Content Include="Views\Dashboard\Dashboard.Stats.cshtml" />
     <None Include="Views\Error\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -350,6 +360,7 @@
     <Content Include="Views\Reminder\ListPartial.Mobile.cshtml" />
     <Content Include="Views\Shared\_ViewSwitcher.cshtml" />
     <Content Include="Views\Shared\_Flash.Mobile.cshtml" />
+    <None Include="Views\Profile\Edit.mustache" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Index.cshtml" />
@@ -491,10 +502,7 @@
   <ItemGroup>
     <Content Include="Views\Reminder\List.Mobile.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\mobile-debug\" />
-    <Folder Include="Scripts\mobile-tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Fillup\Details.Mobile.cshtml" />
   </ItemGroup>

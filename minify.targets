@@ -6,7 +6,8 @@
         AssemblyFile="$(SolutionDir)packages\YUICompressor.NET-MsBuild-Task.1.7.0.0\lib\NET35\Yahoo.Yui.Compressor.MsBuildTask.dll" />
 
     <PropertyGroup>
-        <JavaScriptOutputFile Condition=" '$(JavaScriptOutputFile)'=='' ">Scripts\MileageStats.min.js</JavaScriptOutputFile>
+        <DesktopOutput Condition=" '$(DesktopOutput)'=='' ">Scripts\MileageStats.min.js</DesktopOutput>
+        <MobileOutput Condition=" '$(MobileOutput)'=='' ">Scripts\MileageStats.Mobile.min.js</MobileOutput>
 
         <BuildDependsOn>
             $(BuildDependsOn);
@@ -17,18 +18,33 @@
     
     <Target Name="MinifyJavaScript">
         <ItemGroup>
-            <JavaScriptFiles Include="Scripts\desktop-debug\*.js" />
+            <DesktopInput Include="Scripts\desktop-debug\*.js" />
+            <MobileInput Include="Scripts\mobile-debug\*.js" />
         </ItemGroup>
 
         <CompressorTask
-            JavaScriptFiles="@(JavaScriptFiles)"
+            JavaScriptFiles="@(DesktopInput)"
             ObfuscateJavaScript="False"
             PreserveAllSemicolons="False"
             DisableOptimizations="True"
             EncodingType="Default"
             DeleteJavaScriptFiles="false"
             LineBreakPosition="-1"
-            JavaScriptOutputFile="$(JavaScriptOutputFile)"
+            JavaScriptOutputFile="$(DesktopOutput)"
+            LoggingType="ALittleBit"
+            ThreadCulture="en-us"
+            IsEvalIgnored="false"
+            />
+
+        <CompressorTask
+            JavaScriptFiles="@(MobileInput)"
+            ObfuscateJavaScript="False"
+            PreserveAllSemicolons="False"
+            DisableOptimizations="True"
+            EncodingType="Default"
+            DeleteJavaScriptFiles="false"
+            LineBreakPosition="-1"
+            JavaScriptOutputFile="$(MobileOutput)"
             LoggingType="ALittleBit"
             ThreadCulture="en-us"
             IsEvalIgnored="false"
