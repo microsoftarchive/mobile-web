@@ -122,6 +122,24 @@ limitations under the License. */
             ok(m.tracked.contains('attr: a[href="/another/route"]'));
         },
 
+        'router matches route with a named arg': function () {
+
+            var m = mocks.create();
+            var router = module.router(m);
+
+            router.setDefaultRegion('#view');
+            router.register('/my/route/:id');
+
+            // simulate hash change
+            m.window.location = {
+                hash: '#/my/route/1'
+            };
+            m.window.onhashchange();
+
+            //assert
+            ok(m.tracked.contains('html: #my-route'));
+            ok(m.tracked.contains('ajax: /my/route/1'));
+        }
     };
 
 } (window.specs = window.specs || {}, window.mstats));

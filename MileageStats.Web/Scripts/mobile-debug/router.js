@@ -27,7 +27,6 @@ limitations under the License. */
 
     if (!('onhashchange' in window)) {
         log('hashchange event not supported!');
-        return;
     }
 
     window.onhashchange = function () {
@@ -83,6 +82,7 @@ limitations under the License. */
         // assume that we'll fetch data unless we're told otherwise
         if (!('fetch' in registration)) registration.fetch = true;
         if (!('route' in registration)) registration.route = route;
+
         routes[route] = registration;
     }
 
