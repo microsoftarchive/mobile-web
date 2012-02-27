@@ -148,6 +148,7 @@ namespace MileageStats.Web.Controllers
             if (Request.Browser.IsMobileDevice)
             {
                 chartWidth = Request.Browser.ScreenPixelsWidth;
+                chartHeight = chartWidth*DESKTOP_CHART_HEIGHT/DESKTOP_CHART_WIDTH;
             }
 
             Debug.Assert(yValueAccessor != null);
