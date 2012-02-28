@@ -3,104 +3,21 @@
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Dashboard";
 }
+<script id="dashboard-index" type="text/html">
+    @{ Html.RenderAsMustacheTemplate("Dashboard.Stats"); }
+</script>
+
+<script id="vehicle-add" type="text/html">
+    @{ Html.RenderAsMustacheTemplate("_ProfileForm"); }
+</script>
+
+
 <nav>
-    @if (!Model.User.HasRegistered)
-    {
-        <ol class="title">
-            <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
-            <li>My Profile</li>
-        </ol>
-    }
-    else
-    {
         <ol class="tabs">
             <li><a href="@Url.Action("Index", "Dashboard")" class="selected">Dashboard</a></li>
             <li><a href="@Url.Action("Index", "Chart")">Charts</a></li>
         </ol>
-    }
 </nav>
-<div class="view">
-    @if (!Model.User.HasRegistered)
-    { 
-        using (Html.BeginForm("Edit", "Profile"))
-        {
-            Html.RenderPartial("_ProfileForm", Model.User);
-        }
-    }
-    else
-    {
-        <div class="stats">
-            <dl>
-                <dt class="mpg-label">MPG</dt>
-                <dd class="mpg">@string.Format("{0:0}", Model.FleetSummaryStatistics.AverageFuelEfficiency)</dd>
-                <dt class="mile-label">/mile</dt>
-                <dd class="mile">
-                    @string.Format("{0:c}", Model.FleetSummaryStatistics.AverageFillupPrice)</dd>
-                <dt class="month-label">/month</dt>
-                <dd class="month">
-                    @string.Format("{0:$0,0}", Model.FleetSummaryStatistics.AverageCostPerMonth)</dd>
-            </dl>
-        </div>
-        
-        foreach (var vehicle in Model.VehicleListViewModel.Vehicles)
-        { 
-            <dl class="vehicle widget">
-                <dt>
-                    <h2>
-                        <a href="@Url.Action("Details", "Vehicle", new { Id = vehicle.VehicleId })">@vehicle.Name</a></h2>
-                </dt>
-                <dd>
-                    <table>
-                        <tr>
-                            <td>
-                                Average Fuel Efficiency
-                            </td>
-                            <td>@string.Format("{0:#}", vehicle.Statistics.AverageFuelEfficiency)/mpg
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Total Distance Travelled
-                            </td>
-                            <td>@string.Format("{0:#,#}", vehicle.Statistics.TotalDistance) mi
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Total Cost
-                            </td>
-                            <td>
-                                @string.Format("{0:$#,#}", vehicle.Statistics.TotalCost)
-                            </td>
-                        </tr>
-                    </table>
-                    <ol class="buttons">
-                        <li><a href="@Url.Action("Details", "Vehicle", new { Id = vehicle.VehicleId })"><span>
-                            Details</span></a></li>
-                        <li><a href="@Url.Action("List", "Fillup", new { vehicleId = vehicle.VehicleId })"><span>
-                            Fill Ups</span></a></li>
-                        <li><a href="@Url.Action("List", "Reminder", new { vehicleId = vehicle.VehicleId })">
-                            <span>Reminders</span></a></li>
-                    </ol>
-                </dd>		
-            </dl>
-        }
-
-        <ol class="buttons">
-            <li class="add"><a href="@Url.Action("Add", "Vehicle")"><span>Add New Vehicle</span></a></li>
-        </ol>
-
-        if (Model.ImminentReminders.Any())
-         {
-             <h2>
-                 Imminent Reminders</h2>
-
-             <ol id="reminders" class="list">
-                 @foreach (var reminder in Model.ImminentReminders)
-                 {
-                     <li><a href="@Url.Action("Details", "Reminder", new { Id = reminder.Reminder.ReminderId, VehicleId = reminder.VehicleId })">@reminder.Reminder.Title</a></li>
-                 }
-             </ol>
-         }
-    }
+<div class="view" id="view">
+    @{Html.RenderPartial("Dashboard.Stats", Model);}
 </div>

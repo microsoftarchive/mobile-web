@@ -30,7 +30,6 @@
             @if (Request.IsAuthenticated)
             {
                 <ul>
-                    <li><a href="@Url.Action("Edit", "Profile")" class="profile icon only"><span>Profile</span></a></li>
                     <li><a href="@Url.Action("SignOut", "Auth")">Sign out</a></li>
                 </ul>
             }
