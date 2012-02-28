@@ -32,5 +32,6 @@ namespace MileageStats.Web.MobileProfiler
         public const string JSON = "json";
         public const string Cookies = "cookie_support";
         public const string FileUpload = "xhtml_file_upload";
+        public const string HashChange = "hashchange";
     }
 }

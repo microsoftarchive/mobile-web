@@ -46,6 +46,11 @@ namespace System.Web
             return httpBrowser[AllCapabilities.FileUpload] != "not_supported";
         }
 
+        public static bool SupportsHashChangeEvent(this HttpBrowserCapabilitiesBase httpBrowser)
+        {
+            return httpBrowser[AllCapabilities.HashChange] == "true";
+        }
+
         public static bool IsWorks(this HttpBrowserCapabilitiesBase httpBrowser)
         {
             return httpBrowser.IsMobileDevice;
@@ -57,7 +62,8 @@ namespace System.Web
                    httpBrowser.SupportsJavascript() && 
                    httpBrowser.SupportsJSON() &&
                    httpBrowser.SupportsDOMManipulation() &&
-                   httpBrowser.SupportsXmlHttp;
+                   httpBrowser.SupportsXmlHttp && 
+                   httpBrowser.SupportsHashChangeEvent();
         }
     }
 }

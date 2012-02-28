@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<profile title="Generic" id="generic" version="1.1">
+<profile title="Generic" id="generic" version="1.2">
 	<feature id="json" property="" default="0">
 		<name>JSON</name>
 		<description>Native JSON Object</description>
@@ -184,5 +184,15 @@
 	<feature id="desktop" property="" default="0">
 		<name>Desktop</name>
 		<description>Desktop browser</description>
+	</feature>
+
+	<feature id="hashchange" property="" default="0">
+		<name>Hash Change Event</name>
+		<description>Ability to raise events when a hash tag change is detected</description>
+		<test type="text/javascript">
+			<![CDATA[
+			return ('onhashchange' in window);
+			]]>
+		</test>
 	</feature>
 </profile>
