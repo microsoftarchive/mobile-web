@@ -34,6 +34,11 @@ namespace MileageStats.Web.Helpers
             helper.RenderPartial(view, new ViewDataDictionary { { UseMustacheFlag, "" } });
         }
 
+        public static bool IsMustache<TModel>(this HtmlHelper<TModel> helper)
+        {
+            return helper.ViewData.ContainsKey(UseMustacheFlag);
+        }
+
         public static MvcHtmlString Mustache<TModel,TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel,TProperty>> getter)
         {
             if(helper.ViewData.Model == null)

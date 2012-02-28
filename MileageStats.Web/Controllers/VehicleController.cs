@@ -39,8 +39,6 @@ namespace MileageStats.Web.Controllers
         {
         }
 
-        //
-        // GET: /Vehicle/Details/5
         [Authorize]
         public ActionResult Details(int id)
         {
@@ -71,7 +69,7 @@ namespace MileageStats.Web.Controllers
                          };
             vm.VehicleList.IsCollapsed = true;
 
-            return View(vm);
+            return new ContentTypeAwareResult(vm);
         }
 
         private ViewResult SetupVehicleForm(VehicleFormModel vehicleForm)

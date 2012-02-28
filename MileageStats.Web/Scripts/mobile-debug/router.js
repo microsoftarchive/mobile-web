@@ -19,29 +19,42 @@ limitations under the License. */
 
     var templating = require('Mustache'),
         window = require('window'),
-        log = require('log'),
         $ = require('$');
 
     var routes = {},
-        defaultRegion = '#region-to-replace';
+        defaultRegion = '#region-to-replace',
+        namedParametersPattern = /:(\w)*/g;
 
     if (!('onhashchange' in window)) {
-        log('hashchange event not supported!');
+        //console.log('hashchange event not supported!');
     }
 
     window.onhashchange = function () {
+        var route = window.location.hash.replace('#', ''),
+            target = matchRoute(route);
 
-        var route = window.location.hash.replace('#', '');
-        var registration = routes[route];
-
-        if (registration) {
-            transitionTo(registration);
+        if (target) {
+            transitionTo(target);
         } else {
-            log('unhandled route: ' + route);
+            //console.log('unhandled route: ' + route);
         }
     };
 
-    function transitionTo(registration) {
+    function register(route, registration) {
+        registration = registration || {};
+
+        // assume that we'll fetch data unless we're told otherwise
+        if (!('fetch' in registration)) registration.fetch = true;
+        if (!('route' in registration)) registration.route = route;
+
+        registration.params = route.match(namedParametersPattern);
+        registration.regexp = buildRegExpForMatching(route);
+
+        routes[route] = registration;
+    }
+
+    function transitionTo(target) {
+        var registration = target.registration;
         var region = registration.region || defaultRegion;
         var route = registration.route;
         var callback = registration.callback;
@@ -61,7 +74,7 @@ limitations under the License. */
             $.ajax({
                 dataType: 'json',
                 type: 'GET',
-                url: route,
+                url: target.url,
                 success: success
             });
         } else {
@@ -70,28 +83,80 @@ limitations under the License. */
         }
     }
 
+    function matchRoute(url) {
+
+        var item,
+            registration,
+            match,
+            result;
+
+        for (item in routes) {
+            registration = routes[item];
+            match = url.match(registration.regexp);
+
+            if (match !== null) {
+                result = buildMatchResult(match, registration);
+                result.url = url;
+                return result;
+            }
+        }
+
+        return false;
+    }
+
+    function buildMatchResult(match, registration) {
+
+        var result = {
+            registration: registration,
+            params: {}
+        },
+            params = registration.params,
+            named,
+            i;
+
+        if (!params) return result;
+
+        for (i = 0; i < params.length; i++) {
+            named = params[i];
+            result.params[named] = match[i + 1];
+        }
+
+        return result;
+    }
+
     function getTemplateFor(route) {
-        // results could be cached
-        if (route.substring(0, 1) === '/') route = route.replace('/', '');
-        var id = '#' + route.replace(/\//g, '-').toLowerCase();
+
+        // templateId could be cached at registration
+
+        var id = '#' + route
+            .replace(namedParametersPattern, '')    // remove named parameters
+            .replace(/^\//, '')                     // remove leading /
+            .replace(/\//g, '-').toLowerCase()      // convert / to  -
+            .replace(/--/g, '-')                    // collapse double -
+            .replace(/-$/, '');                   // remove trailing -
+
         return $(id).html();
     }
 
-    function register(route, registration) {
-        registration = registration || {};
-        // assume that we'll fetch data unless we're told otherwise
-        if (!('fetch' in registration)) registration.fetch = true;
-        if (!('route' in registration)) registration.route = route;
-
-        routes[route] = registration;
+    function buildRegExpForMatching(route) {
+        var pattern = route.replace(/\//g, '\\/').replace(namedParametersPattern, '(\\w)+') + '$';
+        return new RegExp(pattern);
     }
 
     function overrideLinks() {
-        // this could be scoped, so that it doesn't search the entire page
-        var route;
-        for (route in routes) {
-            $('a[href="' + route + '"]').attr('href', '#' + route);
-        }
+
+        // rewriting the links this way is very heavy
+        // another approach would be to do this check
+        // in the click handler for the link
+
+        $('a[href]').each(function (i, a) {
+            var anchor = $(a);
+            var match;
+            var href = anchor.attr('href');
+            if (href.indexOf('#') === -1 && (match = matchRoute(href))) {
+                anchor.attr('href', '#' + match.url);
+            }
+        });
     }
 
     return {

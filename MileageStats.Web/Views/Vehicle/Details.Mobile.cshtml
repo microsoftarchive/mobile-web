@@ -1,45 +1,50 @@
 ﻿@model MileageStats.Web.Models.VehicleDetailsViewModel
-@{
+           
+@if (!Html.IsMustache())
+{
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
-	ViewBag.Title = "Details for " + @Model.Vehicle.Name;
+    ViewBag.Title = "Details for " + @Model.Vehicle.Name;
     var vehicle = Model.Vehicle;
+    
+    <nav>
+        <ol class="title">
+            <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
+            <li>@vehicle.Name</li>
+        </ol>
+
+        <ol class="tabs vehicle-details" >
+            <li><a href="@Url.Action("Details", "Vehicle", new {Id = vehicle.VehicleId})" class="selected">Details</a></li>
+            <li><a href="@Url.Action("List", "Fillup", new {vehicleId = vehicle.VehicleId})">Fill Ups</a></li>
+            <li><a href="@Url.Action("List", "Reminder", new {vehicleId = vehicle.VehicleId})">Reminders</a></li>
+        </ol>
+    </nav>
+    
+    Response.Write("<div class=\"view\">");
+    
+    Html.RenderPartial("_Flash");
 }
-
-<nav>
-    <ol class="title">
-        <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
-        <li>@vehicle.Name</li>
-    </ol>
-
-    <ol class="tabs vehicle-details" >
-        <li><a href="@Url.Action("Details", "Vehicle", new { Id = vehicle.VehicleId })" class="selected">Details</a></li>
-        <li><a href="@Url.Action("List", "Fillup", new { vehicleId = vehicle.VehicleId })">Fill Ups</a></li>
-        <li><a href="@Url.Action("List", "Reminder", new { vehicleId = vehicle.VehicleId })">Reminders</a></li>
-    </ol>
-</nav>
-
-<div class="view">
-
-@{Html.RenderPartial("_Flash");}
-
-<div class="flash alert"><p>
-The content of this screen will change! See the flow pdf.</p>
-</div>
-
     <dl class="list">
         <dt>@Html.LabelFor(model => model.Vehicle.Name)</dt>
-        <dd>@vehicle.Name</dd>
+        <dd>@Html.Mustache(m => m.Vehicle.Name)</dd>
+
         <dt>@Html.LabelFor(model => model.Vehicle.Year)</dt>
-        <dd>@(vehicle.Year.HasValue ? vehicle.Year.ToString() : "n/a")</dd>
+        <dd>@Html.Mustache(m => m.Vehicle.Year)</dd>
+
         <dt>@Html.LabelFor(model => model.Vehicle.MakeName)</dt>
-        <dd>@(vehicle.MakeName ?? "n/a")</dd>
+        <dd>@Html.Mustache(m => m.Vehicle.MakeName)</dd>
+
         <dt>@Html.LabelFor(model => model.Vehicle.ModelName)</dt>
-        <dd>@(vehicle.ModelName ?? "n/a")</dd>
+        <dd>@Html.Mustache(m => m.Vehicle.ModelName)</dd>
+
         <dt>@Html.LabelFor(model => model.Vehicle.Odometer)</dt>
-        <dd>@String.Format("{0:g}", vehicle.Odometer ?? 0) miles</dd>
+        <dd>@Html.Mustache(model => model.Vehicle.Odometer) miles</dd>
     </dl>
 
-    <ol class="hbox button-group">
-        <li><a href="@Url.Action("Edit", "Vehicle", new { id = Model.Vehicle.VehicleId })"><span>Edit</span></a></li>
+    <ol class="buttons single">
+        <li><a href="@Url.Action("Edit", "Vehicle", new { id = Html.Mustache(m=>m.Vehicle.VehicleId) })"><span>Edit</span></a></li>
     </ol>
-</div>
+
+@if (!Html.IsMustache())
+{
+    Response.Write("</div>");
+}

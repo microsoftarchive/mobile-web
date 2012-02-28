@@ -26,9 +26,6 @@ limitations under the License. */
     var module, registration;
     var global = this;
 
-    // default logging
-    app.log = app.log || function () { return console.log; };
-
     // this function is responsible for fulfilling
     // depedencies in modules
     function require(service) {
@@ -50,7 +47,9 @@ limitations under the License. */
         // check to see if the module is
         // a function or an object and only apply it
         // when it is a function
-        if (typeof module === 'function') app[registration] = module(require);
+        if (typeof module === 'function') {
+            app[registration] = module(require);
+        }
     }
 
     // after the modules are all bootstrapped
@@ -61,7 +60,7 @@ limitations under the License. */
 
     register('/Profile/Edit');
     register('/Dashboard/Index');
-    //register('/Vehicle/Details/:id'); // requires matching args in a route
+    register('/Vehicle/Details/:id'); // requires matching args in a route
     //register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
     register('/', {
         route: 'Dashboard/Index'

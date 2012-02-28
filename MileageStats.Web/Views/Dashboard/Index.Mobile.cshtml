@@ -7,17 +7,41 @@
     @{ Html.RenderAsMustacheTemplate("Dashboard.Stats"); }
 </script>
 
-<script id="vehicle-add" type="text/html">
+<script id="profile-edit" type="text/html">
     @{ Html.RenderAsMustacheTemplate("_ProfileForm"); }
+</script>
+
+<script id="vehicle-details" type="text/html">
+    @{ Html.RenderAsMustacheTemplate("~/Views/Vehicle/Details.Mobile.cshtml"); }
 </script>
 
 
 <nav>
+    @if (!Model.User.HasRegistered)
+    {
+        <ol class="title">
+            <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
+            <li>My Profile</li>
+        </ol>
+    }
+    else
+    {
         <ol class="tabs">
             <li><a href="@Url.Action("Index", "Dashboard")" class="selected">Dashboard</a></li>
             <li><a href="@Url.Action("Index", "Chart")">Charts</a></li>
         </ol>
+    }
 </nav>
 <div class="view" id="view">
-    @{Html.RenderPartial("Dashboard.Stats", Model);}
+    @if (!Model.User.HasRegistered)
+    {
+        using (Html.BeginForm("Edit", "Profile"))
+        {
+            Html.RenderPartial("_ProfileForm", Model.User);
+        }
+    }
+    else
+    {
+        Html.RenderPartial("Dashboard.Stats", Model);
+    }
 </div>

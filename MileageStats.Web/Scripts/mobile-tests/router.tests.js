@@ -15,11 +15,11 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-(function (specs, app) {
+(function(specs, app) {
 
     module('router specs');
 
-    test('router module constructs itself', function () {
+    test('router module constructs itself', function() {
 
         var router = app.router(mocks.create());
 
@@ -27,7 +27,7 @@ limitations under the License. */
         equal(typeof router, 'object');
     });
 
-    test('router replaces view when hash changed', function () {
+    test('router replaces view when hash changed', function() {
 
         var m = mocks.create();
         var router = app.router(m);
@@ -47,7 +47,7 @@ limitations under the License. */
         ok(m.tracked.indexOf('empty: #view') < m.tracked.indexOf('append: #view'), 'should empty before appending');
     });
 
-        test('router infers template id from route', function () {
+    test('router infers template id from route', function() {
 
         var m = mocks.create();
         var router = app.router(m);
@@ -65,7 +65,7 @@ limitations under the License. */
         ok(m.tracked.contains('html: #my-route'));
     });
 
-    test('router invokes an ajax calls by default to url', function () {
+    test('router invokes an ajax calls by default to url', function() {
 
         var m = mocks.create();
         var router = app.router(m);
@@ -83,13 +83,13 @@ limitations under the License. */
         ok(m.tracked.contains('ajax: /my/route'));
     });
 
-    test('router will not invoke an ajax call when registration accordingly', function () {
+    test('router will not invoke an ajax call when registration accordingly', function() {
 
         var m = mocks.create();
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
-        router.register('/my/route', { fetch: false});
+        router.register('/my/route', { fetch: false });
 
         // simulate hash change
         m.window.location = {
@@ -101,14 +101,20 @@ limitations under the License. */
         ok(!m.tracked.contains('ajax: /my/route'));
     });
 
-    test('router modifies the href on anchor tags matching registered routes', function () {
+    test('router modifies the href on anchor tags matching registered routes', function() {
+        var overriddenLink = '';
 
-        var m = mocks.create();
+        var m = mocks.create(
+            {
+                '$.attr': function(name, value) {
+                    if (!value) return '/my/route';
+                    overriddenLink = value;
+                }
+            });
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
         router.register('/my/route');
-        router.register('/another/route');
 
         // simulate hash change
         m.window.location = {
@@ -116,12 +122,54 @@ limitations under the License. */
         };
         m.window.onhashchange();
 
-        //assert
-        ok(m.tracked.contains('attr: a[href="/my/route"]'));
-        ok(m.tracked.contains('attr: a[href="/another/route"]'));
+        // assert
+        equal(overriddenLink, '#/my/route');
     });
 
-    test('router matches route with a named arg', function () {
+    test('router modifies the href on anchor tags matching registered routes with named args', function() {
+        var overriddenLink = '';
+        var m = mocks.create(
+            {
+                '$.attr': function(name, value) {
+                    if (!value) return '/my/route/1';
+                    overriddenLink = value;
+                }
+            }
+        );
+        var router = app.router(m);
+
+        router.setDefaultRegion('#view');
+        router.register('/my/route/:id');
+
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route/x'
+        };
+        m.window.onhashchange();
+
+        //assert
+        equal(overriddenLink, '#/my/route/1');
+    });
+
+    test('router matches invokes correct ajax url when route has a named arg', function() {
+
+        var m = mocks.create();
+        var router = app.router(m);
+
+        router.setDefaultRegion('#view');
+        router.register('/my/route/:id');
+
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route/1'
+        };
+        m.window.onhashchange();
+
+        //assert
+        ok(m.tracked.contains('ajax: /my/route/1'));
+    });
+
+    test('router matches template with a named arg', function() {
 
         var m = mocks.create();
         var router = app.router(m);
@@ -137,7 +185,24 @@ limitations under the License. */
 
         //assert
         ok(m.tracked.contains('html: #my-route'));
-        ok(m.tracked.contains('ajax: /my/route/1'));
     });
-    
-} (window.specs = window.specs || {}, window.mstats));
+
+    test('router matches template with an embedded named arg', function() {
+
+        var m = mocks.create();
+        var router = app.router(m);
+
+        router.setDefaultRegion('#view');
+        router.register('/my/route/:id/more');
+
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route/1/more'
+        };
+        m.window.onhashchange();
+
+        //assert
+        ok(m.tracked.contains('html: #my-route-more'));
+    });
+
+}(window.specs = window.specs || { }, window.mstats));
