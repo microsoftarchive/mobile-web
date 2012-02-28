@@ -36,8 +36,8 @@
             </li>
             <li>
                 <label>Date Range</label>
-                @Html.PriorMonthYearPickerFor(model => model.StartDate, Model.StartDate, false)
-                @Html.PriorMonthEndYearPickerFor(model => model.EndDate, Model.EndDate, false)
+                <label>From:</label>@Html.PriorMonthYearPickerFor(model => model.StartDate, Model.StartDate, false)
+                <label>To:</label>@Html.PriorMonthEndYearPickerFor(model => model.EndDate, Model.EndDate, false)
             </li>
             
         </ol>
