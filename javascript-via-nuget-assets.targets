@@ -14,8 +14,10 @@
             <jqPlotFiles Include="$(SolutionDir)packages\jqPlot.1.0.0\Content\Scripts\jqPlot\*.*" />
             <jqPlotPluginFiles Include="$(SolutionDir)packages\jqPlot.1.0.0\Content\Scripts\jqPlot\plugins\*.*" />
             <QUnitFiles Include="$(SolutionDir)packages\QUnit-MVC.1.6.2.0\content\**\*.*" />
+            <MustacheFiles Include="$(SolutionDir)packages\mustache.js.0.4.1\content\**\*.*" />
         </ItemGroup>
     
+        <!-- jqPlot -->
         <Message 
             Text="Copying jqPlot assets for project..."
             Importance="high" />
@@ -42,6 +44,8 @@
             Text="@(jqPlotCopiedFiles)"
             Importance="high" />
 
+        <!-- QUnit -->
+
         <Message 
             Text="Copying QUnit assets for project..."
             Importance="high" />
@@ -57,6 +61,25 @@
 
         <Message
             Text="@(QUnitCopiedFiles)"
+            Importance="high" />
+
+        <!-- mustache -->
+
+        <Message 
+            Text="Copying Mustache assets for project..."
+            Importance="high" />
+
+        <Copy
+            SkipUnchangedFiles="true"
+            SourceFiles="@(MustacheFiles)"
+            DestinationFiles="@(MustacheFiles->'$(ProjectDir)%(RecursiveDir)%(Filename)%(Extension)')" >
+            <Output
+                TaskParameter="CopiedFiles"
+                ItemName="MustacheCopiedFiles" />
+        </Copy>
+
+        <Message
+            Text="@(MustacheCopiedFiles)"
             Importance="high" />
 
     </Target>
