@@ -15,131 +15,129 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-(function (specs, module) {
+(function (specs, app) {
 
-    //todo: convert this over to QUnit format
-    specs['router specs'] = {
+    module('router specs');
 
-        'router module constructs itself': function () {
+    test('router module constructs itself', function () {
 
-            var router = module.router(mocks.create());
+        var router = app.router(mocks.create());
 
-            ok(router != undefined, true);
-            equal(typeof router, 'object');
-        },
+        ok(router != undefined, true);
+        equal(typeof router, 'object');
+    });
 
-        'router replaces view when hash changed': function () {
+    test('router replaces view when hash changed', function () {
 
-            var m = mocks.create();
-            var router = module.router(m);
+        var m = mocks.create();
+        var router = app.router(m);
 
-            router.setDefaultRegion('#view');
-            router.register('/my/route');
+        router.setDefaultRegion('#view');
+        router.register('/my/route');
 
-            // simulate hash change
-            m.window.location = {
-                hash: '#/my/route'
-            };
-            m.window.onhashchange();
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route'
+        };
+        m.window.onhashchange();
 
-            //assert
-            ok(m.tracked.contains('empty: #view'));
-            ok(m.tracked.contains('append: #view'));
-            ok(m.tracked.indexOf('empty: #view') < m.tracked.indexOf('append: #view'), 'should empty before appending');
-        },
+        //assert
+        ok(m.tracked.contains('empty: #view'));
+        ok(m.tracked.contains('append: #view'));
+        ok(m.tracked.indexOf('empty: #view') < m.tracked.indexOf('append: #view'), 'should empty before appending');
+    });
 
-        'router infers template id from route': function () {
+        test('router infers template id from route', function () {
 
-            var m = mocks.create();
-            var router = module.router(m);
+        var m = mocks.create();
+        var router = app.router(m);
 
-            router.setDefaultRegion('#view');
-            router.register('/my/route');
+        router.setDefaultRegion('#view');
+        router.register('/my/route');
 
-            // simulate hash change
-            m.window.location = {
-                hash: '#/my/route'
-            };
-            m.window.onhashchange();
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route'
+        };
+        m.window.onhashchange();
 
-            //assert
-            ok(m.tracked.contains('html: #my-route'));
-        },
+        //assert
+        ok(m.tracked.contains('html: #my-route'));
+    });
 
-        'router invokes an ajax calls by default to url': function () {
+    test('router invokes an ajax calls by default to url', function () {
 
-            var m = mocks.create();
-            var router = module.router(m);
+        var m = mocks.create();
+        var router = app.router(m);
 
-            router.setDefaultRegion('#view');
-            router.register('/my/route');
+        router.setDefaultRegion('#view');
+        router.register('/my/route');
 
-            // simulate hash change
-            m.window.location = {
-                hash: '#/my/route'
-            };
-            m.window.onhashchange();
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route'
+        };
+        m.window.onhashchange();
 
-            //assert
-            ok(m.tracked.contains('ajax: /my/route'));
-        },
+        //assert
+        ok(m.tracked.contains('ajax: /my/route'));
+    });
 
-        'router will not invoke an ajax call when registration accordingly': function () {
+    test('router will not invoke an ajax call when registration accordingly', function () {
 
-            var m = mocks.create();
-            var router = module.router(m);
+        var m = mocks.create();
+        var router = app.router(m);
 
-            router.setDefaultRegion('#view');
-            router.register('/my/route', { fetch: false});
+        router.setDefaultRegion('#view');
+        router.register('/my/route', { fetch: false});
 
-            // simulate hash change
-            m.window.location = {
-                hash: '#/my/route'
-            };
-            m.window.onhashchange();
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route'
+        };
+        m.window.onhashchange();
 
-            //assert
-            ok(!m.tracked.contains('ajax: /my/route'));
-        },
+        //assert
+        ok(!m.tracked.contains('ajax: /my/route'));
+    });
 
-        'router modifies the href on anchor tags matching registered routes': function () {
+    test('router modifies the href on anchor tags matching registered routes', function () {
 
-            var m = mocks.create();
-            var router = module.router(m);
+        var m = mocks.create();
+        var router = app.router(m);
 
-            router.setDefaultRegion('#view');
-            router.register('/my/route');
-            router.register('/another/route');
+        router.setDefaultRegion('#view');
+        router.register('/my/route');
+        router.register('/another/route');
 
-            // simulate hash change
-            m.window.location = {
-                hash: '#/my/route'
-            };
-            m.window.onhashchange();
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route'
+        };
+        m.window.onhashchange();
 
-            //assert
-            ok(m.tracked.contains('attr: a[href="/my/route"]'));
-            ok(m.tracked.contains('attr: a[href="/another/route"]'));
-        },
+        //assert
+        ok(m.tracked.contains('attr: a[href="/my/route"]'));
+        ok(m.tracked.contains('attr: a[href="/another/route"]'));
+    });
 
-        'router matches route with a named arg': function () {
+    test('router matches route with a named arg', function () {
 
-            var m = mocks.create();
-            var router = module.router(m);
+        var m = mocks.create();
+        var router = app.router(m);
 
-            router.setDefaultRegion('#view');
-            router.register('/my/route/:id');
+        router.setDefaultRegion('#view');
+        router.register('/my/route/:id');
 
-            // simulate hash change
-            m.window.location = {
-                hash: '#/my/route/1'
-            };
-            m.window.onhashchange();
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route/1'
+        };
+        m.window.onhashchange();
 
-            //assert
-            ok(m.tracked.contains('html: #my-route'));
-            ok(m.tracked.contains('ajax: /my/route/1'));
-        }
-    };
-
+        //assert
+        ok(m.tracked.contains('html: #my-route'));
+        ok(m.tracked.contains('ajax: /my/route/1'));
+    });
+    
 } (window.specs = window.specs || {}, window.mstats));

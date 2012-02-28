@@ -27,33 +27,6 @@
 
     <!-- Unit tests -->
     <script src="router.tests.js"></script>    
-    
-    <script>
-
-        // translate our test format to QUnit
-        function run_test(specId, spec) {
-            test(specId, function () {
-                return spec(equal, expect);
-            });
-        }
-
-        function run_module(suiteId, suite) {
-            var specId;
-            module(suiteId);
-            for (specId in suite) {
-                run_test(specId, suite[specId]);
-            }
-        }
-
-        $(function () {
-            var suiteId;
-            for (suiteId in window.specs) {
-                run_module(suiteId, window.specs[suiteId]);
-            }
-
-        } ());
-        
-    </script>
 
 </body>
 </html>
