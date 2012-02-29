@@ -361,6 +361,7 @@
     <Content Include="Views\Shared\_ViewSwitcher.cshtml" />
     <Content Include="Views\Shared\_Flash.Mobile.cshtml" />
     <None Include="Views\Profile\Edit.mustache" />
+    <Content Include="Views\Vehicle\ConfirmDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Index.cshtml" />

@@ -116,29 +116,35 @@ namespace MileageStats.Web.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
+            var vehicleForm = GetVehicleForm(id);
+
+            return SetupVehicleForm(vehicleForm);
+        }
+
+        private VehicleFormModel GetVehicleForm(int vehicleId)
+        {
             var vehicles = Using<GetVehicleListForUser>()
                 .Execute(CurrentUserId);
 
             var selected = vehicles
-                .FirstOrDefault(x => x.VehicleId == id);
+                .FirstOrDefault(x => x.VehicleId == vehicleId);
 
             if (selected == null)
             {
-                throw new HttpException((int)HttpStatusCode.NotFound,
-                    Messages.VehicleController_VehicleNotFound);
+                throw new HttpException((int) HttpStatusCode.NotFound,
+                                        Messages.VehicleController_VehicleNotFound);
             }
 
             var vehicleForm = new VehicleFormModel
-            {
-                VehicleId = selected.VehicleId,
-                Name = selected.Name,
-                Year = selected.Year,
-                MakeName = selected.MakeName,
-                ModelName = selected.ModelName,
-                SortOrder = selected.SortOrder
-            };
-
-            return SetupVehicleForm(vehicleForm);
+                                  {
+                                      VehicleId = selected.VehicleId,
+                                      Name = selected.Name,
+                                      Year = selected.Year,
+                                      MakeName = selected.MakeName,
+                                      ModelName = selected.ModelName,
+                                      SortOrder = selected.SortOrder
+                                  };
+            return vehicleForm;
         }
 
         [HttpPost]
@@ -157,6 +163,12 @@ namespace MileageStats.Web.Controllers
             }
 
             return SetupVehicleForm(vehicleForm);
+        }
+
+        public ActionResult ConfirmDelete(int id)
+        {
+            var vehicleForm = GetVehicleForm(id);
+            return View(vehicleForm);    
         }
 
         [HttpPost]

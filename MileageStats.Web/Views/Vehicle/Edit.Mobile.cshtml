@@ -20,12 +20,11 @@
         </p>
     }
     <ol class="hbox button-group">
-        <li class="false">
-            @using (Html.BeginForm("Delete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Post))
+        <li class="icon false">
+            @using (Html.BeginForm("ConfirmDelete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Get))
             {
                 <button type="submit" value="delete" name="action" class="false">
-                    <span>Delete Vehicle</span></button>
-    
+                    <span>Delete</span></button>
             }
         </li>
     </ol>

@@ -1,0 +1,23 @@
+﻿@model MileageStats.Web.Models.VehicleFormModel
+@{
+    Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+    ViewBag.Title = "Confirm Delete Vehicle";
+}
+
+<h2>Are you sure you want to delete this vehicle?</h2>
+<ol>
+    <li>@Model.Name</li>
+    <li>@Model.Year</li>
+    <li>@Model.MakeName</li>
+    <li>@Model.ModelName</li>
+</ol>
+<ol class="hbox button-group">
+        <li class="icon false">
+            @using (Html.BeginForm("Delete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Post))
+            {
+                <button type="submit" value="delete" name="action" class="false">
+                    <span>Delete Vehicle</span></button>
+    
+            }            
+        </li>
+    </ol>
