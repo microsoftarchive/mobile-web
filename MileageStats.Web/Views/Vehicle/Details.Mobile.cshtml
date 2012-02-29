@@ -1,6 +1,6 @@
 ﻿@model MileageStats.Web.Models.VehicleDetailsViewModel
            
-@if (!Html.IsMustache())
+@if (!Html.IsRenderingForMustache())
 {
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Details for " + @Model.Vehicle.Name;
@@ -13,9 +13,9 @@
         </ol>
 
         <ol class="tabs vehicle-details" >
-            <li><a href="@Url.Action("Details", "Vehicle", new {Id = vehicle.VehicleId})" class="selected">Details</a></li>
-            <li><a href="@Url.Action("List", "Fillup", new {vehicleId = vehicle.VehicleId})">Fill Ups</a></li>
-            <li><a href="@Url.Action("List", "Reminder", new {vehicleId = vehicle.VehicleId})">Reminders</a></li>
+            <li><a href="@Url.Action("Details", "Vehicle", new { Id = vehicle.VehicleId })" class="selected">Details</a></li>
+            <li><a href="@Url.Action("List", "Fillup", new { vehicleId = vehicle.VehicleId })">Fill Ups</a></li>
+            <li><a href="@Url.Action("List", "Reminder", new { vehicleId = vehicle.VehicleId })">Reminders</a></li>
         </ol>
     </nav>
     
@@ -25,26 +25,26 @@
 }
     <dl class="list">
         <dt>@Html.LabelFor(model => model.Vehicle.Name)</dt>
-        <dd>@Html.Mustache(m => m.Vehicle.Name)</dd>
+        <dd>@Mustache.Value(m => m.Vehicle.Name)</dd>
 
         <dt>@Html.LabelFor(model => model.Vehicle.Year)</dt>
-        <dd>@Html.Mustache(m => m.Vehicle.Year)</dd>
+        <dd>@Mustache.Value(m => m.Vehicle.Year)</dd>
 
         <dt>@Html.LabelFor(model => model.Vehicle.MakeName)</dt>
-        <dd>@Html.Mustache(m => m.Vehicle.MakeName)</dd>
+        <dd>@Mustache.Value(m => m.Vehicle.MakeName)</dd>
 
         <dt>@Html.LabelFor(model => model.Vehicle.ModelName)</dt>
-        <dd>@Html.Mustache(m => m.Vehicle.ModelName)</dd>
+        <dd>@Mustache.Value(m => m.Vehicle.ModelName)</dd>
 
         <dt>@Html.LabelFor(model => model.Vehicle.Odometer)</dt>
-        <dd>@Html.Mustache(model => model.Vehicle.Odometer) miles</dd>
+        <dd>@Mustache.Value(model => model.Vehicle.Odometer) miles</dd>
     </dl>
 
     <ol class="hbox button-group">
-        <li><a href="@Url.Action("Edit", "Vehicle", new { id = Html.Mustache(m=>m.Vehicle.VehicleId) })"><span>Edit</span></a></li>
+        <li><a href="@Url.Action("Edit", "Vehicle", new { id = Mustache.Value(m => m.Vehicle.VehicleId) })"><span>Edit</span></a></li>
     </ol>
 
-@if (!Html.IsMustache())
+@if (!Html.IsRenderingForMustache())
 {
     Response.Write("</div>");
 }

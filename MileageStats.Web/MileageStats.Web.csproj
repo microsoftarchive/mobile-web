@@ -145,6 +145,8 @@
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Authentication\LocalFakeRelyingParty.cs" />
     <Compile Include="Controllers\ViewSwitcherController.cs" />
+    <Compile Include="Helpers\Mustache\DisposableEnumerable.cs" />
+    <Compile Include="Helpers\Mustache\DisposableEnumerator.cs" />
     <Compile Include="Infrastructure\CookieTempDataProvider.cs" />
     <Compile Include="Helpers\VehicleHtmlHelperExtensions.cs" />
     <Compile Include="Helpers\MustacheTemplateExtensions.cs" />
@@ -153,6 +155,7 @@
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\CustomControllerFactory.cs" />
+    <Compile Include="Helpers\MustacheHelper.cs" />
     <Compile Include="MustacheModel.cs" />
     <Compile Include="Properties\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -184,6 +187,7 @@
     <Compile Include="UnityExtensions\UnityHttpContextPerRequestLifetimeManager.cs" />
     <Compile Include="UnityExtensions\UnityPerRequestLifetimeManager.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
+    <Compile Include="WebViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\web_browsers_patch.xml" />

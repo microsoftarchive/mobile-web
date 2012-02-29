@@ -40,7 +40,7 @@ namespace MileageStats.Web.Tests.Helpers
             var helper = MockHelperWithModel(null);
 
             var selectList = new SelectList(new List<string>());
-            var actual = helper.MDropDownListFor(model => model.SomeValue, selectList);
+            var actual = helper.DropDownListFor(model => model.SomeValue, selectList);
            
             const string property = "SomeValue";
             const string option = "<option value=\"{{value}}\" {{#selected}}selected{{/selected}}>{{text}}</option>";
@@ -58,7 +58,7 @@ namespace MileageStats.Web.Tests.Helpers
             var helper = MockHelperWithModel(null);
 
             var selectList = new SelectList(new List<string>());
-            var actual = helper.MDropDownListFor(model => model.SomeValue, selectList, "ignored", new { attr ="test"} );
+            var actual = helper.DropDownListFor(model => model.SomeValue, selectList, "ignored", new { attr ="test"} );
 
             const string property = "SomeValue";
             const string option = "<option value=\"{{value}}\" {{#selected}}selected{{/selected}}>{{text}}</option>";
@@ -76,7 +76,7 @@ namespace MileageStats.Web.Tests.Helpers
             var helper = MockHelperWithModel(null);
 
             var selectList = new SelectList(new List<string>());
-            var actual = helper.MDropDownListFor(model => model.SomeValue, selectList, "an option label");
+            var actual = helper.DropDownListFor(model => model.SomeValue, selectList, "an option label");
 
             const string property = "SomeValue";
             const string option = "<option value=\"{{value}}\" {{#selected}}selected{{/selected}}>{{text}}</option>";
@@ -93,7 +93,7 @@ namespace MileageStats.Web.Tests.Helpers
             var helper = MockHelperWithModel(new SampleModel());
 
             var selectList = new SelectList(new List<string>{ "apple", "orange" });
-            var actual = helper.MDropDownListFor(model => model.SomeValue, selectList);
+            var actual = helper.DropDownListFor(model => model.SomeValue, selectList);
 
             const string property = "SomeValue";
             const string option1 = "<option>apple</option>";
@@ -104,13 +104,14 @@ namespace MileageStats.Web.Tests.Helpers
             Assert.Equal(expected.ToHtmlString(), actual.ToHtmlString());
         }
 
-        private HtmlHelper<SampleModel> MockHelperWithModel(SampleModel model)
+        private MustacheHelper<SampleModel> MockHelperWithModel(SampleModel model)
         {
             var viewData = new ViewDataDictionary();
             if (model != null) viewData.Model = model;
             var viewDataContainer = MockViewDataContainer(viewData);
             var viewContext = MockViewContext(viewData);
-            return new HtmlHelper<SampleModel>(viewContext.Object, viewDataContainer.Object);
+            var internalHelper = new HtmlHelper<SampleModel>(viewContext.Object, viewDataContainer.Object);
+            return new MustacheHelper<SampleModel>(internalHelper);
         }
 
         private static Mock<ViewContext> MockViewContext(ViewDataDictionary viewData)
