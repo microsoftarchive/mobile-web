@@ -52,11 +52,11 @@
             </tr>
         </table>
         <ol class="buttons">
-            <li><a href="@Url.Action("Details", "Vehicle")/@Html.Mustache(vehicle, i => i.VehicleId)"><span>
+            <li><a href="@Url.Action("Details", "Vehicle", new { id = Html.Mustache(vehicle, i => i.VehicleId)})"><span>
                 Details</span></a></li>
-            <li><a href="@Url.Action("List", "Fillup")/@Html.Mustache(vehicle, i => i.VehicleId)"><span>
+            <li><a href="@Url.Action("List", "Fillup", new { vehicleId = Html.Mustache(vehicle, i => i.VehicleId) })"><span>
                 Fill Ups</span></a></li>
-            <li><a href="@Url.Action("List", "Reminder")/@Html.Mustache(vehicle, i => i.VehicleId)">
+            <li><a href="@Url.Action("List", "Reminder", new { vehicleId = Html.Mustache(vehicle, i => i.VehicleId) })">
                 <span>Reminders</span></a></li>
         </ol>
     </dd>
