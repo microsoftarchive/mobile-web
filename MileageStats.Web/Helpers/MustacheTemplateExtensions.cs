@@ -46,13 +46,15 @@ namespace MileageStats.Web.Helpers
                 var name = ExpressionHelper.GetExpressionText(getter);
                 return new MvcHtmlString(string.Format("{{{{{0}}}}}",name));
 
-            } else
+            }
+
+            var fn = getter.Compile();
+            var value = fn(helper.ViewData.Model);
+            if (value != null)
             {
-                var fn = getter.Compile();
-                var value = fn(helper.ViewData.Model);
                 return new MvcHtmlString(value.ToString());
             }
-     
+            return new MvcHtmlString(null);
         }
 
         public static MvcHtmlString Mustache<TModel, TProperty>(this HtmlHelper helper, TModel model, Expression<Func<TModel, TProperty>> getter)
@@ -63,13 +65,14 @@ namespace MileageStats.Web.Helpers
                 return new MvcHtmlString(string.Format("{{{{{0}}}}}", name));
 
             }
-            else
+            
+            var fn = getter.Compile();
+            var value = fn(model);
+            if (value != null)
             {
-                var fn = getter.Compile();
-                var value = fn(model);
                 return new MvcHtmlString(value.ToString());
             }
-
+            return new MvcHtmlString(null);
         }
 
         public interface ISectionRenderer<out T> : IDisposable
