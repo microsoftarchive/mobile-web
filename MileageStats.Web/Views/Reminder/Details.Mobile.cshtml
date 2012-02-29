@@ -21,7 +21,7 @@
     {
         Html.RenderPartial("DetailsPartial.Mobile", reminder);
     }
-    <ol class="buttons boolean">
+    <ol class="hbox button-group">
         <li>
             @using (Html.BeginForm("Fulfill", "Reminder", new { id = reminder.ReminderId }, FormMethod.Post))
             {
@@ -30,7 +30,7 @@
     
             }
         </li>
-        <li class="false"><a href="@Url.Action("List", "Reminder", new { vehicleId = reminder.VehicleId })"><span>Cancel</span></a></li>
+        <li class="icon false invert"><a href="@Url.Action("List", "Reminder", new { vehicleId = reminder.VehicleId })"><span>Cancel</span></a></li>
 	</ol>
 </div>
 

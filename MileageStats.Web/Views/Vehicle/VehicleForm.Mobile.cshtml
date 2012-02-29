@@ -14,11 +14,11 @@
             @Html.HiddenFor(model => model.MakeName)
             @Html.HiddenFor(model => model.ModelName)
             @Html.ValidationMessageFor(model => model.Year)
-            <ol class="buttons boolean">
+            <ol class="hbox button-group">
                 <li>
                     <button type="submit" name="action" value="UpdateMakes">
                         <span>Next</span></button></li>
-                <li class="false"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
+                <li class="icon false invert"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
             </ol>
         </li>
     }
@@ -33,11 +33,11 @@
             @Html.DropDownListFor(model => model.MakeName, ViewBag.Makes as SelectList, "--Select a Make--")
             @Html.HiddenFor(model => model.ModelName)
             @Html.ValidationMessageFor(model => model.MakeName)
-            <ol class="buttons boolean">
+            <ol class="hbox button-group">
                 <li>
                     <button type="submit" name="action" value="UpdateModels">
                         <span>Next</span></button></li>
-                <li class="false"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
+                <li class="icon false invert"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
             </ol>
         </li>
     }
@@ -58,11 +58,11 @@
             @Html.ValidationMessageFor(model => model.ModelName)
         </li>
 
-        <ol class="buttons boolean">
+        <ol class="hbox button-group">
             <li>
                 <button type="submit" name="action" value="Save">
                     <span>Save</span></button></li>
-            <li class="false"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
+            <li class="icon false invert"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
         </ol>
     }
     @Html.ValidationSummary(true)

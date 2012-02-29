@@ -19,7 +19,7 @@
             Note: Year, Make and Model are optional.
         </p>
     }
-    <ol class="buttons boolean">
+    <ol class="hbox button-group">
         <li class="false">
             @using (Html.BeginForm("Delete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Post))
             {

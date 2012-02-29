@@ -27,8 +27,8 @@
 
 @Html.ValidationSummary(true)
 
-<ol class="buttons boolean">
+<ol class="hbox button-group">
 	<li><button type="submit"><span>Save</span></button></li>
-	<li class="false"><a href="@Url.Action("List", "Reminder", new { vehicleId = Model.VehicleId })"><span>Cancel</span></a></li>
+	<li class="icon false invert"><a href="@Url.Action("List", "Reminder", new { vehicleId = Model.VehicleId })"><span>Cancel</span></a></li>
 </ol>
 

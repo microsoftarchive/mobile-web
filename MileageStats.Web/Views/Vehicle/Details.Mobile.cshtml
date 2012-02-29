@@ -39,7 +39,7 @@ The content of this screen will change! See the flow pdf.</p>
         <dd>@String.Format("{0:g}", vehicle.Odometer ?? 0) miles</dd>
     </dl>
 
-    <ol class="buttons single">
+    <ol class="hbox button-group">
         <li><a href="@Url.Action("Edit", "Vehicle", new { id = Model.Vehicle.VehicleId })"><span>Edit</span></a></li>
     </ol>
 </div>

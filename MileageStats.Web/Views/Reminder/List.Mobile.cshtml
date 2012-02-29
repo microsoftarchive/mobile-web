@@ -18,8 +18,8 @@
 </nav>
 
 <div class="view">
-    <ol class="buttons">
-		<li class="add"><a href="@Url.Action("Add", "Reminder", new { vehicleId = ViewBag.VehicleId })"><span>Add New Reminder</span></a></li>
+    <ol class="hbox button-group">
+		<li class="icon add"><a href="@Url.Action("Add", "Reminder", new { vehicleId = ViewBag.VehicleId })"><span>Add New Reminder</span></a></li>
 	</ol>
 	@{ Html.RenderPartial("ListPartial.Mobile", Model.Reminders); }
 </div>

@@ -18,8 +18,8 @@
 </nav>
 
 <div class="view">
-    <ol class="buttons">
-		<li class="add"><a href="@Url.Action("Add", "Fillup", new { vehicleId = ViewBag.VehicleId })"><span>Add New Fillup</span></a></li>
+    <ol class="hbox button-group">
+		<li class="icon add"><a href="@Url.Action("Add", "Fillup", new { vehicleId = ViewBag.VehicleId })"><span>Add New Fillup</span></a></li>
 	</ol>
 	@Html.Partial("ListPartial.Mobile", Model)
 </div>
