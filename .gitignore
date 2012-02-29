@@ -36,9 +36,8 @@ Ankh.NoLoad
 *.orig
 
 #Project specific
-!MileageStats.Web/Scripts/*debug*/
-MileageStats.min.js
-MileageStats.Mobile.min.js
+!MileageStats.Web/Scripts/Debug*/
+*.min.js
 !LICENSE.TXT
 *License.txt
 App_Data/
