@@ -40,7 +40,7 @@
         <dd>@Html.Mustache(model => model.Vehicle.Odometer) miles</dd>
     </dl>
 
-    <ol class="buttons single">
+    <ol class="hbox button-group">
         <li><a href="@Url.Action("Edit", "Vehicle", new { id = Html.Mustache(m=>m.Vehicle.VehicleId) })"><span>Edit</span></a></li>
     </ol>
 
