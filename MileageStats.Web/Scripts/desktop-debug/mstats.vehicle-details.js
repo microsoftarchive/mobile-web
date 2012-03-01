@@ -134,7 +134,9 @@ limitations under the License. */
             var that = this;
 
             this.options.sendRequest({
-                url: actionUrl,
+            	url: actionUrl,
+            	data: { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() },
+				type: 'post',
                 cache: false,
                 success: function () {
                     that._showDeletedMessage();

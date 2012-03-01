@@ -9,9 +9,10 @@
             </button>
             </form>
             <form action="@Url.Action("Delete", "Vehicle")/${VehicleId}" method="post">
-            <button data-action="vehicle-delete-selected" data-action-url="@Url.Action("Delete", "Vehicle")/${VehicleId}" class="button generic small" type="submit">
-                <img src="@Url.Content("~/Content/button-delete.png")" title="Delete Vehicle" alt="Delete" />
-            </button>
+				@Html.AntiForgeryToken()
+				<button data-action="vehicle-delete-selected" data-action-url="@Url.Action("Delete", "Vehicle")/${VehicleId}" class="button generic small" type="submit">
+					<img src="@Url.Content("~/Content/button-delete.png")" title="Delete Vehicle" alt="Delete" />
+				</button>
             </form>
         </div>
         <div class="statistics aside">

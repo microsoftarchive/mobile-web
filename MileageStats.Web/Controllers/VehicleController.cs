@@ -173,6 +173,7 @@ namespace MileageStats.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken()]
         public ActionResult Delete(int id)
         {
             Using<DeleteVehicle>().Execute(CurrentUserId, id);

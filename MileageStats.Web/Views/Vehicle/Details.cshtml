@@ -26,10 +26,11 @@
 
                             @using (Html.BeginForm("Delete", "Vehicle", new { id = Model.Vehicle.VehicleId }, FormMethod.Post))
                             {
+								@Html.AntiForgeryToken()
                                 <button data-action="vehicle-delete-selected" class="button generic small" type="submit">
                                     <img src="@Url.Content("~/Content/button-delete.png")" title="Delete Vehicle" alt="Delete" />
                                 </button>
-                            }
+							}
                         
                         </div>
                         
@@ -95,12 +96,12 @@
                            <div class="article reminder-list">
                             <div class="list nav">
                                 @foreach (var item in Model.OverdueReminders)
-                                {
+								{
                                     <a class="list-item @(item.IsOverdue ? "overdue" : null)" href="@Url.Action("Details", "Reminder", new { id = item.ReminderId })">    
                                         <h1>@item.Title</h1>
                                         <p class="title">Due @item.DueOnFormatted </p>    
                                     </a>                   
-                                }
+								}
                             </div>
                         </div> 
                                 

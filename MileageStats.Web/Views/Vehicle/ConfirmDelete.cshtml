@@ -15,6 +15,8 @@
         <li class="icon false">
             @using (Html.BeginForm("Delete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Post))
             {
+				@Html.AntiForgeryToken()
+
                 <button type="submit" value="delete" name="action" class="false">
                     <span>Delete Vehicle</span></button>
     
