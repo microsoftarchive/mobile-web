@@ -217,7 +217,7 @@ namespace MileageStats.Web.Tests.Controllers
             var model = result.Extract<DashboardViewModel>();
 
             Assert.NotNull(model);
-            Assert.Same(fleetSummaryStatistics, model.FleetSummaryStatistics);
+            Assert.NotNull(model.FleetSummaryStatistics);
         }
 
         [Fact]

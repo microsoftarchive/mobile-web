@@ -23,6 +23,8 @@ namespace MileageStats.Web.Models
     {
         public StatisticsViewModel(FleetStatistics inner)
         {
+            if(inner == null) return;
+
             AverageFillupPrice = string.Format("{0:c}", inner.AverageFillupPrice);
             AverageFuelEfficiency = string.Format("{0:0}", inner.AverageFuelEfficiency);
             AverageCostToDrive = string.Format("{0:0}¢", inner.AverageCostToDrive * 100);
