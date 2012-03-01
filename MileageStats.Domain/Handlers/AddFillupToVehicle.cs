@@ -59,7 +59,7 @@ namespace MileageStats.Domain.Handlers
             }
             catch (InvalidOperationException ex)
             {
-                throw new BusinessServicesException(Resources.UnableToAddFillupToVehicleExceptionMessage, ex);
+                throw new UnauthorizedException(Resources.UnableToAddFillupToVehicleExceptionMessage, ex);
             }
         }
 

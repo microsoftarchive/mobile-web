@@ -16,6 +16,7 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System;
+using System.Web;
 using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Contracts.Data;
 using MileageStats.Domain.Handlers;
@@ -103,7 +104,7 @@ namespace MileageStats.Domain.Tests
 
             var handler = new UpdateVehicle(_vehicleRepo.Object, _photoRepo.Object);
 
-            Assert.Throws<BusinessServicesException>(() => handler.Execute(anotherUserId, vehicleForm, null));
+            Assert.Throws<UnauthorizedException>(() => handler.Execute(anotherUserId, vehicleForm, null));
         }
 
         [Fact]
@@ -116,11 +117,11 @@ namespace MileageStats.Domain.Tests
             // the repo throws an exception when it can't find a match with both the user and the vehicle
             _vehicleRepo
                 .Setup(vr => vr.GetVehicle(UserId, It.IsAny<int>()))
-                .Throws(new InvalidOperationException());
+                .Returns((Vehicle)null);
 
             var handler = new UpdateVehicle(_vehicleRepo.Object, _photoRepo.Object);
 
-            Assert.Throws<BusinessServicesException>(() => handler.Execute(UserId, vehicleForm, null));
+            Assert.Throws<HttpException>(() => handler.Execute(UserId, vehicleForm, null));
         }
 
         [Fact]
@@ -134,7 +135,7 @@ namespace MileageStats.Domain.Tests
 
             var handler = new UpdateVehicle(_vehicleRepo.Object, _photoRepo.Object);
 
-            Exception ex = Assert.Throws<BusinessServicesException>(() => handler.Execute(UserId, vehicleForm, null));
+            Exception ex = Assert.Throws<UnauthorizedException>(() => handler.Execute(UserId, vehicleForm, null));
 
             Assert.NotNull(ex.InnerException);
             Assert.IsType<InvalidOperationException>(ex.InnerException);

@@ -41,7 +41,7 @@ namespace MileageStats.Domain.Handlers
             }
             catch (InvalidOperationException ex)
             {
-                throw new BusinessServicesException(Resources.UnableToRetrieveReminderExceptionMessage, ex);
+                throw new UnauthorizedException(Resources.UnableToRetrieveReminderExceptionMessage, ex);
             }
         }
     }

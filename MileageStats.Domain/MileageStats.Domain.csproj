@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="BingMapService.cs" />
     <Compile Include="ChartDataService.cs" />
-    <Compile Include="Contracts\BusinessServicesException.cs" />
     <Compile Include="Contracts\Data\ICountryRepository.cs" />
     <Compile Include="Contracts\Data\IFillupRepository.cs" />
     <Compile Include="Contracts\Data\IReminderRepository.cs" />

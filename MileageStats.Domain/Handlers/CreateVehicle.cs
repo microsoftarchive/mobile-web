@@ -39,27 +39,20 @@ namespace MileageStats.Domain.Handlers
         {
             if (vehicleForm == null) throw new ArgumentNullException("vehicleForm");
 
-            try
+            var vehicle = vehicleForm.ConvertToEntity(userId);
+            _vehicleRepository.Create(userId, vehicle);
+
+            if (photoFile != null)
             {
-                var vehicle = vehicleForm.ConvertToEntity(userId);
-                _vehicleRepository.Create(userId, vehicle);
+                // the double reference between vehicle and photo is a potential source of pain
+                var photo = photoFile.ConvertToEntity();
+                _photoRepository.Create(vehicle.VehicleId, photo);
+                vehicle.PhotoId = photo.VehiclePhotoId;
 
-                if (photoFile != null)
-                {
-                    // the double reference between vehicle and photo is a potential source of pain
-                    var photo = photoFile.ConvertToEntity();
-                    _photoRepository.Create(vehicle.VehicleId, photo);
-                    vehicle.PhotoId = photo.VehiclePhotoId;
-
-                    _vehicleRepository.Update(vehicle);
-                }
-
-                return vehicle.Id;
+                _vehicleRepository.Update(vehicle);
             }
-            catch (InvalidOperationException ex)
-            {
-                throw new BusinessServicesException(Resources.UnableToCreateVehicleExceptionMessage, ex);
-            }
+
+            return vehicle.Id;
         }
     }
 }

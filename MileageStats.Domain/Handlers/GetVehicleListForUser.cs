@@ -40,14 +40,7 @@ namespace MileageStats.Domain.Handlers
         {
             IEnumerable<Vehicle> vehicleData = null;
 
-            try
-            {
-                vehicleData = _vehicleRepository.GetVehicles(userId);
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new BusinessServicesException("Unable to retrieve vehicle from database.", e);
-            }
+            vehicleData = _vehicleRepository.GetVehicles(userId);
 
             var vehicles = from vehicle in vehicleData
                            let fillups = _fillupRepository.GetFillups(vehicle.VehicleId).OrderBy(f => f.Odometer)

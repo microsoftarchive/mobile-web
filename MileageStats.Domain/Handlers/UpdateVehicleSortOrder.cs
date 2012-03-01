@@ -47,7 +47,7 @@ namespace MileageStats.Domain.Handlers
             }
             catch (InvalidOperationException ex)
             {
-                throw new BusinessServicesException(Resources.UnableToUpdateVehicleSortOrderExceptionMessage, ex);
+                throw new UnauthorizedException(Resources.UnableToUpdateVehicleSortOrderExceptionMessage, ex);
             }
         }
     }

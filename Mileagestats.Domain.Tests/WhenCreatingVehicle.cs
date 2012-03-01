@@ -53,21 +53,6 @@ namespace MileageStats.Domain.Tests
         }
 
         [Fact]
-        public void AndVehicleRepositoryThrows_ThenWrapsException()
-        {
-            _vehicleRepo
-                .Setup(v => v.Create(It.IsAny<int>(), It.IsAny<Vehicle>()))
-                .Throws<InvalidOperationException>();
-
-            var vehicleForm = new VehicleFormModel { Name = "vehicle" };
-
-            var handler = new CreateVehicle(_vehicleRepo.Object, _photoRepo.Object);
-
-            var ex = Assert.Throws<BusinessServicesException>(() => handler.Execute(UserId, vehicleForm, null));
-            Assert.IsType<InvalidOperationException>(ex.InnerException);
-        }
-
-        [Fact]
         public void WithAPhoto_ThenInvokesVehicleRepositoryToUpdatePhotoInfo()
         {
             var vehicleForm = new VehicleFormModel { Name = "vehicle" };

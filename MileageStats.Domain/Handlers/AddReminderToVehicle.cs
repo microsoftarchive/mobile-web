@@ -55,7 +55,7 @@ namespace MileageStats.Domain.Handlers
             }
             catch (InvalidOperationException ex)
             {
-                throw new BusinessServicesException(Resources.UnableToAddReminderToVehicleExceptionMessage, ex);
+                throw new UnauthorizedException(Resources.UnableToAddReminderToVehicleExceptionMessage, ex);
             }
         }
 

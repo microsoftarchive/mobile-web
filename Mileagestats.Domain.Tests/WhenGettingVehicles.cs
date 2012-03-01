@@ -58,21 +58,6 @@ namespace MileageStats.Domain.Tests
         }
 
         [Fact]
-        public void AndRepositoryThrows_ThenWrapsException()
-        {
-            _vehicleRepo
-                .Setup(r => r.GetVehicles(UserId))
-                .Throws<InvalidOperationException>();
-
-            var handler = new GetVehicleListForUser(_vehicleRepo.Object, _fillupRepo.Object);
-
-            var exception = Assert.Throws<BusinessServicesException>(() => handler.Execute(UserId));
-
-            Assert.NotNull(exception);
-            Assert.IsType<InvalidOperationException>(exception.InnerException);
-        }
-
-        [Fact]
         public void ByUserIdForUser_ThenReturnsVehicles()
         {
             var vehicles = new List<Vehicle> { new Vehicle() };

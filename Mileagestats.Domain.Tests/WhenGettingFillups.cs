@@ -47,7 +47,7 @@ namespace MileageStats.Domain.Tests
 
             var handler = new GetFillupsForVehicle(_fillupRepositoryMock.Object);
 
-            var ex = Assert.Throws<BusinessServicesException>(() => handler.Execute(DefaultVehicleId));
+            var ex = Assert.Throws<UnauthorizedException>(() => handler.Execute(DefaultVehicleId));
             Assert.IsType<InvalidOperationException>(ex.InnerException);
         }
 
@@ -74,7 +74,7 @@ namespace MileageStats.Domain.Tests
 
             var handler = new GetFillupById(_fillupRepositoryMock.Object);
 
-            var ex = Assert.Throws<BusinessServicesException>(() => handler.Execute(DefaultFillupId));
+            var ex = Assert.Throws<UnauthorizedException>(() => handler.Execute(DefaultFillupId));
             Assert.IsType<InvalidOperationException>(ex.InnerException);
         }
     }

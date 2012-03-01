@@ -89,7 +89,7 @@ namespace MileageStats.Domain.Handlers
             }
             catch (InvalidOperationException ex)
             {
-                throw new BusinessServicesException(Resources.UnableToRetrieveOverdueReminders, ex);
+                throw new UnauthorizedException(Resources.UnableToRetrieveOverdueReminders, ex);
             }
         }
     }

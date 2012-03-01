@@ -150,7 +150,7 @@ namespace MileageStats.Domain.Tests
             var handler = new AddFillupToVehicle(_vehicleRepo.Object, _fillupRepositoryMock.Object);
 
             var ex = Assert
-                .Throws<BusinessServicesException>(() => handler.Execute(DefaultUserId, DefaultVehicleId, new FillupEntryFormModel()));
+                .Throws<UnauthorizedException>(() => handler.Execute(DefaultUserId, DefaultVehicleId, new FillupEntryFormModel()));
             Assert.IsType<InvalidOperationException>(ex.InnerException);
         }
 
@@ -167,7 +167,7 @@ namespace MileageStats.Domain.Tests
 
             var handler = new AddFillupToVehicle(_vehicleRepo.Object, _fillupRepositoryMock.Object);
             var ex = Assert
-                .Throws<BusinessServicesException>(() => handler.Execute(DefaultUserId, DefaultVehicleId, new FillupEntryFormModel()));
+                .Throws<UnauthorizedException>(() => handler.Execute(DefaultUserId, DefaultVehicleId, new FillupEntryFormModel()));
             Assert.IsType<InvalidOperationException>(ex.InnerException);
         }
     }

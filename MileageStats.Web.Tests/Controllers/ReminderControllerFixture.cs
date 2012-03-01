@@ -266,7 +266,7 @@ namespace MileageStats.Web.Tests.Controllers
             MockHandlerFor<GetOverdueRemindersForUser>(
                 x => x
                          .Setup(h => h.Execute(_defaultUser.UserId))
-                         .Throws(new BusinessServicesException("Unable to get overdue reminders.")));
+                         .Throws(new UnauthorizedException("Unable to get overdue reminders.")));
 
             MockHandlerFor<GetVehicleById>(
                 x => x
@@ -275,7 +275,7 @@ namespace MileageStats.Web.Tests.Controllers
                                       new Vehicle { VehicleId = defaultVehicleId, Name = "Vehicle" },
                                       new VehicleStatisticsModel())));
 
-            Assert.Throws<BusinessServicesException>(() => { controller.OverdueList(); });
+            Assert.Throws<UnauthorizedException>(() => { controller.OverdueList(); });
         }
 
         [Fact]

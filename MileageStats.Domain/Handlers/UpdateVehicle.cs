@@ -16,6 +16,7 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System;
+using System.Net;
 using System.Web;
 using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Contracts.Data;
@@ -63,12 +64,12 @@ namespace MileageStats.Domain.Handlers
                 }
                 else
                 {
-                    throw new BusinessServicesException(Resources.UnableToUpdateVehicleExceptionMessage);
+                    throw new HttpException((int) HttpStatusCode.NotFound, Resources.CannotFindVehicleToUpdateExceptionMessage);
                 }
             }
             catch (InvalidOperationException ex)
             {
-                throw new BusinessServicesException(Resources.CannotFindVehicleToUpdateExceptionMessage, ex);
+                throw new UnauthorizedException(Resources.UnableToUpdateVehicleExceptionMessage, ex);
             }
         }
     }

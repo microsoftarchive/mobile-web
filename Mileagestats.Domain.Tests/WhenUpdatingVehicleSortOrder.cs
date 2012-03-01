@@ -91,7 +91,7 @@ namespace MileageStats.Domain.Tests
 
             var handler = new UpdateVehicleSortOrder(_vehicleRepo.Object);
 
-            var exception = Assert.Throws<BusinessServicesException>(() => handler.Execute(UserId, newOrder));
+            var exception = Assert.Throws<UnauthorizedException>(() => handler.Execute(UserId, newOrder));
             Assert.IsType<InvalidOperationException>(exception.InnerException);
         }
     }
