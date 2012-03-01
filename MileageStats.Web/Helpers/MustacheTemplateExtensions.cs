@@ -70,12 +70,10 @@ namespace MileageStats.Web.Helpers
                 string name = ExpressionHelper.GetExpressionText(getter);
                 return string.Format("{{{{{0}}}}}", name);
             }
-            else
-            {
-                var fn = getter.Compile();
-                var value = fn(model);
-                return value.ToString();
-            }
+            
+            var fn = getter.Compile();
+            var value = fn(model);
+            return value != null ? value.ToString() : string.Empty;
         }
 
         public static IEnumerable<TProperty> Loop<TModel, TProperty>(
