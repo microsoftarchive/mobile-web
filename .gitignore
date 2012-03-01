@@ -51,6 +51,8 @@ mustache.js
 _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
+*.ncrunchproject
+*.ncrunchsolution
 
 # Office Temp Files
 ~$*

@@ -28,6 +28,6 @@ namespace MileageStats.Web.Models
 
         public IEnumerable<ImminentReminderModel> ImminentReminders { get; set; }
 
-        public FleetStatistics FleetSummaryStatistics { get; set; }
+        public StatisticsViewModel FleetSummaryStatistics { get; set; }
     }
 }

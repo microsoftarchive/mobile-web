@@ -73,9 +73,9 @@
                                 Summary Statistics</h1>
                             <div class="statistic mile-per-gallon">@string.Format("{0:N0}", Model.FleetSummaryStatistics.AverageFuelEfficiency)<span
                                 class="units">mpg</span></div>
-                            <div class="statistic cost-per-month">@string.Format("{0:N0}", Model.FleetSummaryStatistics.AverageCostToDrive * 100)&cent;<span
+                            <div class="statistic cost-per-month">@string.Format("{0:N0}", Model.FleetSummaryStatistics.AverageCostToDrive)<span
                                 class="units">per mile</span></div>
-                            <div class="statistic cost-per-mile">@string.Format("${0:N0}", Model.FleetSummaryStatistics.AverageCostPerMonth)<span
+                            <div class="statistic cost-per-mile">@string.Format("{0:N0}", Model.FleetSummaryStatistics.AverageCostPerMonth)<span
                                 class="units">per month</span></div>
                         </div>
                     </div>

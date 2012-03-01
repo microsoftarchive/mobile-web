@@ -158,6 +158,7 @@
     <Compile Include="Infrastructure\CustomControllerFactory.cs" />
     <Compile Include="Helpers\MustacheHelper.cs" />
     <Compile Include="Infrastructure\CustomHandleErrorFilter.cs" />
+    <Compile Include="Models\StatisticsViewModel.cs" />
     <Compile Include="Properties\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -511,10 +512,7 @@
     <Content Include="Views\Reminder\List.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Scripts\mobile-debug\" />
-    <Folder Include="Scripts\mobile-tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Fillup\Details.Mobile.cshtml" />
   </ItemGroup>

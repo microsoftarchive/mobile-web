@@ -60,15 +60,16 @@ namespace MileageStats.Web.Controllers
                 User = CurrentUser,
                 VehicleListViewModel = new VehicleListViewModel(vehicles),
                 ImminentReminders = imminentReminders,
-                FleetSummaryStatistics = statistics
+                FleetSummaryStatistics = new StatisticsViewModel(statistics)
             };
 
+            // the country list is placed in the viewbag soley to support
+            // the legacy desktop version of the application
             ViewBag.CountryList = getCountries.GetCountrySelectList();
 
             return new ContentTypeAwareResult(model);
         }
 
-        // POST: /Vehicle/JsonFleetStatistics
         [HttpPost]
         [Authorize]
         public JsonResult JsonFleetStatistics()
