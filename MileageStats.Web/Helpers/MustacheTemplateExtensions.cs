@@ -43,7 +43,6 @@ namespace MileageStats.Web.Helpers
             Expression<Func<TModel, TProperty>> getter)
         {
             return Value(helper, helper.ViewData.Model, getter);
-            return  new MvcHtmlString(null);
         }
 
         public static MvcHtmlString Value<TPageModel, TModel, TProperty>(

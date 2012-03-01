@@ -84,7 +84,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             var controller = GetTestableFillupController();
             var result = controller.Details(defaultVehicleId, defaultFillupId);
-            var model = result.Extract<List<FillupViewModel>>();
+            var model = result.Extract<FillupViewModel>();
 
             Assert.NotNull(model);
         }
@@ -115,10 +115,9 @@ namespace MileageStats.Web.Tests.Controllers
             var controller = GetTestableFillupController();
 
             var result = controller.Details(defaultVehicleId, defaultFillupId);
-            var model = result.Extract<List<FillupViewModel>>();
+            var model = result.Extract<FillupViewModel>();
 
             Assert.NotNull(model);
-            Assert.Equal(fillupEntries.Count(), model.Count());
         }
 
         [Fact]
@@ -133,7 +132,7 @@ namespace MileageStats.Web.Tests.Controllers
             var controller = GetTestableFillupController();
 
             var actual = controller.List(defaultVehicleId);
-            var model = actual.Extract<List<FillupViewModel>>();
+            var model = actual.Extract<List<FillupListViewModel>>();
 
             Assert.NotNull(actual);
             Assert.NotNull(model);
@@ -151,8 +150,9 @@ namespace MileageStats.Web.Tests.Controllers
             var controller = GetTestableFillupController();
 
             var result = controller.List(defaultVehicleId);
-            var model = result.Extract<List<FillupViewModel>>();
-            Assert.Equal(3, model.Count());
+            var model = result.Extract<List<FillupListViewModel>>();
+            Assert.Equal(1, model.Count()); // expect 1 group of fillups
+            Assert.Equal(3, model.First().Fillups.Count()); // expect 3 members in that group
         }
 
         [Fact]
