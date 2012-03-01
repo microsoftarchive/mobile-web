@@ -56,6 +56,7 @@ namespace MileageStats.Web.Controllers
         {
             VehicleModel vehicle = null;
 
+            var reminder = Using<GetReminder>().Execute(id);
             var reminders = GetRemindersByVehicle(vehicleId, out vehicle);
             var reminderSummaryViewModels = reminders
                 .Select(x => new ReminderSummaryModel(x, x.IsOverdue ?? false))
@@ -63,7 +64,7 @@ namespace MileageStats.Web.Controllers
 
             var viewModel = new ReminderDetailsViewModel
             {
-                Reminder = ToFormModel(reminders.First(r => r.Id == id)),
+                Reminder = ToFormModel(reminder),
                 Reminders = new SelectedItemList<ReminderSummaryModel>(reminderSummaryViewModels, x => x.FirstOrDefault(item => item.ReminderId == id)),
             };
 

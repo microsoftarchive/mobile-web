@@ -25,7 +25,7 @@
         <li>
             @using (Html.BeginForm("Fulfill", "Reminder", new { id = reminder.ReminderId }, FormMethod.Post))
             {
-                <button type="submit" value="fulfill" name="action" class="false" @(reminder.IsFulfilled ? "disabled" : "")>
+                <button type="submit" value="fulfill" name="action" class="icon false" @(reminder.IsFulfilled ? "disabled" : "")>
                     <span>Fulfill</span></button>
     
             }
