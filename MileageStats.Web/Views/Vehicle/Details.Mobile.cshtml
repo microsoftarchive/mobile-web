@@ -19,7 +19,7 @@
         </ol>
     </nav>
     
-    Response.Write("<div class=\"view\">");
+    @:<div class="view">
     
     Html.RenderPartial("_Flash");
 }
@@ -46,5 +46,5 @@
 
 @if (!Html.IsRenderingForMustache())
 {
-    Response.Write("</div>");
+    @:</div >
 }

@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.List<MileageStats.Web.Models.FillupViewModel>
+﻿@model MileageStats.Web.Models.FillupViewModel
 @{
     ViewBag.Title = "Fill ups for " + ViewBag.VehicleName;
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
@@ -11,13 +11,13 @@
     </ol>
     <ol class="breadcrumbs">
 	    <li><a href="@Url.Action("List", "Fillup", new { vehicleId = ViewBag.VehicleId })">Fillups</a></li>
-	    <li>@ViewBag.SelectedFillup.FillupEntryId</li>
+	    <li>@Model.FillupEntryId</li>
     </ol>
 </nav>
 
 <div class="view">
     @{
-		Html.RenderPartial("DetailsPartial.Mobile", (MileageStats.Web.Models.FillupViewModel)ViewBag.SelectedFillup);
+		Html.RenderPartial("DetailsPartial.Mobile", Model);
     }
     <ol class="hbox button-group">
 		<li><a href="@Url.Action("List", "Fillup", new { vehicleId = ViewBag.VehicleId })"><span>Back</span></a></li>

@@ -15,54 +15,69 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
+using System;
+using MileageStats.Domain.Models;
+
 namespace MileageStats.Web.Models
 {
     public class FillupViewModel
     {
+        public FillupViewModel(FillupEntry entry)
+        {
+            FillupEntryId = entry.FillupEntryId;
+            Date = String.Format("{0:d MMM yyyy}", entry.Date);
+            TotalUnits = String.Format("{0:#00.000}", entry.TotalUnits);
+            Odometer = entry.Odometer;
+            TransactionFee = String.Format("{0:C}", entry.TransactionFee);
+            PricePerUnit = String.Format("{0:0.000}", entry.PricePerUnit);
+            Remarks = entry.Remarks;
+            Vendor = entry.Vendor;
+            TotalCost = String.Format("{0:C}", entry.TotalCost);
+        }
+
         /// <summary>
         /// Identifier for FillupEntry.  Should be unique once persisted.
         /// </summary>
-        public int FillupEntryId { get; set; }
+        public int FillupEntryId { get; private  set; }
 
         /// <summary>
         /// Date of the fillup.
         /// </summary>
-        public string Date { get; set; }
+        public string Date { get; private  set; }
 
         /// <summary>
         /// Odometer reading for the fillup.
         /// </summary>
-        public int Odometer { get; set; }
+        public int Odometer { get; private  set; }
 
         /// <summary>
         /// Price per unit.
         /// </summary>
-        public string PricePerUnit { get; set; }
+        public string PricePerUnit { get; private  set; }
 
         /// <summary>
         /// Total number of units.
         /// </summary>
-        public string TotalUnits { get; set; }
+        public string TotalUnits { get; private  set; }
 
         /// <summary>
         /// Name of the gas station
         /// </summary>
-        public string Vendor { get; set; }
+        public string Vendor { get; private  set; }
 
         /// <summary>
         /// Any additional transaction fees
         /// </summary>
-        public string TransactionFee { get; set; }
+        public string TransactionFee { get; private  set; }
 
         /// <summary>
         /// Optional remarks for this fillup
         /// </summary>
-        public string Remarks { get; set; }
+        public string Remarks { get; private  set; }
 
         /// <summary>
         /// Total cost of the fillup (includes transaction fee)
         /// </summary>
-        public string TotalCost { get; set; }
-
+        public string TotalCost { get; private  set; }
     }
 }

@@ -21,9 +21,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
 using MileageStats.Domain.Handlers;
-using MileageStats.Domain.Models;
 using MileageStats.Web.Models;
-using MileageStats.Domain.Properties;
 using MileageStats.Web.Properties;
 using System.Web;
 using System.Net;
@@ -40,17 +38,34 @@ namespace MileageStats.Web.Controllers
 
         public ActionResult Details(int vehicleId, int id)
         {
-            return List(vehicleId, id);
+            ViewBag.VehicleName = GetVehicleName(vehicleId);
+            ViewBag.VehicleId = vehicleId;
+
+            var fillup = Using<GetFillupById>().Execute(id);
+            
+            return new ContentTypeAwareResult(new FillupViewModel(fillup));
         }
 
-        public ActionResult List(int vehicleId, int? selectedFillup = null)
+        public ActionResult List(int vehicleId)
         {
             ViewBag.VehicleName = GetVehicleName(vehicleId);
             ViewBag.VehicleId = vehicleId;
 
-            var model = GetFillups(vehicleId, selectedFillup);
+            var model = GetFillups(vehicleId, null);
 
-            return new ContentTypeAwareResult(model)
+            var groups = from fillup in model
+                         let year = DateTime.Parse(fillup.Date).Year
+                         let month = DateTime.Parse(fillup.Date).ToString("MMMM")
+                         let ym = new Tuple<int,string>(year, month)
+                         group fillup by ym into grouping
+                         select new FillupListViewModel
+                                    {
+                                        Year = grouping.Key.Item1,
+                                        Month = grouping.Key.Item2, 
+                                        Fillups = grouping
+                                    };
+
+            return new ContentTypeAwareResult(groups.ToList())
             {
                 WhenJson = (m,v) => Json(m, JsonRequestBehavior.AllowGet),
                 WhenHtml = (m,v) => View(m)
@@ -59,9 +74,18 @@ namespace MileageStats.Web.Controllers
 
         public ActionResult ListPartial(int vehicleId)
         {
-            var model = GetFillups(vehicleId, null);
-            
-            return PartialView(model);
+            var vehicle = Using<GetVehicleById>()
+                .Execute(CurrentUserId, vehicleId);
+
+            if (vehicle == null)
+                throw new HttpException((int)HttpStatusCode.NotFound, Messages.FillupController_VehicleNotFound);
+
+            var fillups = Using<GetFillupsForVehicle>()
+                .Execute(vehicleId)
+                .Select(m => new FillupViewModel(m))
+                .OrderByDescending(f => f.Date);
+
+            return PartialView(fillups.ToList());
         }
 
         public ActionResult Add(int vehicleId)
@@ -123,23 +147,7 @@ namespace MileageStats.Web.Controllers
             return View(model);
         }
 
-        public static List<FillupViewModel> ToJsonFillupViewModel(IEnumerable<FillupEntry> fillupEntries)
-        {
-            return fillupEntries.Select(entry => new FillupViewModel
-            {
-                FillupEntryId = entry.FillupEntryId,
-                Date = String.Format("{0:d MMM yyyy}", entry.Date),
-                TotalUnits = String.Format("{0:#00.000}", entry.TotalUnits),
-                Odometer = entry.Odometer,
-                TransactionFee = String.Format("{0:C}", entry.TransactionFee),
-                PricePerUnit = String.Format("{0:0.000}", entry.PricePerUnit),
-                Remarks = entry.Remarks,
-                Vendor = entry.Vendor,
-                TotalCost = String.Format("{0:C}", entry.TotalCost)
-            }).ToList();
-        }
-
-        private List<FillupViewModel> GetFillups(int vehicleId, int? selectedFillup)
+        private IEnumerable<FillupViewModel> GetFillups(int vehicleId, int? selectedFillup)
         {
             var vehicle = Using<GetVehicleById>()
                 .Execute(CurrentUserId, vehicleId);
@@ -151,7 +159,7 @@ namespace MileageStats.Web.Controllers
                 .Execute(vehicleId)
                 .OrderByDescending(f => f.Date);
 
-            var model = ToJsonFillupViewModel(fillups);
+            var model = fillups.Select(m => new FillupViewModel(m)).ToList();
 
             if (selectedFillup.HasValue)
             {
@@ -161,6 +169,5 @@ namespace MileageStats.Web.Controllers
             return model;
         }
 
-        
     }
 }

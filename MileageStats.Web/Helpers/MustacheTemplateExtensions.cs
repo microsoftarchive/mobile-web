@@ -38,47 +38,60 @@ namespace MileageStats.Web.Helpers
             return helper.ViewData.ContainsKey(UseMustacheFlag);
         }
 
-        public static MvcHtmlString Value<TModel, TProperty>(this MustacheHelper<TModel> helper,
-                                                             Expression<Func<TModel, TProperty>> getter)
+        public static MvcHtmlString Value<TModel, TProperty>(
+            this MustacheHelper<TModel> helper,
+            Expression<Func<TModel, TProperty>> getter)
         {
-            if (helper.ViewData.Model == null)
-            {
-                string name = ExpressionHelper.GetExpressionText(getter);
-                return new MvcHtmlString(string.Format("{{{{{0}}}}}", name));
-            }
-            
-            var fn = getter.Compile();
-            var value = fn(helper.ViewData.Model);
-            if (value != null)
-            {
-                return new MvcHtmlString(value.ToString());
-            }
+            return Value(helper, helper.ViewData.Model, getter);
             return  new MvcHtmlString(null);
         }
 
-        public static MvcHtmlString Value<TPageModel, TModel, TProperty>(this MustacheHelper<TPageModel> helper,
-                                                                         TModel model,
-                                                                         Expression<Func<TModel, TProperty>> getter)
+        public static MvcHtmlString Value<TPageModel, TModel, TProperty>(
+            this MustacheHelper<TPageModel> helper,
+            TModel model,
+            Expression<Func<TModel, TProperty>> getter)
+        {
+            return new MvcHtmlString(Unencoded(helper,model,getter));
+        }
+
+        public static string Unencoded<TModel, TProperty>(
+            this MustacheHelper<TModel> helper,
+            Expression<Func<TModel, TProperty>> getter)
+        {
+            return Unencoded(helper, helper.ViewData.Model, getter);
+        }
+
+        public static string Unencoded<TPageModel, TModel, TProperty>(
+            this MustacheHelper<TPageModel> helper,
+            TModel model,
+            Expression<Func<TModel, TProperty>> getter)
         {
             if (helper.ViewData.Model == null)
             {
                 string name = ExpressionHelper.GetExpressionText(getter);
-                return new MvcHtmlString(string.Format("{{{{{0}}}}}", name));
+                return string.Format("{{{{{0}}}}}", name);
             }
             else
             {
                 var fn = getter.Compile();
                 var value = fn(model);
-                if (value != null)
-                {
-                    return new MvcHtmlString(value.ToString());
-                }
-                return new MvcHtmlString(null);
+                return value.ToString();
             }
         }
 
-        public static IEnumerable<TProperty> Loop<TModel, TProperty>(this MustacheHelper<TModel> helper,
-                                                                     Expression<Func<TModel, IEnumerable<TProperty>>> getter)
+        public static IEnumerable<TProperty> Loop<TModel, TProperty>(
+            this MustacheHelper<TModel> helper,
+            Expression<Func<TModel,
+            IEnumerable<TProperty>>> getter)
+        {
+            return Loop(helper, helper.ViewData.Model, getter);
+        }
+
+        public static IEnumerable<TProperty> Loop<TPageModel, TModel, TProperty>(
+            this MustacheHelper<TPageModel> helper,
+            TModel model,
+            Expression<Func<TModel,
+            IEnumerable<TProperty>>> getter)
         {
             string name = null;
             Func<IEnumerable<TProperty>> getEnumerable;
@@ -88,10 +101,11 @@ namespace MileageStats.Web.Helpers
             {
                 name = ExpressionHelper.GetExpressionText(getter);
                 getEnumerable = () => new List<TProperty> { default(TProperty) };
-            } else
+            }
+            else
             {
                 // this is an example of partial application of a function
-                getEnumerable = () => fn(helper.ViewData.Model);
+                getEnumerable = () => fn(model);
             }
 
             return new DisposableEnumerable<TProperty>(helper.ViewContext, name, getEnumerable);

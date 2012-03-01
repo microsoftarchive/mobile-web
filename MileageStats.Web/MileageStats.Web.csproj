@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="App_Start\MobileAwareViewEngineBootstrapper.cs" />
     <Compile Include="Authentication\UserAuthenticationTicketBuilder.cs" />
+    <Compile Include="Models\FillupListViewModel.cs" />
     <Compile Include="Helpers\BrowserExtensions.cs" />
     <Compile Include="Helpers\ControllerExtensions.cs" />
     <Compile Include="Authentication\DefaultFormsAuthentication.cs" />
