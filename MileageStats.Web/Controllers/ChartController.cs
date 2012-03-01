@@ -34,6 +34,12 @@ namespace MileageStats.Web.Controllers
     {
         private const int DESKTOP_CHART_WIDTH = 800;
         private const int DESKTOP_CHART_HEIGHT = 450;
+        private const String CHARTS_THEME = @"<Chart> 
+<Legends> 
+<Legend _Template_=""All"" Docking=""Bottom"" LegendStyle=""Table"" Alignment=""Center""> 
+</Legend> 
+    </Legends>                           
+</Chart>"; 
 
         private readonly IChartDataService chartDataService;
 
@@ -163,7 +169,7 @@ namespace MileageStats.Web.Controllers
                 }
             }
 
-            var myChart = new Chart(chartWidth, chartHeight)
+            var myChart = new Chart(chartWidth, chartHeight, CHARTS_THEME)
                 .AddTitle(chartTitle)
                 .AddLegend();
 
