@@ -148,27 +148,32 @@ namespace MileageStats.Web.Controllers
 
         private byte[] GetChartBytes(int userId, Func<StatisticSeriesEntry, double> yValueAccessor, string chartTitle, ChartFormModel chartFormModel)
         {
+            Debug.Assert(yValueAccessor != null);
+
             int chartWidth = DESKTOP_CHART_WIDTH;
             int chartHeight = DESKTOP_CHART_HEIGHT;
+
+            StatisticSeries seriesData = new StatisticSeries();
 
             if (Request.Browser.IsMobileDevice)
             {
                 chartWidth = Request.Browser.ScreenPixelsWidth;
                 chartHeight = chartWidth*DESKTOP_CHART_HEIGHT/DESKTOP_CHART_WIDTH;
-            }
 
-            Debug.Assert(yValueAccessor != null);
-
-            StatisticSeries seriesData = new StatisticSeries();
-            foreach (var vehicleId in chartFormModel.VehicleIds)
-            {
-                var seriesDataForVehicle = this.chartDataService.CalculateSeriesForVehicle(userId, vehicleId, chartFormModel.StartDate, chartFormModel.EndDate);
-                foreach (StatisticSeriesEntry statisticSeriesEntry in seriesDataForVehicle.Entries)
+                foreach (var vehicleId in chartFormModel.VehicleIds)
                 {
-                    seriesData.Entries.Add(statisticSeriesEntry);
+                    var seriesDataForVehicle = this.chartDataService.CalculateSeriesForVehicle(userId, vehicleId, chartFormModel.StartDate, chartFormModel.EndDate);
+                    foreach (StatisticSeriesEntry statisticSeriesEntry in seriesDataForVehicle.Entries)
+                    {
+                        seriesData.Entries.Add(statisticSeriesEntry);
+                    }
                 }
             }
-
+            else
+            {
+                seriesData = this.chartDataService.CalculateSeriesForUser(userId, DateTime.UtcNow.AddMonths(-12), null);                
+            }
+            
             var myChart = new Chart(chartWidth, chartHeight, CHARTS_THEME)
                 .AddTitle(chartTitle)
                 .AddLegend();
