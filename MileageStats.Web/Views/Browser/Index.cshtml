@@ -12,22 +12,22 @@
 <html>
     <head>
         <title>Browser Capabilities</title>
+        <style>
+            body
+            {
+                font-size: 40px;
+            }
+ 
+        </style>
     </head>
     <body>
         <div>
-            <table>
-                <tr>
-                    <th>Capability</th>
-                    <th>Value</th>
-                </tr>
+            <ul>
                 @foreach (var key in keysList)
                 {
-                <tr>
-                    <td>@key</td>
-                    <td>@Model[key]</td>
-                </tr>                    
+                    <li>@key:@Model[key]</li>
                 }
-            </table>  
+            </ul>
         </div>
     </body>
 </html>
