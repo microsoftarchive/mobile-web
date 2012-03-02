@@ -3,6 +3,10 @@
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Dashboard";
 }
+<script id="fillup-details" type="text/html">
+    @{ Html.RenderAsMustacheTemplate("~/Views/Fillup/DetailsPartial.Mobile.cshtml"); }
+</script>
+
 <script id="dashboard-index" type="text/html">
     @{ Html.RenderAsMustacheTemplate("Dashboard.Stats"); }
 </script>

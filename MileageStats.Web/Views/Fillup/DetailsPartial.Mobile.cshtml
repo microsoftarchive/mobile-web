@@ -1,27 +1,31 @@
 ﻿@model MileageStats.Web.Models.FillupViewModel
+           
 <dl class="list">
-	
-		<dt>@Html.LabelFor(model => model.Date)</dt>
-        <dd>@Model.Date</dd>
+    <dt>@Html.LabelFor(model => model.Date)</dt>
+    <dd>@Mustache.Value(m => m.Date)</dd>
 
-		<dt>@Html.LabelFor(model => model.TotalCost)</dt>
-        <dd>@Model.TotalCost</dd>
+    <dt>@Html.LabelFor(model => model.TotalCost)</dt>
+    <dd>@Mustache.Value(m => m.TotalCost)</dd>
 
-		<dt>@Html.LabelFor(model => model.TotalUnits)</dt>
-        <dd>@Model.TotalUnits</dd>
+    <dt>@Html.LabelFor(model => model.TotalUnits)</dt>
+    <dd>@Mustache.Value(m => m.TotalUnits)</dd>
 
-		<dt>@Html.LabelFor(model => model.PricePerUnit)</dt>
-        <dd>@Model.PricePerUnit</dd>
+    <dt>@Html.LabelFor(model => model.PricePerUnit)</dt>
+    <dd>@Mustache.Value(m => m.PricePerUnit)</dd>
 
-		<dt>@Html.LabelFor(model => model.Vendor)</dt>
-        <dd>@Model.Vendor</dd>
+    <dt>@Html.LabelFor(model => model.Vendor)</dt>
+    <dd>@Mustache.Value(m => m.Vendor)</dd>
 
-		<dt>@Html.LabelFor(model => model.Odometer)</dt>
-        <dd>@Model.Odometer</dd>
+    <dt>@Html.LabelFor(model => model.Odometer)</dt>
+    <dd>@Mustache.Value(m => m.Odometer)</dd>
 
-		<dt>@Html.LabelFor(model => model.TransactionFee)</dt>
-        <dd>@Model.TransactionFee</dd>
+    <dt>@Html.LabelFor(model => model.TransactionFee)</dt>
+    <dd>@Mustache.Value(m => m.TransactionFee)</dd>
 
-		<dt>@Html.LabelFor(model => model.Remarks)</dt>
-        <dd>@(Model.Remarks ?? "None")</dd>
+    <dt>@Html.LabelFor(model => model.Remarks)</dt>
+    <dd>@Mustache.Value(m => m.Remarks)</dd>
 </dl>
+
+<ol class="hbox button-group">
+	<li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Back</span></a></li>
+</ol>

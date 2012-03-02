@@ -41,7 +41,7 @@
     </dl>
 
     <ol class="hbox button-group">
-        <li><a href="@Url.Action("Edit", "Vehicle", new { id = Mustache.Value(m => m.Vehicle.VehicleId) })"><span>Edit</span></a></li>
+        <li><a href="@Url.UnencodedAction("Edit", "Vehicle", new { id = Mustache.Value(m => m.Vehicle.VehicleId) })"><span>Edit</span></a></li>
     </ol>
 
 @if (!Html.IsRenderingForMustache())

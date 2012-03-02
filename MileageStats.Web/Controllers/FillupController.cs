@@ -38,9 +38,6 @@ namespace MileageStats.Web.Controllers
 
         public ActionResult Details(int vehicleId, int id)
         {
-            ViewBag.VehicleName = GetVehicleName(vehicleId);
-            ViewBag.VehicleId = vehicleId;
-
             var fillup = Using<GetFillupById>().Execute(id);
             
             return new ContentTypeAwareResult(new FillupViewModel(fillup));
@@ -48,9 +45,6 @@ namespace MileageStats.Web.Controllers
 
         public ActionResult List(int vehicleId)
         {
-            ViewBag.VehicleName = GetVehicleName(vehicleId);
-            ViewBag.VehicleId = vehicleId;
-
             var model = GetFillups(vehicleId, null);
 
             var groups = from fillup in model
@@ -144,7 +138,7 @@ namespace MileageStats.Web.Controllers
 
             ViewBag.IsFirstFillup = (!fillups.Any());
 
-            return View(model);
+            return new ContentTypeAwareResult(model);
         }
 
         private IEnumerable<FillupViewModel> GetFillups(int vehicleId, int? selectedFillup)
@@ -170,4 +164,16 @@ namespace MileageStats.Web.Controllers
         }
 
     }
+
+    //public class VehicleContextFilterAttribute:IFilterProvider
+    //{
+    //    public IEnumerable<Filter> GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
+    //    {
+    //        int vehicleId = controllerContext.RequestContext.RouteData[];
+    //        var controller = (BaseController) controllerContext.Controller;
+    //        var viewbag = controllerContext.Controller.ViewBag;
+    //        viewbag.VehicleName = controller.GetVehicleName(vehicleId);
+    //        viewbag.VehicleId = vehicleId;
+    //    }
+    //}
 }

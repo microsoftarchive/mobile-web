@@ -14,13 +14,13 @@
                 <div>
 
                     <div id="details-pane" class="tab opened section">
-                        @Html.ActionLink(" ", "Details", "Vehicle", new { id = ViewBag.VehicleId }, new { @class = "trigger" })
+                        @Html.ActionLink(" ", "Details", "Vehicle", new { id = Html.RouteValue("vehicleId") }, new { @class = "trigger" })
                     </div>
                     <div id="fillups-pane" class="tab opened section">
-                        @Html.ActionLink(" ", "List", "Fillup", new { vehicleId = ViewBag.VehicleId }, new { @class = "trigger" })
+                        @Html.ActionLink(" ", "List", "Fillup", new { vehicleId = Html.RouteValue("vehicleId") }, new { @class = "trigger" })
                         <div class="content">
                             <div class="header">
-                                @using (Html.BeginForm("Add", "Fillup", new { vehicleId = ViewBag.VehicleId }, FormMethod.Get))
+                                @using (Html.BeginForm("Add", "Fillup", new { vehicleId = Html.RouteValue("vehicleId") }, FormMethod.Get))
                                 {
                                     <button data-action="fillup-add-selected" class="button generic small" type="submit">
                                         <img src="@Url.Content("~/Content/button-add.png")" title="Add Fill up" alt="Add" />
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div id="reminders-pane" class="tab section">
-                        @Html.ActionLink(" ", "List", "Reminder", new { vehicleId = ViewBag.VehicleId }, new { @class = "trigger" })
+                        @Html.ActionLink(" ", "List", "Reminder", new { vehicleId = Html.RouteValue("vehicleId") }, new { @class = "trigger" })
                     </div>
 
                 </div>

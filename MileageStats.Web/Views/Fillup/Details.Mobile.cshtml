@@ -10,7 +10,7 @@
         <li>@ViewBag.VehicleName</li>
     </ol>
     <ol class="breadcrumbs">
-	    <li><a href="@Url.Action("List", "Fillup", new { vehicleId = ViewBag.VehicleId })">Fillups</a></li>
+	    <li><a href="@Url.Action("List", "Fillup", new { vehicleId = ViewContext.RouteData.Values["vehicleId"] })">Fillups</a></li>
 	    <li>@Model.FillupEntryId</li>
     </ol>
 </nav>
@@ -19,7 +19,4 @@
     @{
 		Html.RenderPartial("DetailsPartial.Mobile", Model);
     }
-    <ol class="hbox button-group">
-		<li><a href="@Url.Action("List", "Fillup", new { vehicleId = ViewBag.VehicleId })"><span>Back</span></a></li>
-	</ol>
 </div>

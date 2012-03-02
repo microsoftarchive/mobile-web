@@ -19,7 +19,7 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MileageStats.Web
+namespace MileageStats.Web.Helpers
 {
     public static class UrlExtensions
     {
@@ -71,6 +71,11 @@ namespace MileageStats.Web
             }
 
             return new Uri(uriBuilder.Uri, relativeUri).AbsoluteUri;
+        }
+
+        public static string UnencodedAction(this UrlHelper helper, string action, string controller, object routeValues)
+        {
+            return HttpUtility.UrlDecode(helper.Action(action, controller, routeValues));
         }
     }
 }

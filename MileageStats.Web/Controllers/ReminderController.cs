@@ -68,9 +68,6 @@ namespace MileageStats.Web.Controllers
                 Reminders = new SelectedItemList<ReminderSummaryModel>(reminderSummaryViewModels, x => x.FirstOrDefault(item => item.ReminderId == id)),
             };
 
-            ViewBag.VehicleName = vehicle.Name;
-            ViewBag.VehicleId = vehicleId;
-            
             return View(viewModel);
         }
 
@@ -88,9 +85,6 @@ namespace MileageStats.Web.Controllers
                 Reminder = ToFormModel(reminders.FirstOrDefault()),
                 Reminders = new SelectedItemList<ReminderSummaryModel>(reminderSummaryViewModels, Enumerable.FirstOrDefault),
             };
-
-            ViewBag.VehicleName = vehicle.Name;
-            ViewBag.VehicleId = vehicleId;
 
             return View(viewModel);
         }

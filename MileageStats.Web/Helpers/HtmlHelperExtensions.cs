@@ -156,6 +156,10 @@ namespace System.Web.Mvc.Html
             return helper.TextBox(name, (value == null) ? "" : value, htmlAttributes);
         }
 
-        
+        public static string RouteValue<TModel>(this HtmlHelper<TModel> helper, string key)
+        {
+            var value = helper.ViewContext.RouteData.Values[key];
+            return (value == null) ? string.Empty : value.ToString();
+        }
     }
 }

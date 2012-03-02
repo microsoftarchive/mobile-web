@@ -58,9 +58,8 @@ limitations under the License. */
     app.router.setDefaultRegion('#view');
     var register = app.router.register;
 
-    register('/Profile/Edit');
     register('/Dashboard/Index');
-    register('/Vehicle/Details/:id'); // requires matching args in a route
+    register('/Vehicle/:id/Details'); // requires matching args in a route
     //register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
     register('/', {
         route: 'Dashboard/Index'

@@ -45,6 +45,17 @@ namespace MileageStats.Web.Controllers
             _serviceLocator = serviceLocator;
         }
 
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            var vehicleId = filterContext.RouteData.Values["vehicleId"];
+            if (vehicleId != null && string.IsNullOrEmpty(ViewBag.VehicleName))
+            {
+                ViewBag.VehicleName = GetVehicleName(int.Parse(vehicleId.ToString()));
+            }
+
+            base.OnActionExecuted(filterContext);
+        }
+
         /// <summary>
         /// Retrieves the CurrentUserId as stored in the <see cref="MileageStatsIdentity"/>
         /// </summary>
@@ -83,7 +94,7 @@ namespace MileageStats.Web.Controllers
             return handler;
         }
 
-        protected string GetVehicleName(int vehicleId)
+        private string GetVehicleName(int vehicleId)
         {
             try
             {

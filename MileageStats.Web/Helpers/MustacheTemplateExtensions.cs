@@ -50,30 +50,31 @@ namespace MileageStats.Web.Helpers
             TModel model,
             Expression<Func<TModel, TProperty>> getter)
         {
-            return new MvcHtmlString(Unencoded(helper,model,getter));
-        }
+            string s;
 
-        public static string Unencoded<TModel, TProperty>(
-            this MustacheHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> getter)
-        {
-            return Unencoded(helper, helper.ViewData.Model, getter);
-        }
-
-        public static string Unencoded<TPageModel, TModel, TProperty>(
-            this MustacheHelper<TPageModel> helper,
-            TModel model,
-            Expression<Func<TModel, TProperty>> getter)
-        {
             if (helper.ViewData.Model == null)
             {
                 string name = ExpressionHelper.GetExpressionText(getter);
-                return string.Format("{{{{{0}}}}}", name);
+                s = string.Format("{{{{{0}}}}}", name);
+            } else
+            {
+                var fn = getter.Compile();
+                var value = fn(model);
+                s = value != null ? value.ToString() : string.Empty;
             }
-            
-            var fn = getter.Compile();
-            var value = fn(model);
-            return value != null ? value.ToString() : string.Empty;
+            return new MvcHtmlString(s);
+        }
+
+        public static string RouteValue<TModel>(this MustacheHelper<TModel> helper, string key)
+        {
+            if (helper.ViewData.Model == null)
+            {
+                return string.Format("{{{{{0}}}}}", key);
+            }
+
+            var value = helper.HtmlHelper.ViewContext.RouteData.Values[key];
+
+            return (value == null) ? string.Empty : value.ToString();
         }
 
         public static IEnumerable<TProperty> Loop<TModel, TProperty>(

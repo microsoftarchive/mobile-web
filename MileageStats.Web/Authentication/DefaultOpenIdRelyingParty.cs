@@ -21,6 +21,7 @@ using System.Web.Mvc;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using DotNetOpenAuth.OpenId.RelyingParty;
+using MileageStats.Web.Helpers;
 
 namespace MileageStats.Web.Authentication
 {

@@ -154,7 +154,7 @@ limitations under the License. */
             var match;
             var href = anchor.attr('href');
             if (href.indexOf('#') === -1 && (match = matchRoute(href))) {
-                anchor.attr('href', '#' + match.url);
+                anchor.attr('href', '/#' + match.url);
             }
         });
     }

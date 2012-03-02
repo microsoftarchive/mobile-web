@@ -21,9 +21,9 @@ using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using DotNetOpenAuth.OpenId.RelyingParty;
 using Microsoft.Practices.Unity;
 using MileageStats.Web.Authentication;
-using MileageStats.Domain.Properties;
 using MileageStats.Domain.Handlers;
 using System.Web.UI;
+using MileageStats.Web.Helpers;
 using MileageStats.Web.Properties;
 
 namespace MileageStats.Web.Controllers
