@@ -148,10 +148,10 @@
     <value>The date is invalid</value>
   </data>
   <data name="ReminderController_ReminderAdded" xml:space="preserve">
-    <value>Successfully added remainder</value>
+    <value>Successfully added reminder</value>
   </data>
   <data name="ReminderController_ReminderDeleted" xml:space="preserve">
-    <value>Successfully deleted remainder</value>
+    <value>Successfully deleted reminder</value>
   </data>
   <data name="ReminderController_VehicleNotFound" xml:space="preserve">
     <value>Vehicle not found</value>

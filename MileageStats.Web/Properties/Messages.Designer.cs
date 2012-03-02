@@ -160,7 +160,7 @@ namespace MileageStats.Web.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully added remainder.
+        ///   Looks up a localized string similar to Successfully added reminder.
         /// </summary>
         internal static string ReminderController_ReminderAdded {
             get {
@@ -169,7 +169,7 @@ namespace MileageStats.Web.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully deleted remainder.
+        ///   Looks up a localized string similar to Successfully deleted reminder.
         /// </summary>
         internal static string ReminderController_ReminderDeleted {
             get {

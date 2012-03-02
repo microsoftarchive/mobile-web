@@ -135,7 +135,11 @@ limitations under the License. */
             .replace(/--/g, '-')                    // collapse double -
             .replace(/-$/, '');                   // remove trailing -
 
-        return $(id).html();
+        var template = $(id);
+        if (template.length === 0) {
+            return '<h1>No Template Found!</h1><h2>' + id + '</h2>';
+        }
+        return template.html();
     }
 
     function buildRegExpForMatching(route) {

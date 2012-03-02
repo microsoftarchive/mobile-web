@@ -59,7 +59,9 @@ limitations under the License. */
     var register = app.router.register;
 
     register('/Dashboard/Index');
-    register('/Vehicle/:id/Details'); // requires matching args in a route
+    register('/Vehicle/:id/Details');
+    register('/Vehicle/:id/Fillup/List');
+    register('/Vehicle/:id/Reminder/List');
     //register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
     register('/', {
         route: 'Dashboard/Index'
