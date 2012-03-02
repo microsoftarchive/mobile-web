@@ -19,6 +19,7 @@ using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
 using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Models;
+using MileageStats.Web.MobileProfiler;
 using MileageStats.Web.Models;
 using System;
 using System.Diagnostics;
@@ -42,11 +43,13 @@ namespace MileageStats.Web.Controllers
 </Chart>"; 
 
         private readonly IChartDataService chartDataService;
+        private readonly MobileCapabilitiesProvider mobileCapabilitiesProvider;
 
-        public ChartController(GetUserByClaimId getUser, IChartDataService chartDataService, IServiceLocator serviceLocator)
+        public ChartController(GetUserByClaimId getUser, IChartDataService chartDataService, IServiceLocator serviceLocator, MobileCapabilitiesProvider mobileCapabilitiesProvider)
             : base(getUser, serviceLocator)
         {
             this.chartDataService = chartDataService;
+            this.mobileCapabilitiesProvider = mobileCapabilitiesProvider;
         }
 
         [Authorize]
@@ -157,7 +160,7 @@ namespace MileageStats.Web.Controllers
 
             if (Request.Browser.IsMobileDevice)
             {
-                chartWidth = Request.Browser.ScreenPixelsWidth;
+                chartWidth = int.Parse(mobileCapabilitiesProvider.GetBrowserCapabilities(this.Request)[AllCapabilities.Width]);
                 chartHeight = chartWidth*DESKTOP_CHART_HEIGHT/DESKTOP_CHART_WIDTH;
 
                 foreach (var vehicleId in chartFormModel.VehicleIds)

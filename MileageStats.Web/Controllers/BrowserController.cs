@@ -22,8 +22,10 @@ namespace MileageStats.Web.Controllers
         public ActionResult Index()
         {
             var caps = mobileCapabilitiesProvider.GetBrowserCapabilities(this.Request);
-            caps.Add(new KeyValuePair<string, string>("_Request.Browser.ScreenPixelsWidth", Request.Browser.ScreenPixelsWidth.ToString()));
-            return View(caps);
+            var widthcaps = new Dictionary<string, string>();
+            widthcaps.Add("Request.Browser.ScreenPixelsWidth", Request.Browser.ScreenPixelsWidth.ToString());
+            widthcaps.Add("width", caps[AllCapabilities.Width]);
+            return View(widthcaps);
         }
 
     }
