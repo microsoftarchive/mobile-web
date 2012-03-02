@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="App_Start\MobileAwareViewEngineBootstrapper.cs" />
     <Compile Include="Authentication\UserAuthenticationTicketBuilder.cs" />
+    <Compile Include="Controllers\BrowserController.cs" />
     <Compile Include="Models\FillupListViewModel.cs" />
     <Compile Include="Helpers\BrowserExtensions.cs" />
     <Compile Include="Helpers\ControllerExtensions.cs" />
@@ -344,6 +345,7 @@
     <Content Include="Views\Chart\Index.Mobile.cshtml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="Views\Dashboard\Dashboard.Stats.cshtml" />
+    <Content Include="Views\Browser\Index.cshtml" />
     <None Include="Views\Error\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
