@@ -16,7 +16,7 @@
 
     </PropertyGroup>
     
-    <Target Name="MinifyJavaScript">
+    <Target Name="MinifyJavaScript" Condition="$(NCrunch) != '1'">
         <ItemGroup>
             <DesktopInput Include="Scripts\desktop-debug\*.js" />
             <MobileInput Include="Scripts\mobile-debug\*.js" />
