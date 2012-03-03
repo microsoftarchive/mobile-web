@@ -160,8 +160,11 @@ namespace MileageStats.Web.Controllers
 
             if (Request.Browser.IsMobileDevice)
             {
-                chartWidth = int.Parse(mobileCapabilitiesProvider.GetBrowserCapabilities(this.Request)[AllCapabilities.Width]);
-                chartHeight = chartWidth*DESKTOP_CHART_HEIGHT/DESKTOP_CHART_WIDTH;
+                var capabilities = mobileCapabilitiesProvider.GetBrowserCapabilities(this.Request);
+                chartWidth = capabilities.ContainsKey(AllCapabilities.Width)
+                                 ? int.Parse(capabilities[AllCapabilities.Width])
+                                 : 320;
+                //chartHeight = chartWidth*DESKTOP_CHART_HEIGHT/DESKTOP_CHART_WIDTH;
 
                 foreach (var vehicleId in chartFormModel.VehicleIds)
                 {

@@ -24,7 +24,7 @@ namespace MileageStats.Web.Controllers
             var caps = mobileCapabilitiesProvider.GetBrowserCapabilities(this.Request);
             var widthcaps = new Dictionary<string, string>();
             widthcaps.Add("Request.Browser.ScreenPixelsWidth", Request.Browser.ScreenPixelsWidth.ToString());
-            widthcaps.Add("width", caps[AllCapabilities.Width]);
+            widthcaps.Add("width", caps.ContainsKey(AllCapabilities.Width) ? caps[AllCapabilities.Width] : "unknown capability");
             return View(widthcaps);
         }
 
