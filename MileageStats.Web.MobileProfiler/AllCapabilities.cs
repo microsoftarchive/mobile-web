@@ -34,5 +34,6 @@ namespace MileageStats.Web.MobileProfiler
         public const string FileUpload = "xhtml_file_upload";
         public const string HashChange = "hashchange";
         public const string Width = "width";
+        public const int DefaultWidth = 320;
     }
 }

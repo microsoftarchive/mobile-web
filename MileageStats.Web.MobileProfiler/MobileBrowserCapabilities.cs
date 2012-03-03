@@ -65,6 +65,14 @@ namespace MileageStats.Web.MobileProfiler
                     return _deviceCapabilities.TryGetValue(AllCapabilities.MobileDevice);
                 case "cookies":
                     return _deviceCapabilities.TryGetValue(AllCapabilities.Cookies);
+                case "screenPixelsWidth":
+                    {
+                        if (_deviceCapabilities.ContainsKey(AllCapabilities.Width))
+                        {
+                            return _deviceCapabilities[AllCapabilities.Width];
+                        }
+                        return AllCapabilities.DefaultWidth.ToString();
+                    }
                 default:
                     {
                         string capability = null;
