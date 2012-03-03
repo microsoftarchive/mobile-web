@@ -1,24 +1,20 @@
 ﻿@model MileageStats.Web.Models.VehicleFormModel
 @{
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
-    ViewBag.Title = "Confirm Delete Vehicle";
+    ViewBag.Title = "Delete Vehicle";
 }
 
-<h2>Are you sure you want to delete this vehicle?</h2>
-<ol>
-    <li>@Model.Name</li>
-    <li>@Model.Year</li>
-    <li>@Model.MakeName</li>
-    <li>@Model.ModelName</li>
-</ol>
-<ol class="hbox button-group">
-        <li class="icon false">
+<h2>Delete Vehicle</h2>
+<p>If you wish to delete this vehicle and all of it's related data please press the button below. <strong>Please note, this action is permanent (no undo is available).</strong></p>
+
+<ol class="button-group">
+        <li>
             @using (Html.BeginForm("Delete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Post))
             {
 				@Html.AntiForgeryToken()
 
-                <button type="submit" value="delete" name="action" class="false">
-                    <span>Delete Vehicle</span></button>
+                <button type="submit" value="delete" name="action">
+                    <span>Permanently delete this vehicle</span></button>
     
             }            
         </li>
