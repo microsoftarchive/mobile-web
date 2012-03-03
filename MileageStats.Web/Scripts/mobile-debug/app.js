@@ -15,7 +15,7 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-(function (app) {
+(function (app, global, $) {
 
     // ** bootstrapper **
     // iterate through the modules calling the 
@@ -24,7 +24,6 @@ limitations under the License. */
     // back as the same name.
     // we also pass in depedencies to each module
     var module, registration;
-    var global = this;
 
     // this function is responsible for fulfilling
     // depedencies in modules
@@ -42,31 +41,35 @@ limitations under the License. */
         throw new Error('unable to locate ' + service);
     }
 
-    for (registration in app) {
-        module = app[registration];
-        // check to see if the module is
-        // a function or an object and only apply it
-        // when it is a function
-        if (typeof module === 'function') {
-            app[registration] = module(require);
+    $(function () {
+        
+        for (registration in app) {
+            module = app[registration];
+            // check to see if the module is
+            // a function or an object and only apply it
+            // when it is a function
+            if (typeof module === 'function') {
+                app[registration] = module(require);
+            }
         }
-    }
 
-    // after the modules are all bootstrapped
-    // perform any necessary configuration
+        // after the modules are all bootstrapped
+        // perform any necessary configuration
 
-    app.router.setDefaultRegion('#view');
-    var register = app.router.register;
+        app.router.setDefaultRegion('#view');
+        var register = app.router.register;
 
-    register('/Dashboard/Index');
-    register('/Vehicle/:id/Details');
-    register('/Vehicle/:id/Fillup/List');
-    register('/Vehicle/:id/Reminder/List');
-    //register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
-    register('/', {
-        route: 'Dashboard/Index'
+        register('/Dashboard/Index');
+        register('/Vehicle/:id/Details');
+        register('/Vehicle/Edit/:id');
+        register('/Vehicle/:id/Fillup/List');
+        register('/Vehicle/:id/Reminder/List');
+        //register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
+        register('/', {
+            route: 'Dashboard/Index'
+        });
+
+        app.router.initialize();
     });
 
-    $(app.router.initialize);
-
-})(window.mstats = window.mstats || {});
+})(window.mstats = window.mstats || {}, window, $);
