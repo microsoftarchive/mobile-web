@@ -142,19 +142,6 @@ namespace MileageStats.Web.Tests.Controllers
         }
 
         [Fact]
-        public void WhenAddActionExecuted_ThenResultPopulated()
-        {
-            MockVehicleList();
-            MockDefaultYearMakeModel();
-            var controller = GetTestableVehicleController();
-
-            var actual = controller.Add() as ViewResult;
-
-            Assert.NotNull(actual);
-            Assert.Equal(string.Empty, actual.ViewName);
-        }
-
-        [Fact]
         public void WhenAddActionExecuted_ThenViewModelContainsVehicleFormViewModel()
         {
             MockVehicleList();

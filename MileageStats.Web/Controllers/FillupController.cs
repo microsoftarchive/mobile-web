@@ -59,11 +59,7 @@ namespace MileageStats.Web.Controllers
                                         Fillups = grouping
                                     };
 
-            return new ContentTypeAwareResult(groups.ToList())
-            {
-                WhenJson = (m,v) => Json(m, JsonRequestBehavior.AllowGet),
-                WhenHtml = (m,v) => View(m)
-            };
+            return new ContentTypeAwareResult(groups.ToList());
         }
 
         public ActionResult ListPartial(int vehicleId)

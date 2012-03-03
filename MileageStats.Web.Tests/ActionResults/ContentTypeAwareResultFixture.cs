@@ -34,6 +34,11 @@ namespace MileageStats.Web.Tests.ActionResults
             return new ContentTypeAwareResult(new { apples = 1, oranges = "tasty"});
         }
 
+        public ActionResult ReturnAnArray()
+        {
+            return    new ContentTypeAwareResult(new List<string>{"robot"});
+        }
+
         public ActionResult CustomizedActionResult()
         {
             var viewmodel = new {apples = 1, oranges = "tasty"};
@@ -130,6 +135,23 @@ namespace MileageStats.Web.Tests.ActionResults
             action.ExecuteResult(context.Object);
 
             view.VerifyAll();
+        }
+
+        [Fact]
+        public void when_model_is_enumerable_and_the_response_is_JSON_wrap_the_array_in_an_object()
+        {
+            var controller = new ExampleController();
+            var action = (ContentTypeAwareResult)controller.ReturnAnArray();
+
+            var context = MockContextFor(controller);
+            var response = new Mock<HttpResponseBase>();
+
+            context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "application/json" });
+            context.SetupGet(x => x.HttpContext.Response).Returns(() => response.Object);
+
+            action.ExecuteResult(context.Object);
+
+            response.Verify(x => x.Write("{\"model\":[\"robot\"]}"));
         }
 
         private static Mock<ControllerContext> MockContextFor(ControllerBase controller)

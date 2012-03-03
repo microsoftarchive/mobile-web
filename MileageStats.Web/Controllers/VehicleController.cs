@@ -21,7 +21,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
-using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Handlers;
 using MileageStats.Domain.Models;
 using MileageStats.Web.Models;
@@ -43,7 +42,7 @@ namespace MileageStats.Web.Controllers
         public ActionResult Details(int id)
         {
             var vehicles = Using<GetVehicleListForUser>()
-                .Execute(this.CurrentUserId);
+                .Execute(CurrentUserId);
 
             var selected = vehicles
                 .FirstOrDefault(x => x.VehicleId == id);
@@ -72,7 +71,7 @@ namespace MileageStats.Web.Controllers
             return new ContentTypeAwareResult(vm);
         }
 
-        private ViewResult SetupVehicleForm(VehicleFormModel vehicleForm)
+        private ActionResult SetupVehicleForm(VehicleFormModel vehicleForm)
         {
             var handler = Using<GetYearsMakesAndModels>();
             var yearsMakesAndModels = handler.Execute(vehicleForm.Year, vehicleForm.MakeName);
@@ -81,7 +80,7 @@ namespace MileageStats.Web.Controllers
             ViewBag.Makes = EnumerableToSelectList(yearsMakesAndModels.Item2, vehicleForm.MakeName);
             ViewBag.Models = EnumerableToSelectList(yearsMakesAndModels.Item3, vehicleForm.ModelName);
 
-            return View(vehicleForm);
+            return new ContentTypeAwareResult(vehicleForm);
         }
 
         [Authorize]
@@ -218,8 +217,8 @@ namespace MileageStats.Web.Controllers
         {
             vehicleId = -1;
 
-            IEnumerable<ValidationResult> vehicleErrors = Using<CanAddVehicle>().Execute(CurrentUserId,
-                vehicleForm);
+            var vehicleErrors = Using<CanAddVehicle>()
+                .Execute(CurrentUserId,vehicleForm);
 
             ModelState.AddModelErrors(vehicleErrors, "Save");
 
@@ -229,7 +228,8 @@ namespace MileageStats.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                vehicleId =  Using<CreateVehicle>().Execute(CurrentUserId, vehicleForm, photoFile);
+                vehicleId =  Using<CreateVehicle>()
+                    .Execute(CurrentUserId, vehicleForm, photoFile);
                 return true;
             }
             return false;
@@ -237,8 +237,9 @@ namespace MileageStats.Web.Controllers
 
         private bool TryUpdateVehicle(VehicleFormModel vehicleForm, HttpPostedFileBase photoFile)
         {
-            IEnumerable<ValidationResult> vehicleErrors =
-                Using<CanValidateVehicleYearMakeAndModel>().Execute(vehicleForm);
+            var vehicleErrors = Using<CanValidateVehicleYearMakeAndModel>()
+                .Execute(vehicleForm);
+            
             ModelState.AddModelErrors(vehicleErrors, "Edit");
 
             if (!ModelState.IsValid) return false;
@@ -247,9 +248,12 @@ namespace MileageStats.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                Using<UpdateVehicle>().Execute(CurrentUserId, vehicleForm, photoFile);
+                Using<UpdateVehicle>()
+                    .Execute(CurrentUserId, vehicleForm, photoFile);
+                
                 return true;
             }
+
             return false;
         }
 
@@ -257,10 +261,8 @@ namespace MileageStats.Web.Controllers
         {
             if (photoFile == null) return; // the photo is optional, so no validation errors if it's omitted
 
-            IEnumerable<ValidationResult> photoErrors =
-                Using<CanAddPhoto>().Execute(photoFile.InputStream,
-                                             photoFile.ContentLength,
-                                             photoFile.ContentType);
+            var photoErrors = Using<CanAddPhoto>()
+                .Execute(photoFile.InputStream, photoFile.ContentLength, photoFile.ContentType);
 
             ModelState.AddModelErrors(photoErrors, "photoFile");
         }

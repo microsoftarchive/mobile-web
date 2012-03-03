@@ -61,10 +61,16 @@ limitations under the License. */
 
         register('/Dashboard/Index');
         register('/Vehicle/:id/Details');
-        register('/Vehicle/Edit/:id');
         register('/Vehicle/:id/Fillup/List');
         register('/Vehicle/:id/Reminder/List');
+        
+        // these forms are special cases, we need to address them
+        //register('/Vehicle/Edit/:id');
+        //register('/Vehicle/Edit');
+        //register('/Vehicle/Add/:id');
         //register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
+        
+        // the root url
         register('/', {
             route: 'Dashboard/Index'
         });

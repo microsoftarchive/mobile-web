@@ -16,6 +16,7 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -45,12 +46,27 @@ namespace MileageStats.Web
 
         public object Model { get { return _model; } }
 
+        private static object WrapArrayWithObject(object model)
+        {
+            // We want to avoid sending a JSON array as a response
+            // See http://haacked.com/archive/2009/06/25/json-hijacking.aspx
+            // In cases were our model would be converted to an array,
+            // we wrap it in a object
+            return (typeof(IEnumerable)).IsInstanceOfType(model) 
+                ? new { model } 
+                : model;
+        }
+
         private void SetupDefaultActionResultProviders(object model)
         {
             // these should behave the same as calling the corresponding 
             // convenience method on Controller
 
-            WhenJson = (x,v) => new JsonResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            WhenJson = (x, v) => new JsonResult
+                                     {
+                                         Data = WrapArrayWithObject(model),
+                                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                                     };
 
             WhenHtml = (x,v) =>
                        {
@@ -77,8 +93,9 @@ namespace MileageStats.Web
             //  text/html; q=0.90
             // in those cases we want to discard the portion
             // after the semicolon when attempting to match
-            var types = from type in context.HttpContext.Request.AcceptTypes
-                        select type.Split(';')[0];
+            var types = (from type in context.HttpContext.Request.AcceptTypes
+                        select type.Split(';')[0])
+                        .ToList();
 
             var providers = from type in types
                             where _supportedTypes.ContainsKey(type)
