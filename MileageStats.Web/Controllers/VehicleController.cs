@@ -109,7 +109,16 @@ namespace MileageStats.Web.Controllers
                 }
             }
 
-            vehicleForm.Action = action;
+            if (ModelState.IsValid)
+            {
+                //Only proceed to next action if form is valid.
+                vehicleForm.Action = action;
+            }
+            else
+            {
+                vehicleForm.Action = null;
+            }
+
             return SetupVehicleForm(vehicleForm);
         }
 
