@@ -2,25 +2,16 @@
 @{
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Dashboard";
+
+    if (Request.Browser.IsWow()){
+        Html.RenderPartial("_spaTemplates", Model);
+    }
 }
-<script id="fillup-details" type="text/html">
-    @{ Html.RenderAsMustacheTemplate("~/Views/Fillup/DetailsPartial.Mobile.cshtml"); }
-</script>
-
-<script id="dashboard-index" type="text/html">
-    @{ Html.RenderAsMustacheTemplate("Dashboard.Stats"); }
-</script>
-
-<script id="vehicle-details" type="text/html">
-    @{ Html.RenderAsMustacheTemplate("~/Views/Vehicle/Details.Mobile.cshtml"); }
-</script>
-
-
 <nav>
-        <ol class="tabs">
-            <li><a href="@Url.Action("Index", "Dashboard")" class="selected">Dashboard</a></li>
-            <li><a href="@Url.Action("Index", "Chart")">Charts</a></li>
-        </ol>
+    <ol class="tabs">
+        <li><a href="@Url.Action("Index", "Dashboard")" class="selected">Dashboard</a></li>
+        <li><a href="@Url.Action("Index", "Chart")">Charts</a></li>
+    </ol>
 </nav>
 <div class="view" id="view">
     @{Html.RenderPartial("Dashboard.Stats", Model);}
