@@ -75,7 +75,7 @@ limitations under the License. */
 
 					that.data = {
 						VehicleId: selectedVehicleId,
-						Fillups: data
+						Fillups: data.model
 					};
 					that._updateSelectedFillup();
 					that._applyTemplate();

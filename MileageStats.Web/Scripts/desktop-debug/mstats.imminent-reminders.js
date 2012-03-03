@@ -42,7 +42,7 @@ limitations under the License. */
             }
 
             // Wrapped to make it easier to template with header data.
-            var wrappedData = { ReminderList: data };
+            var wrappedData = { ReminderList: data.model };
             this.element.find('#summary-reminders-content')
                 .html($(this.options.templateId).tmpl(wrappedData, {
                     createRemindersLink: function (vehicleId) {
