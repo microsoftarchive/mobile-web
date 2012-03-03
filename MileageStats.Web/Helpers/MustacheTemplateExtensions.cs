@@ -98,6 +98,7 @@ namespace MileageStats.Web.Helpers
             if (helper.ViewData.Model == null)
             {
                 name = ExpressionHelper.GetExpressionText(getter);
+                if (string.IsNullOrEmpty(name)) name = "model";
                 getEnumerable = () => new List<TProperty> { default(TProperty) };
             }
             else

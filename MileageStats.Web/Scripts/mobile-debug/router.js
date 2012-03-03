@@ -61,7 +61,17 @@ limitations under the License. */
 
         var template = getTemplateFor(route);
 
-        function success(data) {
+        function success(data, status, xhr) {
+           
+            if (isArray(data)) {
+                // mustache needs to have an object and
+                // not array, if we detect an array we'l
+                // wrap it and name the property 'model'
+                data = {
+                    model: data
+                };
+            }
+
             var view = templating.to_html(template, data);
             $(region).append(view);
             overrideLinks();
@@ -161,6 +171,17 @@ limitations under the License. */
                 anchor.attr('href', '/#' + match.url);
             }
         });
+    }
+
+    function isArray(candidate) {
+        return !(
+            !candidate || // should exist
+            (!candidate.length || candidate.length == 0) || //should have a length property
+            typeof candidate !== 'object' || // should be an object
+            !candidate.constructor || // should have a constructor
+            candidate.nodeType ||   // should not be a node (that is, in the DOM)
+            candidate.item
+          );
     }
 
     return {
