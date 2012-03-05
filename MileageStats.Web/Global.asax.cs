@@ -179,6 +179,9 @@ namespace MileageStats.Web
 
             // Injects the custom BrowserCapabilitiesProvider into the ASP.NET pipeline
             HttpCapabilitiesBase.BrowserCapabilitiesProvider = provider;
+
+            // Injects the custom metadata provider
+            ModelMetadataProviders.Current = new CustomMetadataProvider();
         }
 
         private void EndRequestHandler(object sender, EventArgs e)

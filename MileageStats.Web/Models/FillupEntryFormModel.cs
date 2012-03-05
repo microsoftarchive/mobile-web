@@ -21,6 +21,7 @@ using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Models;
 using MileageStats.Domain.Validators;
 using MileageStats.Domain.Properties;
+using MileageStats.Web.Infrastructure;
 
 namespace MileageStats.Web.Models
 {
@@ -87,6 +88,7 @@ namespace MileageStats.Web.Models
         /// </summary>
         [Required(ErrorMessageResourceName = "FillupEntryOdometerRequired", ErrorMessageResourceType = typeof(Resources))]
         [Range(1, 1000000, ErrorMessageResourceName = "FillupEntryOdometerRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
+        [InputType("number", "7")]
         public int Odometer { get; set; }
 
         /// <summary>
@@ -95,6 +97,7 @@ namespace MileageStats.Web.Models
         [Required(ErrorMessageResourceName = "FillupEntryPricePerUnitRequired", ErrorMessageResourceType = typeof(Resources))]
         [Range(0.1d, 100.0d, ErrorMessageResourceName = "FillupEntryPricePerUnitRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "FillupEntryPricePerUnitLabelText", ResourceType = typeof(Resources))]
+        [InputType("number", "6", "0.01", "3.75")]
         public double PricePerUnit { get; set; }
 
         /// <summary>
@@ -103,6 +106,7 @@ namespace MileageStats.Web.Models
         [Required(ErrorMessageResourceName = "FillupEntryTotalUnitsRequired", ErrorMessageResourceType = typeof(Resources))]
         [Range(1.0d, 1000.0d, ErrorMessageResourceName = "FillupEntryTotalUnitsRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "FillupEntryTotalUnitsLabelText", ResourceType = typeof(Resources))]
+        [InputType("number", "7", "0.001", "10.123")]
         public double TotalUnits { get; set; }
 
         [Required(ErrorMessageResourceName = "FillUpEntryUnitOfMeasureRequired", ErrorMessageResourceType = typeof(Resources))]
@@ -117,6 +121,7 @@ namespace MileageStats.Web.Models
         [Required(ErrorMessageResourceName = "FillupEntryTransactionFeeRequired", ErrorMessageResourceType = typeof(Resources))]
         [Range(0.0d, 100.0d, ErrorMessageResourceName = "FillupEntryTransactionFeeRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "FillupEntryTransactionFeeLabelText", ResourceType = typeof(Resources))]
+        [InputType("number", "6", "0.01", "0.45")]
         public double TransactionFee { get; set; }
 
         [TextMultilineValidator]

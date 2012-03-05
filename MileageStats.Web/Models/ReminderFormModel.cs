@@ -20,6 +20,7 @@ using System.ComponentModel.DataAnnotations;
 using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Properties;
 using MileageStats.Domain.Validators;
+using MileageStats.Web.Infrastructure;
 
 namespace MileageStats.Web.Models
 {
@@ -119,6 +120,7 @@ namespace MileageStats.Web.Models
         /// </value>
         [Range(0, 1000000, ErrorMessageResourceName = "ReminderDueDistanceRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "ReminderDueDistanceLabelText", ResourceType = typeof(Resources))]
+        [InputType("number", "7", "1", "0")]
         public int? DueDistance { get; set; }
 
         /// <summary>

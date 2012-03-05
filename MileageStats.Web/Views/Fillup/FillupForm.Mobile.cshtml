@@ -10,17 +10,17 @@
     </li>
     <li>
         @Html.LabelFor(model => model.Odometer)
-        @Html.FixedValueTextBoxFor(model => model.Odometer, (Model.Odometer > 0) ? Model.Odometer.ToString() : null, new { maxlength = "7", type = "number" })
+        @Html.InputTypeFor(model => model.Odometer, (Model.Odometer > 0) ? Model.Odometer.ToString() : null)
         @Html.ValidationMessageFor(model => model.Odometer)
     </li>
     <li>
         @Html.LabelFor(model => model.PricePerUnit)
-        @Html.FixedValueTextBoxFor(model => model.PricePerUnit, new { maxlength = "6", type = "number", step = "0.01", placeholder = Model.PricePerUnit })
+        @Html.InputTypeFor(model => model.PricePerUnit)
         @Html.ValidationMessageFor(model => model.PricePerUnit)
     </li>
     <li>
         @Html.LabelFor(model => model.TotalUnits)
-        @Html.FixedValueTextBoxFor(model => model.TotalUnits, new { maxlength = "7", type = "number", step = "0.01", placeholder = Model.TotalUnits })
+        @Html.InputTypeFor(model => model.TotalUnits)
         @Html.ValidationMessageFor(model => model.TotalUnits)
     </li>
     <li>
@@ -30,7 +30,7 @@
     </li>
     <li>
         @Html.LabelFor(model => model.TransactionFee)
-        @Html.FixedValueTextBoxFor(model => model.TransactionFee, new { maxlength = "6", type = "number", step = "0.01", placeholder = Model.TransactionFee })
+        @Html.InputTypeFor(model => model.TransactionFee)
         @Html.ValidationMessageFor(model => model.TransactionFee)
     </li>
     <li>

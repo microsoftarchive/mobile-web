@@ -17,6 +17,7 @@ limitations under the License. */
 
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using MileageStats.Web.Infrastructure;
 
 namespace System.Web.Mvc.Html
 {
@@ -143,17 +144,36 @@ namespace System.Web.Mvc.Html
             return helper.DropDownListFor(expression, months);
         }
 
-        public static IHtmlString FixedValueTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
-           Expression<Func<TModel, TProperty>> expression, object htmlAttributes)
+        public static IHtmlString InputTypeFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
+           Expression<Func<TModel, TProperty>> expression)
         {
-            return FixedValueTextBoxFor(helper, expression, null, htmlAttributes);
+            return InputTypeFor(helper, expression, null);
         }
 
-        public static IHtmlString FixedValueTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> expression, object value, object htmlAttributes)
+        public static IHtmlString InputTypeFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
+            Expression<Func<TModel, TProperty>> expression, object value)
         {
             var name = ExpressionHelper.GetExpressionText(expression);
-            return helper.TextBox(name, (value == null) ? "" : value, htmlAttributes);
+
+            var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
+
+            var attributes = new Dictionary<string, object>();
+
+            if (metadata.AdditionalValues.ContainsKey("InputType"))
+            {
+                var inputTypeAttribute = (InputTypeAttribute)metadata.AdditionalValues["InputType"];
+
+                attributes.Add("maxlength", inputTypeAttribute.Length);
+                attributes.Add("type", inputTypeAttribute.Type);
+                
+                if(!string.IsNullOrEmpty(inputTypeAttribute.Step))
+                    attributes.Add("step", inputTypeAttribute.Step);
+
+                if (!string.IsNullOrEmpty(inputTypeAttribute.PlaceHolder))
+                    attributes.Add("placeholder", inputTypeAttribute.PlaceHolder);
+            }
+
+            return helper.TextBox(name, (value == null) ? "" : value, attributes);
         }
 
         public static string RouteValue<TModel>(this HtmlHelper<TModel> helper, string key)

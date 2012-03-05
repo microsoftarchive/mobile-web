@@ -120,6 +120,7 @@
     <Compile Include="App_Start\MobileAwareViewEngineBootstrapper.cs" />
     <Compile Include="Authentication\UserAuthenticationTicketBuilder.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
+    <Compile Include="Infrastructure\CustomMetadataProvider.cs" />
     <Compile Include="Models\FillupListViewModel.cs" />
     <Compile Include="Helpers\BrowserExtensions.cs" />
     <Compile Include="Helpers\ControllerExtensions.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Infrastructure\CustomControllerFactory.cs" />
     <Compile Include="Helpers\MustacheHelper.cs" />
     <Compile Include="Infrastructure\CustomHandleErrorFilter.cs" />
+    <Compile Include="Infrastructure\InputTypeAttribute.cs" />
     <Compile Include="Models\StatisticsViewModel.cs" />
     <Compile Include="Properties\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
