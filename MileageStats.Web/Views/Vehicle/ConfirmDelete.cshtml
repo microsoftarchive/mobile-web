@@ -3,19 +3,21 @@
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Delete Vehicle";
 }
-
-<h2>Delete Vehicle</h2>
-<p>If you wish to delete this vehicle and all of it's related data please press the button below. <strong>Please note, this action is permanent (no undo is available).</strong></p>
-
-<ol class="button-group">
+<div class="view">
+    <h2>Delete Vehicle</h2>
+    <p>
+        If you wish to delete this vehicle and all of it's related data please press the
+        button below. <strong>Please note, this action is permanent (no undo is available).</strong></p>
+    <ol class="button-group">
         <li>
             @using (Html.BeginForm("Delete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Post))
             {
-				@Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()
 
                 <button type="submit" value="delete" name="action">
                     <span>Permanently delete this vehicle</span></button>
     
-            }            
+            }
         </li>
     </ol>
+</div>
