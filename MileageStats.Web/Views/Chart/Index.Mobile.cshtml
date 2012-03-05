@@ -22,29 +22,32 @@
 
     @using (Html.BeginForm("Index", "Chart"))
     {
-        @Html.DropDownListFor(model => model.ChartName, Model.AllCharts)                           
-
-        <img src="@Url.Action("GetChartImage", new { UserId = Model.UserId, ChartName = Model.ChartName, StartDate = Model.StartDate, EndDate = Model.EndDate })@vehicleIdQueryStringBuilder.ToString()" title="@Model.ChartName" alt="@Model.ChartName" />
-
-        <ol>
-            <li>
-                <label>Vehicles</label>
+	<ul>
+        <li>
+            <label for="chart-data">Chart Data</label>        
+            @Html.DropDownListFor(model => model.ChartName, Model.AllCharts)                           
+        </li>
+        <li><img src="@Url.Action("GetChartImage", new { UserId = Model.UserId, ChartName = Model.ChartName, StartDate = Model.StartDate, EndDate = Model.EndDate })@vehicleIdQueryStringBuilder.ToString()" title="@Model.ChartName" alt="@Model.ChartName" /></li>
+        <li>
+            <h4>Vehicles</h4>
+            <ol class="legend">
                 @foreach (var vehicle in Model.AllVehicleModels)
                 {
-                    <input name="VehicleIds" type="checkbox" value="@vehicle.VehicleId" @(Model.VehicleIds.Contains(vehicle.VehicleId) ? "checked" : "")>@vehicle.Name</input>
+                    <li><input name="VehicleIds" type="checkbox" value="@vehicle.VehicleId" @(Model.VehicleIds.Contains(vehicle.VehicleId) ? "checked" : "")>@vehicle.Name</input></li>
                 }
-            </li>
-            <li>
-                <label>Date Range</label>
-                <label>From:</label>@Html.PriorMonthYearPickerFor(model => model.StartDate, Model.StartDate, false)
-                <label>To:</label>@Html.PriorMonthEndYearPickerFor(model => model.EndDate, Model.EndDate, false)
-            </li>
-            
-        </ol>
-        <ol class="hbox button-group">
-            <li class="refresh">
-                <button type="submit"><span>Refresh</span></button>     
-            </li>
-        </ol>                    
+            </ol>
+        </li>
+        <li class="range">
+            <h4>Date Range</h4>
+            <label for="StartDate">From</label>@Html.PriorMonthYearPickerFor(model => model.StartDate, Model.StartDate, false)
+            <label for="EndDate">To</label>@Html.PriorMonthEndYearPickerFor(model => model.EndDate, Model.EndDate, false)
+        </li>
+    </ul>
+        
+    <ol class="button-group">
+        <li class="icon refresh">
+            <button type="submit"><span>Refresh</span></button>     
+        </li>
+    </ol>                    
     }
 </div>

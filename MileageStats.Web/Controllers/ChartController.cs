@@ -35,12 +35,7 @@ namespace MileageStats.Web.Controllers
     {
         private const int DESKTOP_CHART_WIDTH = 800;
         private const int DESKTOP_CHART_HEIGHT = 450;
-        private const String CHARTS_THEME = @"<Chart> 
-<Legends> 
-<Legend _Template_=""All"" Docking=""Bottom"" LegendStyle=""Table"" Alignment=""Center""> 
-</Legend> 
-    </Legends>                           
-</Chart>"; 
+        private const String CHARTS_THEME = @"<Chart Palette=""None"" PaletteCustomColors=""#4bb2c5;#c5b47f;#EAA228;#579575;#839557;#958c12;#953579;#4b5de4;#d8b83f;#ff5800""></Chart>"; 
 
         private readonly IChartDataService chartDataService;
 
@@ -173,10 +168,14 @@ namespace MileageStats.Web.Controllers
             {
                 seriesData = this.chartDataService.CalculateSeriesForUser(userId, DateTime.UtcNow.AddMonths(-12), null);                
             }
-            
+
             var myChart = new Chart(chartWidth, chartHeight, CHARTS_THEME)
-                .AddTitle(chartTitle)
-                .AddLegend();
+                .AddTitle(chartTitle);
+
+            if (!Request.Browser.IsMobileDevice)
+            {
+                myChart.AddLegend();
+            }
 
             if (PlotMultipleChartLine(myChart, seriesData.Entries, yValueAccessor))
             {
