@@ -21,10 +21,23 @@
     }
     <ol class="hbox button-group">
         <li class="icon false">
-            @using (Html.BeginForm("ConfirmDelete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Get))
+            @if (Request.Browser.IsWow())
             {
-                <button type="submit" value="delete" name="action" class="false">
-                    <span>Delete</span></button>
+                using (Html.BeginForm("Delete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Post))
+                {
+				    @Html.AntiForgeryToken()
+
+                    <button type="submit" value="delete" name="action" onclick="asdf">
+                        <span>Delete</span></button>
+                }       
+            }
+            else
+            {
+                using (Html.BeginForm("ConfirmDelete", "Vehicle", new {id = Model.VehicleId}, FormMethod.Get))
+                 {
+                     <button type="submit" value="delete" name="action" class="false">
+                         <span>Delete</span></button>
+                 }
             }
         </li>
     </ol>
