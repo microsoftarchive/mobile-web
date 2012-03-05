@@ -25,7 +25,7 @@
         <li>
             @using (Html.BeginForm("Fulfill", "Reminder", new { id = reminder.ReminderId }, FormMethod.Post))
             {
-                <button type="submit" value="fulfill" name="action" class="icon false" @(reminder.IsFulfilled ? "disabled" : "")>
+                <button type="submit" value="fulfill" name="action" @(reminder.IsFulfilled ? "disabled" : "")>
                     <span>Fulfill</span></button>
     
             }
@@ -33,5 +33,3 @@
         <li class="icon false invert"><a href="@Url.Action("List", "Reminder", new { vehicleId = reminder.VehicleId })"><span>Cancel</span></a></li>
 	</ol>
 </div>
-
-                        
