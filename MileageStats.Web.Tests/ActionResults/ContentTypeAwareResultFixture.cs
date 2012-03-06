@@ -44,10 +44,10 @@ namespace MileageStats.Web.Tests.ActionResults
             var viewmodel = new {apples = 1, oranges = "tasty"};
             return new ContentTypeAwareResult(viewmodel)
                        {
-                           WhenJson = (data,viewdata) => new JsonResult {Data = data}, 
+                           WhenJson = (data,viewdata,tempdata) => new JsonResult {Data = data}, 
                            // this way if we don't want the default behavior 
                            // we can customize it
-                           WhenHtml = (model, viewdata) =>
+                           WhenHtml = (model, viewdata, tempdata) =>
                                       {
                                           var result = new ViewResult();
                                           if (model != null)
@@ -108,7 +108,7 @@ namespace MileageStats.Web.Tests.ActionResults
             var view = new Mock<ViewResult>();
             view.Setup(x => x.ExecuteResult(It.IsAny<ControllerContext>()))
                 .Verifiable();
-            action.WhenHtml = (x,v) => view.Object;
+            action.WhenHtml = (x,v,t) => view.Object;
 
             var context = MockContextFor(controller);
             context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "text/html" });
@@ -127,7 +127,7 @@ namespace MileageStats.Web.Tests.ActionResults
             var view = new Mock<ViewResult>();
             view.Setup(x => x.ExecuteResult(It.IsAny<ControllerContext>()))
                 .Verifiable();
-            action.WhenHtml = (x,v) => view.Object;
+            action.WhenHtml = (x,v,t) => view.Object;
 
             var context = MockContextFor(controller);
             context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "text/html; q=0.90" });

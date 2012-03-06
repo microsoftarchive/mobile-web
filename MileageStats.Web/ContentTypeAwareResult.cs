@@ -26,10 +26,10 @@ namespace MileageStats.Web
     public sealed class ContentTypeAwareResult : ActionResult, ITestableContentTypeAwareResult
     {
         private readonly object _model;
-        private Dictionary<string, Func<object,ViewDataDictionary, ActionResult>> _supportedTypes;
+        private Dictionary<string, Func<object,ViewDataDictionary, TempDataDictionary, ActionResult>> _supportedTypes;
 
-        public Func<object,ViewDataDictionary, ActionResult> WhenJson { get; set; }
-        public Func<object,ViewDataDictionary, ActionResult> WhenHtml { get; set; }
+        public Func<object, ViewDataDictionary, TempDataDictionary, ActionResult> WhenJson { get; set; }
+        public Func<object, ViewDataDictionary, TempDataDictionary, ActionResult> WhenHtml { get; set; }
 
         public ContentTypeAwareResult()
             : this(null)
@@ -62,16 +62,17 @@ namespace MileageStats.Web
             // these should behave the same as calling the corresponding 
             // convenience method on Controller
 
-            WhenJson = (x, v) => new JsonResult
+            WhenJson = (x, v, t) => new JsonResult
                                      {
                                          Data = WrapArrayWithObject(model),
                                          JsonRequestBehavior = JsonRequestBehavior.AllowGet
                                      };
 
-            WhenHtml = (x,v) =>
+            WhenHtml = (x,v,t) =>
                        {
                            var result = new ViewResult();
                            result.ViewData = v;
+                           result.TempData = t;
                            if (model != null)
                            {
                                result.ViewData.Model = model;
@@ -83,7 +84,7 @@ namespace MileageStats.Web
         private ActionResult GetActionResultFor(ControllerContext context)
         {
             // map supported content-types to a provider
-            _supportedTypes = new Dictionary<string, Func<object, ViewDataDictionary, ActionResult>>
+            _supportedTypes = new Dictionary<string, Func<object, ViewDataDictionary, TempDataDictionary, ActionResult>>
                                   {
                                       {"application/json", WhenJson},
                                       {"text/html", WhenHtml}
@@ -105,7 +106,7 @@ namespace MileageStats.Web
             {
                 //note: if more than one support type is found, what should we do?
                 var getResult = providers.First();
-                return getResult(_model, context.Controller.ViewData);
+                return getResult(_model, context.Controller.ViewData, context.Controller.TempData);
             }
             else
             {

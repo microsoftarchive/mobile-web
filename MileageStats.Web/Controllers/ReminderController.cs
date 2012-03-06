@@ -150,7 +150,7 @@ namespace MileageStats.Web.Controllers
 
             return new ContentTypeAwareResult
                        {
-                           WhenHtml = (x,v) => RedirectToAction("List", "Reminder", new {vehicleId})
+                           WhenHtml = (x,v,t) => RedirectToAction("List", "Reminder", new {vehicleId})
                        };
         }
 
