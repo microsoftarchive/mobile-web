@@ -62,10 +62,15 @@ limitations under the License. */
         var template = getTemplateFor(route);
 
         function success(data, status, xhr) {
+            data.__route__ = target.params;
             var view = templating.to_html(template, data);
             $(region).append(view);
             overrideLinks();
             if (callback) callback(null, data, view);
+        }
+
+        function error(xhr, status, errorThrown) {
+            $(region).append('<div>' + status + ': ' + errorThrown + '</div>');
         }
 
         $(region).empty();
@@ -75,7 +80,8 @@ limitations under the License. */
                 dataType: 'json',
                 type: 'GET',
                 url: target.url,
-                success: success
+                success: success,
+                error: error
             });
         } else {
             // do we ever need to render a template with default values?
@@ -117,7 +123,7 @@ limitations under the License. */
         if (!params) return result;
 
         for (i = 0; i < params.length; i++) {
-            named = params[i];
+            named = params[i].slice(1);
             result.params[named] = match[i + 1];
         }
 
@@ -164,8 +170,11 @@ limitations under the License. */
     }
 
     function initialize() {
-        overrideLinks();
-        window.onhashchange();
+        if (!window.location.hash) {
+            window.location.hash = '#/';
+        } else {
+            window.onhashchange();
+        }
     }
 
     return {

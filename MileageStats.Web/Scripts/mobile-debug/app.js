@@ -56,13 +56,13 @@ limitations under the License. */
         // after the modules are all bootstrapped
         // perform any necessary configuration
 
-        app.router.setDefaultRegion('#view');
+        app.router.setDefaultRegion('#main');
         var register = app.router.register;
 
         register('/Dashboard/Index');
-        register('/Vehicle/:id/Details');
-        register('/Vehicle/:id/Fillup/List');
-        register('/Vehicle/:id/Reminder/List');
+        register('/Vehicle/:vehicleId/Details');
+        register('/Vehicle/:vehicleId/Fillup/List');
+        register('/Vehicle/:vehicleId/Reminder/List');
         
         // these forms are special cases, we need to address them
         //register('/Vehicle/Edit/:id');
