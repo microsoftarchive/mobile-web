@@ -10,17 +10,32 @@
     display: table-cell
 }
 
+#content #tab-dashboard {
+    border: none
+}
+
+#content #tab-charts {
+    display: none
+}
+
 #content #extended {
     width: 52.5%;
     display: table-cell;
-    border-left: 1px solid #999;
+    border-left: 1px solid #c4cad0;
     vertical-align: top
 }
 
 #content #extended .title li:last-child {
     display: block;
     text-align: center;
+    text-transform: uppercase;
+    background-color: #414851;
     background-image: none
+}
+
+#content #extended img {
+    width: 100%;
+    height: auto
 }
 
 @media screen and (min-width: 1020px) {
