@@ -1,5 +1,5 @@
 ﻿@model List<MileageStats.Web.Models.FillupListViewModel>
-@{    
+@if(!Html.IsRenderingForMustache()){    
     ViewBag.Title = "Fill ups for " + ViewBag.VehicleName;
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
 }
@@ -7,13 +7,13 @@
 <nav>
     <ol class="title">
         <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
-        <li>@ViewBag.VehicleName</li>
+        <li>@Mustache.ViewBag("VehicleName")</li>
     </ol>
 
     <ol class="tabs vehicle-details" >
-        <li><a href="@Url.Action("Details", "Vehicle", new { Id = Html.RouteValue("vehicleId") })">Details</a></li>
-        <li><a href="@Url.Action("List", "Fillup", new { vehicleId = Html.RouteValue("vehicleId") })" class="selected">Fill Ups</a></li>
-        <li><a href="@Url.Action("List", "Reminder", new { vehicleId = Html.RouteValue("vehicleId") })">Reminders</a></li>
+        <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { Id = Mustache.RouteValue("vehicleId") })">Details</a></li>
+        <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })" class="selected">Fill Ups</a></li>
+        <li><a href="@Url.UnencodedAction("List", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })">Reminders</a></li>
     </ol>
 </nav>
 
@@ -21,5 +21,25 @@
     <ol class="hbox button-group">
 		<li class="icon add"><a href="@Url.Action("Add", "Fillup", new { vehicleId = Html.RouteValue("vehicleId") })"><span>Add New Fillup</span></a></li>
 	</ol>
-	@Html.Partial("ListPartial.Mobile", Model)
+	<dl class="fillup widget">
+
+@foreach (var item in Mustache.Loop(m => m))
+{
+    <dt><h2><a href="">@Mustache.Value(item, m => m.Month) @Mustache.Value(item, m => m.Year)</a></h2></dt>
+    <dd>
+		<table>
+            <thead><tr><th>Date</th><th>Location</th><th>Cost</th></tr></thead>
+            @foreach(var fillup in Mustache.Loop(item, m => m.Fillups))
+            {
+                var url = Url.UnencodedAction("Details", "Fillup", new { id = Mustache.Value(fillup, m => m.FillupEntryId) });
+                <tr>
+                    <td><a href="@url">@Mustache.Value(fillup, m => m.Date)</a></td>
+                    <td><a href="@url">@Mustache.Value(fillup, m => m.Vendor)</a></td>
+                    <td><a href="@url">@Mustache.Value(fillup, m => m.TotalCost)</a></td>
+                </tr>
+            }
+		</table>
+	</dd>
+}
+</dl>
 </div>

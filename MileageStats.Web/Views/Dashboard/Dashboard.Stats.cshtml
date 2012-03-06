@@ -1,5 +1,6 @@
 ﻿@model MileageStats.Web.Models.DashboardViewModel  
-           
+
+<h2>Statistics</h2>           
 <div class="stats">
     <dl>
         <dt class="mpg-label">MPG</dt>
@@ -17,6 +18,7 @@
     </dl>
 </div>
 
+<h2>Vehicles</h2>
 @foreach (var vehicle in Mustache.Loop(m => m.VehicleListViewModel.Vehicles))
 {
 <dl class="vehicle widget">
@@ -65,9 +67,7 @@
 	<li class="add icon"><a href="@Url.Action("Add", "Vehicle")"><span>Add New Vehicle</span></a></li>
 </ol>
 
-<h2>
-    Imminent Reminders</h2>
-
+<h2>Reminders</h2>
 <ul>
 @foreach (var reminder in Mustache.Loop(m => m.ImminentReminders))
 {
