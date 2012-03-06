@@ -5,7 +5,7 @@
 
 @foreach (var item in Mustache.Loop(m => m))
 {
-    <dt><h2><a href="">@Mustache.Value(item, m => m.Month) @Mustache.Value(item, m => m.Year)</a></h2></dt>
+    <dt><h2><a href="#">@Mustache.Value(item, m => m.Month) @Mustache.Value(item, m => m.Year)</a></h2></dt>
     <dd>
 		<table>
             <thead><tr><th>Date</th><th>Location</th><th>Cost</th></tr></thead>
