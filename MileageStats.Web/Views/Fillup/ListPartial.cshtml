@@ -1,6 +1,6 @@
-﻿@model System.Collections.Generic.List<MileageStats.Web.Models.FillupViewModel>
+﻿@model List<MileageStats.Web.Models.FillupListViewModel>
 <div class="list nav">
-    @foreach (var item in Model)
+    @foreach (var item in Model.SelectMany(x => x.Fillups))
     {
 		var selectedId = (ViewBag.SelectedFillup == null) ? -1 : ViewBag.SelectedFillup.FillupEntryId;
         <a class="list-item @(item.FillupEntryId == selectedId ? "selected" : String.Empty)" href="@Url.Action("Details", "Fillup", new { id = item.FillupEntryId })">

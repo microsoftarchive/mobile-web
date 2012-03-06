@@ -1,11 +1,11 @@
-﻿@model System.Collections.Generic.List<MileageStats.Web.Models.FillupViewModel>
+﻿@model List<MileageStats.Web.Models.FillupListViewModel>
 @{    
     ViewBag.Title = "Fill ups for " + ViewBag.VehicleName;    
 }
 <div id="details-page">
     <div id="scrollable">
         <div>
-            @Html.Partial("ListPartial", Model)
+            @{ Html.RenderAction("ListPartial", "Vehicle", new {vehicleId = ViewBag.VehicleId, isCollapsed = true}); }
         </div>
     </div>
     <div id="fixed">
