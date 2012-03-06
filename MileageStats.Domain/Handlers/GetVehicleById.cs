@@ -41,7 +41,7 @@ namespace MileageStats.Domain.Handlers
             if (vehicle == null)
                 return null;
 
-            var fillups = _fillupRepository.GetFillups(vehicle.VehicleId).OrderBy(f => f.Odometer).Skip(1);
+            var fillups = _fillupRepository.GetFillups(vehicle.VehicleId).OrderBy(f => f.Odometer);
             var statistics = CalculateStatistics.Calculate(fillups);
 
             return new VehicleModel(vehicle, statistics);

@@ -128,5 +128,35 @@ namespace MileageStats.Domain.Tests
             Assert.NotNull(retrievedVehicle);
             Assert.Equal(1000, retrievedVehicle.Odometer);
         }
+
+        [Fact]
+        public void WhenGettingVehicleWithOneFillup_ThenVehicleOdometerReflectsFillup()
+        {
+            var fillups = new List<FillupEntry>
+                              {
+                                  new FillupEntry
+                                      {
+                                          Date = DateTime.UtcNow.AddDays(-10),
+                                          Odometer = 500,
+                                          PricePerUnit = 10.0,
+                                          TotalUnits = 10.0
+                                      },
+                              };
+
+            var vehicle = new Vehicle { VehicleId = DefaultVehicleId };
+
+            _vehicleRepo
+                .Setup(vr => vr.GetVehicle(UserId, DefaultVehicleId))
+                .Returns(vehicle);
+
+            _fillupRepo
+                .Setup(r => r.GetFillups(DefaultVehicleId))
+                .Returns(fillups);
+
+            var handler = new GetVehicleById(_vehicleRepo.Object, _fillupRepo.Object);
+            var retrievedVehicle = handler.Execute(UserId, vehicle.VehicleId);
+
+            Assert.Equal(500, retrievedVehicle.Odometer);
+        }
     }
 }
