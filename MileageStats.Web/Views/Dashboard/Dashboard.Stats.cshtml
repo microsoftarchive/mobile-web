@@ -71,6 +71,6 @@
 <ul>
 @foreach (var reminder in Mustache.Loop(m => m.ImminentReminders))
 {
-    <li><a href="@Url.UnencodedAction("Details", "Reminder", new{ id = Mustache.Value(reminder, i => i.Reminder.ReminderId)})">@Mustache.Value(reminder, i => i.Reminder.Title)</a></li>
+    <li><a href="@Url.UnencodedAction("Details", "Reminder", new { id = Mustache.Value(reminder, i => i.Reminder.ReminderId), vehicleId = Mustache.Value(reminder, i => i.VehicleId) })">@Mustache.Value(reminder, i => i.Reminder.Title)</a></li>
 }
 </ul>
