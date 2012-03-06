@@ -38,6 +38,15 @@ namespace MileageStats.Web.Helpers
             return helper.ViewData.ContainsKey(UseMustacheFlag);
         }
 
+        public static MvcHtmlString ViewBag<TModel>(this MustacheHelper<TModel> helper, string key)
+        {
+            var s = (helper.IsRenderingMustache())
+                        ? string.Format("{{{{__view__.{0}}}}}", key)
+                        : helper.ViewData[key].ToString();
+
+            return new MvcHtmlString(s);
+        }
+
         public static MvcHtmlString Value<TModel, TProperty>(
             this MustacheHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> getter)
@@ -52,7 +61,7 @@ namespace MileageStats.Web.Helpers
         {
             string s;
 
-            if (helper.ViewData.Model == null)
+            if (helper.IsRenderingMustache())
             {
                 string name = ExpressionHelper.GetExpressionText(getter);
                 s = string.Format("{{{{{0}}}}}", name);
@@ -67,9 +76,9 @@ namespace MileageStats.Web.Helpers
 
         public static string RouteValue<TModel>(this MustacheHelper<TModel> helper, string key)
         {
-            if (helper.ViewData.Model == null)
+            if (helper.IsRenderingMustache())
             {
-                return string.Format("{{{{{0}}}}}", key);
+                return string.Format("{{{{__route__.{0}}}}}", key);
             }
 
             var value = helper.HtmlHelper.ViewContext.RouteData.Values[key];
@@ -95,7 +104,7 @@ namespace MileageStats.Web.Helpers
             Func<IEnumerable<TProperty>> getEnumerable;
 
             var fn = getter.Compile();
-            if (helper.ViewData.Model == null)
+            if (helper.IsRenderingMustache())
             {
                 name = ExpressionHelper.GetExpressionText(getter);
                 if (string.IsNullOrEmpty(name)) name = "model";
@@ -114,7 +123,7 @@ namespace MileageStats.Web.Helpers
                                                                   Expression<Func<TModel, TProperty>> getter,
                                                                   object htlmAttributes)
         {
-            if (helper.ViewData.Model == null)
+            if (helper.IsRenderingMustache())
             {
                 string name = ExpressionHelper.GetExpressionText(getter);
                 return helper.HtmlHelper.TextBox(name, string.Format("{{{{{0}}}}}", name), htlmAttributes);
@@ -149,6 +158,11 @@ namespace MileageStats.Web.Helpers
             {
                 return helper.HtmlHelper.DropDownListFor(getter, list, optionLabel, htlmAttributes);
             }
+        }
+    
+        private static bool IsRenderingMustache<TModel>(this MustacheHelper<TModel> helper)
+        {
+            return (helper.ViewData.Model == null);
         }
     }
 }
