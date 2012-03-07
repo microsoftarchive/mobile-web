@@ -136,7 +136,7 @@ namespace MileageStats.Web.Helpers
 
         public static MvcHtmlString DropDownListFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
                                                                        Expression<Func<TModel, TProperty>> getter,
-                                                                       SelectList list, string optionLabel = null,
+                                                                       IEnumerable<SelectListItem> list, string optionLabel = null,
                                                                        object htlmAttributes = null)
         {
             if (helper.ViewData.Model == null)
