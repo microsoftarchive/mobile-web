@@ -145,7 +145,7 @@ namespace MileageStats.Web.Tests.Controllers
         }
 
         [Fact]
-        public void WhenAddReminderWithValidReminder_ThenReturnsToReminderListView()
+        public void WhenAddReminderWithValidReminder_ThenReturnsToReminderListByGroupView()
         {
             var formModel = new ReminderFormModel();
 
@@ -163,8 +163,8 @@ namespace MileageStats.Web.Tests.Controllers
             var result = (RedirectToRouteResult)controller.Add(defaultVehicleId, formModel);
 
             Assert.NotNull(result);
-            Assert.Equal("Details", result.RouteValues["action"]);
-            Assert.Equal("Vehicle", result.RouteValues["controller"]);
+            Assert.Equal("ListByGroup", result.RouteValues["action"]);
+            Assert.Equal("Reminder", result.RouteValues["controller"]);
         }
 
         [Fact]

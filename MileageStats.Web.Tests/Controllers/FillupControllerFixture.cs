@@ -253,7 +253,7 @@ namespace MileageStats.Web.Tests.Controllers
         }
 
         [Fact]
-        public void WhenAddingFillupPostExecutes_RedirectsToVehicleDetails()
+        public void WhenAddingFillupPostExecutes_RedirectsToFillupList()
         {
             var fillupEntry = new FillupEntryFormModel
             {
@@ -279,8 +279,8 @@ namespace MileageStats.Web.Tests.Controllers
             var result = (RedirectToRouteResult)controller.Add(defaultVehicleId, fillupEntry);
 
             Assert.NotNull(result);
-            Assert.Equal("Details", result.RouteValues["action"]);
-            Assert.Equal("Vehicle", result.RouteValues["controller"]);
+            Assert.Equal("List", result.RouteValues["action"]);
+            Assert.Equal("Fillup", result.RouteValues["controller"]);
         }
 
         // returns controller with mocks
