@@ -171,7 +171,11 @@ limitations under the License. */
 
     function initialize() {
         if (!window.location.hash) {
-            window.location.hash = '#/';
+            if (window.pathname === '/') {
+                window.location.hash = '#/';
+            } else {
+                overrideLinks();
+            }
         } else {
             window.onhashchange();
         }
