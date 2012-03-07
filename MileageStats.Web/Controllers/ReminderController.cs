@@ -54,12 +54,10 @@ namespace MileageStats.Web.Controllers
 
         public ActionResult Details(int vehicleId, int id)
         {
-            VehicleModel vehicle = null;
-
             var reminder = Using<GetReminder>().Execute(id);
-            var reminders = GetRemindersByVehicle(vehicleId, out vehicle);
+            var reminders = GetUnfulfilledRemindersByVehicle(vehicleId);
             var reminderSummaryViewModels = reminders
-                .Select(x => new ReminderSummaryModel(x, x.IsOverdue ?? false))
+                .Select(x => new ReminderSummaryModel(x))
                 .ToList();
 
             var viewModel = new ReminderDetailsViewModel
@@ -73,11 +71,9 @@ namespace MileageStats.Web.Controllers
 
         public ActionResult List(int vehicleId)
         {
-            VehicleModel vehicle = null;
-
-            var reminders = GetRemindersByVehicle(vehicleId, out vehicle);
+            var reminders = GetUnfulfilledRemindersByVehicle(vehicleId);
             var reminderSummaryViewModels = reminders
-                .Select(x => new ReminderSummaryModel(x, x.IsOverdue ?? false))
+                .Select(x => new ReminderSummaryModel(x))
                 .ToList();
 
             var viewModel = new ReminderDetailsViewModel
@@ -91,14 +87,35 @@ namespace MileageStats.Web.Controllers
 
         public ActionResult ListPartial(int vehicleId, int? id = null)
         {
-            VehicleModel vehicle = null;
-
-            var reminders = GetRemindersByVehicle(vehicleId, out vehicle)
-                .Select(r => new ReminderSummaryModel(r, r.IsOverdue ?? false));
+            var reminders = GetUnfulfilledRemindersByVehicle(vehicleId)
+                .Select(r => new ReminderSummaryModel(r));
 
             var reminderItemList = new SelectedItemList<ReminderSummaryModel>(reminders, list=> list.FirstOrDefault(x=>x.ReminderId == id));
 
             return new ContentTypeAwareResult(reminderItemList);
+        }
+
+        public ActionResult ListByGroup(int vehicleId)
+        {
+            var vehicle = Using<GetVehicleById>().Execute(CurrentUserId, vehicleId);
+
+            var reminders = Using<GetAllRemindersForVehicle>().Execute(vehicleId);
+            foreach (var reminder in reminders)
+            {
+                reminder.CalculateIsOverdue(vehicle.Odometer ?? 0);
+            }
+
+            var reminderSummaryModels = reminders.Select(r => new ReminderSummaryModel(r));
+            var groups = from reminder in reminderSummaryModels
+                         group reminder by reminder.Status
+                         into grouping
+                         select new ReminderListViewModel
+                                    {
+                                        Status = grouping.Key,
+                                        Reminders = grouping
+                                    };
+
+            return new ContentTypeAwareResult(groups.ToList());
         }
 
         public ActionResult Add(int vehicleId)
@@ -150,7 +167,7 @@ namespace MileageStats.Web.Controllers
 
             return new ContentTypeAwareResult
                        {
-                           WhenHtml = (x,v,t) => RedirectToAction("List", "Reminder", new {vehicleId})
+                           WhenHtml = (x,v,t) => RedirectToAction("ListByGroup", "Reminder", new {vehicleId})
                        };
         }
 
@@ -161,13 +178,10 @@ namespace MileageStats.Web.Controllers
             return new ContentTypeAwareResult(imminentReminders);
         }
 
-        private IEnumerable<Reminder> GetRemindersByVehicle(int vehicleId, out VehicleModel vehicle)
+        private IEnumerable<Reminder> GetUnfulfilledRemindersByVehicle(int vehicleId)
         {
-            var vehicles = Using<GetVehicleListForUser>()
-                .Execute(CurrentUserId);
-
-            vehicle = vehicles
-                .FirstOrDefault(v => v.VehicleId == vehicleId);
+            var vehicle = Using<GetVehicleById>()
+                .Execute(CurrentUserId, vehicleId);
 
             if (vehicle == null)
                 throw new HttpException((int)HttpStatusCode.NotFound,

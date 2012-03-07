@@ -54,11 +54,8 @@ namespace MileageStats.Web.Tests.Controllers
         [Fact]
         public void WhenListReminderGetWithValidVehicleId_ThenReturnsView()
         {
-            var vehicles = new[]
-                               {
-                                   new VehicleModel(new Vehicle {VehicleId = defaultVehicleId},
-                                                             new VehicleStatisticsModel())
-                               };
+            var vehicle = new VehicleModel(new Vehicle {VehicleId = defaultVehicleId},
+                                                             new VehicleStatisticsModel());
 
             var reminders = new[]
                                 {
@@ -71,10 +68,10 @@ namespace MileageStats.Web.Tests.Controllers
                          .Setup(h => h.Execute(_defaultUser.UserId, defaultVehicleId, 0))
                          .Returns(reminders));
 
-            MockHandlerFor<GetVehicleListForUser>(
+            MockHandlerFor<GetVehicleById>(
                 x => x
-                         .Setup(h => h.Execute(_defaultUser.UserId))
-                         .Returns(vehicles));
+                         .Setup(h => h.Execute(_defaultUser.UserId, defaultVehicleId))
+                         .Returns(vehicle));
 
             ReminderController controller = GetTestableReminderController();
             ActionResult result = controller.List(defaultVehicleId);
@@ -319,11 +316,8 @@ namespace MileageStats.Web.Tests.Controllers
         [Fact]
         public void WhenGettingList_ThenRemindersReturned()
         {
-            var vehicles = new[]
-                               {
-                                   new VehicleModel(new Vehicle {VehicleId = defaultVehicleId},
-                                                             new VehicleStatisticsModel())
-                               };
+            var vehicle = new VehicleModel(new Vehicle {VehicleId = defaultVehicleId},
+                                           new VehicleStatisticsModel());
 
             var reminders = new[]
                                 {
@@ -336,10 +330,10 @@ namespace MileageStats.Web.Tests.Controllers
                          .Setup(h => h.Execute(_defaultUser.UserId, defaultVehicleId, 0))
                          .Returns(reminders));
 
-            MockHandlerFor<GetVehicleListForUser>(
+            MockHandlerFor<GetVehicleById>(
                 x => x
-                         .Setup(h => h.Execute(_defaultUser.UserId))
-                         .Returns(vehicles));
+                         .Setup(h => h.Execute(_defaultUser.UserId, defaultVehicleId))
+                         .Returns(vehicle));
 
             var controller = GetTestableReminderController();
 
@@ -367,6 +361,41 @@ namespace MileageStats.Web.Tests.Controllers
             controller.Fulfill(_defaultUser.Id, reminderId);
 
             handler.Verify();
+        }
+
+        [Fact]
+        public void WhenGettingListByGroup_ThenRemindersReturned()
+        {
+            var vehicle = new VehicleModel(new Vehicle {VehicleId = defaultVehicleId},
+                                           new VehicleStatisticsModel());
+
+            var reminders = new[]
+                                {
+                                    new Reminder {Title = "active"},
+                                    new Reminder {Title = "overdue", DueDate = DateTime.UtcNow.AddDays(-1)},
+                                    new Reminder {Title = "fulfilled", IsFulfilled = true}
+                                };
+
+            MockHandlerFor<GetAllRemindersForVehicle>(
+                x => x
+                         .Setup(h => h.Execute(defaultVehicleId))
+                         .Returns(reminders));
+
+            MockHandlerFor<GetVehicleById>(
+                x => x
+                         .Setup(h => h.Execute(_defaultUser.UserId, defaultVehicleId))
+                         .Returns(vehicle));
+
+            var controller = GetTestableReminderController();
+
+            var result = (ContentTypeAwareResult)controller.ListByGroup(defaultVehicleId);
+            var data = (List<ReminderListViewModel>)result.Model;
+
+            Assert.NotNull(data);
+            Assert.Equal(3, data.Count());
+            Assert.Equal("active", data.First(d => d.Status == ReminderStatus.Active).Reminders.First().Title);
+            Assert.Equal("overdue", data.First(d => d.Status == ReminderStatus.Overdue).Reminders.First().Title);
+            Assert.Equal("fulfilled", data.First(d => d.Status == ReminderStatus.Fulfilled).Reminders.First().Title);
         }
 
         private ReminderController GetTestableReminderController()

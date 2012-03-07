@@ -22,12 +22,10 @@ namespace MileageStats.Domain.Models
     public class ReminderSummaryModel
     {
         private readonly Reminder _reminder;
-        private readonly bool _isOvedue;
 
-        public ReminderSummaryModel(Reminder reminder, bool isOvedue)
+        public ReminderSummaryModel(Reminder reminder)
         {
             _reminder = reminder;
-            _isOvedue = isOvedue;
         }
 
         public int ReminderId
@@ -42,7 +40,12 @@ namespace MileageStats.Domain.Models
 
         public bool IsOverdue
         {
-            get { return _isOvedue; }
+            get { return _reminder.IsOverdue.HasValue && _reminder.IsOverdue.Value; }
+        }
+
+        public bool IsFulfilled
+        {
+            get { return _reminder.IsFulfilled; }
         }
 
         public string DueOnFormatted
@@ -82,6 +85,16 @@ namespace MileageStats.Domain.Models
         public int? DueDistance
         {
             get { return _reminder.DueDistance; }
+        }
+
+        public ReminderStatus Status
+        {
+            get
+            {
+                if (IsFulfilled) return ReminderStatus.Fulfilled;
+                if (IsOverdue) return ReminderStatus.Overdue;
+                return ReminderStatus.Active;
+            }
         }
     }
 }

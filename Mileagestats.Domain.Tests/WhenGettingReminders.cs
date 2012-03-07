@@ -93,6 +93,21 @@ namespace MileageStats.Domain.Tests
             Assert.Equal(1, result[2].ReminderId);
         }
 
+        [Fact]
+        public void WhenGettingAllReminders_ThenReturnsAllReminders()
+        {
+            _reminderRepository
+                .Setup(r => r.GetRemindersForVehicle(DefaultVehicleId))
+                .Returns(GetListOfReminders);
+
+            var handler = new GetAllRemindersForVehicle(_reminderRepository.Object);
+
+            var reminders = handler.Execute(DefaultVehicleId);
+
+            Assert.Equal(8, reminders.Count());
+            Assert.True(reminders.Last().IsFulfilled);
+        }
+
         private static IEnumerable<Reminder> GetListOfReminders()
         {
             var currentDate = DateTime.UtcNow;

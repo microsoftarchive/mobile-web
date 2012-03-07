@@ -36,7 +36,7 @@ namespace MileageStats.Domain.Handlers
             return from reminder in _reminderRepository.GetOverdueReminders(vehicleId, dueDate, odometer)
                    orderby reminder.DueDistance
                    orderby reminder.DueDate
-                   select new ReminderSummaryModel(reminder, isOvedue:true);
+                   select new ReminderSummaryModel(reminder);
         }
     }
 }

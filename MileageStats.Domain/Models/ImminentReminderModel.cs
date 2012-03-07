@@ -30,7 +30,7 @@ namespace MileageStats.Domain.Models
             IsOverdue = isOverdue;
             _vehicle = vehicle;
             _reminder = reminder;
-            _summary = new ReminderSummaryModel(reminder,isOverdue);
+            _summary = new ReminderSummaryModel(reminder);
         }
 
         public int VehicleId { get { return _vehicle.VehicleId; } }

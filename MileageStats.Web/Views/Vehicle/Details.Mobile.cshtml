@@ -14,7 +14,7 @@
         <ol class="tabs vehicle-details" >
             <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { id = Mustache.Value(m => m.Vehicle.VehicleId) })" class="selected">Details</a></li>
             <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.Value(m => m.Vehicle.VehicleId) })">Fill Ups</a></li>
-            <li><a href="@Url.UnencodedAction("List", "Reminder", new { vehicleId = Mustache.Value(m => m.Vehicle.VehicleId) })">Reminders</a></li>
+            <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m => m.Vehicle.VehicleId) })">Reminders</a></li>
         </ol>
     </nav>
     

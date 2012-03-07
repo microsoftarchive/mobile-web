@@ -121,6 +121,7 @@
     <Compile Include="Authentication\UserAuthenticationTicketBuilder.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
     <Compile Include="Infrastructure\CustomMetadataProvider.cs" />
+    <Compile Include="Models\ReminderListViewModel.cs" />
     <Compile Include="Models\FillupListViewModel.cs" />
     <Compile Include="Helpers\BrowserExtensions.cs" />
     <Compile Include="Helpers\ControllerExtensions.cs" />
@@ -375,6 +376,7 @@
     <Content Include="Views\Shared\_Error.cshtml" />
     <Content Include="Views\Shared\_Error.Mobile.cshtml" />
     <Content Include="Views\Shared\_spaTemplates.cshtml" />
+    <Content Include="Views\Reminder\ListByGroup.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Index.cshtml" />

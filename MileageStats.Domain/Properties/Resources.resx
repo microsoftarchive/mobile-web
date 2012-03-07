@@ -171,8 +171,8 @@
   <data name="UnableToRetrieveUpcomingReminders" xml:space="preserve">
     <value>Unable to retrieve upcoming reminders</value>
   </data>
-  <data name="UnableToRetrieveFulfilledReminders" xml:space="preserve">
-    <value>Unable to retrieve fulfilled reminders</value>
+  <data name="UnableToRetrieveReminders" xml:space="preserve">
+    <value>Unable to retrieve reminders</value>
   </data>
   <data name="UnableToRetrieveVehiclePhoto" xml:space="preserve">
     <value>Unable to retrieve vehicle photo.</value>

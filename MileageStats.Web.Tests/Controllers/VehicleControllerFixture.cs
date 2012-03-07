@@ -124,7 +124,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             MockHandlerFor<GetOverdueRemindersForVehicle>(
                 x => x.Setup(h => h.Execute(DefaultVehicleId, It.IsAny<DateTime>(), 0))
-                    .Returns(new List<ReminderSummaryModel> { new ReminderSummaryModel(new Reminder(), isOvedue: true) }));
+                    .Returns(new List<ReminderSummaryModel> { new ReminderSummaryModel(new Reminder{DueDate = DateTime.UtcNow.AddDays(-1)}) }));
 
             var controller = GetTestableVehicleController();
 
@@ -318,7 +318,7 @@ namespace MileageStats.Web.Tests.Controllers
                 new VehicleStatisticsModel(0, 0, 0, 0, odometer, 0)
                 );
 
-            var reminder = new ReminderSummaryModel(new Reminder(), false);
+            var reminder = new ReminderSummaryModel(new Reminder());
 
             MockHandlerFor<GetVehicleListForUser>(
                 m => m.Setup(h => h.Execute(defaultUser.UserId))
