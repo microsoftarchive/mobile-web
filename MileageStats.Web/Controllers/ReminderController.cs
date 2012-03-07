@@ -154,7 +154,7 @@ namespace MileageStats.Web.Controllers
 
                     this.SetConfirmationMessage(Messages.ReminderController_ReminderAdded);
 
-                    return RedirectToAction("Details", "Vehicle", new { Id = vehicleId });
+                    return RedirectToAction("ListByGroup", "Reminder", new { Id = vehicleId });
                 }
             }
 

@@ -123,8 +123,8 @@ namespace MileageStats.Web.Controllers
                     Using<AddFillupToVehicle>().Execute(CurrentUserId, vehicleId, model);
 
                     this.SetConfirmationMessage(Messages.FillupController_FillupAddedMessage);
-                    
-                    return RedirectToAction("Details", "Vehicle", new { Id = vehicleId });
+
+                    return RedirectToAction("List", "Fillup", new { vehicleId = vehicleId });
                 }
             }
 
