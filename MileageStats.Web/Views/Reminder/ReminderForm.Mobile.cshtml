@@ -20,7 +20,7 @@
     </li>
     <li>
         @Html.LabelFor(model => model.DueDistance)
-        @Html.InputTypeFor(model => model.DueDistance)
+        @Mustache.InputTypeFor(model => model.DueDistance)
         @Html.ValidationMessageFor(model => model.DueDistance)
     </li>
 </ul>

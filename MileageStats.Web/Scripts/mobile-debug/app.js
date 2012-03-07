@@ -62,7 +62,9 @@ limitations under the License. */
         register('/Dashboard/Index');
         register('/Vehicle/:vehicleId/Details');
         register('/Vehicle/:vehicleId/Fillup/List');
-        register('/Vehicle/:vehicleId/Reminder/List');
+        register('Vehicle/:vehicleId/Fillup/Add', {fetch: false});
+        
+        //register('/Vehicle/:vehicleId/Reminder/List');
         
         // these forms are special cases, we need to address them
         //register('/Vehicle/Edit/:id');

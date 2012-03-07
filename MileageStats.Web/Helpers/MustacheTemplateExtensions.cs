@@ -18,9 +18,11 @@ limitations under the License. */
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using MileageStats.Web.Helpers.Mustache;
+using MileageStats.Web.Infrastructure;
 
 namespace MileageStats.Web.Helpers
 {
@@ -38,7 +40,7 @@ namespace MileageStats.Web.Helpers
             return helper.ViewData.ContainsKey(UseMustacheFlag);
         }
 
-        public static MvcHtmlString ViewBag<TModel>(this MustacheHelper<TModel> helper, string key)
+        public static IHtmlString ViewBag<TModel>(this MustacheHelper<TModel> helper, string key)
         {
             var s = (helper.IsRenderingMustache())
                         ? string.Format("{{{{__view__.{0}}}}}", key)
@@ -47,14 +49,14 @@ namespace MileageStats.Web.Helpers
             return new MvcHtmlString(s);
         }
 
-        public static MvcHtmlString Value<TModel, TProperty>(
+        public static IHtmlString Value<TModel, TProperty>(
             this MustacheHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> getter)
         {
             return Value(helper, helper.ViewData.Model, getter);
         }
 
-        public static MvcHtmlString Value<TPageModel, TModel, TProperty>(
+        public static IHtmlString Value<TPageModel, TModel, TProperty>(
             this MustacheHelper<TPageModel> helper,
             TModel model,
             Expression<Func<TModel, TProperty>> getter)
@@ -119,22 +121,43 @@ namespace MileageStats.Web.Helpers
             return new DisposableEnumerable<TProperty>(helper.ViewContext, name, getEnumerable);
         }
 
-        public static MvcHtmlString TextBoxFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
+        public static IHtmlString TextBoxFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
                                                                   Expression<Func<TModel, TProperty>> getter,
                                                                   object htlmAttributes)
         {
             if (helper.IsRenderingMustache())
             {
                 string name = ExpressionHelper.GetExpressionText(getter);
-                return helper.HtmlHelper.TextBox(name, string.Format("{{{{{0}}}}}", name), htlmAttributes);
+                string formatted = string.Format("{{{{{0}}}}}", name);
+                return (htlmAttributes is IDictionary<string, object>)
+                           ? helper.HtmlHelper.TextBox(name, formatted, (IDictionary<string, object>) htlmAttributes)
+                           : helper.HtmlHelper.TextBox(name, formatted, htlmAttributes);
             }
-            else
-            {
-                return helper.HtmlHelper.TextBoxFor(getter, htlmAttributes);
-            }
+            
+            return (htlmAttributes is IDictionary<string, object>) 
+                       ? helper.HtmlHelper.TextBoxFor(getter, (IDictionary<string, object>)htlmAttributes)
+                       : helper.HtmlHelper.TextBoxFor(getter, htlmAttributes);
         }
 
-        public static MvcHtmlString DropDownListFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
+        public static IHtmlString TextAreaFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
+                                                                  Expression<Func<TModel, TProperty>> getter,
+                                                                  object htlmAttributes)
+        {
+            if (helper.IsRenderingMustache())
+            {
+                string name = ExpressionHelper.GetExpressionText(getter);
+                string formatted = string.Format("{{{{{0}}}}}", name);
+                return (htlmAttributes is IDictionary<string, object>)
+                           ? helper.HtmlHelper.TextArea(name, formatted, (IDictionary<string, object>)htlmAttributes)
+                           : helper.HtmlHelper.TextArea(name, formatted, htlmAttributes);
+            }
+
+            return (htlmAttributes is IDictionary<string, object>)
+                       ? helper.HtmlHelper.TextAreaFor(getter, (IDictionary<string, object>)htlmAttributes)
+                       : helper.HtmlHelper.TextAreaFor(getter, htlmAttributes);
+        }
+
+        public static IHtmlString DropDownListFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
                                                                        Expression<Func<TModel, TProperty>> getter,
                                                                        IEnumerable<SelectListItem> list, string optionLabel = null,
                                                                        object htlmAttributes = null)
@@ -159,6 +182,36 @@ namespace MileageStats.Web.Helpers
                 return helper.HtmlHelper.DropDownListFor(getter, list, optionLabel, htlmAttributes);
             }
         }
+
+        public static IHtmlString InputTypeFor<TModel, TProperty>(this MustacheHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
+        {
+            return InputTypeFor(helper, expression, null);
+        }
+
+        public static IHtmlString InputTypeFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
+            Expression<Func<TModel, TProperty>> expression, object value)
+        {
+            var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
+
+            var attributes = new Dictionary<string, object>();
+
+            if (metadata.AdditionalValues.ContainsKey("InputType"))
+            {
+                var inputTypeAttribute = (InputTypeAttribute)metadata.AdditionalValues["InputType"];
+
+                attributes.Add("maxlength", inputTypeAttribute.Length);
+                attributes.Add("type", inputTypeAttribute.Type);
+
+                if (!string.IsNullOrEmpty(inputTypeAttribute.Step))
+                    attributes.Add("step", inputTypeAttribute.Step);
+
+                if (!string.IsNullOrEmpty(inputTypeAttribute.PlaceHolder))
+                    attributes.Add("placeholder", inputTypeAttribute.PlaceHolder);
+            }
+
+            return helper.TextBoxFor(expression, attributes);
+        }
+
     
         private static bool IsRenderingMustache<TModel>(this MustacheHelper<TModel> helper)
         {

@@ -1,5 +1,5 @@
 ﻿@model MileageStats.Web.Models.FillupEntryFormModel
-@{
+@if(!Html.IsRenderingForMustache()){
     ViewBag.Title = "Add Fill up";
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
 }
@@ -7,19 +7,16 @@
 <nav>
     <ol class="title">
         <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
-        <li>@ViewBag.VehicleName</li>
+        <li>@Mustache.ViewBag("VehicleName")</li>
     </ol>
     <ol class="breadcrumbs">
-	    <li><a href="@Url.Action("List", "Fillup", new { vehicleId = Model.VehicleId })">Fillups</a></li>
+	    <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })">Fillups</a></li>
 	    <li>Add Fillup</li>
     </ol>
 </nav>
 
 <div class="view">
-@using(Html.BeginForm()) { 
-    if (Model != null) 
-    {
-        Html.RenderPartial("FillupForm.Mobile", Model);
-    }
-}
+    <form method="POST" action="@Url.UnencodedAction("Add", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })">
+    @{ Html.RenderPartial("~/Views/Fillup/FillupForm.Mobile.cshtml", Model); }
+    </form>
 </div>

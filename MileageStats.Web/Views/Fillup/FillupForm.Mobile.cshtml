@@ -3,54 +3,46 @@
 <ul>
     <li class="psuedo-date">
         <label for="due-date">Date <em>(mm/dd/yyyy)</em></label>
-        @Html.MonthPickerFor(model => model.DateMonth, Model.Date, true)
-        @Html.DayPickerFor(model => model.DateDay, Model.Date, true)
-        @Html.YearPickerFor(model => model.DateYear, Model.Date, true)
+        @Mustache.DropDownListFor(model => model.DateMonth, SelectListFor.Month(i => Model.Date.Month == i))
+        @Mustache.DropDownListFor(model => model.DateDay, SelectListFor.Date(i => Model.Date.Day == i))
+        @Mustache.DropDownListFor(model => model.DateYear, SelectListFor.Year(i => Model.Date.Year == i))
         @Html.ValidationMessageFor(model => model.Date)
     </li>
     <li>
         @Html.LabelFor(model => model.Odometer)
-        @Html.FixedValueTextBoxFor(model => model.Odometer, (Model.Odometer > 0) ? Model.Odometer.ToString() : null, new { maxlength = "7", type = "text", required = "required" })
+        @Mustache.InputTypeFor(model => model.Odometer)
         @Html.ValidationMessageFor(model => model.Odometer)
     </li>
     <li>
         @Html.LabelFor(model => model.PricePerUnit)
-        @Html.FixedValueTextBoxFor(model => model.PricePerUnit, new { maxlength = "6", type = "text", step = "0.01", placeholder = "ex. 3.75", required = "required" })
+        @Mustache.InputTypeFor(model => model.PricePerUnit)
         @Html.ValidationMessageFor(model => model.PricePerUnit)
     </li>
     <li>
         @Html.LabelFor(model => model.TotalUnits)
-        @Html.FixedValueTextBoxFor(model => model.TotalUnits, new { maxlength = "7", type = "text", step = "0.01", placeholder = "ex. 10.123", required = "required" })
+        @Mustache.InputTypeFor(model => model.TotalUnits)
         @Html.ValidationMessageFor(model => model.TotalUnits)
     </li>
     <li>
         @Html.LabelFor(model => model.Vendor)
-        @Html.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) 
+        @Mustache.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) 
 		@Html.ValidationMessageFor(model => model.Vendor)
     </li>
     <li>
         @Html.LabelFor(model => model.TransactionFee)
-        @Html.FixedValueTextBoxFor(model => model.TransactionFee, new { maxlength = "6", type = "text", step = "0.01", placeholder = "ex. 0.45" })
+        @Mustache.InputTypeFor(model => model.TransactionFee)
         @Html.ValidationMessageFor(model => model.TransactionFee)
     </li>
-    <li>
+   <li>
         @Html.LabelFor(model => model.Remarks)
-        @Html.TextAreaFor(model => model.Remarks, new { maxlength = "250", wrap="soft" }) 
+        @Mustache.TextAreaFor(model => model.Remarks, new { maxlength = "250", wrap = "soft" }) 
 		@Html.ValidationMessageFor(model => model.Remarks)
     </li>
 </ul>
-@if (ViewBag.IsFirstFillup)
-{ 
-    <div class="flash notify">
-        <p>
-            This is your first fill up. This odometer reading will establish your mileage starting
-            point. Vehicle statistics will be displayed beginning on your next fill up.</p>
-    </div>
-}
 
 @Html.ValidationSummary(true)
 
 <ol class="hbox button-group">
 	<li><button type="submit"><span>Save</span></button></li>
-	<li class="icon false invert"><a href="@Url.Action("List", "Fillup", new { vehicleId = Model.VehicleId })"><span>Cancel</span></a></li>
+	<li class="icon false invert"><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Cancel</span></a></li>
 </ol>
