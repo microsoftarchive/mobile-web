@@ -42,7 +42,7 @@ limitations under the License. */
     }
 
     $(function () {
-        
+
         for (registration in app) {
             module = app[registration];
             // check to see if the module is
@@ -62,16 +62,17 @@ limitations under the License. */
         register('/Dashboard/Index');
         register('/Vehicle/:vehicleId/Details');
         register('/Vehicle/:vehicleId/Fillup/List');
-        register('Vehicle/:vehicleId/Fillup/Add', {fetch: false});
-        
+
+        register('Vehicle/:vehicleId/Fillup/Add', app.addFillup);
+
         //register('/Vehicle/:vehicleId/Reminder/List');
-        
+
         // these forms are special cases, we need to address them
         //register('/Vehicle/Edit/:id');
         //register('/Vehicle/Edit');
         //register('/Vehicle/Add/:id');
         //register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
-        
+
         // the root url
         register('/', {
             route: 'Dashboard/Index'

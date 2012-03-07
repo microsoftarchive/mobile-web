@@ -63,6 +63,11 @@ limitations under the License. */
 
         function success(data, status, xhr) {
             data.__route__ = target.params;
+
+            if (registration.prerender) {
+                data = registration.prerender(data);
+            }
+            
             var view = templating.to_html(template, data);
             $(region).append(view);
             overrideLinks();
