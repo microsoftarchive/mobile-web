@@ -17,6 +17,8 @@
     </ol>
 </nav>
 @{Html.RenderPartial("_Flash.Mobile");}
+
+
 <div class="view">
     <ol class="hbox button-group">
 		<li class="icon add"><a href="@Url.UnencodedAction("Add", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Add New Fill up</span></a></li>
@@ -31,7 +33,7 @@
             <thead><tr><th>Date</th><th>Location</th><th>Cost</th></tr></thead>
             @foreach(var fillup in Mustache.Loop(item, m => m.Fillups))
             {
-                var url = Url.UnencodedAction("Details", "Fillup", new { id = Mustache.Value(fillup, m => m.FillupEntryId) });
+                var url = Url.UnencodedAction("Details", "Fillup", new { id = Mustache.Value(fillup, m => m.FillupEntryId), vehicleId = Mustache.RouteValue("vehicleId") });
                 <tr>
                     <td><a href="@url">@Mustache.Value(fillup, m => m.Date)</a></td>
                     <td><a href="@url">@Mustache.Value(fillup, m => m.Vendor)</a></td>
