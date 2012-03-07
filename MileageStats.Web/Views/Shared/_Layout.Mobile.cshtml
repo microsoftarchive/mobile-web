@@ -56,6 +56,13 @@
         }
         @if (Request.Browser.IsWow() && User.Identity.IsAuthenticated)
         {
+            <script type="text/javascript">
+                // allowing the server to set the root URL for the site, 
+                // which is used by the client code for server requests.
+                (function (mstats) {
+                    mstats.rootUrl = '@Url.Content("~")';
+                } (this.mstats = this.mstats || {}));
+            </script>
             <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
             <script src="@Url.Content("~/Scripts/mustache.js")"></script>
             <script src="@Url.Content("~/Scripts/mobile-debug/router.js")"></script>

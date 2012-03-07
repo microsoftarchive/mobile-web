@@ -20,6 +20,7 @@ limitations under the License. */
     var templating = require('Mustache'),
         window = require('window'),
         $ = require('$');
+    var rootUrl = require('rootUrl');
 
     var routes = {},
         defaultRegion = '#region-to-replace',
@@ -67,7 +68,7 @@ limitations under the License. */
             if (registration.prerender) {
                 data = registration.prerender(data);
             }
-            
+
             var view = templating.to_html(template, data);
             $(region).append(view);
             overrideLinks();
@@ -84,7 +85,7 @@ limitations under the License. */
             $.ajax({
                 dataType: 'json',
                 type: 'GET',
-                url: target.url,
+                url: makeRelativeToRoot(target.url),
                 success: success,
                 error: error
             });
@@ -92,6 +93,10 @@ limitations under the License. */
             // do we ever need to render a template with default values?
             success({});
         }
+    }
+
+    function makeRelativeToRoot(url) {
+        return (rootUrl + url).replace('//', '/');
     }
 
     function matchRoute(url) {
@@ -107,7 +112,7 @@ limitations under the License. */
 
             if (match !== null) {
                 result = buildMatchResult(match, registration);
-                result.url = url;
+                result.url = match[0];
                 return result;
             }
         }
@@ -169,14 +174,14 @@ limitations under the License. */
             var match;
             var href = anchor.attr('href');
             if (href.indexOf('#') === -1 && (match = matchRoute(href))) {
-                anchor.attr('href', '/#' + match.url);
+                anchor.attr('href', rootUrl + '#' + match.url);
             }
         });
     }
 
     function initialize() {
         if (!window.location.hash) {
-            if (window.pathname === '/') {
+            if (window.location.pathname === '/') {
                 window.location.hash = '#/';
             } else {
                 overrideLinks();
