@@ -79,7 +79,7 @@ namespace MileageStats.Web.Controllers
             }
             catch (Exception)
             {
-                this.SetConfirmationMessage(Messages.AuthController_SignIn_UnableToAuthenticateWithProvider);
+                this.SetAlertMessage(Messages.AuthController_SignIn_UnableToAuthenticateWithProvider);
                 return RedirectToAction("SignIn");
             }
         }
@@ -112,11 +112,11 @@ namespace MileageStats.Web.Controllers
                     return RedirectToAction("SignIn");
 
                 case AuthenticationStatus.Failed:
-                    this.SetConfirmationMessage(response.Exception.Message);
+                    this.SetAlertMessage(response.Exception.Message);
                     return RedirectToAction("SignIn");
 
                 default:
-                    this.SetConfirmationMessage(Messages.AuthController_SignIn_UnableToAuthenticateWithProvider);
+                    this.SetAlertMessage(Messages.AuthController_SignIn_UnableToAuthenticateWithProvider);
                     return RedirectToAction("SignIn");
             }
         }
