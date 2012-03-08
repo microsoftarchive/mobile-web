@@ -126,30 +126,23 @@ limitations under the License. */
         equal(overriddenLink, '/#/my/route');
     });
 
-//    test('router collapses all the widget containers', function () {
-//		var overriddenLink = '';
+    test('router applies expander to all widget containers', function () {
+		var overriddenLink = '';
 
-//		var m = mocks.create(
-//			{
-//				'$.expander': function (name, value) {
-//            		if (!value) return '/my/route';
-//            		overriddenLink = value;
-//				}
-//			});
-//		var router = app.router(m);
+		var m = mocks.create();
+		var router = app.router(m);
 
-//		router.setDefaultRegion('#view');
-//		router.register('/my/route');
+		router.setDefaultRegion('#view');
+		router.register('/my/route');
 
-//		// simulate hash change
-//		m.window.location = {
-//       		hash: '#/my/route'
-//		};
-//		m.window.onhashchange();
+		// simulate hash change
+		m.window.location = {
+       		hash: '#/my/route'
+		};
+		m.window.onhashchange();
 
-//		// assert
-//		equal(overriddenLink, '/#/my/route');
-//    });
+		ok(m.tracked.contains('expander: dl.widget'));
+    });
 
     test('router modifies the href on anchor tags matching registered routes with named args', function () {
         var overriddenLink = '';
