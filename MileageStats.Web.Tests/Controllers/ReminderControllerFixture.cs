@@ -103,8 +103,11 @@ namespace MileageStats.Web.Tests.Controllers
             ReminderController controller = GetTestableReminderController();
 
             ActionResult result = controller.Add(defaultVehicleId, null);
-
+            
             Assert.IsType(typeof(ViewResult), result);
+
+            var viewResult = result as ViewResult;
+            Assert.Equal(MileageStats.Web.Properties.Messages.PleaseFixInvalidData, viewResult.TempData["alert"]); 
         }
 
         [Fact]

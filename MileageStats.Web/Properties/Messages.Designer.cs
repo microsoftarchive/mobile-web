@@ -22,7 +22,7 @@ namespace MileageStats.Web.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Messages {
+    public class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MileageStats.Web.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MileageStats.Web.Properties.Messages", typeof(Messages).Assembly);
@@ -51,7 +51,7 @@ namespace MileageStats.Web.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Canceled authentication.
         /// </summary>
-        internal static string AuthController_CanceledAuthentication {
+        public static string AuthController_CanceledAuthentication {
             get {
                 return ResourceManager.GetString("AuthController_CanceledAuthentication", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to New User.
         /// </summary>
-        internal static string AuthController_CreateOrGetUser_New_User {
+        public static string AuthController_CreateOrGetUser_New_User {
             get {
                 return ResourceManager.GetString("AuthController_CreateOrGetUser_New_User", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to We are unable to authenticate you with provider at this time.  Please check your provider URL and try again..
         /// </summary>
-        internal static string AuthController_SignIn_UnableToAuthenticateWithProvider {
+        public static string AuthController_SignIn_UnableToAuthenticateWithProvider {
             get {
                 return ResourceManager.GetString("AuthController_SignIn_UnableToAuthenticateWithProvider", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Unable to authenticate at this time..
         /// </summary>
-        internal static string AuthController_SignInResponse_Unable_to_authenticate {
+        public static string AuthController_SignInResponse_Unable_to_authenticate {
             get {
                 return ResourceManager.GetString("AuthController_SignInResponse_Unable_to_authenticate", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successfully added fill up.
         /// </summary>
-        internal static string FillupController_FillupAddedMessage {
+        public static string FillupController_FillupAddedMessage {
             get {
                 return ResourceManager.GetString("FillupController_FillupAddedMessage", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The date is invalid.
         /// </summary>
-        internal static string FillupController_InvalidDate {
+        public static string FillupController_InvalidDate {
             get {
                 return ResourceManager.GetString("FillupController_InvalidDate", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Vehicle not found.
         /// </summary>
-        internal static string FillupController_VehicleNotFound {
+        public static string FillupController_VehicleNotFound {
             get {
                 return ResourceManager.GetString("FillupController_VehicleNotFound", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please fix invalid data.
         /// </summary>
-        internal static string PleaseFixInvalidData {
+        public static string PleaseFixInvalidData {
             get {
                 return ResourceManager.GetString("PleaseFixInvalidData", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Invalid Request Data.
         /// </summary>
-        internal static string ProfileController_InvalidData {
+        public static string ProfileController_InvalidData {
             get {
                 return ResourceManager.GetString("ProfileController_InvalidData", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successfully updated profile.
         /// </summary>
-        internal static string ProfileController_ProfileUpdated {
+        public static string ProfileController_ProfileUpdated {
             get {
                 return ResourceManager.GetString("ProfileController_ProfileUpdated", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You don&apos;t have permissions to execute this action over the reminder.
         /// </summary>
-        internal static string Reminder_ForbiddenAction {
+        public static string Reminder_ForbiddenAction {
             get {
                 return ResourceManager.GetString("Reminder_ForbiddenAction", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The date is invalid.
         /// </summary>
-        internal static string ReminderController_InvalidDate {
+        public static string ReminderController_InvalidDate {
             get {
                 return ResourceManager.GetString("ReminderController_InvalidDate", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successfully added reminder.
         /// </summary>
-        internal static string ReminderController_ReminderAdded {
+        public static string ReminderController_ReminderAdded {
             get {
                 return ResourceManager.GetString("ReminderController_ReminderAdded", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successfully deleted reminder.
         /// </summary>
-        internal static string ReminderController_ReminderDeleted {
+        public static string ReminderController_ReminderDeleted {
             get {
                 return ResourceManager.GetString("ReminderController_ReminderDeleted", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successfully fulfilled reminder.
         /// </summary>
-        internal static string ReminderController_ReminderFulfilled {
+        public static string ReminderController_ReminderFulfilled {
             get {
                 return ResourceManager.GetString("ReminderController_ReminderFulfilled", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Vehicle not found.
         /// </summary>
-        internal static string ReminderController_VehicleNotFound {
+        public static string ReminderController_VehicleNotFound {
             get {
                 return ResourceManager.GetString("ReminderController_VehicleNotFound", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successfully added vehicle.
         /// </summary>
-        internal static string VehicleController_VehicleAdded {
+        public static string VehicleController_VehicleAdded {
             get {
                 return ResourceManager.GetString("VehicleController_VehicleAdded", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successfully deleted vehicle.
         /// </summary>
-        internal static string VehicleController_VehicleDeleted {
+        public static string VehicleController_VehicleDeleted {
             get {
                 return ResourceManager.GetString("VehicleController_VehicleDeleted", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Vehicle not found.
         /// </summary>
-        internal static string VehicleController_VehicleNotFound {
+        public static string VehicleController_VehicleNotFound {
             get {
                 return ResourceManager.GetString("VehicleController_VehicleNotFound", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace MileageStats.Web.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successfully updated vehicle.
         /// </summary>
-        internal static string VehicleController_VehicleUpdated {
+        public static string VehicleController_VehicleUpdated {
             get {
                 return ResourceManager.GetString("VehicleController_VehicleUpdated", resourceCulture);
             }

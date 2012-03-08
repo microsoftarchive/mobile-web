@@ -543,7 +543,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Messages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
