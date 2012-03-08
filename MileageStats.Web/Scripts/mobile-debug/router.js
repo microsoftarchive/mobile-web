@@ -19,8 +19,8 @@ limitations under the License. */
 
     var templating = require('Mustache'),
         window = require('window'),
+        rootUrl = require('rootUrl'),
         $ = require('$');
-    var rootUrl = require('rootUrl');
 
     var routes = {},
         defaultRegion = '#region-to-replace',
@@ -181,7 +181,7 @@ limitations under the License. */
 
     function initialize() {
         if (!window.location.hash) {
-            if (window.location.pathname === '/') {
+            if (window.location.pathname === rootUrl) {
                 window.location.hash = '#/';
             } else {
                 overrideLinks();
