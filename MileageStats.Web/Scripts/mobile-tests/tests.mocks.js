@@ -20,102 +20,103 @@ limitations under the License. */
 // ***
 (function (module) {
 
-    // we'll generate a fresh instance of our mocks
-    // for each unit test
-    function generate(behaviors) {
+	// we'll generate a fresh instance of our mocks
+	// for each unit test
+	function generate(behaviors) {
 
-        // some of our mocks will record what they do
-        // so that we can verify behavior
-        var tracked = [];
-        tracked.contains = function (candidate) {
-            var i = tracked.length - 1;
+		// some of our mocks will record what they do
+		// so that we can verify behavior
+		var tracked = [];
+		tracked.contains = function (candidate) {
+			var i = tracked.length - 1;
 
-            for (; i >= 0; i--) {
-                if (tracked[i] === candidate) return true;
-            }
-            return false;
-        };
+			for (; i >= 0; i--) {
+				if (tracked[i] === candidate) return true;
+			}
+			return false;
+		};
 
-        // we can pass into our generate function a hash of 
-        // behaviors, this will allow us to define behavior
-        // specific to individual unit tests
-        function getBehavior(target) {
-            if (behaviors && behaviors[target]) return behaviors[target];
-            return function () { return ''; };
-        };
+		// we can pass into our generate function a hash of 
+		// behaviors, this will allow us to define behavior
+		// specific to individual unit tests
+		function getBehavior(target) {
+			if (behaviors && behaviors[target]) return behaviors[target];
+			return function () { return ''; };
+		};
 
-        // mock jQuery
-        function buildMember(name, selector) {
-            return function () {
-                tracked.push(name + ': ' + selector);
-                var fn = getBehavior('$.' + name);
-                return fn.apply(this, arguments);
-            };
-        }
+		// mock jQuery
+		function buildMember(name, selector) {
+			return function () {
+				tracked.push(name + ': ' + selector);
+				var fn = getBehavior('$.' + name);
+				return fn.apply(this, arguments);
+			};
+		}
 
-        var jqueryMembers = ['append', 'attr', 'empty', 'html'];
+		var jqueryMembers = ['append', 'attr', 'empty', 'html'];
 
-        var $ = function (selector) {
-            var jquery = {},
+		var $ = function (selector) {
+			var jquery = {},
                 member,
                 i = jqueryMembers.length;
 
-            for (; i >= 0; i--) {
-                member = jqueryMembers[i];
-                jquery[member] = buildMember(member, selector);
-            }
+			for (; i >= 0; i--) {
+				member = jqueryMembers[i];
+				jquery[member] = buildMember(member, selector);
+			}
 
-            jquery.each = function (fn) {
-                fn(0, selector + ' item');
-            };
+			jquery.each = function (fn) {
+				fn(0, selector + ' item');
+			};
 
-            return jquery;
-        };
+			return jquery;
+		};
 
-        $.ajax = function (args) {
-            tracked.push('ajax: ' + args.url);
-            if (args.success) args.success();
-        };
+		$.ajax = function (args) {
+			tracked.push('ajax: ' + args.url);
+			if (args.success) args.success({});
+		};
 
-        // return a hash of the objects we are mocking
-        return {
-            $: $,
-            Mustache: {
-                to_html: function () {
-                    return 'template';
-                }
-            },
-            tracked: tracked,
-            window: {},
-            log: function () { return console.log; }
-        };
+		// return a hash of the objects we are mocking
+		return {
+			$: $,
+			Mustache: {
+				to_html: function () {
+					return 'template';
+				}
+			},
+			rootUrl: '/',
+			tracked: tracked,
+			window: {},
+			log: function () { return console.log; }
+		};
 
-    }
+	}
 
-    // the only exposed member of our mocks module
-    // is used to create a new set of mocks. 
-    // we can optionally provide some behaviors to 
-    // override.
-    module.create = function (behaviors) {
-        var m = generate(behaviors);
-        var prop;
+	// the only exposed member of our mocks module
+	// is used to create a new set of mocks. 
+	// we can optionally provide some behaviors to 
+	// override.
+	module.create = function (behaviors) {
+		var m = generate(behaviors);
+		var prop;
 
-        // this emulates the service location in
-        // the main app.js file
-        var fn = function (service) {
-            if (m[service]) return m[service];
-            throw new Error('Could not find a module registered as ' + service);
-        };
+		// this emulates the service location in
+		// the main app.js file
+		var fn = function (service) {
+			if (m[service]) return m[service];
+			throw new Error('Could not find a module registered as ' + service);
+		};
 
-        // for convenience we'll alias the individual
-        // mocks as members of the function
-        for (prop in m) {
-            // this could be quite dangerous, for example
-            // we could override a default member of function
-            fn[prop] = m[prop];
-        }
+		// for convenience we'll alias the individual
+		// mocks as members of the function
+		for (prop in m) {
+			// this could be quite dangerous, for example
+			// we could override a default member of function
+			fn[prop] = m[prop];
+		}
 
-        return fn;
-    };
+		return fn;
+	};
 
 } (this.mocks = this.mocks || {}));

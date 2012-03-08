@@ -126,6 +126,31 @@ limitations under the License. */
         equal(overriddenLink, '/#/my/route');
     });
 
+//    test('router collapses all the widget containers', function () {
+//		var overriddenLink = '';
+
+//		var m = mocks.create(
+//			{
+//				'$.expander': function (name, value) {
+//            		if (!value) return '/my/route';
+//            		overriddenLink = value;
+//				}
+//			});
+//		var router = app.router(m);
+
+//		router.setDefaultRegion('#view');
+//		router.register('/my/route');
+
+//		// simulate hash change
+//		m.window.location = {
+//       		hash: '#/my/route'
+//		};
+//		m.window.onhashchange();
+
+//		// assert
+//		equal(overriddenLink, '/#/my/route');
+//    });
+
     test('router modifies the href on anchor tags matching registered routes with named args', function () {
         var overriddenLink = '';
         var m = mocks.create(
