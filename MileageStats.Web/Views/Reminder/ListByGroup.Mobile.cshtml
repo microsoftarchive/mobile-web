@@ -16,7 +16,7 @@
         <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })" class="selected">Reminders</a></li>
     </ol>
 </nav>
-
+@{Html.RenderPartial("_Flash.Mobile");}
 <div class="view">
     <ol class="hbox button-group">
 		<li class="icon add"><a href="@Url.Action("Add", "Reminder", new { vehicleId = Html.RouteValue("vehicleId") })"><span>Add New Reminder</span></a></li>

@@ -73,7 +73,12 @@ namespace MileageStats.Web
 
         public static void SetConfirmationMessage(this Controller controller, string message)
         {
-            controller.TempData["Message"] = message;
+            controller.TempData["confirm"] = message;
+        }
+
+        public static void SetAlertMessage(this Controller controller, string message)
+        {
+            controller.TempData["alert"] = message;
         }
     }
 }

@@ -17,7 +17,7 @@
             <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m => m.Vehicle.VehicleId) })">Reminders</a></li>
         </ol>
     </nav>
-    
+    @{Html.RenderPartial("_Flash.Mobile");}
     <div class="view">
     
     <dl class="list">

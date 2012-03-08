@@ -128,6 +128,8 @@ namespace MileageStats.Web.Controllers
                 }
             }
 
+            this.SetAlertMessage(Messages.PleaseFixInvalidData);
+
             var fillups = Using<GetFillupsForVehicle>()
                 .Execute(vehicleId)
                 .OrderByDescending(f => f.Date);

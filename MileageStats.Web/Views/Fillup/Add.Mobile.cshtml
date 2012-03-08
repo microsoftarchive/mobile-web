@@ -14,7 +14,7 @@
 	    <li>Add Fill up</li>
     </ol>
 </nav>
-
+@{Html.RenderPartial("_Flash.Mobile");}
 <div class="view">
     <form method="POST" action="@Url.UnencodedAction("Add", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })">
     @{ Html.RenderPartial("~/Views/Fillup/FillupForm.Mobile.cshtml", Model); }

@@ -138,6 +138,9 @@
   <data name="FillupController_VehicleNotFound" xml:space="preserve">
     <value>Vehicle not found</value>
   </data>
+  <data name="PleaseFixInvalidData" xml:space="preserve">
+    <value>Please fix invalid data</value>
+  </data>
   <data name="ProfileController_InvalidData" xml:space="preserve">
     <value>Invalid Request Data</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="ReminderController_ReminderDeleted" xml:space="preserve">
     <value>Successfully deleted reminder</value>
+  </data>
+  <data name="ReminderController_ReminderFulfilled" xml:space="preserve">
+    <value>Successfully fulfilled reminder</value>
   </data>
   <data name="ReminderController_VehicleNotFound" xml:space="preserve">
     <value>Vehicle not found</value>

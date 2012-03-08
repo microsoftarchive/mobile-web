@@ -157,13 +157,15 @@ namespace MileageStats.Web.Controllers
                     return RedirectToAction("ListByGroup", "Reminder", new { Id = vehicleId });
                 }
             }
-
+            this.SetAlertMessage(Messages.PleaseFixInvalidData);
             return View(reminder);
         }
 
         public ActionResult Fulfill(int vehicleId, int id)
         {
             Using<FulfillReminder>().Execute(CurrentUserId, id);
+
+            this.SetConfirmationMessage(Messages.ReminderController_ReminderFulfilled);
 
             return new ContentTypeAwareResult
                        {

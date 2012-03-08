@@ -36,10 +36,6 @@
         <!-- #content region(s) -->
         <div id="content">
             <div id="main">
-                @if (TempData["Message"] != null)
-                { 
-                    <div class="flash alert"><p>@TempData["Message"]</p></div>
-                }
                 @RenderBody()
             </div>
         </div>

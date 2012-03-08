@@ -370,7 +370,6 @@
     <Content Include="Views\Reminder\DetailsPartial.Mobile.cshtml" />
     <Content Include="Views\Fillup\ListPartial.Mobile.cshtml" />
     <Content Include="Views\Fillup\DetailsPartial.Mobile.cshtml" />
-    <Content Include="Views\Reminder\ListPartial.Mobile.cshtml" />
     <Content Include="Views\Shared\_ViewSwitcher.cshtml" />
     <Content Include="Views\Shared\_Flash.Mobile.cshtml" />
     <None Include="Views\Profile\Edit.mustache" />
@@ -517,9 +516,6 @@
   <ItemGroup>
     <Content Include="Views\Reminder\Add.Mobile.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Reminder\List.Mobile.cshtml" />
-  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup>
@@ -549,6 +545,7 @@
     <EmbeddedResource Include="Properties\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

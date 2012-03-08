@@ -339,7 +339,7 @@ namespace MileageStats.Web.Tests.Controllers
             TestableAuthController authController = GetTestableAuthController(relyingParty);
 
             authController.SignInResponse();
-            Assert.Equal(exception.Message, authController.TempData["Message"]);
+            Assert.Equal(exception.Message, authController.TempData["alert"]);
         }
 
         [Fact]
@@ -366,7 +366,7 @@ namespace MileageStats.Web.Tests.Controllers
             ActionResult result = authController.SignInResponse();
             Assert.IsType(typeof (RedirectToRouteResult), result);
             Assert.Equal("SignIn", ((RedirectToRouteResult) result).RouteValues["action"]);
-            Assert.NotNull(authController.TempData["Message"]);
+            Assert.NotNull(authController.TempData["alert"]);
         }
 
         [Fact]
@@ -383,7 +383,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             Assert.IsType(typeof (RedirectToRouteResult), result);
             Assert.Equal("SignIn", ((RedirectToRouteResult) result).RouteValues["action"]);
-            Assert.NotNull(authController.TempData["Message"]);
+            Assert.NotNull(authController.TempData["alert"]);
         }
 
         [Fact]
