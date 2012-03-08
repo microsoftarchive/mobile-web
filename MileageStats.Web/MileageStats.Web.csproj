@@ -286,6 +286,7 @@
     <Content Include="Profiles\Generic.xml" />
     <Content Include="Scripts\MileageStats.Mobile.min.js" />
     <Content Include="Scripts\desktop-debug\mstats.tile.js" />
+    <Content Include="Scripts\mobile-debug\dashboard.js" />
     <Content Include="Scripts\mobile-debug\expander.js" />
     <Content Include="Scripts\mobile-debug\router.js" />
     <Content Include="Scripts\mobile-debug\app.js" />

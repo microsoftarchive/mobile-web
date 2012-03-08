@@ -122,7 +122,10 @@ namespace MileageStats.Domain.Models
         /// </summary>
         public int PhotoId { get { return this.Vehicle.PhotoId; } }
 
+        public bool HasImminentReminders { get; set; }
+
         private Vehicle Vehicle {  get; set; }
+
 
         public VehicleStatisticsModel Statistics { get; private set; }
     }

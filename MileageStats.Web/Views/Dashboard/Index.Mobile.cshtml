@@ -62,9 +62,11 @@
                     <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { id = Mustache.Value(vehicle, i => i.VehicleId) })">
                         <span>Details</span></a></li>
                     <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
-                        <span>Fill Ups</span></a></li>
-                    <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
-                        <span>Reminders</span></a></li>
+                        <span>Fill Ups </span></a></li>
+                    <li @{if (!Html.IsRenderingForMustache() && vehicle.HasImminentReminders) { <text>class="highlight"</text> } } id="reminderMenu_@(Mustache.Value(vehicle, i => i.VehicleId))">
+						
+						<a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
+                        <span >Reminders</span></a></li>
                 </ol>
             </dd>
         </dl>

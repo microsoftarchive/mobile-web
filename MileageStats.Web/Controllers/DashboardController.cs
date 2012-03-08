@@ -47,10 +47,17 @@ namespace MileageStats.Web.Controllers
         public ActionResult Index()
         {
             var vehicles = Using<GetVehicleListForUser>()
-                .Execute(CurrentUserId);
+                .Execute(CurrentUserId)
+                .ToList();
 
             var imminentReminders = Using<GetImminentRemindersForUser>()
                 .Execute(CurrentUserId, DateTime.UtcNow);
+
+            foreach (var vehicle in vehicles)
+            {
+                vehicle.HasImminentReminders = imminentReminders
+                    .Any(i => i.VehicleId == vehicle.VehicleId);
+            }
 
             var statistics = Using<GetFleetSummaryStatistics>()
                 .Execute(CurrentUserId);
