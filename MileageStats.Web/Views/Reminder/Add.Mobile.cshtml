@@ -9,7 +9,7 @@
         <li>@ViewBag.VehicleName</li>
     </ol>
     <ol class="breadcrumbs">
-	    <li><a href="@Url.Action("List", "Reminder", new { vehicleId = Model.VehicleId })">Reminders</a></li>
+	    <li><a href="@Url.Action("ListByGroup", "Reminder", new { vehicleId = Model.VehicleId })">Reminders</a></li>
 	    <li>Add Reminder</li>
     </ol>
 </nav>
