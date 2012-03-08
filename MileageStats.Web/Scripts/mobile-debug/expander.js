@@ -16,15 +16,23 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 (function ($) {
-	$.fn.expander = function () {
-		this.each(function () {
-			var dt = $(this).children('dt');
-			
-			dt.next('dd').toggle();
+	$.fn.expander = function (options) {
 
-			dt.click(function (e) {
+		var defaults = {
+			header: 'dt',
+			children: 'dd'
+		}; 
+
+		var options = $.extend(defaults, options);
+
+		this.each(function () {
+			var header = $(this).children(options.header);
+
+			header.next(options.children).toggle();
+
+			header.click(function (e) {
 				e.preventDefault();
-				$(this).next('dd').toggle();
+				$(this).next(options.children).toggle();
 			});
 		});
 	};
