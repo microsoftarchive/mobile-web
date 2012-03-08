@@ -79,6 +79,9 @@ limitations under the License. */
         });
 
         app.router.initialize();
+
+        // add a visual indicator when in SPA
+        $('header h1').after('<span class="spa">SPA</span>');
     });
 
 })(window.mstats = window.mstats || {}, window, $);
