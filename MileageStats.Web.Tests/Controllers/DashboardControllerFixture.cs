@@ -315,6 +315,7 @@ namespace MileageStats.Web.Tests.Controllers
             MockHandlerFor(
                 () => new Mock<GetImminentRemindersForUser>(null, null, null),
                 mock => mock.Setup(h => h.Execute(defaultUser.UserId, It.IsAny<DateTime>(), NoVehicleSelectedId))
+                    .Returns(new List<ImminentReminderModel>())
                 );
         }
 
