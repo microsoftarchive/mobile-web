@@ -8,37 +8,40 @@
     <nav>
         <ol class="title">
             <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
-            <li>@Mustache.Value(m => m.Vehicle.Name)</li>
+            <li>@Mustache.ViewBag("VehicleName")</li>
         </ol>
 
         <ol class="tabs vehicle-details" >
-            <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { id = Mustache.Value(m => m.Vehicle.VehicleId) })" class="selected">Details</a></li>
-            <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.Value(m => m.Vehicle.VehicleId) })">Fill Ups</a></li>
-            <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m => m.Vehicle.VehicleId) })">Reminders</a></li>
+            <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })" class="selected">Details</a></li>
+            <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })">Fill Ups</a></li>
+            <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })">Reminders</a></li>
         </ol>
     </nav>
-    @{Html.RenderPartial("_Flash.Mobile");}
+@{Html.RenderPartial("_Flash.Mobile");}
+@using (var section = Mustache.Section("Model"))
+{
     <div class="view">
     
-    <dl class="list">
-        <dt>@Html.LabelFor(model => model.Vehicle.Name)</dt>
-        <dd>@Mustache.Value(m => m.Vehicle.Name)</dd>
+        <dl class="list">
+            <dt>@Html.LabelFor(model => model.Vehicle.Name)</dt>
+            <dd>@Mustache.Value(m => m.Vehicle.Name)</dd>
 
-        <dt>@Html.LabelFor(model => model.Vehicle.Year)</dt>
-        <dd>@Mustache.Value(m => m.Vehicle.Year)</dd>
+            <dt>@Html.LabelFor(model => model.Vehicle.Year)</dt>
+            <dd>@Mustache.Value(m => m.Vehicle.Year)</dd>
 
-        <dt>@Html.LabelFor(model => model.Vehicle.MakeName)</dt>
-        <dd>@Mustache.Value(m => m.Vehicle.MakeName)</dd>
+            <dt>@Html.LabelFor(model => model.Vehicle.MakeName)</dt>
+            <dd>@Mustache.Value(m => m.Vehicle.MakeName)</dd>
 
-        <dt>@Html.LabelFor(model => model.Vehicle.ModelName)</dt>
-        <dd>@Mustache.Value(m => m.Vehicle.ModelName)</dd>
+            <dt>@Html.LabelFor(model => model.Vehicle.ModelName)</dt>
+            <dd>@Mustache.Value(m => m.Vehicle.ModelName)</dd>
 
-        <dt>@Html.LabelFor(model => model.Vehicle.Odometer)</dt>
-        <dd>@Mustache.Value(model => model.Vehicle.Odometer) miles</dd>
-    </dl>
+            <dt>@Html.LabelFor(model => model.Vehicle.Odometer)</dt>
+            <dd>@Mustache.Value(model => model.Vehicle.Odometer) miles</dd>
+        </dl>
 
-    <ol class="hbox button-group">
-        <li><a href="@Url.UnencodedAction("Edit", "Vehicle", new { id = Mustache.Value(m => m.Vehicle.VehicleId) })"><span>Edit</span></a></li>
-    </ol>
+        <ol class="hbox button-group">
+            <li><a href="@Url.UnencodedAction("Edit", "Vehicle", new {id = Mustache.Value(m => m.Vehicle.VehicleId)})"><span>Edit</span></a></li>
+        </ol>
     
     </div>
+}

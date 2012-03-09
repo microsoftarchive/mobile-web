@@ -3,10 +3,26 @@
  in addition, they are the keys used 
  to set message in TempData
 *@
-
-@foreach (var pair in TempData.Where(x => new []{"alert","notify","confirm"}.Contains(x.Key)))
+@if (Html.IsRenderingForMustache())
 {
-<div class="flash @pair.Key">
-	<p>@pair.Value</p>
-</div>
+    @:{{#FlashAlert}}
+    <div class="flash alert">
+        <p>{{FlashAlert}}</p>
+    </div>
+    @:{{/FlashAlert}}
+
+    @:{{#FlashConfirm}}
+    <div class="flash confirm">
+        <p>{{FlashConfirm}}</p>
+    </div>
+    @:{{/FlashConfirm}}
+}
+else
+{
+    foreach (var pair in TempData.Where(x => new[] { "alert", "notify", "confirm" }.Contains(x.Key)))
+    {
+    <div class="flash @pair.Key">
+        <p>@pair.Value</p>
+    </div>
+    }
 }

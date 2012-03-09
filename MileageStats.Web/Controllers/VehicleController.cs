@@ -39,13 +39,13 @@ namespace MileageStats.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult Details(int id)
+        public ActionResult Details(int vehicleId)
         {
             var vehicles = Using<GetVehicleListForUser>()
                 .Execute(CurrentUserId);
 
             var selected = vehicles
-                .FirstOrDefault(x => x.VehicleId == id);
+                .FirstOrDefault(x => x.VehicleId == vehicleId);
 
             if (selected == null)
             {
@@ -56,12 +56,12 @@ namespace MileageStats.Web.Controllers
             // we are limiting this to 3 reminders 
             // after we retrieve the full set from the server
             var overdue = Using<GetOverdueRemindersForVehicle>()
-                .Execute(id, DateTime.UtcNow, selected.Odometer ?? 0)
+                .Execute(vehicleId, DateTime.UtcNow, selected.Odometer ?? 0)
                 .Take(3);
 
             var vm = new VehicleDetailsViewModel
                          {
-                             VehicleList = new VehicleListViewModel(vehicles, id) { IsCollapsed = true },
+                             VehicleList = new VehicleListViewModel(vehicles, vehicleId) { IsCollapsed = true },
                              Vehicle = selected,
                              OverdueReminders = overdue,
                              UserId = CurrentUserId
@@ -122,9 +122,9 @@ namespace MileageStats.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int vehicleId)
         {
-            var vehicleForm = GetVehicleForm(id);
+            var vehicleForm = GetVehicleForm(vehicleId);
 
             return SetupVehicleForm(vehicleForm);
         }

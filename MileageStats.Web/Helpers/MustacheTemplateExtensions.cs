@@ -121,6 +121,11 @@ namespace MileageStats.Web.Helpers
             return new DisposableEnumerable<TProperty>(helper.ViewContext, name, getEnumerable);
         }
 
+        public static IDisposable Section<TPageModel>(this MustacheHelper<TPageModel> helper, string name)
+        {
+            return new DisposableSection(helper.ViewContext, name, helper.IsRenderingMustache());
+        }
+
         public static IHtmlString TextBoxFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
                                                                   Expression<Func<TModel, TProperty>> getter,
                                                                   object htlmAttributes)

@@ -11,6 +11,7 @@
     </ol>
 </nav>
 @{ Html.RenderPartial("_Flash.Mobile"); }
+@using (var section  = Mustache.Section("Model")){
 <div class="view" id="view">
     <h2>
         Statistics</h2>
@@ -59,7 +60,7 @@
                     </tr>
                 </table>
                 <ol class="hbox button-group">
-                    <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { id = Mustache.Value(vehicle, i => i.VehicleId) })">
+                    <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
                         <span>Details</span></a></li>
                     <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
                         <span>Fill Ups </span></a></li>
@@ -107,3 +108,4 @@
         </dd>
     </dl>
 </div>
+}

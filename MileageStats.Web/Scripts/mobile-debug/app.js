@@ -17,74 +17,71 @@ limitations under the License. */
 
 (function (app, global, $) {
 
-	// ** bootstrapper **
-	// iterate through the modules calling the 
-	// constructor functions for each module
-	// and storing the resulting export 
-	// back as the same name.
-	// we also pass in depedencies to each module
-	var module, registration;
+    // ** bootstrapper **
+    // iterate through the modules calling the 
+    // constructor functions for each module
+    // and storing the resulting export 
+    // back as the same name.
+    // we also pass in depedencies to each module
+    var module, registration;
 
-	// this function is responsible for fulfilling
-	// depedencies in modules
-	function require(service) {
-		//todo: check for cyclical registration
-		if (service in global) return global[service];
+    // this function is responsible for fulfilling
+    // depedencies in modules
+    function require(service) {
+        //todo: check for cyclical registration
+        if (service in global) return global[service];
 
-		if (service in app) {
-			if (typeof app[service] === 'function') {
-				app[service] = app[service](require);
-			};
-			return app[service];
-		}
+        if (service in app) {
+            if (typeof app[service] === 'function') {
+                app[service] = app[service](require);
+            };
+            return app[service];
+        }
 
-		throw new Error('unable to locate ' + service);
-	}
+        throw new Error('unable to locate ' + service);
+    }
 
-	$(function () {
+    $(function () {
 
-		for (registration in app) {
-			module = app[registration];
-			// check to see if the module is
-			// a function or an object and only apply it
-			// when it is a function
-			if (typeof module === 'function') {
-				app[registration] = module(require);
-			}
-		}
+        for (registration in app) {
+            module = app[registration];
+            // check to see if the module is
+            // a function or an object and only apply it
+            // when it is a function
+            if (typeof module === 'function') {
+                app[registration] = module(require);
+            }
+        }
 
-		// after the modules are all bootstrapped
-		// perform any necessary configuration
+        // after the modules are all bootstrapped
+        // perform any necessary configuration
 
-		app.router.setDefaultRegion('#main');
-		var register = app.router.register;
+        app.router.setDefaultRegion('#main');
+        var register = app.router.register;
 
-		register('/Dashboard/Index', {
-			callback: app.dashboard
-		});
+        register('/Dashboard/Index');
+        register('/Vehicle/:vehicleId/Details');
+        register('/Vehicle/:vehicleId/Fillup/List');
 
-		register('/Vehicle/:vehicleId/Details');
-		register('/Vehicle/:vehicleId/Fillup/List');
+        register('Vehicle/:vehicleId/Fillup/Add', app.addFillup);
 
-		register('Vehicle/:vehicleId/Fillup/Add', app.addFillup);
+        register('/Vehicle/:vehicleId/Reminder/ListByGroup');
 
-		//register('/Vehicle/:vehicleId/Reminder/List');
+        // these forms are special cases, we need to address them
+        //register('/Vehicle/Edit/:id');
+        //register('/Vehicle/Edit');
+        //register('/Vehicle/Add/:id');
+        //register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
 
-		// these forms are special cases, we need to address them
-		//register('/Vehicle/Edit/:id');
-		//register('/Vehicle/Edit');
-		//register('/Vehicle/Add/:id');
-		//register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
+        // the root url
+        register('/', {
+            route: 'Dashboard/Index'
+        });
 
-		// the root url
-		register('/', {
-			route: 'Dashboard/Index',
-			callback: app.dashboard
-		});
+        app.router.initialize();
 
-		app.router.initialize();
-	});
-
-
+        // add a visual indicator when in SPA
+        $('header h1').after('<span class="spa">SPA</span>');
+    });
 
 })(window.mstats = window.mstats || {}, window, $);

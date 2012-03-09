@@ -11,36 +11,39 @@
     </ol>
 
     <ol class="tabs vehicle-details" >
-        <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { Id = Mustache.RouteValue("vehicleId") })">Details</a></li>
+        <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })">Details</a></li>
         <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })" class="selected">Fill Ups</a></li>
         <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })">Reminders</a></li>
     </ol>
 </nav>
 
 @{ Html.RenderPartial("_Flash.Mobile"); }
-<div class="view">
-    <ol class="hbox button-group">
-		<li class="icon add"><a href="@Url.UnencodedAction("Add", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Add New Fill up</span></a></li>
-	</ol>
-	<dl class="fillup widget">
-
-@foreach (var item in Mustache.Loop(m => m))
+@using (var section = Mustache.Section("Model"))
 {
-    <dt><h2><a href="">@Mustache.Value(item, m => m.Month) @Mustache.Value(item, m => m.Year)</a></h2></dt>
-    <dd>
-		<table>
-            <thead><tr><th>Date</th><th>Location</th><th>Cost</th></tr></thead>
-            @foreach(var fillup in Mustache.Loop(item, m => m.Fillups))
+    <div class="view">
+        <ol class="hbox button-group">
+            <li class="icon add"><a href="@Url.UnencodedAction("Add", "Fillup", new {vehicleId = Mustache.RouteValue("vehicleId")})"><span>Add New Fill up</span></a></li>
+        </ol>
+        <dl class="fillup widget">
+
+            @foreach (var item in Mustache.Loop(m => m))
             {
-                var url = Url.UnencodedAction("Details", "Fillup", new { id = Mustache.Value(fillup, m => m.FillupEntryId), vehicleId = Mustache.RouteValue("vehicleId") });
-                <tr>
-                    <td><a href="@url">@Mustache.Value(fillup, m => m.Date)</a></td>
-                    <td><a href="@url">@Mustache.Value(fillup, m => m.Vendor)</a></td>
-                    <td><a href="@url">@Mustache.Value(fillup, m => m.TotalCost)</a></td>
-                </tr>
+                <dt><h2><a href="">@Mustache.Value(item, m => m.Month) @Mustache.Value(item, m => m.Year)</a></h2></dt>
+                <dd>
+                    <table>
+                        <thead><tr><th>Date</th><th>Location</th><th>Cost</th></tr></thead>
+                        @foreach (var fillup in Mustache.Loop(item, m => m.Fillups))
+                        {
+                            var url = Url.UnencodedAction("Details", "Fillup", new {id = Mustache.Value(fillup, m => m.FillupEntryId), vehicleId = Mustache.RouteValue("vehicleId")});
+                            <tr>
+                                <td><a href="@url">@Mustache.Value(fillup, m => m.Date)</a></td>
+                                <td><a href="@url">@Mustache.Value(fillup, m => m.Vendor)</a></td>
+                                <td><a href="@url">@Mustache.Value(fillup, m => m.TotalCost)</a></td>
+                            </tr>
+                        }
+                    </table>
+                </dd>
             }
-		</table>
-	</dd>
+        </dl>
+    </div>
 }
-</dl>
-</div>

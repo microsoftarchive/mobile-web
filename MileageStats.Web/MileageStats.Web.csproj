@@ -120,6 +120,7 @@
     <Compile Include="App_Start\MobileAwareViewEngineBootstrapper.cs" />
     <Compile Include="Authentication\UserAuthenticationTicketBuilder.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
+    <Compile Include="Helpers\DisposableSection.cs" />
     <Compile Include="Helpers\SelectListFor.cs" />
     <Compile Include="Infrastructure\CustomMetadataProvider.cs" />
     <Compile Include="Models\ReminderListViewModel.cs" />

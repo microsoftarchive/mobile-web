@@ -25,7 +25,7 @@ namespace MileageStats.Web
 {
     public sealed class ContentTypeAwareResult : ActionResult, ITestableContentTypeAwareResult
     {
-        private readonly object _model;
+        private readonly dynamic _model;
         private Dictionary<string, Func<object,ViewDataDictionary, TempDataDictionary, ActionResult>> _supportedTypes;
 
         public Func<object, ViewDataDictionary, TempDataDictionary, ActionResult> WhenJson { get; set; }
@@ -44,17 +44,36 @@ namespace MileageStats.Web
             SetupDefaultActionResultProviders(model);
         }
 
-        public object Model { get { return _model; } }
+        public dynamic Model { get { return _model; } }
 
-        private static object WrapArrayWithObject(object model)
+        private static dynamic WrapArrayWithObject(dynamic model, TempDataDictionary tempData, ViewDataDictionary viewDataDictionary)
         {
             // We want to avoid sending a JSON array as a response
             // See http://haacked.com/archive/2009/06/25/json-hijacking.aspx
             // In cases were our model would be converted to an array,
             // we wrap it in a object
-            return (typeof(IEnumerable)).IsInstanceOfType(model) 
-                ? new { model } 
-                : model;
+
+            string flashAlert = null;
+            if (tempData.ContainsKey("alert"))
+            {
+                flashAlert = tempData["alert"].ToString();
+            }
+
+            string flashConfirmation = null;
+            if (tempData.ContainsKey("confirm"))
+            {
+                flashConfirmation = tempData["confirm"].ToString();
+            }
+
+            object wrappedModel = (typeof(IEnumerable)).IsInstanceOfType(model) ? new { model } : model;
+            var viewData = new Dictionary<string, object>();
+            foreach (var viewDataKeyValuePair in viewDataDictionary)
+            {
+                viewData.Add(viewDataKeyValuePair.Key, viewDataKeyValuePair.Value);
+            }
+            //viewData.Add("VehicleName", "Mustang");
+
+            return new { Model = wrappedModel, FlashAlert = flashAlert, FlashConfirm = flashConfirmation, __view__ = viewData };
         }
 
         private void SetupDefaultActionResultProviders(object model)
@@ -64,7 +83,7 @@ namespace MileageStats.Web
 
             WhenJson = (x, v, t) => new JsonResult
                                      {
-                                         Data = WrapArrayWithObject(model),
+                                         Data = WrapArrayWithObject(model, t, v),
                                          JsonRequestBehavior = JsonRequestBehavior.AllowGet
                                      };
 
