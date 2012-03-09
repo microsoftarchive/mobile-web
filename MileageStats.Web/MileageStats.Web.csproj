@@ -105,7 +105,7 @@
     </Reference>
     <Reference Include="WURFL, Version=1.3.2.0, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WURFL_Official_API.1.3.2\Lib\WURFL.dll</HintPath>
+      <HintPath>..\packages\WURFL_Official_API.1.3.3\Lib\WURFL.dll</HintPath>
     </Reference>
     <Reference Include="Yahoo.Yui.Compressor, Version=1.7.0.0, Culture=neutral, PublicKeyToken=f8b4b81ec75097e2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -198,7 +198,6 @@
     <Compile Include="WebViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\web_browsers_patch.xml" />
     <Content Include="Content\account-pane.jpg" />
     <Content Include="Content\add-vehicle-pane.jpg" />
     <Content Include="Content\application-background.png" />
@@ -350,8 +349,8 @@
     <Content Include="Scripts\desktop-tests\test-utilities.js" />
     <Content Include="Scripts\desktop-tests\tests.htm" />
     <Content Include="Views\Chart\Index.Mobile.cshtml" />
-    <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="Views\Browser\Index.cshtml" />
+    <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Views\Error\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

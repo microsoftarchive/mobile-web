@@ -11,7 +11,7 @@
     <Target Name="CopyWurflAssets" AfterTargets="BuildPackage" Condition="$(NCrunch) != '1'">
 
         <ItemGroup>
-            <WurflDataFiles Include="$(SolutionDir)packages\WURFL_Official_API.1.3.2\Content\App_Data\*.*" />
+            <WurflDataFiles Include="$(SolutionDir)packages\WURFL_Official_API.1.3.3\Content\App_Data\*.*" />
         </ItemGroup>
     
         <Message 
