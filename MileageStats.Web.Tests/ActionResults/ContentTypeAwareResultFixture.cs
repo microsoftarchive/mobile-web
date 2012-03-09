@@ -39,6 +39,24 @@ namespace MileageStats.Web.Tests.ActionResults
             return    new ContentTypeAwareResult(new List<string>{"robot"});
         }
 
+        public ActionResult Alert()
+        {
+            TempData["alert"] = "alertmessage";
+            return new ContentTypeAwareResult();
+        }
+
+        public ActionResult Confirm()
+        {
+            TempData["confirm"] = "confirmmessage";
+            return new ContentTypeAwareResult();
+        }
+
+        public ActionResult ViewDataContent()
+        {
+            ViewData.Add("testkey", "testvalue");
+            return new ContentTypeAwareResult();
+        }
+
         public ActionResult CustomizedActionResult()
         {
             var viewmodel = new {apples = 1, oranges = "tasty"};
@@ -151,7 +169,58 @@ namespace MileageStats.Web.Tests.ActionResults
 
             action.ExecuteResult(context.Object);
 
-            response.Verify(x => x.Write("{\"model\":[\"robot\"]}"));
+            response.Verify(x => x.Write("{\"Model\":{\"model\":[\"robot\"]},\"FlashAlert\":null,\"FlashConfirm\":null,\"__view__\":{}}"));
+        }
+
+        [Fact]
+        public void when_tempdata_has_alert_and_the_response_is_JSON_put_message_in_FlashAlert()
+        {
+            var controller = new ExampleController();
+            var action = (ContentTypeAwareResult)controller.Alert();
+
+            var context = MockContextFor(controller);
+            var response = new Mock<HttpResponseBase>();
+
+            context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "application/json" });
+            context.SetupGet(x => x.HttpContext.Response).Returns(() => response.Object);
+
+            action.ExecuteResult(context.Object);
+
+            response.Verify(x => x.Write("{\"Model\":null,\"FlashAlert\":\"alertmessage\",\"FlashConfirm\":null,\"__view__\":{}}"));
+        }
+
+        [Fact]
+        public void when_tempdata_has_confirm_and_the_response_is_JSON_put_message_in_FlashConfirm()
+        {
+            var controller = new ExampleController();
+            var action = (ContentTypeAwareResult)controller.Confirm();
+
+            var context = MockContextFor(controller);
+            var response = new Mock<HttpResponseBase>();
+
+            context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "application/json" });
+            context.SetupGet(x => x.HttpContext.Response).Returns(() => response.Object);
+
+            action.ExecuteResult(context.Object);
+
+            response.Verify(x => x.Write("{\"Model\":null,\"FlashAlert\":null,\"FlashConfirm\":\"confirmmessage\",\"__view__\":{}}"));
+        }
+
+        [Fact]
+        public void when_viewdata_has_entry_and_the_response_is_JSON_key_value_in_view_()
+        {
+            var controller = new ExampleController();
+            var action = (ContentTypeAwareResult)controller.ViewDataContent();
+
+            var context = MockContextFor(controller);
+            var response = new Mock<HttpResponseBase>();
+
+            context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "application/json" });
+            context.SetupGet(x => x.HttpContext.Response).Returns(() => response.Object);
+
+            action.ExecuteResult(context.Object);
+
+            response.Verify(x => x.Write("{\"Model\":null,\"FlashAlert\":null,\"FlashConfirm\":null,\"__view__\":{\"testkey\":\"testvalue\"}}"));
         }
 
         private static Mock<ControllerContext> MockContextFor(ControllerBase controller)

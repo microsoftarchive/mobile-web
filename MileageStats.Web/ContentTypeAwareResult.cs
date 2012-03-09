@@ -71,7 +71,6 @@ namespace MileageStats.Web
             {
                 viewData.Add(viewDataKeyValuePair.Key, viewDataKeyValuePair.Value);
             }
-            //viewData.Add("VehicleName", "Mustang");
 
             return new { Model = wrappedModel, FlashAlert = flashAlert, FlashConfirm = flashConfirmation, __view__ = viewData };
         }
