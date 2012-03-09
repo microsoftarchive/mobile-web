@@ -16,23 +16,31 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 (function (mstats, $) {
-	mstats.dashboard = function () {
-		return function (arg, data, view) {
-			highlightImminentReminders(data, $(view));
-		}
+    mstats.dashboard = function () {
 
-		function highlightImminentReminders(data, view) {
-			for (var i = 0; i < data.VehicleListViewModel.Vehicles.length; i++) {
-				var vehicle = data.VehicleListViewModel.Vehicles[i];
+        return function (arg, data, view) {
+            highlightImminentReminders(data, $(view));
+        };
 
-				for (var j = 0; j < data.ImminentReminders.length; j++) {
-					var reminder = data.ImminentReminders[j];
-					if (reminder.VehicleId == vehicle.VehicleId) {
-						$('#reminderMenu_' + reminder.VehicleId).addClass('highlight');
-						break;
-					}
-				}
-			}
-		}
-	};
+        function highlightImminentReminders(res, view) {
+            var vehicles = res.Model.VehicleListViewModel.Vehicles,
+                reminders = res.Model.ImminentReminders,
+                vehicle,
+                reminder,
+                i,j;
+            
+            for (i = 0; i < vehicles.length; i++) {
+                vehicle = vehicles[i];
+
+                for (j = 0; j < reminders.length; j++) {
+                    reminder = reminders[j];
+                    if (reminder.VehicleId == vehicle.VehicleId) {
+                        var el = $('#reminderMenu_' + reminder.VehicleId);
+                        el.addClass('flag');
+                        break;
+                    }
+                }
+            }
+        }
+    };
 } (this.mstats = this.mstats || {}, jQuery));

@@ -35,6 +35,8 @@
         Vehicles</h2>
     @foreach (var vehicle in Mustache.Loop(m => m.VehicleListViewModel.Vehicles))
     {
+        var overdueReminderFlag = (!Html.IsRenderingForMustache() && vehicle.HasImminentReminders)? "class=\"flag\"" : string.Empty;
+        
         <dl class="vehicle widget">
             <dt>
                 <h2>
@@ -64,9 +66,8 @@
                         <span>Details</span></a></li>
                     <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
                         <span>Fill Ups </span></a></li>
-                    <li @{if (!Html.IsRenderingForMustache() && vehicle.HasImminentReminders) { <text>class="highlight"</text> } } id="reminderMenu_@(Mustache.Value(vehicle, i => i.VehicleId))">
-						
-						<a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
+                    <li>
+						<a id="reminderMenu_@(Mustache.Value(vehicle, i => i.VehicleId))" @overdueReminderFlag href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
                         <span >Reminders</span></a></li>
                 </ol>
             </dd>
