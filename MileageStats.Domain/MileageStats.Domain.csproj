@@ -104,7 +104,6 @@
     <Compile Include="Handlers\ViewModelExtensions.cs" />
     <Compile Include="Contracts\IMapService.cs" />
     <Compile Include="MockMapService.cs" />
-    <Compile Include="Models\ReminderStatus.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\FillupEntry.cs" />
     <Compile Include="Models\FleetStatistics.cs" />

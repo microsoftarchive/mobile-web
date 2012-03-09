@@ -6,7 +6,7 @@ namespace MileageStats.Web.Models
 {
     public class ReminderListViewModel
     {
-        public ReminderStatus Status { get; set; }
-        public IGrouping<ReminderStatus, ReminderSummaryModel> Reminders { get; set; } 
+        public string Status { get; set; }
+        public IGrouping<string, ReminderSummaryModel> Reminders { get; set; } 
     }
 }

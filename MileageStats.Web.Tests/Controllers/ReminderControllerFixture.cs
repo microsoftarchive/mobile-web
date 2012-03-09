@@ -396,9 +396,9 @@ namespace MileageStats.Web.Tests.Controllers
 
             Assert.NotNull(data);
             Assert.Equal(3, data.Count());
-            Assert.Equal("active", data.First(d => d.Status == ReminderStatus.Active).Reminders.First().Title);
-            Assert.Equal("overdue", data.First(d => d.Status == ReminderStatus.Overdue).Reminders.First().Title);
-            Assert.Equal("fulfilled", data.First(d => d.Status == ReminderStatus.Fulfilled).Reminders.First().Title);
+            Assert.Equal("active", data.First(d => d.Status == ReminderSummaryModel.StatusActive).Reminders.First().Title);
+            Assert.Equal("overdue", data.First(d => d.Status == ReminderSummaryModel.StatusOverdue).Reminders.First().Title);
+            Assert.Equal("fulfilled", data.First(d => d.Status == ReminderSummaryModel.StatusFulfilled).Reminders.First().Title);
         }
 
         private ReminderController GetTestableReminderController()
