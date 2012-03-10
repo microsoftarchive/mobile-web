@@ -62,7 +62,7 @@ namespace MileageStats.Web.Controllers
 
             var viewModel = new ReminderDetailsViewModel
             {
-                Reminder = ToFormModel(reminder),
+                Reminder = new ReminderSummaryModel(reminder),
                 Reminders = new SelectedItemList<ReminderSummaryModel>(reminderSummaryViewModels, x => x.FirstOrDefault(item => item.ReminderId == id)),
             };
 
@@ -78,7 +78,7 @@ namespace MileageStats.Web.Controllers
 
             var viewModel = new ReminderDetailsViewModel
             {
-                Reminder = ToFormModel(reminders.FirstOrDefault()),
+                Reminder = new ReminderSummaryModel(reminders.FirstOrDefault()),
                 Reminders = new SelectedItemList<ReminderSummaryModel>(reminderSummaryViewModels, Enumerable.FirstOrDefault),
             };
 
@@ -216,26 +216,5 @@ namespace MileageStats.Web.Controllers
 
             return fullTitle;
         }
-
-        static ReminderFormModel ToFormModel(Reminder source)
-        {
-            if (source == null)
-            {
-                return null;
-            }
-
-            return new ReminderFormModel
-            {
-                DueDate = source.DueDate,
-                DueDistance = source.DueDistance,
-                Remarks = source.Remarks,
-                ReminderId = source.ReminderId,
-                Title = source.Title,
-                VehicleId = source.VehicleId,
-                IsFulfilled = source.IsFulfilled
-            };
-        }
-
-        
     }
 }

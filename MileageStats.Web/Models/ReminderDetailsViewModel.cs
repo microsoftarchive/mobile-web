@@ -21,7 +21,7 @@ namespace MileageStats.Web.Models
 {
     public class ReminderDetailsViewModel
     {
-        public ReminderFormModel Reminder { get; set; }
+        public ReminderSummaryModel Reminder { get; set; }
 
         public SelectedItemList<ReminderSummaryModel> Reminders { get; set; }
     }

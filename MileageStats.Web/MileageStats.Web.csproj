@@ -367,7 +367,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Error\Index.Mobile.cshtml" />
     <Content Include="Views\Reminder\ReminderForm.Mobile.cshtml" />
-    <Content Include="Views\Reminder\DetailsPartial.Mobile.cshtml" />
     <Content Include="Views\Fillup\ListPartial.Mobile.cshtml" />
     <Content Include="Views\Fillup\DetailsPartial.Mobile.cshtml" />
     <Content Include="Views\Shared\_ViewSwitcher.cshtml" />

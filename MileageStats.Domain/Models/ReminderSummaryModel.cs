@@ -37,6 +37,11 @@ namespace MileageStats.Domain.Models
             get { return _reminder.ReminderId; }
         }
 
+        public int VehicleId
+        {
+            get { return _reminder.VehicleId; }
+        }
+
         public string Title
         {
             get { return _reminder.Title; }
@@ -74,7 +79,10 @@ namespace MileageStats.Domain.Models
 
         public string Remarks
         {
-            get { return _reminder.Remarks; }
+            get { return string.IsNullOrEmpty(_reminder.Remarks) 
+                        ? "(not entered)"
+                        : _reminder.Remarks; 
+            }
         }
 
         public string DueDate
@@ -82,13 +90,16 @@ namespace MileageStats.Domain.Models
             get { 
                 return _reminder.DueDate.HasValue
                         ? String.Format("{0:d MMM yyyy}", _reminder.DueDate)
-                        : null; 
+                        : "(not entered)"; 
             }
         }
 
-        public int? DueDistance
+        public string DueDistance
         {
-            get { return _reminder.DueDistance; }
+            get { return _reminder.DueDistance.HasValue
+                        ? _reminder.DueDistance.ToString()
+                        : "(not entered)";
+            }
         }
 
         public string Status
