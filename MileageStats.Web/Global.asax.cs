@@ -146,6 +146,12 @@ namespace MileageStats.Web
             );
 
             routes.MapRoute(
+                "VehicleEditRoute",
+                "Vehicle/{vehicleId}/Edit",
+                new { controller = "Vehicle", action = "Edit" }
+            );
+
+            routes.MapRoute(
               "DetailsRoute",
               "Vehicle/{vehicleId}/{controller}/{id}/Details",
               new { action = "Details" }

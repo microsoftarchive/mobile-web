@@ -14,10 +14,10 @@
             <div>
 
                 <div id="details-pane" class="tab opened section">
-                    @Html.ActionLink(" ", "Details", "Vehicle", new { id = Model.Vehicle.VehicleId }, new { @class = "trigger" })
+                    @Html.ActionLink(" ", "Details", "Vehicle", new { vehicleId = Model.Vehicle.VehicleId }, new { @class = "trigger" })
                     <div class="content">
                         <div class="header">
-                            @using (Html.BeginForm("Edit", "Vehicle", new { id = Model.Vehicle.VehicleId }, FormMethod.Get))
+                            @using (Html.BeginForm("Edit", "Vehicle", new { vehicleId = Model.Vehicle.VehicleId }, FormMethod.Get))
                             {
                                 <button data-action="vehicle-edit-selected" class="button generic small" type="submit">
                                     <img src="@Url.Content("~/Content/button-edit.png")" title="Edit Vehicle" alt="Edit" />

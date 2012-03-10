@@ -104,7 +104,7 @@ namespace MileageStats.Web.Controllers
                 {
                     this.SetConfirmationMessage(Messages.VehicleController_VehicleAdded);
 
-                    return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+                    return RedirectToAction("Details", "Vehicle", new { vehicleId });
                 }
             }
 
