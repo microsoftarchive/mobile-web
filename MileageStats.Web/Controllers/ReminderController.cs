@@ -66,7 +66,7 @@ namespace MileageStats.Web.Controllers
                 Reminders = new SelectedItemList<ReminderSummaryModel>(reminderSummaryViewModels, x => x.FirstOrDefault(item => item.ReminderId == id)),
             };
 
-            return View(viewModel);
+            return new ContentTypeAwareResult(viewModel);
         }
 
         public ActionResult List(int vehicleId)

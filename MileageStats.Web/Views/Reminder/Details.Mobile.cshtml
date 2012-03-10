@@ -9,10 +9,13 @@
         <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
         <li>@Mustache.ViewBag("VehicleName")</li>
     </ol>
+@using (var section1 = Mustache.Section("Model"))
+{
     <ol class="breadcrumbs">
-        <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})">Reminders</a></li>
+        <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new {vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})">Reminders</a></li>
         <li>@Mustache.Value(m => m.Reminder.Title)</li>
     </ol>
+}
 </nav>
 @{Html.RenderPartial("_Flash.Mobile");}
 @using (var section = Mustache.Section("Model"))
@@ -33,14 +36,24 @@
     
         <ol class="hbox button-group">
             <li>
-                @using (Html.BeginForm("Fulfill", "Reminder", new { id = Mustache.Value(m => m.Reminder.ReminderId) }, FormMethod.Post))
-                {
-                    <button type="submit" value="fulfill" name="action">
-                        <span>Fulfill</span></button>
-
-                }
+                <form action="@Url.UnencodedAction("Fulfill", "Reminder", new {id = Mustache.Value(m => m.Reminder.ReminderId), vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})" method="post">
+                    @if(Html.IsRenderingForMustache()){
+                        @Html.Raw("{{#Reminder.IsFulfilled}}")
+                        <button type="submit" value="fulfill" name="action" disabled><span>Fulfill</span></button>
+                        @Html.Raw("{{/Reminder.IsFulfilled}}")
+                        @Html.Raw("{{^Reminder.IsFulfilled}}")
+                        <button type="submit" value="fulfill" name="action"><span>Fulfill</span></button>
+                        @Html.Raw("{{/Reminder.IsFulfilled}}")
+                            }
+                            else
+                            {
+                            <button type="submit" value="fulfill" name="action" @(Model.Reminder.IsFulfilled ? "disabled" : "")>
+                                <span>Fulfill</span>
+                            </button>
+                            }
+                </form>
             </li>
-            <li class="icon false invert"><a href="@Url.Action("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})"><span>Cancel</span></a></li>
+            <li class="icon false invert"><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})"><span>Cancel</span></a></li>
         </ol>
     </div>
 }

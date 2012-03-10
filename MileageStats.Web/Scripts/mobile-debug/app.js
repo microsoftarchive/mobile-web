@@ -69,7 +69,7 @@ limitations under the License. */
 		register('Vehicle/:vehicleId/Fillup/Add', { fetch: false });
 
 		register('/Vehicle/:vehicleId/Reminder/ListByGroup');
-		register('/Reminder/Details/:id');
+		register('/Vehicle/:vehicleId/Reminder/:id/Details');
 
 		// these forms are special cases, we need to address them
 		//register('/Vehicle/Edit/:id');

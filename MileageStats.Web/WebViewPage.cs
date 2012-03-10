@@ -33,6 +33,22 @@ namespace MileageStats.Web
             Mustache = new MustacheHelper<TModel>(Html);
         }
 
+        public override string Layout
+        {
+            get
+            {
+                if (Html.IsRenderingForMustache())
+                {
+                    return null;
+                }
+                return base.Layout;
+            }
+            set
+            {
+                base.Layout = value;
+            }
+        }
+
         public MustacheHelper<TModel> Mustache
         {
             get;
