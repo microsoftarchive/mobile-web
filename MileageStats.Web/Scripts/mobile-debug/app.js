@@ -65,7 +65,7 @@ limitations under the License. */
 
 		register('/Vehicle/:vehicleId/Details');
 		register('/Vehicle/:vehicleId/Fillup/List');
-
+		register('/Vehicle/:vehicleId/Fillup/:id/Details');
 		register('Vehicle/:vehicleId/Fillup/Add', { fetch: false });
 
 		register('/Vehicle/:vehicleId/Reminder/ListByGroup');

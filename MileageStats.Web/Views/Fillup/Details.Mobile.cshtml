@@ -7,16 +7,45 @@
 <nav>
     <ol class="title">
         <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
-        <li>@ViewBag.VehicleName</li>
+        <li>@Mustache.ViewBag("VehicleName")</li>
     </ol>
     <ol class="breadcrumbs">
-	    <li><a href="@Url.Action("List", "Fillup", new { vehicleId = ViewContext.RouteData.Values["vehicleId"] })">Fillups</a></li>
-	    <li>@Model.FillupEntryId</li>
+        <li><a href="@Url.Action("List", "Fillup", new { vehicleId = ViewContext.RouteData.Values["vehicleId"] })">Fillups</a></li>
+	    <li>@Mustache.Value(m => m.FillupEntryId)</li>
     </ol>
 </nav>
+@{Html.RenderPartial("_Flash.Mobile");}
+@using (var section = Mustache.Section("Model"))
+{
+    <div class="view">
+        <dl class="list">
+            <dt>@Html.LabelFor(model => model.Date)</dt>
+            <dd>@Mustache.Value(m => m.Date)</dd>
 
-<div class="view">
-    @{
-		Html.RenderPartial("DetailsPartial.Mobile", Model);
-    }
-</div>
+            <dt>@Html.LabelFor(model => model.TotalCost)</dt>
+            <dd>@Mustache.Value(m => m.TotalCost)</dd>
+
+            <dt>@Html.LabelFor(model => model.TotalUnits)</dt>
+            <dd>@Mustache.Value(m => m.TotalUnits)</dd>
+
+            <dt>@Html.LabelFor(model => model.PricePerUnit)</dt>
+            <dd>@Mustache.Value(m => m.PricePerUnit)</dd>
+
+            <dt>@Html.LabelFor(model => model.Vendor)</dt>
+            <dd>@Mustache.Value(m => m.Vendor)</dd>
+
+            <dt>@Html.LabelFor(model => model.Odometer)</dt>
+            <dd>@Mustache.Value(m => m.Odometer)</dd>
+
+            <dt>@Html.LabelFor(model => model.TransactionFee)</dt>
+            <dd>@Mustache.Value(m => m.TransactionFee)</dd>
+
+            <dt>@Html.LabelFor(model => model.Remarks)</dt>
+            <dd>@Mustache.Value(m => m.Remarks)</dd>
+        </dl>
+
+        <ol class="hbox button-group">
+	        <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Back</span></a></li>
+        </ol>
+    </div>
+}
