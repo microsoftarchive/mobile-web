@@ -21,27 +21,39 @@
 @using (var section = Mustache.Section("Model"))
 {
     <div class="view">
-    
-        <dl class="list">
-            <dt>@Html.LabelFor(model => model.Vehicle.Name)</dt>
-            <dd>@Mustache.Value(m => m.Vehicle.Name)</dd>
-
-            <dt>@Html.LabelFor(model => model.Vehicle.Year)</dt>
-            <dd>@Mustache.Value(m => m.Vehicle.Year)</dd>
-
-            <dt>@Html.LabelFor(model => model.Vehicle.MakeName)</dt>
-            <dd>@Mustache.Value(m => m.Vehicle.MakeName)</dd>
-
-            <dt>@Html.LabelFor(model => model.Vehicle.ModelName)</dt>
-            <dd>@Mustache.Value(m => m.Vehicle.ModelName)</dd>
-
-            <dt>@Html.LabelFor(model => model.Vehicle.Odometer)</dt>
-            <dd>@Mustache.Value(model => model.Vehicle.Odometer) miles</dd>
-        </dl>
-
-        <ol class="hbox button-group">
-            <li><a href="@Url.UnencodedAction("Edit", "Vehicle", new { vehicleId = Mustache.Value(m => m.Vehicle.VehicleId) })"><span>Edit</span></a></li>
+        <h2>Vehicle</h2>
+        <ol class="list">
+            <li>Name: @Mustache.Value(m => m.Vehicle.Name)</li>
+            <li>Year: @Mustache.Value(m => m.Vehicle.Year)</li>
+            <li>Make: @Mustache.Value(m => m.Vehicle.MakeName)</li>
+            <li>Model: @Mustache.Value(m => m.Vehicle.ModelName)</li>
         </ol>
+        <h2>Statistics</h2>
+        <div class="stats">
+            <dl>
+				<dt class="mpg-label">MPG</dt>
+				<dd class="mpg">@Mustache.Value(model => model.Vehicle.Statistics.AverageFuelEfficiency)</dd>
+				<dt class="mile-label">/mile</dt>
+				<dd class="mile">$@Mustache.Value(model => model.Vehicle.Statistics.AverageCostToDrive)</dd>
+				<dt class="month-label">/month</dt>
+				<dd class="month">$@Mustache.Value(model => model.Vehicle.Statistics.AverageCostPerMonth)</dd>
+			</dl>
+		</div>
+		<h2>Last 12 Months</h2>
+		<p>The following graphs provide an glimpse </p>
+		<dl class="details">
+			<dt>Average fuel efficiency</dt>
+			<dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m=>m.UserId), ChartName = "FuelEfficiency", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId") })" /></dd>
+			<dt>Total distance travelled</dt>
+			<dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m => m.UserId), ChartName = "TotalDistance", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId") })" /></dd>
+			<dt>Total cost</dt>
+			<dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m => m.UserId), ChartName = "TotalCost", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId") })" /></dd>
+		</dl>
+		<h2>Edit Vehicle</h2>
+		<p>If you wish to edit the name or any other details specific to this vehicle you may do so by pressing the button below.</p>
+		<ol class="button-group">
+			<li><a href="@Url.UnencodedAction("Edit", "Vehicle", new { vehicleId = Mustache.Value(m => m.Vehicle.VehicleId) })"><span>Edit vehicles details</span></a></li>
+		</ol>
     
     </div>
 }

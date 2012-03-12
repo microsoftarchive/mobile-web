@@ -64,7 +64,7 @@ namespace MileageStats.Domain.Models
         /// </summary>
         public double AverageFuelEfficiency
         {
-            get { return TotalUnits == 0 ? 0 : RoundToTwoDecimals(TotalDistance/TotalUnits); }
+            get { return TotalUnits == 0 ? 0 : RoundToZeroDecimals(TotalDistance / TotalUnits); }
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace MileageStats.Domain.Models
         /// </summary>
         public double AverageCostPerMonth
         {
-            get { return totalMonths == 0 ? 0 : RoundToTwoDecimals(TotalCost/totalMonths); }
+            get { return totalMonths == 0 ? 0 : RoundToZeroDecimals(TotalCost/totalMonths); }
         }
 
         /// <summary>
@@ -141,6 +141,11 @@ namespace MileageStats.Domain.Models
         private static double RoundToTwoDecimals(double number)
         {
             return Math.Round(number, 2);
+        }
+
+        private static double RoundToZeroDecimals(double number)
+        {
+            return Math.Round(number, 0);
         }
     }
 }
