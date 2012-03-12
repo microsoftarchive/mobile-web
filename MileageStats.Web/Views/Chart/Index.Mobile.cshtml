@@ -5,9 +5,12 @@
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
 
     var vehicleIdQueryStringBuilder = new StringBuilder();
-    foreach (int vehicleId in Model.VehicleIds)
+    if (!Html.IsRenderingForMustache())
     {
-        vehicleIdQueryStringBuilder.AppendFormat("&VehicleIds={0}", vehicleId);
+        foreach (int vehicleId in Model.VehicleIds)
+        {
+            vehicleIdQueryStringBuilder.AppendFormat("&VehicleIds={0}", vehicleId);
+        }
     }
 }
 
@@ -17,37 +20,88 @@
         <li><a href="@Url.Action("Index", "Chart")" class="selected">Charts</a></li>
     </ol>
 </nav>
-
-<div class="view">
+@{ Html.RenderPartial("_Flash.Mobile"); }
+@using (var section = Mustache.Section("Model"))
+{
+    <div class="view">
 
     @using (Html.BeginForm("Index", "Chart"))
     {
-	<ul>
-        <li>
-            <label for="chart-data">Chart Data</label>        
-            @Html.DropDownListFor(model => model.ChartName, Model.AllCharts)                           
-        </li>
-        <li><img src="@Url.Action("GetChartImage", new { UserId = Model.UserId, ChartName = Model.ChartName, StartDate = Model.StartDate, EndDate = Model.EndDate })@vehicleIdQueryStringBuilder.ToString()" title="@Model.ChartName" alt="@Model.ChartName" /></li>
-        <li>
-            <h4>Vehicles</h4>
-            <ol class="legend">
-                @foreach (var vehicle in Model.AllVehicleModels)
+        <ul>
+            <li>
+                <label for="chart-data">Chart Data</label>
+                @if (Html.IsRenderingForMustache())
                 {
-                    <li><input name="VehicleIds" type="checkbox" value="@vehicle.VehicleId" @(Model.VehicleIds.Contains(vehicle.VehicleId) ? "checked" : "")>@vehicle.Name</input></li>
+                    <select id="ChartName" name="ChartName">
+                        @Html.Raw("{{#AllCharts}}");
+                        <option value="@Html.Raw("{{Value}}")">@Html.Raw("{{Text}}")</option>
+                        @Html.Raw("{{/AllCharts}}");
+                    </select>
                 }
-            </ol>
-        </li>
-        <li class="range">
-            <h4>Date Range</h4>
-            <label for="StartDate">From</label>@Html.PriorMonthYearPickerFor(model => model.StartDate, Model.StartDate, false)
-            <label for="EndDate">To</label>@Html.PriorMonthEndYearPickerFor(model => model.EndDate, Model.EndDate, false)
-        </li>
-    </ul>
-        
-    <ol class="button-group">
-        <li class="icon refresh">
-            <button type="submit"><span>Refresh</span></button>     
-        </li>
-    </ol>                    
+                else
+                {
+                    @Html.DropDownListFor(model => model.ChartName, Model.AllCharts);
+                }             
+                                                                             
+            </li>
+            @if (Html.IsRenderingForMustache())
+            {
+                <li><img id="chartimage" src="" /></li>
+            }
+            else
+            {
+                <li><img src="@Url.Action("GetChartImage", new { UserId = Model.UserId, ChartName = Model.ChartName, StartDate = Model.StartDate, EndDate = Model.EndDate })@vehicleIdQueryStringBuilder.ToString()" title="@Model.ChartName" alt="@Model.ChartName" /></li>
+            }
+  
+            <li>
+                <h4>Vehicles</h4>
+                <ol class="legend">
+                    @foreach (var vehicle in Mustache.Loop(m => m.AllVehicleModels))
+                    {
+                        if (Html.IsRenderingForMustache())
+                        {
+                            <li><input name="VehicleIds" type="checkbox" value="@Html.Raw("{{VehicleId}}")">@Html.Raw("{{Name}}")</input></li>
+                        }
+                        else
+                        {
+                            <li><input name="VehicleIds" type="checkbox" value="@vehicle.VehicleId" @(Model.VehicleIds.Contains(vehicle.VehicleId) ? "checked" : "")>@vehicle.Name</input></li>
+                        }
+
+                    }
+                </ol>
+            </li>
+            <li class="range">
+                <h4>Date Range</h4>
+                @if (Html.IsRenderingForMustache())
+                {
+                <label for="StartDate">From</label> 
+                    <select name="StartDate">
+                        @Html.Raw("{{#PriorMonthStartYears}}");
+                        <option value="@Html.Raw("{{Value}}")">@Html.Raw("{{Text}}")</option>
+                        @Html.Raw("{{/PriorMonthStartYears}}");
+                    </select>
+                    
+                <label for="EndDate">To</label>
+                    <select name="EndDate">
+                        @Html.Raw("{{#PriorMonthEndYears}}");
+                        <option value="@Html.Raw("{{Value}}")">@Html.Raw("{{Text}}")</option>
+                        @Html.Raw("{{/PriorMonthEndYears}}");
+                    </select>
+                }
+                else
+                {
+                <label for="StartDate">From</label>@Mustache.DropDownListFor(model => model.StartDate, SelectListFor.PriorMonthStartYear(d => Model.StartDate == d))
+                <label for="EndDate">To</label>@Mustache.DropDownListFor(model => model.EndDate, SelectListFor.PriorMonthEndYear(d => Model.EndDate == d))                    
+                }
+            </li>
+        </ul>
+
+        <ol class="button-group">
+            <li class="icon refresh">
+                <button type="submit"><span>Refresh</span></button>     
+            </li>
+        </ol>
     }
+    
 </div>
+}

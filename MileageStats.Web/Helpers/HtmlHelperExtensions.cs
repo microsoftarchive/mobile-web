@@ -94,56 +94,6 @@ namespace System.Web.Mvc.Html
             return helper.DropDownListFor(expression, years);
         }
 
-        public static IHtmlString PriorMonthYearPickerFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> expression, DateTime? selectedDate, bool required)
-        {
-            var months = new List<SelectListItem>();
-
-            if (!required)
-            {
-                months.Add(new SelectListItem());
-            }
-
-            for (int i = 0; i > -10; i--)
-            {
-                var date = DateTime.Now.AddMonths(i);
-                var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
-                months.Add(new SelectListItem
-                               {
-                                   Value = firstDayOfMonth.ToShortDateString(),
-                                   Text = string.Format("{0:MMMM yyyy}", firstDayOfMonth),
-                                   Selected = (selectedDate.HasValue ? firstDayOfMonth == selectedDate.Value : false)
-                               });
-            }
-            return helper.DropDownListFor(expression, months);
-        }
-
-        public static IHtmlString PriorMonthEndYearPickerFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> expression, DateTime? selectedDate, bool required)
-        {
-            var months = new List<SelectListItem>();
-
-            if (!required)
-            {
-                months.Add(new SelectListItem());
-            }
-
-            for (int i = 0; i > -10; i--)
-            {
-                var date = DateTime.Now.AddMonths(i);
-                var nextMonth = date.AddMonths(1);
-                var firstDayOfNextMonth = new DateTime(nextMonth.Year, nextMonth.Month, 1);
-                var lastDayOfThisMonth = firstDayOfNextMonth.AddDays(-1);
-                months.Add(new SelectListItem
-                {
-                    Value = lastDayOfThisMonth.ToShortDateString(),
-                    Text = string.Format("{0:MMMM yyyy}", lastDayOfThisMonth),
-                    Selected = (selectedDate.HasValue ? lastDayOfThisMonth == selectedDate.Value : false)
-                });
-            }
-            return helper.DropDownListFor(expression, months);
-        }
-
         public static string RouteValue<TModel>(this HtmlHelper<TModel> helper, string key)
         {
             var value = helper.ViewContext.RouteData.Values[key];
