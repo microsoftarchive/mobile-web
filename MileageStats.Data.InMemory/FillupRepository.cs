@@ -26,7 +26,6 @@ namespace MileageStats.Data.InMemory
     {
         public void Create(int userId, int vehicleId, FillupEntry fillup)
         {
-            //TODO: why is this using the userId?
             fillup.VehicleId = vehicleId;
             base.Create(fillup);
         }
