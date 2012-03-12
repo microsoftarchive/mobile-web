@@ -16,6 +16,20 @@ Mileage Stats Mobile is just one part of Project Liike. It's a journey and a lea
 
 We want your [feedback, comments, and questions](https://github.com/liike/reference-application/issues). Keep us honest.
 
+## Project Status
+
+_March 12, 2012_
+
+We think of the application as providing three _experiences_.
+
+The first is the _Legacy_ experience mentioned above. We deliver this if the server determines that the client browser is _not_ a mobile browser.
+
+The second is the _Works_ experience. We deliver this as the standard baseline experience or when the server knows little about the client browser's capabilities. It is intended to work well on devices with limited resources (including network, CPU, screen size, etc.).
+
+The third is the _Wow_ experience. We deliver this when it is determined that the client browser can support JavaScript, JSON, XHR, and DOM manipulation. The Wow and Works experiences are closely related however. Works is a subset of Wow, and generally follows a pattern of [Progressive Enhancement](http://en.wikipedia.org/wiki/Progressive_Enhancement). A key enhancement of Wow is providing the application as a [Single Page Application](http://en.wikipedia.org/wiki/Single_Page_Application) (SPA).
+
+At this point, the Works experience is fairly mature whereas the Wow experience is only partially implemented. When running the application, the text "SPA" will appear in header when that mode is enabled.
+
 ## Running the Reference Application
 
 The minimum requirement for building and running Mileage Stats Mobile is:
