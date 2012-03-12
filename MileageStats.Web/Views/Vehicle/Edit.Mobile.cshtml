@@ -28,7 +28,7 @@
                     @Html.AntiForgeryToken()
 
                     <button id="DeleteVehicleButton" type="submit" value="delete" name="action">
-                        <span>Delete</span></button>
+                        <span>Delete vehicle</span></button>
                 }       
             }
             else
@@ -36,7 +36,7 @@
                 using (Html.BeginForm("ConfirmDelete", "Vehicle", new {id = Model.VehicleId}, FormMethod.Get))
                 {
                     <button type="submit" value="delete" name="action" class="false">
-                        <span>Delete</span></button>
+                        <span>Delete vehicle</span></button>
                 }
             }
         </li>
