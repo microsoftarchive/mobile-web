@@ -75,7 +75,8 @@ h4 {
     margin-bottom: .4em;
     margin-top: .3em;
     padding-bottom: .2em;
-    border-bottom: 0.2em solid #414851
+    border-bottom: 0.2em solid #414851;
+    color: #7c8796
 }
 
 h5 {
@@ -93,7 +94,7 @@ h6 {
 }
 
 a {
-    color: #414851;
+    color: #f90;
     display: block;
     text-decoration: none
 }
@@ -193,6 +194,10 @@ body>footer p.switch a {
     margin: 0 auto;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAXUlEQVQ4jWP8//8/AzUBE1VNG5kGsiCxKY0dRnQDUSRIACgOGfxhOAINxBbLHZQYyIhUOFA9HeJKf7vR+K54TSWi+EJXgDfho0eKC9QAZIzNAmTsQqoLSQKDPx0CAIFqGir5ZXgdAAAAAElFTkSuQmCC);background-position: center left;
     background-repeat: no-repeat
+}
+
+body>footer p.switch.mobile a {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAP0lEQVQ4jWP8//8/AzUBE1VNY2BgYMEhTqyzGYk1EKtiYiylupdHDRw1cNRAYgC+vExWuTZ0vUyo6MIJqO5CALtcBi0m+0uYAAAAAElFTkSuQmCC)
 }
 
 #content,#extended {
@@ -335,7 +340,7 @@ body>footer p.switch a {
 }
 
 .flash {
-    margin: 1em 0;
+    margin: 1em;
     border: 1px solid #64717d
 }
 
