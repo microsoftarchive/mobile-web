@@ -9,10 +9,13 @@
         <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
         <li>@Mustache.ViewBag("VehicleName")</li>
     </ol>
-    <ol class="breadcrumbs">
-        <li><a href="@Url.Action("List", "Fillup", new { vehicleId = ViewContext.RouteData.Values["vehicleId"] })">Fillups</a></li>
-	    <li>@Mustache.Value(m => m.FillupEntryId)</li>
-    </ol>
+    @using (var breadcrumbsection = Mustache.Section("Model"))
+    {
+        <ol class="breadcrumbs">
+            <li><a href="@Url.Action("List", "Fillup", new {vehicleId = ViewContext.RouteData.Values["vehicleId"]})">Fillups</a></li>
+            <li>@Mustache.Value(m => m.Vendor) : @Mustache.Value(m => m.Date)</li>
+        </ol>
+    }
 </nav>
 @{Html.RenderPartial("_Flash.Mobile");}
 @using (var section = Mustache.Section("Model"))
