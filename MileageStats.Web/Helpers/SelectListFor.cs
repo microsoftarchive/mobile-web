@@ -50,5 +50,43 @@ namespace MileageStats.Web.Helpers
                        Selected = isSelected(i)
                    };
         }
+
+        public static IEnumerable<SelectListItem> PriorMonthStartYear(Func<DateTime, bool> isSelected)
+        {
+            var months = new List<SelectListItem>();
+
+            for (int i = 0; i > -10; i--)
+            {
+                var date = DateTime.Now.AddMonths(i);
+                var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+                months.Add(new SelectListItem
+                {
+                    Value = firstDayOfMonth.ToShortDateString(),
+                    Text = string.Format("{0:MMMM yyyy}", firstDayOfMonth),
+                    Selected = isSelected(firstDayOfMonth)
+                });
+            }
+            return months;
+        }
+
+        public static IEnumerable<SelectListItem> PriorMonthEndYear(Func<DateTime, bool> isSelected)
+        {
+            var months = new List<SelectListItem>();
+
+            for (int i = 0; i > -10; i--)
+            {
+                var date = DateTime.Now.AddMonths(i);
+                var nextMonth = date.AddMonths(1);
+                var firstDayOfNextMonth = new DateTime(nextMonth.Year, nextMonth.Month, 1);
+                var lastDayOfThisMonth = firstDayOfNextMonth.AddDays(-1);
+                months.Add(new SelectListItem
+                {
+                    Value = lastDayOfThisMonth.ToShortDateString(),
+                    Text = string.Format("{0:MMMM yyyy}", lastDayOfThisMonth),
+                    Selected = isSelected(lastDayOfThisMonth)
+                });
+            }
+            return months;
+        } 
     }
 }

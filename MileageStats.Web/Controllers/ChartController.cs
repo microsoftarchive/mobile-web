@@ -19,6 +19,7 @@ using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
 using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Models;
+using MileageStats.Web.Helpers;
 using MileageStats.Web.MobileProfiler;
 using MileageStats.Web.Models;
 using System;
@@ -64,7 +65,10 @@ namespace MileageStats.Web.Controllers
             chartFormModel.AllVehicleModels = Using<GetVehicleListForUser>()
                 .Execute(chartFormModel.UserId).ToArray();
 
-            return View(chartFormModel);
+            chartFormModel.PriorMonthStartYears = SelectListFor.PriorMonthStartYear(d => d == chartFormModel.StartDate);
+            chartFormModel.PriorMonthEndYears = SelectListFor.PriorMonthEndYear(d => d == chartFormModel.EndDate);
+
+            return new ContentTypeAwareResult(chartFormModel);
         }
 
         [Authorize]

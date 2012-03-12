@@ -71,6 +71,8 @@ limitations under the License. */
 		register('/Vehicle/:vehicleId/Reminder/ListByGroup');
 		register('/Vehicle/:vehicleId/Reminder/:id/Details');
 
+		register('/Chart');
+
 		// these forms are special cases, we need to address them
 		//register('/Vehicle/Edit/:id');
 		//register('/Vehicle/Edit');

@@ -39,6 +39,8 @@ namespace MileageStats.Web.Models
         public DateTime EndDate { get; set; }
         public IList<int> VehicleIds { get; set; }
         public VehicleModel[] AllVehicleModels { get; set; }
-        public IEnumerable<SelectListItem>  AllCharts { get; set; }
+        public IEnumerable<SelectListItem> AllCharts { get; set; }
+        public IEnumerable<SelectListItem> PriorMonthStartYears { get; set; }
+        public IEnumerable<SelectListItem> PriorMonthEndYears { get; set; }
     }
 }
