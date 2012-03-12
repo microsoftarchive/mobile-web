@@ -40,7 +40,7 @@
         <dl class="vehicle widget">
             <dt>
                 <h2>
-                    <a href="@Url.UnencodedAction("Details", "Vehicle", new { id = Mustache.Value(vehicle, i => i.VehicleId) })">@Mustache.Value(vehicle, i => i.Name)</a></h2>
+                    <a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">@Mustache.Value(vehicle, i => i.Name)</a></h2>
             </dt>
             <dd>
                 <table>
