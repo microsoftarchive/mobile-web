@@ -18,9 +18,9 @@ limitations under the License. */
 (function (app, global, $) {
 
 	// ** bootstrapper **
-	// iterate through the modules calling the 
+	// iterate through the modules calling the
 	// constructor functions for each module
-	// and storing the resulting export 
+	// and storing the resulting export
 	// back as the same name.
 	// we also pass in depedencies to each module
 	var module, registration;
@@ -28,13 +28,15 @@ limitations under the License. */
 	// this function is responsible for fulfilling
 	// depedencies in modules
 	function require(service) {
-		//todo: check for cyclical registration
+		// this is a simplified approach to resolving
+		// a more thorough approach would check for
+		// cyclical registration
 		if (service in global) return global[service];
 
 		if (service in app) {
 			if (typeof app[service] === 'function') {
 				app[service] = app[service](require);
-			};
+			}
 			return app[service];
 		}
 
@@ -42,7 +44,8 @@ limitations under the License. */
 	}
 
 	$(function () {
-
+		var registration;
+		
 		for (registration in app) {
 			module = app[registration];
 			// check to see if the module is

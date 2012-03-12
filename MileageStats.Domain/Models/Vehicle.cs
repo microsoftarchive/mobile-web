@@ -20,8 +20,6 @@ using MileageStats.Domain.Contracts;
 
 namespace MileageStats.Domain.Models
 {
-    // TODO: Can we remove Photo and Fillups from this class?
-
     /// <summary>
     /// A vehicle used to track mileage statistics.
     /// </summary>
