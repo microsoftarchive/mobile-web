@@ -23,6 +23,7 @@ using System.Web;
 using System.Web.Mvc;
 using Moq;
 using Xunit;
+using System.Collections.Specialized;
 
 namespace MileageStats.Web.Tests.ActionResults
 {
@@ -82,7 +83,7 @@ namespace MileageStats.Web.Tests.ActionResults
     public class ContentTypeAwareFixture
     {
         [Fact]
-        public void when_no_providers_are_found_for_values_in_the_accepts_header_then_return_415()
+        public void when_no_providers_are_found_for_values_in_the_accepts_header_then_return_406()
         {
             // 415 Unsupported Media Type
             // http://tools.ietf.org/html/rfc2616#section-10.4.16
@@ -98,7 +99,7 @@ namespace MileageStats.Web.Tests.ActionResults
 
             action.ExecuteResult(context.Object);
             
-            response.VerifySet(x=>x.StatusCode = 415);
+            response.VerifySet(x=>x.StatusCode = 406);
         }
 
         [Fact]
@@ -154,6 +155,47 @@ namespace MileageStats.Web.Tests.ActionResults
             action.ExecuteResult(context.Object);
 
             view.VerifyAll();
+        }
+
+        [Fact]
+        public void when_json_format_expected_then_returns_json()
+        {
+            var controller = new ExampleController();
+            var action = controller.DefaultActionResult();
+
+            var context = MockContextFor(controller);
+            var response = new Mock<HttpResponseBase>();
+
+            var qs = new NameValueCollection();
+            qs.Add("format", "json");
+
+            context.Setup(x => x.HttpContext.Request.QueryString).Returns(qs);
+            context.SetupGet(x => x.HttpContext.Response).Returns(() => response.Object);
+
+            action.ExecuteResult(context.Object);
+
+            response.VerifySet(x => x.ContentType = "application/json");
+        }
+
+        [Fact]
+        public void when_json_format_expected_and_accepted_then_returns_json()
+        {
+            var controller = new ExampleController();
+            var action = controller.DefaultActionResult();
+
+            var context = MockContextFor(controller);
+            var response = new Mock<HttpResponseBase>();
+
+            var qs = new NameValueCollection();
+            qs.Add("format", "json");
+
+            context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "application/json" });
+            context.Setup(x => x.HttpContext.Request.QueryString).Returns(qs);
+            context.SetupGet(x => x.HttpContext.Response).Returns(() => response.Object);
+
+            action.ExecuteResult(context.Object);
+
+            response.VerifySet(x => x.ContentType = "application/json");
         }
 
         [Fact]

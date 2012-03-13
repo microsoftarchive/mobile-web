@@ -41,7 +41,7 @@ limitations under the License. */
 			$.ajax({
 				dataType: 'json',
 				type: 'GET',
-				url: makeRelativeToRoot(target.url),
+				url: appendJsonFormat(makeRelativeToRoot(target.url)),
 				success: onSuccess,
 				error: error(host)
 			});
@@ -99,6 +99,15 @@ limitations under the License. */
 
 	function makeRelativeToRoot(url) {
 		return (rootUrl + url).replace('//', '/');
+	}
+
+	function appendJsonFormat(url) {
+		if (url.indexOf('?') > 0) {
+			return url + '&format=json';
+		}
+		else {
+			return url + '?format=json';
+		}
 	}
 
 	function getTemplateFor(route, namedParametersPattern) {

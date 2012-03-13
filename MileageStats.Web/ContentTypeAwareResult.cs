@@ -126,6 +126,20 @@ namespace MileageStats.Web
                         select type.Split(';')[0])
                         .ToList();
 
+            if (types.Count == 0)
+            {
+                // The format passed in the query string is used
+                // when no accept header is found in the request
+
+                var format = context.HttpContext.Request.QueryString["format"];
+                var contentType = GetContentTypeForFormat(format);
+
+                if (!string.IsNullOrEmpty(contentType))
+                {
+                    types.Add(contentType);
+                }
+            }
+
             var providers = from type in types
                             where _supportedTypes.ContainsKey(type)
                             select _supportedTypes[type];
@@ -138,8 +152,8 @@ namespace MileageStats.Web
             }
             else
             {
-                var msg = string.Format("An unsupported media type was requested. The request types were: {0}", String.Join(",", types));
-                return new HttpStatusCodeResult(415, msg);
+                var msg = string.Format("An unsupported media type was requested. The supported content types are : {0}", String.Join(",", types));
+                return new HttpStatusCodeResult(406, msg);
             }
         }
 
@@ -147,6 +161,17 @@ namespace MileageStats.Web
         {
             GetActionResultFor(context).ExecuteResult(context);
         }
+
+        private static string GetContentTypeForFormat(string format)
+        {
+            if (format != null && format.Equals("json", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return "application/json";
+            }
+
+            return null;
+        }
+
 
         ActionResult ITestableContentTypeAwareResult.GetActionResultFor(ControllerContext context)
         {
