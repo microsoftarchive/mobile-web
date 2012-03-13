@@ -53,7 +53,7 @@ limitations under the License. */
             };
         }
 
-        var jqueryMembers = ['append', 'children', 'empty', 'expander', 'html', 'last', 'toggleClass'];
+        var jqueryMembers = ['append', 'children', 'empty', 'expander', 'html', 'last', 'next', 'toggle', 'toggleClass'];
 
         var $ = function (selector) {
             var jquery = {},

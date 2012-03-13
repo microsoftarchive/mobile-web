@@ -35,7 +35,6 @@ limitations under the License. */
             if (target) {
                 transition.to(target, defaultRegion, namedParametersPattern, function () {
                     overrideLinks();
-                    collapseWidgets();
                 });
 
             } else {
@@ -117,10 +116,6 @@ limitations under the License. */
                 anchor.attr('href', rootUrl + '#' + match.url);
             }
         });
-    }
-
-    function collapseWidgets() {
-        $('dl.widget').expander();
     }
 
     function initialize() {

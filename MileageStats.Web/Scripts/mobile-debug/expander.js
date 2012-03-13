@@ -15,26 +15,27 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-(function ($) {
-	$.fn.expander = function (options) {
-
-		var defaults = {
-			header: 'dt',
-			children: 'dd'
-		}; 
-
-		var options = $.extend(defaults, options);
-
-		this.each(function () {
-			var header = $(this).children(options.header);
-
-			header.next(options.children).toggle();
-
-			header.click(function (e) {
+(function (mstats) {
+    mstats.expander = function (require) {
+        
+        var $ = require('$');
+        
+        var parent = 'dt',
+            child = 'dd';
+        
+        function attach(view) {
+            var header = view.find(parent);
+            
+            header.next(child).toggle();
+            
+            header.click(function (e) {
 				e.preventDefault();
-				$(this).next(options.children).toggle();
+				$(this).next(child).toggle();
 			});
-		});
-	};
-})(jQuery);
+        }
 
+        return {
+            attach: attach
+        };
+    };
+} (this.mstats = this.mstats || {}));

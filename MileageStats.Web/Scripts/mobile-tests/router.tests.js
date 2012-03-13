@@ -61,22 +61,6 @@ limitations under the License. */
         }
     });
 
-    test('router applies expander to all widget containers', function () {
-        var m = mocks.create(default_mocks);
-        var router = app.router(m);
-
-        router.setDefaultRegion('#view');
-        router.register('/my/route');
-
-        // simulate hash change
-        m.window.location = {
-            hash: '#/my/route'
-        };
-        m.window.onhashchange();
-
-        ok(m.tracked.contains('expander: dl.widget'));
-    });
-
     test('router modifies the href on anchor tags matching registered routes', function () {
         var overriddenLink = '';
 
