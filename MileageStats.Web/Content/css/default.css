@@ -886,3 +886,16 @@ em {
 .legend :nth-child(10) {
     color: #ff5800
 }
+
+#main {
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    -ms-transition: opacity 1s;
+}
+
+.swapping 
+{
+    opacity: 0.2;
+}

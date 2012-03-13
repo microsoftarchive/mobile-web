@@ -287,6 +287,7 @@
     <Content Include="Scripts\MileageStats.Mobile.min.js" />
     <Content Include="Scripts\desktop-debug\mstats.tile.js" />
     <Content Include="Scripts\mobile-debug\charts.js" />
+    <Content Include="Scripts\mobile-debug\transition.js" />
     <Content Include="Scripts\mobile-debug\dashboard.js" />
     <Content Include="Scripts\mobile-debug\expander.js" />
     <Content Include="Scripts\mobile-debug\router.js" />
@@ -312,6 +313,9 @@
     <Content Include="Scripts\desktop-debug\mstats.validation.js" />
     <Content Include="Scripts\desktop-debug\mstats.vehicle-details.js" />
     <Content Include="Scripts\desktop-debug\mstats.vehicle.js" />
+    <Content Include="Scripts\mobile-tests\expander.tests.js" />
+    <Content Include="Scripts\mobile-tests\dashboard.tests.js" />
+    <Content Include="Scripts\mobile-tests\transition.tests.js" />
     <Content Include="Scripts\mobile-tests\tests.mocks.js" />
     <Content Include="Scripts\mobile-tests\router.tests.js" />
     <Content Include="Scripts\mobile-tests\tests.htm" />

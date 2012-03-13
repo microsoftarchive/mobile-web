@@ -19,17 +19,31 @@ limitations under the License. */
 
     module('router specs');
 
-    test('router module constructs itself', function () {
+    var default_mocks = {
+        transition: {
+            to: function (target, defaultRegion, namedParametersPattern, callback) { callback(); }
+        },
+        window: { onhashchange: function () { } }
+    };
 
-        var router = app.router(mocks.create());
+    test('router module constructs itself', function () {
+        var router = app.router(mocks.create(default_mocks));
 
         ok(router != undefined, true);
         equal(typeof router, 'object');
     });
 
-    test('router replaces view when hash changed', function () {
+    test('router delegates to transition when hash changed', function () {
 
-        var m = mocks.create();
+        var m = mocks.create({
+            transition: {
+                to: function () {
+                    assertion(arguments);
+                }
+            },
+            window: { onhashchange: function () { } }
+        });
+
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -41,15 +55,14 @@ limitations under the License. */
         };
         m.window.onhashchange();
 
-        //assert
-        ok(m.tracked.contains('empty: #view'));
-        ok(m.tracked.contains('append: #view'));
-        ok(m.tracked.indexOf('empty: #view') < m.tracked.indexOf('append: #view'), 'should empty before appending');
+        function assertion() {
+            var view = arguments[0][1];
+            equal(view, '#view');
+        }
     });
 
-    test('router infers template id from route', function () {
-
-        var m = mocks.create();
+    test('router applies expander to all widget containers', function () {
+        var m = mocks.create(default_mocks);
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -61,56 +74,23 @@ limitations under the License. */
         };
         m.window.onhashchange();
 
-        //assert
-        ok(m.tracked.contains('html: #my-route'));
-    });
-
-    test('router invokes an ajax calls by default to url', function () {
-
-        var m = mocks.create();
-        var router = app.router(m);
-
-        router.setDefaultRegion('#view');
-        router.register('/my/route');
-
-        // simulate hash change
-        m.window.location = {
-            hash: '#/my/route'
-        };
-        m.window.onhashchange();
-
-        //assert
-        ok(m.tracked.contains('ajax: /my/route'));
-    });
-
-    test('router will not invoke an ajax call when registration accordingly', function () {
-
-        var m = mocks.create();
-        var router = app.router(m);
-
-        router.setDefaultRegion('#view');
-        router.register('/my/route', { fetch: false });
-
-        // simulate hash change
-        m.window.location = {
-            hash: '#/my/route'
-        };
-        m.window.onhashchange();
-
-        //assert
-        ok(!m.tracked.contains('ajax: /my/route'));
+        ok(m.tracked.contains('expander: dl.widget'));
     });
 
     test('router modifies the href on anchor tags matching registered routes', function () {
         var overriddenLink = '';
 
-        var m = mocks.create(
+        var m = mocks.create(default_mocks,
             {
+                // when attr is called inside the module
+                // we expect it to be called with a
+                // modified url that includes a #
                 '$.attr': function (name, value) {
                     if (!value) return '/my/route';
                     overriddenLink = value;
                 }
             });
+
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -126,27 +106,9 @@ limitations under the License. */
         equal(overriddenLink, '/#/my/route');
     });
 
-    test('router applies expander to all widget containers', function () {
-		var overriddenLink = '';
-
-		var m = mocks.create();
-		var router = app.router(m);
-
-		router.setDefaultRegion('#view');
-		router.register('/my/route');
-
-		// simulate hash change
-		m.window.location = {
-       		hash: '#/my/route'
-		};
-		m.window.onhashchange();
-
-		ok(m.tracked.contains('expander: dl.widget'));
-    });
-
     test('router modifies the href on anchor tags matching registered routes with named args', function () {
         var overriddenLink = '';
-        var m = mocks.create(
+        var m = mocks.create(default_mocks,
             {
                 '$.attr': function (name, value) {
                     if (!value) return '/my/route/1';
@@ -154,6 +116,7 @@ limitations under the License. */
                 }
             }
         );
+
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -169,63 +132,17 @@ limitations under the License. */
         equal(overriddenLink, '/#/my/route/1');
     });
 
-    test('router matches invokes correct ajax url when route has a named arg', function () {
-
-        var m = mocks.create();
-        var router = app.router(m);
-
-        router.setDefaultRegion('#view');
-        router.register('/my/route/:id');
-
-        // simulate hash change
-        m.window.location = {
-            hash: '#/my/route/1'
-        };
-        m.window.onhashchange();
-
-        //assert
-        ok(m.tracked.contains('ajax: /my/route/1'));
-    });
-
-    test('router matches template with a named arg', function () {
-
-        var m = mocks.create();
-        var router = app.router(m);
-
-        router.setDefaultRegion('#view');
-        router.register('/my/route/:id');
-
-        // simulate hash change
-        m.window.location = {
-            hash: '#/my/route/1'
-        };
-        m.window.onhashchange();
-
-        //assert
-        ok(m.tracked.contains('html: #my-route'));
-    });
-
-    test('router matches template with an embedded named arg', function () {
-
-        var m = mocks.create();
-        var router = app.router(m);
-
-        router.setDefaultRegion('#view');
-        router.register('/my/route/:id/more');
-
-        // simulate hash change
-        m.window.location = {
-            hash: '#/my/route/1/more'
-        };
-        m.window.onhashchange();
-
-        //assert
-        ok(m.tracked.contains('html: #my-route-more'));
-    });
-
     test('router invoke transition when first initialized if # is in the url', function () {
 
-        var m = mocks.create();
+        var transition_invoked = false;
+
+        var m = mocks.create({
+            transition: {
+                to: function () { transition_invoked = true; }
+            },
+            window: { onhashchange: function () { } }
+        });
+
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -239,16 +156,19 @@ limitations under the License. */
         router.initialize();
 
         // assert
-        // this assert is that we clearing the region
-        // it is one of many things that happen during
-        // a transition
-        ok(m.tracked.contains('empty: #view'));
-        ok(m.tracked.length > 2);
+        ok(transition_invoked);
     });
 
     test('router will not invoke transition when first initialized if no # is in the url', function () {
 
-        var m = mocks.create();
+        var transition_not_invoked = true;
+
+        var m = mocks.create({
+            transition: {
+                to: function () { transition_not_invoked = false; }
+            },
+            window: { onhashchange: function () {} }
+        });
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -261,14 +181,7 @@ limitations under the License. */
 
         router.initialize();
 
-        // assert
-        // should only contain the calls related to 
-        // overriding links
-        // this assertion is somewhat fragile
-        // but it is sometimes diffiuclt to make
-        // a negative assertion
-        ok(m.tracked.contains('attr: a[href] item'));
-        equal(m.tracked.length, 1);
+        ok(transition_not_invoked);
     });
 
 } (window.specs = window.specs || {}, window.mstats));

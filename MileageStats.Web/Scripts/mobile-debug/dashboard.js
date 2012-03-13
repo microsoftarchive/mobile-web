@@ -15,32 +15,33 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-(function (mstats, $) {
-    mstats.dashboard = function () {
-
-        return function (arg, data, view) {
-            highlightImminentReminders(data, $(view));
-        };
+(function (mstats) {
+    mstats.dashboard = function (require) {
 
         function highlightImminentReminders(res, view) {
+            
             var vehicles = res.Model.VehicleListViewModel.Vehicles,
                 reminders = res.Model.ImminentReminders,
                 vehicle,
                 reminder,
-                i,j;
-            
+                i, j;
+
             for (i = 0; i < vehicles.length; i++) {
                 vehicle = vehicles[i];
 
                 for (j = 0; j < reminders.length; j++) {
                     reminder = reminders[j];
                     if (reminder.VehicleId == vehicle.VehicleId) {
-                        var el = $('#reminderMenu_' + reminder.VehicleId);
+                        var el = view.find('#reminderMenu_' + reminder.VehicleId);
                         el.addClass('flag');
                         break;
                     }
                 }
             }
         }
+
+        return {
+            postrender: highlightImminentReminders
+        };
     };
-} (this.mstats = this.mstats || {}, jQuery));
+} (this.mstats = this.mstats || {}));
