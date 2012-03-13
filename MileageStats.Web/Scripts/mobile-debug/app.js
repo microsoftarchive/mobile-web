@@ -23,7 +23,7 @@ limitations under the License. */
 	// and storing the resulting export
 	// back as the same name.
 	// we also pass in depedencies to each module
-	var module, registration;
+	var module;
 
 	// this function is responsible for fulfilling
 	// depedencies in modules

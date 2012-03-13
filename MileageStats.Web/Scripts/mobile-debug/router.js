@@ -17,201 +17,132 @@ limitations under the License. */
 
 (window.mstats = window.mstats || {}).router = function (require) {
 
-	var templating = require('Mustache'),
-        window = require('window'),
+    var window = require('window'),
         rootUrl = require('rootUrl'),
+	    transition = require('transition'),
         $ = require('$');
 
-	var routes = {},
+    var routes = {},
+        supportsHashChange = ('onhashchange' in window),
         defaultRegion = '#region-to-replace',
         namedParametersPattern = /:(\w)*/g;
 
-	if (!('onhashchange' in window)) {
-		//console.log('hashchange event not supported!');
-	}
+    if (supportsHashChange) {
+        window.onhashchange = function () {
+            var route = window.location.hash.replace('#', ''),
+                target = matchRoute(route);
 
-	window.onhashchange = function () {
-		var route = window.location.hash.replace('#', ''),
-            target = matchRoute(route);
+            if (target) {
+                transition.to(target, defaultRegion, namedParametersPattern, function () {
+                    overrideLinks();
+                    collapseWidgets();
+                });
 
-		if (target) {
-			transitionTo(target);
-		} else {
-			//console.log('unhandled route: ' + route);
-		}
-	};
+            } else {
+                // console.log('unhandled route: ' + route);
+            }
+        };
+    }
 
-	function register(route, registration) {
-		registration = registration || {};
+    function register(route, registration) {
+        registration = registration || {};
 
-		// assume that we'll fetch data unless we're told otherwise
-		if (!('fetch' in registration)) registration.fetch = true;
-		if (!('route' in registration)) registration.route = route;
+        // assume that we'll fetch data unless we're told otherwise
+        if (!('fetch' in registration)) registration.fetch = true;
+        if (!('route' in registration)) registration.route = route;
 
-		registration.params = route.match(namedParametersPattern);
-		registration.regexp = buildRegExpForMatching(route);
+        registration.params = route.match(namedParametersPattern);
+        registration.regexp = buildRegExpForMatching(route);
 
-		routes[route] = registration;
-	}
+        routes[route] = registration;
+    }
 
-	function transitionTo(target) {
-		var registration = target.registration;
-		var region = registration.region || defaultRegion;
-		var route = registration.route;
-		var callback = registration.callback;
+    function matchRoute(url) {
 
-		var template = getTemplateFor(route);
-
-		function success(model, status, xhr) {
-		    var view,
-                host = $(region);
-
-		    // append route data to the model 
-		    // we use the well known name '__route__'
-		    // assuming that it will be unlikely to
-		    // collide with any existing properties
-		    model.__route__ = target.params;
-
-		    if (registration.prerender) {
-		        model = registration.prerender(model);
-		    }
-
-		    view = templating.to_html(template, model);
-		    host.append(view);
-		    overrideLinks();
-		    collapseWidgets();
-
-		    if (registration.postrender) {
-		        registration.postrender(model, host.children().last());
-		    }
-		}
-
-		function error(xhr, status, errorThrown) {
-			$(region).append('<div>' + status + ': ' + errorThrown + '</div>');
-		}
-
-		$(region).empty();
-
-		if (registration.fetch) {
-			$.ajax({
-				dataType: 'json',
-				type: 'GET',
-				url: makeRelativeToRoot(target.url),
-				success: success,
-				error: error
-			});
-		} else {
-			// do we ever need to render a template with default values?
-			success({});
-		}
-	}
-
-	function makeRelativeToRoot(url) {
-		return (rootUrl + url).replace('//', '/');
-	}
-
-	function matchRoute(url) {
-
-		var item,
+        var item,
             registration,
             match,
             result;
 
-		for (item in routes) {
-			registration = routes[item];
-			match = url.match(registration.regexp);
+        for (item in routes) {
+            registration = routes[item];
+            match = url.match(registration.regexp);
 
-			if (match !== null) {
-				result = buildMatchResult(match, registration);
-				result.url = match[0];
-				return result;
-			}
-		}
+            if (match !== null) {
+                result = buildMatchResult(match, registration);
+                result.url = match[0];
+                return result;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	function buildMatchResult(match, registration) {
+    function buildMatchResult(match, registration) {
 
-		var result = {
-			registration: registration,
-			params: {}
-		},
+        var result = {
+            registration: registration,
+            params: {}
+        },
             params = registration.params,
             named,
             i;
 
-		if (!params) return result;
+        if (!params) return result;
 
-		for (i = 0; i < params.length; i++) {
-			named = params[i].slice(1);
-			result.params[named] = match[i + 1];
-		}
+        for (i = 0; i < params.length; i++) {
+            named = params[i].slice(1);
+            result.params[named] = match[i + 1];
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	function getTemplateFor(route) {
+    function buildRegExpForMatching(route) {
+        var pattern = route.replace(/\//g, '\\/').replace(namedParametersPattern, '(\\w)+') + '$';
+        return new RegExp(pattern);
+    }
 
-		// templateId could be cached at registration
+    function overrideLinks() {
 
-		var id = '#' + route
-            .replace(namedParametersPattern, '')    // remove named parameters
-            .replace(/^\//, '')                     // remove leading /
-            .replace(/\//g, '-').toLowerCase()      // convert / to  -
-            .replace(/--/g, '-')                    // collapse double -
-            .replace(/-$/, '');                   // remove trailing -
+        // rewriting the links this way is very heavy
+        // another approach would be to do this check
+        // in the click handler for the link
 
-		var template = $(id);
-		if (template.length === 0) {
-			return '<h1>No Template Found!</h1><h2>' + id + '</h2>';
-		}
-		return template.html();
-	}
+        $('a[href]').each(function (i, a) {
+            var anchor = $(a);
+            var match;
+            var href = anchor.attr('href');
+            if (href.indexOf('#') === -1 && (match = matchRoute(href))) {
+                anchor.attr('href', rootUrl + '#' + match.url);
+            }
+        });
+    }
 
-	function buildRegExpForMatching(route) {
-		var pattern = route.replace(/\//g, '\\/').replace(namedParametersPattern, '(\\w)+') + '$';
-		return new RegExp(pattern);
-	}
+    function collapseWidgets() {
+        $('dl.widget').expander();
+    }
 
-	function overrideLinks() {
+    function initialize() {
+        if (!supportsHashChange) return;
 
-		// rewriting the links this way is very heavy
-		// another approach would be to do this check
-		// in the click handler for the link
+        if (!window.location.hash) {
+            if (window.location.pathname === rootUrl) {
+                window.location.hash = '#/';
+            } else {
+                overrideLinks();
+            }
+        } else {
+            window.onhashchange();
+        }
+    }
 
-		$('a[href]').each(function (i, a) {
-			var anchor = $(a);
-			var match;
-			var href = anchor.attr('href');
-			if (href.indexOf('#') === -1 && (match = matchRoute(href))) {
-				anchor.attr('href', rootUrl + '#' + match.url);
-			}
-		});
-	}
-
-	function collapseWidgets() {
-		$('dl.widget').expander();
-	}
-
-	function initialize() {
-		if (!window.location.hash) {
-			if (window.location.pathname === rootUrl) {
-				window.location.hash = '#/';
-			} else {
-				overrideLinks();
-			}
-		} else {
-			window.onhashchange();
-		}
-	}
-
-	return {
-		register: register,
-		setDefaultRegion: function (val) {
-			defaultRegion = val;
-		},
-		initialize: initialize
-	};
+    return {
+        register: register,
+        setDefaultRegion: function (val) {
+            defaultRegion = val;
+        },
+        initialize: initialize
+    };
 
 };
