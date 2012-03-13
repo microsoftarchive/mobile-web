@@ -26,7 +26,7 @@ limitations under the License. */
         equal(typeof module, 'object');
     });
 
-    test('dashboard module flags an element associated with an overdue reminder', function () {
+    test('dashboard module should flag an element associated with a vehicle that has an overdue reminder', function () {
 
         var find_invoked = false;
 
@@ -47,13 +47,39 @@ limitations under the License. */
         function assertion(selector) {
             find_invoked = (selector === '#reminderMenu_1');
             return {
-                addClass: function(cssClass) {
+                addClass: function (cssClass) {
                     equal(cssClass, 'flag');
                 }
             };
         }
-        
-        ok(find_invoked)
+
+        ok(find_invoked);
+    });
+
+    test('dashboard module should only flag an element associated with a particular vehicle once', function () {
+
+        var find_invoked = 0;
+
+        var mockView = {
+            find: assertion
+        };
+
+        var module = app.dashboard();
+
+        module.postrender({ Model: {
+            VehicleListViewModel: {
+                Vehicles: [{ VehicleId: 1}]
+            },
+            ImminentReminders: [{ VehicleId: 1 }, { VehicleId: 1 }, { VehicleId: 1 }]
+        }
+        }, mockView);
+
+        function assertion(selector) {
+            if(selector === '#reminderMenu_1') find_invoked++;
+            return { addClass: function () {} };
+        }
+
+        equal(find_invoked, 1);
     });
 
 
