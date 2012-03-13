@@ -130,18 +130,26 @@ namespace MileageStats.Web.Helpers
                                                                   Expression<Func<TModel, TProperty>> getter,
                                                                   object htlmAttributes)
         {
+            return TextBoxFor(helper, getter, htlmAttributes, null);
+        }
+
+        public static IHtmlString TextBoxFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
+                                                                  Expression<Func<TModel, TProperty>> getter,
+                                                                  object htlmAttributes,
+                                                                  object value)
+        {
+            string name = ExpressionHelper.GetExpressionText(getter);
             if (helper.IsRenderingMustache())
             {
-                string name = ExpressionHelper.GetExpressionText(getter);
                 string formatted = string.Format("{{{{{0}}}}}", name);
                 return (htlmAttributes is IDictionary<string, object>)
                            ? helper.HtmlHelper.TextBox(name, formatted, (IDictionary<string, object>) htlmAttributes)
                            : helper.HtmlHelper.TextBox(name, formatted, htlmAttributes);
             }
-            
+
             return (htlmAttributes is IDictionary<string, object>) 
-                       ? helper.HtmlHelper.TextBoxFor(getter, (IDictionary<string, object>)htlmAttributes)
-                       : helper.HtmlHelper.TextBoxFor(getter, htlmAttributes);
+                       ? helper.HtmlHelper.TextBox(name, (value == null) ? "" : value, (IDictionary<string, object>)htlmAttributes)
+                       : helper.HtmlHelper.TextBox(name, (value == null) ? "" : value, htlmAttributes);
         }
 
         public static IHtmlString TextAreaFor<TModel, TProperty>(this MustacheHelper<TModel> helper,
@@ -214,7 +222,7 @@ namespace MileageStats.Web.Helpers
                     attributes.Add("placeholder", inputTypeAttribute.PlaceHolder);
             }
 
-            return helper.TextBoxFor(expression, attributes);
+            return helper.TextBoxFor(expression, attributes, value);
         }
 
     

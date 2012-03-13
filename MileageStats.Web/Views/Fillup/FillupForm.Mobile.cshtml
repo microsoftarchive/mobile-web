@@ -10,7 +10,7 @@
     </li>
     <li>
         @Html.LabelFor(model => model.Odometer)
-        @Mustache.InputTypeFor(model => model.Odometer)
+        @Mustache.InputTypeFor(model => model.Odometer, (Model != null && Model.Odometer > 0) ? Model.Odometer.ToString() : null)
         @Html.ValidationMessageFor(model => model.Odometer)
     </li>
     <li>
