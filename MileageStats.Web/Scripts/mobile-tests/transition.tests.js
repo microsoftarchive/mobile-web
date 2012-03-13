@@ -51,7 +51,24 @@ limitations under the License. */
         }, '#view');
 
         //assert
-        ok(m.tracked.contains('ajax: /my/route'));
+           ok(m.tracked.contains('ajax: /my/route?format=json'));
+    });
+
+    test('module appends format to url before making an ajax calls registered to fetch', function () {
+
+		var m = mocks.create();
+		var transition = app.transition(m);
+
+		transition.to({
+       		url: '/my/route',
+       		registration: {
+       			route: '/my/route',
+       			fetch: true
+       		}
+		}, '#view');
+
+		//assert
+		ok(m.tracked.contains('ajax: /my/route?format=json'));
     });
 
     test('module will not invoke an ajax call when registrater not to fetch', function () {
@@ -86,7 +103,7 @@ limitations under the License. */
 
 
         //assert
-        ok(m.tracked.contains('ajax: /my/route/1'));
+         ok(m.tracked.contains('ajax: /my/route/1?format=json'));
     });
 
     test('module matches template with a named arg when the correct regex is passed', function () {
