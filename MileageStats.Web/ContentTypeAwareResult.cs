@@ -46,33 +46,43 @@ namespace MileageStats.Web
 
         public dynamic Model { get { return _model; } }
 
-        private static dynamic WrapArrayWithObject(dynamic model, TempDataDictionary tempData, ViewDataDictionary viewDataDictionary)
+        private static IDictionary<string,object> WrapArrayWithObject(dynamic model, TempDataDictionary tempData, ViewDataDictionary viewDataDictionary)
         {
+            var output = new Dictionary<string, object>();
+
             // We want to avoid sending a JSON array as a response
             // See http://haacked.com/archive/2009/06/25/json-hijacking.aspx
             // In cases were our model would be converted to an array,
             // we wrap it in a object
+            object wrappedModel = (typeof(IEnumerable)).IsInstanceOfType(model) ? new { model } : model;
 
-            string flashAlert = null;
+            output["Model"] = wrappedModel;
+
             if (tempData.ContainsKey("alert"))
             {
-                flashAlert = tempData["alert"].ToString();
+                output["FlashAlert"] = tempData["alert"].ToString();
             }
 
-            string flashConfirmation = null;
             if (tempData.ContainsKey("confirm"))
             {
-                flashConfirmation = tempData["confirm"].ToString();
+                output["FlashConfirm"] = tempData["confirm"].ToString();
             }
-
-            object wrappedModel = (typeof(IEnumerable)).IsInstanceOfType(model) ? new { model } : model;
-            var viewData = new Dictionary<string, object>();
-            foreach (var viewDataKeyValuePair in viewDataDictionary)
+            
+            if (viewDataDictionary.Any())
             {
-                viewData.Add(viewDataKeyValuePair.Key, viewDataKeyValuePair.Value);
+                output["__view__"] = viewDataDictionary
+                    .ToDictionary(viewDataKeyValuePair => viewDataKeyValuePair.Key,
+                                  viewDataKeyValuePair => viewDataKeyValuePair.Value);
             }
 
-            return new { Model = wrappedModel, FlashAlert = flashAlert, FlashConfirm = flashConfirmation, __view__ = viewData };
+            if (viewDataDictionary.ModelState.Any())
+            {
+                output["Errors"] = viewDataDictionary.ModelState
+                    .Where(p => p.Value.Errors.Any())
+                    .ToDictionary(p => p.Key, p => p.Value.Errors.Select(x => x.ErrorMessage).ToArray());
+            }
+
+            return output;
         }
 
         private void SetupDefaultActionResultProviders(object model)

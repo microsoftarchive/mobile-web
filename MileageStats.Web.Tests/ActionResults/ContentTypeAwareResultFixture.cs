@@ -17,6 +17,7 @@ limitations under the License. */
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -169,7 +170,7 @@ namespace MileageStats.Web.Tests.ActionResults
 
             action.ExecuteResult(context.Object);
 
-            response.Verify(x => x.Write("{\"Model\":{\"model\":[\"robot\"]},\"FlashAlert\":null,\"FlashConfirm\":null,\"__view__\":{}}"));
+            response.Verify(x => x.Write("{\"Model\":{\"model\":[\"robot\"]}}"));
         }
 
         [Fact]
@@ -186,7 +187,7 @@ namespace MileageStats.Web.Tests.ActionResults
 
             action.ExecuteResult(context.Object);
 
-            response.Verify(x => x.Write("{\"Model\":null,\"FlashAlert\":\"alertmessage\",\"FlashConfirm\":null,\"__view__\":{}}"));
+            response.Verify(x => x.Write("{\"Model\":null,\"FlashAlert\":\"alertmessage\"}"));
         }
 
         [Fact]
@@ -203,7 +204,7 @@ namespace MileageStats.Web.Tests.ActionResults
 
             action.ExecuteResult(context.Object);
 
-            response.Verify(x => x.Write("{\"Model\":null,\"FlashAlert\":null,\"FlashConfirm\":\"confirmmessage\",\"__view__\":{}}"));
+            response.Verify(x => x.Write("{\"Model\":null,\"FlashConfirm\":\"confirmmessage\"}"));
         }
 
         [Fact]
@@ -220,7 +221,7 @@ namespace MileageStats.Web.Tests.ActionResults
 
             action.ExecuteResult(context.Object);
 
-            response.Verify(x => x.Write("{\"Model\":null,\"FlashAlert\":null,\"FlashConfirm\":null,\"__view__\":{\"testkey\":\"testvalue\"}}"));
+            response.Verify(x => x.Write("{\"Model\":null,\"__view__\":{\"testkey\":\"testvalue\"}}"));
         }
 
         private static Mock<ControllerContext> MockContextFor(ControllerBase controller)
