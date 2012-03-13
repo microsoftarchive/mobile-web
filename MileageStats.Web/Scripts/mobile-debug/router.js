@@ -62,18 +62,28 @@ limitations under the License. */
 
 		var template = getTemplateFor(route);
 
-		function success(data, status, xhr) {
-			data.__route__ = target.params;
+		function success(model, status, xhr) {
+		    var view,
+                host = $(region);
 
-			if (registration.prerender) {
-				data = registration.prerender(data);
-			}
+		    // append route data to the model 
+		    // we use the well known name '__route__'
+		    // assuming that it will be unlikely to
+		    // collide with any existing properties
+		    model.__route__ = target.params;
 
-			var view = templating.to_html(template, data);
-			$(region).append(view);
-			overrideLinks();
-			collapseWidgets();
-			if (callback) callback(null, data, view);
+		    if (registration.prerender) {
+		        model = registration.prerender(model);
+		    }
+
+		    view = templating.to_html(template, model);
+		    host.append(view);
+		    overrideLinks();
+		    collapseWidgets();
+
+		    if (registration.postrender) {
+		        registration.postrender(model, host.children().last());
+		    }
 		}
 
 		function error(xhr, status, errorThrown) {
