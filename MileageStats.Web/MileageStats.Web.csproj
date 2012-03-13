@@ -123,6 +123,7 @@
     <Compile Include="Helpers\DisposableSection.cs" />
     <Compile Include="Helpers\SelectListFor.cs" />
     <Compile Include="Infrastructure\CustomMetadataProvider.cs" />
+    <Compile Include="Infrastructure\SuppressFormsAuthenticationRedirectModule.cs" />
     <Compile Include="Models\ReminderListViewModel.cs" />
     <Compile Include="Models\FillupListViewModel.cs" />
     <Compile Include="Helpers\BrowserExtensions.cs" />

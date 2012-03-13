@@ -17,105 +17,110 @@ limitations under the License. */
 
 (window.mstats = window.mstats || {}).transition = function (require) {
 
-    var templating = require('Mustache'),
+	var templating = require('Mustache'),
         rootUrl = require('rootUrl'),
+		window = require('window'),
         $ = require('$');
 
-    var cssClassForTransition = 'swapping';
+	var cssClassForTransition = 'swapping';
 
-    function transitionTo(target, defaultRegion, namedParametersPattern, callback) {
+	function transitionTo(target, defaultRegion, namedParametersPattern, callback) {
 
-        var registration = target.registration,
+		var registration = target.registration,
             region = registration.region || defaultRegion,
             host = $(region),
             route = registration.route;
 
-        var template = getTemplateFor(route, namedParametersPattern);
-        var onSuccess = success(host, template, target, callback);
+		var template = getTemplateFor(route, namedParametersPattern);
+		var onSuccess = success(host, template, target, callback);
 
-        host.toggleClass(cssClassForTransition);
+		host.toggleClass(cssClassForTransition);
 
-        if (registration.fetch) {
+		if (registration.fetch) {
 
-            $.ajax({
-                dataType: 'json',
-                type: 'GET',
-                url: makeRelativeToRoot(target.url),
-                success: onSuccess,
-                error: error(host)
-            });
+			$.ajax({
+				dataType: 'json',
+				type: 'GET',
+				url: makeRelativeToRoot(target.url),
+				success: onSuccess,
+				error: error(host)
+			});
 
-        } else {
-            // do we ever need to render a template with default values?
-            onSuccess({});
-        }
-    }
+		} else {
+			// do we ever need to render a template with default values?
+			onSuccess({});
+		}
+	}
 
-    function success(host, template, target, callback) {
+	function success(host, template, target, callback) {
 
-        var registration = target.registration;
+		var registration = target.registration;
 
-        return function (model, status, xhr) {
+		return function (model, status, xhr) {
 
-            var view, el;
+			var view, el;
 
-            // append route data to the model 
-            // we use the well known name '__route__'
-            // assuming that it will be unlikely to
-            // collide with any existing properties
-            model.__route__ = target.params;
+			// append route data to the model 
+			// we use the well known name '__route__'
+			// assuming that it will be unlikely to
+			// collide with any existing properties
+			model.__route__ = target.params;
 
-            if (registration.prerender) {
-                model = registration.prerender(model);
-            }
+			if (registration.prerender) {
+				model = registration.prerender(model);
+			}
 
-            view = templating.to_html(template, model);
-            host.empty();
-            host.append(view);
-            el = host.children().last();
+			view = templating.to_html(template, model);
+			host.empty();
+			host.append(view);
+			el = host.children().last();
 
-            if (registration.postrender) {
-                registration.postrender(model, el);
-            }
+			if (registration.postrender) {
+				registration.postrender(model, el);
+			}
 
-            host.toggleClass(cssClassForTransition);
+			host.toggleClass(cssClassForTransition);
 
-            if (callback) callback(model, el);
-        };
-    }
+			if (callback) callback(model, el);
+		};
+	}
 
-    function error(host) {
+	function error(host) {
 
-        return function (xhr, status, errorThrown) {
-            host.empty();
-            host.append('<div>' + status + ': ' + errorThrown + '</div>');
-        };
-    }
+		return function (xhr, status, errorThrown) {
+			if (xhr.status == 401) {
+				window.location = rootUrl;
+			}
 
-    function makeRelativeToRoot(url) {
-        return (rootUrl + url).replace('//', '/');
-    }
+			host.empty();
+			host.append('<div>' + status + ': ' + errorThrown + '</div>');
+		};
+	}
 
-    function getTemplateFor(route, namedParametersPattern) {
+	function makeRelativeToRoot(url) {
+		return (rootUrl + url).replace('//', '/');
+	}
 
-        // templateId could be cached at registration
+	function getTemplateFor(route, namedParametersPattern) {
 
-        var id = '#' + route
+		// templateId could be cached at registration
+
+		var id = '#' + route
             .replace(namedParametersPattern, '')    // remove named parameters
             .replace(/^\//, '')                     // remove leading /
             .replace(/\//g, '-').toLowerCase()      // convert / to  -
             .replace(/--/g, '-')                    // collapse double -
             .replace(/-$/, ''); // remove trailing -
 
-        var template = $(id);
-        if (template.length === 0) {
-            return '<h1>No Template Found!</h1><h2>' + id + '</h2>';
-        }
-        return template.html();
-    }
+		var template = $(id);
+		if (template.length === 0) {
+			return '<h1>No Template Found!</h1><h2>' + id + '</h2>';
+		}
+		return template.html();
+	}
 
-    return {
-        to: transitionTo
-    };
+	return {
+		to: transitionTo
+	};
 
 };

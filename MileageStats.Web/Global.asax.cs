@@ -38,6 +38,7 @@ using MileageStats.Web.Infrastructure;
 using System.Net;
 using MileageStats.Domain.Contracts;
 
+
 namespace MileageStats.Web
 {
     public class MvcApplication : HttpApplication
@@ -215,8 +216,8 @@ namespace MileageStats.Web
         private void PostAuthenticateRequestHandler(object sender, EventArgs e)
         {
             var formsAuthentication = ServiceLocator.Current.GetInstance<IFormsAuthentication>();
-
             var ticket = formsAuthentication.GetAuthenticationTicket(new HttpContextWrapper(HttpContext.Current));
+
             if (ticket != null)
             {
                 var mileageStatsIdentity = new MileageStatsIdentity(ticket);
@@ -228,7 +229,15 @@ namespace MileageStats.Web
                 {
                     formsAuthentication.Signout();
 
-                    HttpContext.Current.Response.Redirect("~/Auth/Index");
+                    if (Context.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    {
+                        Context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        Context.Response.End();
+                    }
+                    else
+                    {
+                        Context.Response.Redirect("~/Auth/Index", true);
+                    }
                 }
                 else
                 {
@@ -238,7 +247,6 @@ namespace MileageStats.Web
                     formsAuthentication.SetAuthCookie(Context, ticket);
                 }
             }
-            
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
