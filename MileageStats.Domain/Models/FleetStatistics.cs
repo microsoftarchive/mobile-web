@@ -23,7 +23,7 @@ namespace MileageStats.Domain.Models
     /// <summary>
     /// Provides aggregate statistics across a set of vehicle statistics
     /// </summary>
-    public class FleetStatistics
+    public class FleetStatistics : IVehicleStatistics
     {
         private readonly IEnumerable<VehicleStatisticsModel> _fleetVehicleStatistics;
 

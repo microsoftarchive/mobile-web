@@ -41,6 +41,17 @@ namespace MileageStats.Web.Models
             {
                 _vehicle = value;
                 MakeConsistent();
+                _statistics = new StatisticsViewModel(_vehicle.Statistics);
+            }
+        }
+
+        private StatisticsViewModel _statistics;
+        public StatisticsViewModel Statistics
+        {
+            get { return _statistics; }
+            set
+            {
+                _statistics = value;
             }
         }
 

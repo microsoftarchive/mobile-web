@@ -32,11 +32,11 @@
         <div class="stats">
             <dl>
 				<dt class="mpg-label">MPG</dt>
-				<dd class="mpg">@Mustache.Value(model => model.Vehicle.Statistics.AverageFuelEfficiency)</dd>
+				<dd class="mpg">@Mustache.Value(model => model.Statistics.AverageFuelEfficiency)</dd>
 				<dt class="mile-label">/mile</dt>
-				<dd class="mile">$@Mustache.Value(model => model.Vehicle.Statistics.AverageCostToDrive)</dd>
+				<dd class="mile">@Mustache.Value(model => model.Statistics.AverageCostToDrive)</dd>
 				<dt class="month-label">/month</dt>
-				<dd class="month">$@Mustache.Value(model => model.Vehicle.Statistics.AverageCostPerMonth)</dd>
+				<dd class="month">@Mustache.Value(model => model.Statistics.AverageCostPerMonth)</dd>
 			</dl>
 		</div>
 		<h2>Last 12 Months</h2>

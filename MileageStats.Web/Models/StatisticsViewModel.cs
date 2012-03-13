@@ -21,7 +21,7 @@ namespace MileageStats.Web.Models
 {
     public class StatisticsViewModel
     {
-        public StatisticsViewModel(FleetStatistics inner)
+        public StatisticsViewModel(IVehicleStatistics inner)
         {
             if(inner == null) return;
 
