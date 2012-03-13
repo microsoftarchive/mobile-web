@@ -62,9 +62,7 @@ limitations under the License. */
 		app.router.setDefaultRegion('#main');
 		var register = app.router.register;
 
-		register('/Dashboard/Index', {
-			callback: app.dashboard
-		});
+		register('/Dashboard/Index', app.dashboard);
 
 		register('/Vehicle/:vehicleId/Details');
 		register('/Vehicle/:vehicleId/Fillup/List');
@@ -83,10 +81,7 @@ limitations under the License. */
 		//register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
 
 		// the root url
-		register('/', {
-			route: 'Dashboard/Index',
-			callback: app.dashboard
-		});
+		register('/', app.dashboard);
 
 		app.router.initialize();
 

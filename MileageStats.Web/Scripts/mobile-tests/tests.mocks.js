@@ -39,21 +39,21 @@ limitations under the License. */
         // we can pass into our generate function a hash of 
         // behaviors, this will allow us to define behavior
         // specific to individual unit tests
-        function getBehavior(target) {
+        function getBehavior(target, defaultFn) {
             if (behaviors && behaviors[target]) return behaviors[target];
-            return function () { return ''; };
+            return  defaultFn || function () { return this; };
         };
 
         // mock jQuery
-        function buildMember(name, selector) {
+        function buildMember(name, selector, defaultFn) {
             return function () {
                 tracked.push(name + ': ' + selector);
-                var fn = getBehavior('$.' + name);
+                var fn = getBehavior('$.' + name, defaultFn);
                 return fn.apply(this, arguments);
             };
         }
 
-        var jqueryMembers = ['append', 'attr', 'empty', 'expander', 'html', 'toggleClass'];
+        var jqueryMembers = ['append', 'children', 'empty', 'expander', 'html', 'last', 'toggleClass'];
 
         var $ = function (selector) {
             var jquery = {},
@@ -65,6 +65,7 @@ limitations under the License. */
                 jquery[member] = buildMember(member, selector);
             }
 
+            jquery.attr = buildMember('attr', selector, function(name, value) { return ''; });
             jquery.each = function (fn) {
                 fn(0, selector + ' item');
             };

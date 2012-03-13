@@ -57,7 +57,7 @@ limitations under the License. */
 
         return function (model, status, xhr) {
 
-            var view;
+            var view, el;
 
             // append route data to the model 
             // we use the well known name '__route__'
@@ -72,10 +72,15 @@ limitations under the License. */
             view = templating.to_html(template, model);
             host.empty();
             host.append(view);
+            el = host.children().last();
+
+            if (registration.postrender) {
+                registration.postrender(model, el);
+            }
 
             host.toggleClass(cssClassForTransition);
 
-            if (callback) callback(null, data, view);
+            if (callback) callback(model, el);
         };
     }
 
