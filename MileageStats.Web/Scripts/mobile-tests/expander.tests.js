@@ -22,6 +22,8 @@ limitations under the License. */
     var stubFunction = function () {
     };
 
+    var verifyFunction = function() { ok(true); };
+
     test('expander module constructs itself', function () {
         var module = app.expander(mocks.create());
 
@@ -66,7 +68,7 @@ limitations under the License. */
                     next: function (selector) {
                         child = selector;
                         return {
-                            toggle: function () { ok(true); }
+                            toggle: verifyFunction
                         };
                     },
                     click: stubFunction
@@ -80,6 +82,30 @@ limitations under the License. */
     });
 
     test('expander attaches a click handler to "headers"', function () {
+        expect(1);
+
+        var m = mocks.create();
+        var module = app.expander(m);
+
+        var view = {
+            find: function () {
+                return {
+                    next: function () {
+                        return {
+                            toggle: stubFunction
+                        };
+                    },
+                    click: function (handler) {
+                        equal(typeof handler, 'function');
+                    }
+                };
+            }
+        };
+
+        module.attach(view);
+    });
+
+    test('expander should toggle children when the header is clicked', function () {
 
         expect(2);
         var m = mocks.create();
@@ -95,9 +121,7 @@ limitations under the License. */
                     },
                     click: function (handler) {
                         handler.call('child', {
-                            preventDefault: function () {
-                                ok(true);
-                            }
+                            preventDefault: verifyFunction
                         });
                     }
                 };
@@ -108,6 +132,5 @@ limitations under the License. */
 
         ok(m.tracked.contains('toggle: child'));
     });
-
 
 } (window.specs = window.specs || {}, window.mstats));
