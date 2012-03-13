@@ -65,11 +65,11 @@ limitations under the License. */
 		register('/Dashboard/Index', app.dashboard);
 
 		register('/Vehicle/:vehicleId/Details');
-		register('/Vehicle/:vehicleId/Fillup/List');
+		register('/Vehicle/:vehicleId/Fillup/List', { postrender: function (res, view) { app.expander.attach(view); } });
 		register('/Vehicle/:vehicleId/Fillup/:id/Details');
 		register('Vehicle/:vehicleId/Fillup/Add', { fetch: false });
 
-		register('/Vehicle/:vehicleId/Reminder/ListByGroup');
+		register('/Vehicle/:vehicleId/Reminder/ListByGroup', { postrender: function (res, view) { app.expander.attach(view); } });
 		register('/Vehicle/:vehicleId/Reminder/:id/Details');
 
 		register('/Chart', mstats.charts);

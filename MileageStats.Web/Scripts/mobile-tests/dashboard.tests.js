@@ -19,8 +19,15 @@ limitations under the License. */
 
     module('dashboard specs');
 
+    var mockExpander = {
+        expander: {
+            attach: function () {
+            }
+        }
+    };
+
     test('dashboard module constructs itself', function () {
-        var module = app.dashboard();
+        var module = app.dashboard(mocks.create(mockExpander));
 
         ok(module != undefined, true);
         equal(typeof module, 'object');
@@ -34,7 +41,7 @@ limitations under the License. */
             find: assertion
         };
 
-        var module = app.dashboard();
+        var module = app.dashboard(mocks.create(mockExpander));
 
         module.postrender({ Model: {
             VehicleListViewModel: {
@@ -64,22 +71,52 @@ limitations under the License. */
             find: assertion
         };
 
-        var module = app.dashboard();
+        var module = app.dashboard(mocks.create(mockExpander));
 
         module.postrender({ Model: {
             VehicleListViewModel: {
                 Vehicles: [{ VehicleId: 1}]
             },
-            ImminentReminders: [{ VehicleId: 1 }, { VehicleId: 1 }, { VehicleId: 1 }]
+            ImminentReminders: [{ VehicleId: 1 }, { VehicleId: 1 }, { VehicleId: 1}]
         }
         }, mockView);
 
         function assertion(selector) {
-            if(selector === '#reminderMenu_1') find_invoked++;
-            return { addClass: function () {} };
+            if (selector === '#reminderMenu_1') find_invoked++;
+            return { addClass: function () { } };
         }
 
         equal(find_invoked, 1);
+    });
+
+    test('dashboard module should invoke expander module', function () {
+
+        expect(1);
+        
+        // the view and response are inconsequential for this test
+
+        var view = {
+            find: function () {
+                return { addClass: function () { } };
+            }
+        };
+
+        var response = {
+            Model: {
+                VehicleListViewModel: { Vehicles: [] },
+                ImminentReminders: []
+            }
+        };
+
+        var module = app.dashboard(mocks.create({
+            expander: {
+                attach: function () {
+                    ok(true);
+                }
+            }
+        }));
+        
+        module.postrender(response, view);
     });
 
 

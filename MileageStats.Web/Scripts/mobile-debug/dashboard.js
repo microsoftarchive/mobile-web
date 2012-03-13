@@ -18,8 +18,10 @@ limitations under the License. */
 (function (mstats) {
     mstats.dashboard = function (require) {
 
+        var expander = require('expander');
+
         function highlightImminentReminders(res, view) {
-            
+
             var vehicles = res.Model.VehicleListViewModel.Vehicles,
                 reminders = res.Model.ImminentReminders,
                 vehicle,
@@ -41,7 +43,10 @@ limitations under the License. */
         }
 
         return {
-            postrender: highlightImminentReminders
+            postrender: function (res, view) {
+                highlightImminentReminders(res, view);
+                expander.attach(view);
+            }
         };
     };
 } (this.mstats = this.mstats || {}));
