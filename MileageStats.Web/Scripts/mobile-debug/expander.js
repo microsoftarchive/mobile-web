@@ -20,7 +20,7 @@ limitations under the License. */
         
         var $ = require('$');
         
-        var parent = 'dt',
+        var parent = 'dl.widget dt',
             child = 'dd';
         
         function attach(view) {

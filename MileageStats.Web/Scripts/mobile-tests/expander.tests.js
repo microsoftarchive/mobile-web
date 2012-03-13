@@ -52,7 +52,7 @@ limitations under the License. */
 
         module.attach(view);
 
-        equal(header, 'dt');
+        equal(header, 'dl.widget dt');
     });
 
     test('expander toggles the "child" elements for the "headers" in the given view', function () {
