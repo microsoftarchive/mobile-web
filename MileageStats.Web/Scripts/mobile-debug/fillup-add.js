@@ -15,20 +15,19 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-(window.mstats = window.mstats || {}).vehicleFillupAdd = function (require) {
+(window.mstats = window.mstats || {}).fillupAdd = function (require) {
 
     var rootUrl = require('rootUrl'),
         $ = require('$');
 
-    var next = '#/Vehicle/' + 1 + '/Fillup/List';
-    var data_validation = 'unobtrusiveValidation';
+    var urlPattern = '/Vehicle/:vehicleId/Fillup/List';
 
-    var ev = new $.Event('removeClass'),
-        orig = $.fn.removeClass;
-    $.fn.removeClass = function () {
-        $(this).trigger(ev);
-        return orig.apply(this, arguments);
-    };
+//    var ev = new $.Event('removeClass'),
+//        orig = $.fn.removeClass;
+//    $.fn.removeClass = function () {
+//        $(this).trigger(ev);
+//        return orig.apply(this, arguments);
+//    };
 
     function makeRelativeToRoot(url) {
         return (rootUrl + url).replace('//', '/');
@@ -41,7 +40,6 @@ limitations under the License. */
 
         for (item in errors) {
             el = $('[data-valmsg-for="' + item + '"]');
-            //            el = $('form #' + item).parent('li');
             el.parent('li').addClass('validation-error');
             errorList = errors[item];
             msg = '';
@@ -52,36 +50,38 @@ limitations under the License. */
         }
     }
 
-    function clearErrors() {
-        $('span.validation-error').remove();
-        $('.validation-error').removeClass('validation-error');
-    }
-
-    function success(res, status, xhr) {
-        if (res.Errors) {
-            displayErrors(res.Errors);
-        } else if (!res.Model) {
-            // success!
-            window.location.hash = next;
-        } else {
-            // render errors
-        }
-    }
-
-    function error(xhr, status, errorThrown) {
-        debugger;
+    function onSuccess(next) {
+        return function(res, status, xhr) {
+            if (res.Errors) {
+                displayErrors(res.Errors);
+            } else {
+                window.location.hash = next;
+            }
+        };
     }
 
     function validate(form) {
-        var validationInfo = $(form).data(data_validation);
+        // here we look for the validation object that has been
+        // attached to the form. this assumes the present of 
+        // jQuery validation and MVC's unobtrusive validation scripts.
+        var validationInfo = $(form).data('unobtrusiveValidation');
         return !validationInfo || !validationInfo.validate || validationInfo.validate();
     }
 
-    function postrender(model, el) {
-        var form = el.find('form'),
-            action = form.attr('action');
+    function nextUrl(params) {
+        var p;
+        for (p in params) {
+            urlPattern = urlPattern.replace(':' + p, params[p]);
+        }
+        return urlPattern;
+    }
 
-        form.find('span[data-valmsg-for]').on('removeClass', function (a, b) {
+    function postrender(model, el, context) {
+        var form = el.find('form'),
+            action = form.attr('action'),
+            next = nextUrl(context.params);
+
+        form.find('span[data-valmsg-for]').on('removeClass', function () {
             form.find('li').has('.field-validation-valid').removeClass('validation-error');
         });
 
@@ -92,7 +92,8 @@ limitations under the License. */
             evt.preventDefault();
 
             if (!validate(this)) {
-                form.find('li').has('.field-validation-error').addClass('validation-error');
+                // the following requires over
+                // form.find('li').has('.field-validation-error').addClass('validation-error');
                 return;
             }
 
@@ -103,8 +104,7 @@ limitations under the License. */
                 data: input,
                 type: 'POST',
                 url: makeRelativeToRoot(action),
-                success: success,
-                error: error
+                success: onSuccess(next)
             });
             return false;
         });

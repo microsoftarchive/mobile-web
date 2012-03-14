@@ -20,40 +20,10 @@ limitations under the License. */
     module('fillup add specs');
 
     test('fillup module constructs itself', function () {
-        var module = app.dashboard(mocks.create(mockExpander));
+        var module = app.fillupAdd(mocks.create());
 
         ok(module != undefined, true);
         equal(typeof module, 'object');
-    });
-
-    test('dashboard module should flag an element associated with a vehicle that has an overdue reminder', function () {
-
-        var find_invoked = false;
-
-        var mockView = {
-            find: assertion
-        };
-
-        var module = app.dashboard(mocks.create(mockExpander));
-
-        module.postrender({ Model: {
-            VehicleListViewModel: {
-                Vehicles: [{ VehicleId: 1}]
-            },
-            ImminentReminders: [{ VehicleId: 1}]
-        }
-        }, mockView);
-
-        function assertion(selector) {
-            find_invoked = (selector === '#reminderMenu_1');
-            return {
-                addClass: function (cssClass) {
-                    equal(cssClass, 'flag');
-                }
-            };
-        }
-
-        ok(find_invoked);
     });
 
 } (window.specs = window.specs || {}, window.mstats));

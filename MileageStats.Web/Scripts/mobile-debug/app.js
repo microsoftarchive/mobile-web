@@ -67,7 +67,7 @@ limitations under the License. */
 		register('/Vehicle/:vehicleId/Details');
 		register('/Vehicle/:vehicleId/Fillup/List', { postrender: function (res, view) { app.expander.attach(view); } });
 		register('/Vehicle/:vehicleId/Fillup/:id/Details');
-        register('/Vehicle/:vehicleId/Fillup/Add', app.vehicleFillupAdd);
+        register('/Vehicle/:vehicleId/Fillup/Add', app.fillupAdd);
         register('/Vehicle/:vehicleId/Reminder/ListByGroup');
 
 		register('/Vehicle/:vehicleId/Reminder/ListByGroup', { postrender: function (res, view) { app.expander.attach(view); } });

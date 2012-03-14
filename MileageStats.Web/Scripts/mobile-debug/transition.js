@@ -76,7 +76,7 @@ limitations under the License. */
 			el = host.children().last();
 
 			if (registration.postrender) {
-				registration.postrender(model, el);
+			    registration.postrender(model, el, target);
 			}
 
 			host.toggleClass(cssClassForTransition);
