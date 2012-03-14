@@ -28,7 +28,7 @@ limitations under the License. */
 
     test('charts subscribes to button click and searches for form values in the given view. also subscribes to submit event and cancels default', function () {
 
-        expect(3);
+        expect(6);
         var module = app.charts(mocks.create());
         var clickEventHandler;
         var submitEventHandler;
@@ -37,7 +37,10 @@ limitations under the License. */
 
         var chartImage = { attr: function (attributeName, attributeValue) {
             equal(attributeName, 'src');
-            equal(attributeValue, 'testchartimageurl&ChartName=testchartname&StartDate=teststartdate&EndDate=testenddate');
+            equal(0, attributeValue.indexOf('testchartimageurl'));
+            ok(attributeValue.indexOf('&ChartName=testchartname') > 0);
+            ok(attributeValue.indexOf('&StartDate=teststartdate') > 0);
+            ok(attributeValue.indexOf('&EndDate=testenddate') > 0);
         }
         };
         var mockView = {
