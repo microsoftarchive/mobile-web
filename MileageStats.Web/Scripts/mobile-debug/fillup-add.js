@@ -21,10 +21,11 @@ limitations under the License. */
         $ = require('$');
 
     var next = '#/Vehicle/' + 1 + '/Fillup/List';
+    var data_validation = 'unobtrusiveValidation';
 
     var ev = new $.Event('removeClass'),
         orig = $.fn.removeClass;
-    $.fn.removeClass = function() {
+    $.fn.removeClass = function () {
         $(this).trigger(ev);
         return orig.apply(this, arguments);
     };
@@ -35,10 +36,19 @@ limitations under the License. */
 
     function displayErrors(errors) {
         var item, el;
+        var errorList;
+        var msg;
+
         for (item in errors) {
-            el = $('form #' + item).parent('li');
-            el.addClass('validation-error');
-            el.find('label').after('<span class="validation-error">' + errors[item] + '</span>');
+            el = $('[data-valmsg-for="' + item + '"]');
+            //            el = $('form #' + item).parent('li');
+            el.parent('li').addClass('validation-error');
+            errorList = errors[item];
+            msg = '';
+            for (var i = 0; i < errorList.length; i++) {
+                msg = msg + errorList[i];
+            }
+            el.html(msg);
         }
     }
 
@@ -62,8 +72,6 @@ limitations under the License. */
         debugger;
     }
 
-    var data_validation = 'unobtrusiveValidation';
-
     function validate(form) {
         var validationInfo = $(form).data(data_validation);
         return !validationInfo || !validationInfo.validate || validationInfo.validate();
@@ -73,15 +81,16 @@ limitations under the License. */
         var form = el.find('form'),
             action = form.attr('action');
 
-        form.find('span[data-valmsg-for]').on('removeClass',function (a, b) {
+        form.find('span[data-valmsg-for]').on('removeClass', function (a, b) {
             form.find('li').has('.field-validation-valid').removeClass('validation-error');
         });
 
         $.validator.unobtrusive.parse(form);
 
         form.submit(function (evt) {
-            //                    clearErrors();
+
             evt.preventDefault();
+
             if (!validate(this)) {
                 form.find('li').has('.field-validation-error').addClass('validation-error');
                 return;
