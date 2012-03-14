@@ -173,12 +173,12 @@ namespace MileageStats.Web.Controllers
                 seriesData = this.chartDataService.CalculateSeriesForUser(userId, DateTime.UtcNow.AddMonths(-12), null);                
             }
 
-            var myChart = new Chart(chartWidth, chartHeight, CHARTS_THEME)
-                .AddTitle(chartTitle);
+            var myChart = new Chart(chartWidth, chartHeight, CHARTS_THEME);
+                
 
             if (!Request.Browser.IsMobileDevice)
             {
-                myChart.AddLegend();
+                myChart.AddTitle(chartTitle).AddLegend();
             }
 
             if (PlotMultipleChartLine(myChart, seriesData.Entries, yValueAccessor))
