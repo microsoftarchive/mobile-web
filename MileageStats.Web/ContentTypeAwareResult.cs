@@ -77,8 +77,11 @@ namespace MileageStats.Web
 
             if (viewDataDictionary.ModelState.Any())
             {
-                output["Errors"] = viewDataDictionary.ModelState
-                    .Where(p => p.Value.Errors.Any())
+                var errors = viewDataDictionary.ModelState
+                    .Where(p => p.Value.Errors.Any());
+
+                if(errors.Any())
+                output["Errors"] = errors
                     .ToDictionary(p => p.Key, p => p.Value.Errors.Select(x => x.ErrorMessage).ToArray());
             }
 
