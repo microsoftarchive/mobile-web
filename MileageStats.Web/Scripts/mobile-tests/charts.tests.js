@@ -26,42 +26,70 @@ limitations under the License. */
         equal(typeof module, 'object');
     });
 
-    test('charts searches for "headers" in the given view', function () {
+    test('charts subscribes to button click and searches for form values in the given view. also subscribes to submit event and cancels default', function () {
 
+        expect(3);
         var module = app.charts(mocks.create());
+        var clickEventHandler;
+        var submitEventHandler;
+        var testSubmitEventCancelled = false;
+        var testSubmitEvent = { preventDefault: function () { testSubmitEventCancelled = true; } };
 
+        var chartImage = { attr: function (attributeName, attributeValue) {
+            equal(attributeName, 'src');
+            equal(attributeValue, 'testchartimageurl&ChartName=testchartname&StartDate=teststartdate&EndDate=testenddate');
+        }
+        };
         var mockView = {
             find: function (selector) {
                 switch (selector) {
                     case '#ChartRefreshButton':
                         return {
                             click: function (clickEventSubscription) {
-                                
-                            },
-                            val: function() { return 'testchartname' }
+                                clickEventHandler = clickEventSubscription;
+                            }
                         }; break;
+                    case 'form':
+                        return {
+                            submit: function (submitEventSubscription) {
+                                submitEventHandler = submitEventSubscription;
+                            }
+                        }; break;
+                    case 'select[name=ChartName] option:selected':
+                        return {
+                            val: function () { return 'testchartname'; }
+                        }; break;
+                    case 'select[name=StartDate] option:selected':
+                        return {
+                            val: function () { return 'teststartdate'; }
+                        }; break;
+                    case 'select[name=EndDate] option:selected':
+                        return {
+                            val: function () { return 'testenddate'; }
+                        }; break;
+                    case 'input:checkbox[name=VehicleIds]:checked':
+                        return {
+                            each: function (fn) { return { value: 123 }; }
+                        }; break;
+                    case '#GetChartImageUrl':
+                        return {
+                            val: function () { return 'testchartimageurl'; }
+                        }; break;
+                    case '#chartimage':
+                        return chartImage; break;
+
                     default: result = 'unknown';
                 }
 
-                if (selector === '#reminderMenu_1') find_invoked++;
-                return {
-                    addClass: function () {
-                    }
-                };
             }
         };
 
-        module.postrender({ Model: {
-            VehicleListViewModel: {
-                Vehicles: [{ VehicleId: 1}]
-            },
-            ImminentReminders: [{ VehicleId: 1 }, { VehicleId: 1 }, { VehicleId: 1}]
-        }
-        }, mockView);
+        module.postrender({}, mockView);
 
+        clickEventHandler();
+        submitEventHandler(testSubmitEvent);
+        ok(testSubmitEventCancelled, 'submit event not cancelled.');
 
     });
-    ;
-
 
 } (window.specs = window.specs || {}, window.mstats));
