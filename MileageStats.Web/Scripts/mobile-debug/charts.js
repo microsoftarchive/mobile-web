@@ -36,8 +36,8 @@ limitations under the License. */
 
         });
 
-        el.find('form').submit(function () {
-            return false;
+        el.find('form').submit(function (event) {
+            event.preventDefault();
         });
     }
 
