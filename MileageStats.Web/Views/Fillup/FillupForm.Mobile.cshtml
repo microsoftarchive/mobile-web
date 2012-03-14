@@ -1,46 +1,48 @@
 ﻿@model MileageStats.Web.Models.FillupEntryFormModel
 @Html.AntiForgeryToken()
+@{
+    var today = DateTime.Now;
+}
+@Html.ValidationSummary(true)
 <ul>
     <li class="psuedo-date">
-        <label for="due-date">Date <em>(mm/dd/yyyy)</em></label>
-        @Mustache.DropDownListFor(model => model.DateMonth, SelectListFor.Month(i => Model.Date.Month == i))
-        @Mustache.DropDownListFor(model => model.DateDay, SelectListFor.Date(i => Model.Date.Day == i))
-        @Mustache.DropDownListFor(model => model.DateYear, SelectListFor.Year(i => Model.Date.Year == i))
+        <label for="Date">Date <em>(mm/dd/yyyy)</em></label>
         @Html.ValidationMessageFor(model => model.Date)
+        @Html.DropDownListFor(model => model.DateMonth, SelectListFor.Month(i => today.Month == i))
+        @Html.DropDownListFor(model => model.DateDay, SelectListFor.Date(i => today.Day == i))
+        @Html.DropDownListFor(model => model.DateYear, SelectListFor.Year(i => today.Year == i))
     </li>
     <li>
         @Html.LabelFor(model => model.Odometer)
-        @Mustache.InputTypeFor(model => model.Odometer, (Model != null && Model.Odometer > 0) ? Model.Odometer.ToString() : null)
         @Html.ValidationMessageFor(model => model.Odometer)
+        @Mustache.InputTypeFor(model => model.Odometer, (Model != null && Model.Odometer > 0) ? Model.Odometer.ToString() : null)
     </li>
     <li>
         @Html.LabelFor(model => model.PricePerUnit)
-        @Mustache.InputTypeFor(model => model.PricePerUnit)
         @Html.ValidationMessageFor(model => model.PricePerUnit)
+        @Mustache.InputTypeFor(model => model.PricePerUnit)
     </li>
     <li>
         @Html.LabelFor(model => model.TotalUnits)
-        @Mustache.InputTypeFor(model => model.TotalUnits)
         @Html.ValidationMessageFor(model => model.TotalUnits)
+        @Mustache.InputTypeFor(model => model.TotalUnits)
     </li>
     <li>
         @Html.LabelFor(model => model.Vendor)
-        @Mustache.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) 
 		@Html.ValidationMessageFor(model => model.Vendor)
+        @Mustache.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) 
     </li>
     <li>
         @Html.LabelFor(model => model.TransactionFee)
-        @Mustache.InputTypeFor(model => model.TransactionFee)
         @Html.ValidationMessageFor(model => model.TransactionFee)
+        @Mustache.InputTypeFor(model => model.TransactionFee)
     </li>
    <li>
         @Html.LabelFor(model => model.Remarks)
-        @Mustache.TextAreaFor(model => model.Remarks, new { maxlength = "250", wrap = "soft" }) 
 		@Html.ValidationMessageFor(model => model.Remarks)
+        @Mustache.TextAreaFor(model => model.Remarks, new { maxlength = "250", wrap = "soft" }) 
     </li>
 </ul>
-
-@Html.ValidationSummary(true)
 
 <ol class="hbox button-group">
 	<li><button type="submit"><span>Save</span></button></li>
