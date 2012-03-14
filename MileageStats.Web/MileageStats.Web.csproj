@@ -290,6 +290,7 @@
     <Content Include="Scripts\mobile-debug\charts.js" />
     <Content Include="Scripts\mobile-debug\transition.js" />
     <Content Include="Scripts\mobile-debug\dashboard.js" />
+    <Content Include="Scripts\mobile-debug\fillup-add.js" />
     <Content Include="Scripts\mobile-debug\expander.js" />
     <Content Include="Scripts\mobile-debug\router.js" />
     <Content Include="Scripts\mobile-debug\app.js" />
@@ -316,6 +317,7 @@
     <Content Include="Scripts\desktop-debug\mstats.vehicle.js" />
     <Content Include="Scripts\mobile-debug\vehicle.js" />
     <Content Include="Scripts\mobile-tests\charts.tests.js" />
+    <Content Include="Scripts\mobile-tests\fillup-add.tests.js" />
     <Content Include="Scripts\mobile-tests\expander.tests.js" />
     <Content Include="Scripts\mobile-tests\dashboard.tests.js" />
     <Content Include="Scripts\mobile-tests\transition.tests.js" />

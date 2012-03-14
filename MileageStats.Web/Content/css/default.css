@@ -899,3 +899,7 @@ em {
 {
     opacity: 0.2;
 }
+
+.validation-error span {
+    display: block;
+}

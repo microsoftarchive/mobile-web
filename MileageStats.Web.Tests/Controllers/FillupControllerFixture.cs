@@ -275,8 +275,9 @@ namespace MileageStats.Web.Tests.Controllers
             MockVehicleListWithVehicles(defaultVehicleId);
 
             var controller = GetTestableFillupController();
-            controller.Add(defaultVehicleId, fillupEntry);
-            var result = (RedirectToRouteResult)controller.Add(defaultVehicleId, fillupEntry);
+            var context = controller.MockRequestForMediaType("text/html");
+            var proxy = (ITestableContentTypeAwareResult)controller.Add(defaultVehicleId, fillupEntry);
+            var result = proxy.GetActionResultFor(context.Object) as RedirectToRouteResult;
 
             Assert.NotNull(result);
             Assert.Equal("List", result.RouteValues["action"]);

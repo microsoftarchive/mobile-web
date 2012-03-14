@@ -16,7 +16,14 @@
 </nav>
 @{Html.RenderPartial("_Flash.Mobile");}
 <div class="view">
-    <form method="POST" action="@Url.UnencodedAction("Add", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })">
-    @{ Html.RenderPartial("~/Views/Fillup/FillupForm.Mobile.cshtml", Model); }
+    @{
+        ViewContext.FormContext = new FormContext();
+        ViewContext.FormContext.FormId = "form";
+    }
+    <form id="form" method="POST" action="@Url.UnencodedAction("Add", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })">
+        @{ Html.RenderPartial("~/Views/Fillup/FillupForm.Mobile.cshtml", Model); }
     </form>
+    @{
+        ViewContext.OutputClientValidation();
+    }
 </div>

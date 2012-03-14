@@ -124,7 +124,10 @@ namespace MileageStats.Web.Controllers
 
                     this.SetConfirmationMessage(Messages.FillupController_FillupAddedMessage);
 
-                    return RedirectToAction("List", "Fillup", new { vehicleId = vehicleId });
+                    return new ContentTypeAwareResult
+                               {
+                                   WhenHtml = (m,v,t) => RedirectToAction("List", "Fillup", new { vehicleId })
+                               };
                 }
             }
 
