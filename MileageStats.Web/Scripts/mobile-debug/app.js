@@ -74,13 +74,14 @@ limitations under the License. */
 
 		register('/Chart', mstats.charts);
 
-		register('/Vehicle/:id/Edit', mstats.vehicle);
+		register('/Vehicle/:id/Edit', mstats.vehicleEdit);
+		register('/Vehicle/Add', mstats.vehicleAdd);
 	    
 		// these forms are special cases, we need to address them
 		//register('/Vehicle/Edit/:id');
 		//register('/Vehicle/Edit');
 		//register('/Vehicle/Add/:id');
-		//register('/Vehicle/Add', { fetch: false }); // the vehicle form is complicated because of it's wizard like workflow
+		
 
 		// the root url
 		register('/', app.dashboard);

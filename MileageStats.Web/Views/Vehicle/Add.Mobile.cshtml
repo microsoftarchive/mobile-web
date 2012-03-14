@@ -9,15 +9,18 @@
         <li>Add Vehicle</li>
     </ol>
 </nav>
+@{Html.RenderPartial("_Flash.Mobile");}
+@using (var section = Mustache.Section("Model"))
+{
+    <div class="view">
+        @using (Html.BeginForm("Add", "Vehicle", FormMethod.Post))
+        {
+            Html.RenderPartial("~/Views/Vehicle/VehicleForm.Mobile.cshtml", Model);
 
-<div class="view">
-    @using (Html.BeginForm("Add", "Vehicle", FormMethod.Post))
-    {
-        Html.RenderPartial("VehicleForm", Model);
-
-        <p class="instructions">
-            Note: Year, Make and Model are optional, but by providing them you get access
-            to vehicle performance reports.
-        </p>
-    }
-</div>
+            <p class="instructions">
+                Note: Year, Make and Model are optional, but by providing them you get access
+                to vehicle performance reports.
+            </p>
+        }
+    </div>
+}
