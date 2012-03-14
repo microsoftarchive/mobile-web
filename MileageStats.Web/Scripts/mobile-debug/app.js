@@ -74,6 +74,8 @@ limitations under the License. */
 
 		register('/Chart', mstats.charts);
 
+		register('/Vehicle/:id/Edit', mstats.vehicle);
+	    
 		// these forms are special cases, we need to address them
 		//register('/Vehicle/Edit/:id');
 		//register('/Vehicle/Edit');

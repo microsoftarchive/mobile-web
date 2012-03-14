@@ -126,6 +126,7 @@ namespace MileageStats.Web.Controllers
         {
             var vehicleForm = GetVehicleForm(vehicleId);
 
+            //return new ContentTypeAwareResult(SetupVehicleForm(vehicleForm));
             return SetupVehicleForm(vehicleForm);
         }
 
@@ -166,7 +167,7 @@ namespace MileageStats.Web.Controllers
                 {
                     this.SetConfirmationMessage(Messages.VehicleController_VehicleUpdated);
 
-                    return RedirectToAction("Details", "Vehicle", new {id = vehicleForm.VehicleId});
+                    return RedirectToAction("Details", "Vehicle", new {vehicleId = vehicleForm.VehicleId});
                 }
             }
 

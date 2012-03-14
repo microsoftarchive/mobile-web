@@ -9,49 +9,38 @@
         <li>Edit Vehicle</li>
     </ol>
 </nav>
-
-<div class="view">
-    @using (Html.BeginForm("Edit", "Vehicle", FormMethod.Post))
-    {
-        @Html.Hidden("vehicleId", Model.VehicleId);
-        Html.RenderPartial("VehicleForm", Model);
-        <p class="instructions">
-            Note: Year, Make and Model are optional.
-        </p>
-    }
-    <ol class="hbox button-group">
-        <li class="icon false">
-            @if (Request.Browser.IsWow())
-            {
-                using (Html.BeginForm("Delete", "Vehicle", new { id = Model.VehicleId }, FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-
-                    <button id="DeleteVehicleButton" type="submit" value="delete" name="action">
-                        <span>Delete vehicle</span></button>
-                }       
-            }
-            else
-            {
-                using (Html.BeginForm("ConfirmDelete", "Vehicle", new {id = Model.VehicleId}, FormMethod.Get))
-                {
-                    <button type="submit" value="delete" name="action" class="false">
-                        <span>Delete vehicle</span></button>
-                }
-            }
-        </li>
-    </ol>
-</div>
-@if (Request.Browser.IsWow())
+@{Html.RenderPartial("_Flash.Mobile");}
+@using (var section = Mustache.Section("Model"))
 {
-    <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
-    <script>
-        $("#DeleteVehicleButton").click(function (event) {
-            var answer = confirm("Are you sure you want to delete this vehicle and all of it's related data?");
-            if (!answer) {
-                event.preventDefault();
-            }
+    <div class="view">
+        @using (Html.BeginForm("Edit", "Vehicle", FormMethod.Post))
+        {
+            @Html.Hidden("vehicleId", Mustache.Value(m => m.VehicleId))
+            ;
+            Html.RenderPartial("~/Views/Vehicle/VehicleForm.Mobile.cshtml", Model);
+            <p class="instructions">
+                Note: Year, Make and Model are optional.
+            </p>
+        }
+        <ol class="hbox button-group">
+            <li class="icon false">
+                @if (Request.Browser.IsWow())
+                {
+                    <form action="@Url.UnencodedAction("Delete", "Vehicle", new {id = Mustache.Value(m => m.VehicleId)})" method="POST">
+                        @Html.AntiForgeryToken()
 
-        })
-    </script>
+                        <button id="DeleteVehicleButton" type="submit" value="delete" name="action">
+                            <span>Delete vehicle</span></button>
+                    </form>
+                }
+                else
+                {
+                    <form action="@Url.UnencodedAction("ConfirmDelete", "Vehicle", new {id = Mustache.Value(m => m.VehicleId)})" method="GET">
+                        <button type="submit" value="delete" name="action" class="false">
+                            <span>Delete vehicle</span></button>
+                    </form>
+                }
+            </li>
+        </ol>
+    </div>
 }

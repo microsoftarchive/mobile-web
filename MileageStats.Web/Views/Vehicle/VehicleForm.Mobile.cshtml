@@ -1,70 +1,123 @@
 ﻿@model MileageStats.Web.Models.VehicleFormModel
 @Html.AntiForgeryToken()
+<div id="vehicleEditForm" data-makes-url="@Url.Action("MakesForYear", "MakeAndModel")" data-models-url="@Url.Action("ModelsForMake", "MakeAndModel")">
 <ul>
-    <li>
-        @Html.LabelFor(model => model.Name)
-        @Html.TextBoxFor(model => model.Name, new { @class = "editor-textbox", maxlength = "20" })
-        @Html.ValidationMessageFor(model => model.Name)
-    </li>
-    @if (Model.Action == null)
+    
+    @if (Html.IsRenderingForMustache())
     {
         <li>
+            @Html.LabelFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+            @Mustache.TextBoxFor(model => model.Name, new { @class = "editor-textbox", maxlength = "20" })
+        </li>
+        <li>
             @Html.LabelFor(model => model.Year)
-            @Html.DropDownListFor(model => model.Year, ViewBag.Years as SelectList, "--Select a Year--")
-            @Html.HiddenFor(model => model.MakeName)
-            @Html.HiddenFor(model => model.ModelName)
             @Html.ValidationMessageFor(model => model.Year)
-            <ol class="hbox button-group">
-                <li>
-                    <button type="submit" name="action" value="UpdateMakes">
-                        <span>Next</span></button></li>
-                <li class="icon false invert"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
-            </ol>
-        </li>
-    }
-    @if (Model.Action == "UpdateMakes")
-    {
-        <li>
-            @Html.LabelFor(model => model.Year)
-            @Html.TextBoxFor(model => model.Year, new { @readonly = true }) 
+            <select id="Year" name="Year">
+                <option>--Select a Year--</option>
+                @Html.Raw("{{#__view__.Years}}");
+                <option value="@Html.Raw("{{Value}}")" @Html.Raw("{{#Selected}}selected{{/Selected}}")>@Html.Raw("{{Text}}")</option>
+                @Html.Raw("{{/__view__.Years}}");
+            </select>
         </li>
         <li>
             @Html.LabelFor(model => model.MakeName)
-            @Html.DropDownListFor(model => model.MakeName, ViewBag.Makes as SelectList, "--Select a Make--")
-            @Html.HiddenFor(model => model.ModelName)
             @Html.ValidationMessageFor(model => model.MakeName)
-            <ol class="hbox button-group">
-                <li>
-                    <button type="submit" name="action" value="UpdateModels">
-                        <span>Next</span></button></li>
-                <li class="icon false invert"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
-            </ol>
+            <select class="editor-textbox" id="MakeName" name="MakeName">
+                <option value="">--Select a Make--</option>
+                @Html.Raw("{{#__view__.Makes}}");
+            <option value="@Html.Raw("{{Value}}")" @Html.Raw("{{#Selected}}selected{{/Selected}}")>@Html.Raw("{{Text}}")</option>
+                @Html.Raw("{{/__view__.Makes}}");
+            </select>
         </li>
-    }
-    @if (Model.Action == "UpdateModels")
-    {
-        <li>
-            @Html.LabelFor(model => model.Year)
-            @Html.TextBoxFor(model => model.Year, new { @readonly = true }) 
-        </li>
-        <li>
-            @Html.LabelFor(model => model.MakeName)
-            @Html.TextBoxFor(model => model.MakeName, new { @readonly = true }) 
-        </li>
-
         <li>
             @Html.LabelFor(model => model.ModelName)
-            @Html.DropDownListFor(model => model.ModelName, ViewBag.Models as SelectList, "--Select a Model--")
             @Html.ValidationMessageFor(model => model.ModelName)
+            <select class="editor-textbox" id="ModelName" name="ModelName">
+                <option value="">--Select a Model--</option>
+                @Html.Raw("{{#__view__.Models}}");
+                <option value="@Html.Raw("{{Value}}")" @Html.Raw("{{#Selected}}selected{{/Selected}}")>@Html.Raw("{{Text}}")</option>
+                @Html.Raw("{{/__view__.Models}}");
+            </select>
         </li>
-
-        <ol class="hbox button-group">
+        <li>
+            <ol class="hbox button-group">
+                <li>
+                    <button type="submit" name="action" value="Save">
+                        <span>Save</span></button></li>
+                <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Cancel</span></a></li>
+            </ol>
+        </li>
+    }
+    else
+    {
+        <li>
+            @Html.LabelFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+            @Html.TextBoxFor(model => model.Name, new { @class = "editor-textbox", maxlength = "20" })
+        </li>
+        if (Model.Action == null)
+        {
             <li>
-                <button type="submit" name="action" value="Save">
-                    <span>Save</span></button></li>
-            <li class="icon false invert"><a href="@Url.Action("Index", "Dashboard")"><span>Cancel</span></a></li>
-        </ol>
+                @Html.LabelFor(model => model.Year)
+                @Html.ValidationMessageFor(model => model.Year)
+                @Html.DropDownListFor(model => model.Year, ViewBag.Years as SelectList, "--Select a Year--")
+                @Html.HiddenFor(model => model.MakeName)
+                @Html.HiddenFor(model => model.ModelName)
+                <ol class="hbox button-group">
+                    <li>
+                        <button type="submit" name="action" value="UpdateMakes">
+                            <span>Next</span></button></li>
+                    <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Cancel</span></a></li>
+                </ol>
+            </li>
+        }
+        if (Model.Action == "UpdateMakes")
+        {
+            <li>
+                @Html.LabelFor(model => model.Year)
+                @Html.TextBoxFor(model => model.Year, new { @readonly = true }) 
+            </li>
+            <li>
+                @Html.LabelFor(model => model.MakeName)
+                @Html.ValidationMessageFor(model => model.MakeName)
+                @Html.DropDownListFor(model => model.MakeName, ViewBag.Makes as SelectList, "--Select a Make--")
+                @Html.HiddenFor(model => model.ModelName)
+                <ol class="hbox button-group">
+                    <li>
+                        <button type="submit" name="action" value="UpdateModels">
+                            <span>Next</span></button></li>
+                    <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Cancel</span></a></li>
+                </ol>
+            </li>
+        }
+        if (Model.Action == "UpdateModels")
+        {
+            <li>
+                @Html.LabelFor(model => model.Year)
+                @Html.TextBoxFor(model => model.Year, new { @readonly = true }) 
+            </li>
+            <li>
+                @Html.LabelFor(model => model.MakeName)
+                @Html.TextBoxFor(model => model.MakeName, new { @readonly = true }) 
+            </li>
+
+            <li>
+                @Html.LabelFor(model => model.ModelName)
+                @Html.ValidationMessageFor(model => model.ModelName)
+                @Html.DropDownListFor(model => model.ModelName, ViewBag.Models as SelectList, "--Select a Model--")
+            
+            </li>
+
+            <ol class="hbox button-group">
+                <li>
+                    <button type="submit" name="action" value="Save">
+                        <span>Save</span></button></li>
+                <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Cancel</span></a></li>
+            </ol>
+        }
     }
     @Html.ValidationSummary(true)
     @Html.ValidationMessage("Save")
 </ul>
+</div>

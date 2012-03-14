@@ -1,9 +1,9 @@
 ﻿<script id="mstats-vehicle-details-template" type="text/x-jquery-tmpl">
 
-    <a class="trigger" href="@Url.Action("Details", "Vehicle")/${VehicleId}" data-info-nav="details"></a>
+    <a class="trigger" href="@Url.Action("Details", "Vehicle", new { vehicleId = "${VehicleId}"})" data-info-nav="details"></a>
     <div class="content">
         <div class="header">
-            <form action="@Url.Action("Edit", "Vehicle")/${VehicleId}" method="get">
+            <form action="@Url.UnencodedAction("Edit", "Vehicle", new { vehicleId = "${VehicleId}" })" method="get">
             <button data-action="vehicle-edit-selected" class="button generic small" type="submit">
                 <img src="@Url.Content("~/Content/button-edit.png")" title="Edit Vehicle" alt="Edit" />
             </button>
