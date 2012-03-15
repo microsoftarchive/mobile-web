@@ -64,15 +64,23 @@
             <script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"></script>
             <script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>
             <script src="@Url.Content("~/Scripts/mustache.js")"></script>
-            <script src="@Url.Content("~/Scripts/mobile-debug/router.js")"></script>
-            <script src="@Url.Content("~/Scripts/mobile-debug/transition.js")"></script>
-            <script src="@Url.Content("~/Scripts/mobile-debug/dashboard.js")"></script>
-            <script src="@Url.Content("~/Scripts/mobile-debug/fillup-add.js")"></script>
-            <script src="@Url.Content("~/Scripts/mobile-debug/app.js")"></script>
-            <script src="@Url.Content("~/Scripts/mobile-debug/expander.js")"></script>
-            <script src="@Url.Content("~/Scripts/mobile-debug/charts.js")"></script>
-            <script src="@Url.Content("~/Scripts/mobile-debug/vehicle.js")"></script>
-         
+            
+			if (User.Identity.IsAuthenticated && HttpContext.Current.IsDebuggingEnabled)
+			{
+				<script src="@Url.Content("~/Scripts/mobile-debug/router.js")"></script>
+				<script src="@Url.Content("~/Scripts/mobile-debug/transition.js")"></script>
+				<script src="@Url.Content("~/Scripts/mobile-debug/dashboard.js")"></script>
+				<script src="@Url.Content("~/Scripts/mobile-debug/fillup-add.js")"></script>
+				<script src="@Url.Content("~/Scripts/mobile-debug/app.js")"></script>
+				<script src="@Url.Content("~/Scripts/mobile-debug/expander.js")"></script>
+				<script src="@Url.Content("~/Scripts/mobile-debug/charts.js")"></script>
+				<script src="@Url.Content("~/Scripts/mobile-debug/vehicle.js")"></script>
+			}
+			
+			if (User.Identity.IsAuthenticated && !HttpContext.Current.IsDebuggingEnabled)
+			{
+				<script src="@Url.Content("~/Scripts/MileageStats.Mobile.min.js")"></script>
+			}         
 			
 		}
     </body>
