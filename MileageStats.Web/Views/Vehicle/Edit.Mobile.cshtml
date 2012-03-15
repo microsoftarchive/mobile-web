@@ -13,15 +13,12 @@
 @using (var section = Mustache.Section("Model"))
 {
     <div class="view">
-        @using (Html.BeginForm("Edit", "Vehicle", FormMethod.Post))
-        {
-            @Html.Hidden("vehicleId", Mustache.Value(m => m.VehicleId))
-            ;
-            Html.RenderPartial("~/Views/Vehicle/VehicleForm.Mobile.cshtml", Model);
+        <form action="@Url.UnencodedAction("Edit", "Vehicle", new { vehicleId = Mustache.Value(m => m.VehicleId)})" method="POST">
+            @{ Html.RenderPartial("~/Views/Vehicle/VehicleForm.Mobile.cshtml", Model); }
             <p class="instructions">
                 Note: Year, Make and Model are optional.
-            </p>
-        }
+            </p>            
+        </form>
         <ol class="hbox button-group">
             <li class="icon false">
                 @if (Request.Browser.IsWow())
