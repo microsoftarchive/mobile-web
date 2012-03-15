@@ -43,8 +43,10 @@
         <li>
             <ol class="hbox button-group">
                 <li>
+                    @Html.Hidden("action", "Save")
                     <button type="submit" name="action" value="Save">
-                        <span>Save</span></button></li>
+                        <span>Save</span></button>
+                </li>
                 <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Cancel</span></a></li>
             </ol>
         </li>

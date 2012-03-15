@@ -18,9 +18,71 @@ limitations under the License. */
 (function (mstats) {
     var ctr = function (require) {
 
-        var $ = require('$');
+        var rootUrl = require('rootUrl'),
+            $ = require('$');
 
-        function postrender(model, el) {
+        var urlPattern = '/Vehicle/:vehicleId/Details';
+
+        //TODO: refactor copied code
+        function nextUrl(params) {
+            var p;
+            for (p in params) {
+                urlPattern = urlPattern.replace(':' + p, params[p]);
+            }
+            return urlPattern;
+        }
+
+        //TODO: refactor copied code
+        function validate(form) {
+            // here we look for the validation object that has been
+            // attached to the form. this assumes the present of 
+            // jQuery validation and MVC's unobtrusive validation scripts.
+            var validationInfo = $(form).data('unobtrusiveValidation');
+            return !validationInfo || !validationInfo.validate || validationInfo.validate();
+        }
+
+        //TODO: refactor copied code
+        function onSuccess() {
+            return function (res, status, xhr) {
+                if (res.Errors) {
+                    displayErrors(res.Errors);
+                } else {
+                    window.location.hash = nextUrl({ vehicleId: res.Model.Vehicle.VehicleId });
+                }
+            };
+        }
+
+        //TODO: refactor copied code
+        function makeRelativeToRoot(url) {
+            return (rootUrl + url).replace('//', '/');
+        }
+
+        function postrender(model, el, context) {
+
+            var form = el.find('form'),
+                action = form.attr('action');
+
+            $.validator.unobtrusive.parse(form);
+
+            form.submit(function (evt) {
+
+                evt.preventDefault();
+
+                if (!validate(this)) {
+                    return;
+                }
+
+                var input = form.serialize();
+
+                $.ajax({
+                    dataType: 'json',
+                    data: input,
+                    type: 'POST',
+                    url: makeRelativeToRoot(action),
+                    success: onSuccess()
+                });
+                return false;
+            });
 
             el.find('#DeleteVehicleButton').click(function (event) {
                 var answer = confirm("Are you sure you want to delete this vehicle and all of it's related data?");
@@ -55,7 +117,7 @@ limitations under the License. */
                     updateList(data, $modelSelect);
                 });
             });
-        }
+        };
 
         return {
             postrender: postrender
