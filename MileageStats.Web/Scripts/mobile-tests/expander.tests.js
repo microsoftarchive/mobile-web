@@ -130,7 +130,7 @@ limitations under the License. */
 
         module.attach(view);
 
-        ok(m.tracked.contains('toggle: child'));
+        ok(m.tracked.contains('dd.toggle()'));
     });
 
 } (window.specs = window.specs || {}, window.mstats));

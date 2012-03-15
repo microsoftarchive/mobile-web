@@ -41,19 +41,35 @@ limitations under the License. */
         // specific to individual unit tests
         function getBehavior(target, defaultFn) {
             if (behaviors && behaviors[target]) return behaviors[target];
-            return  defaultFn || function () { return this; };
+            return defaultFn || function () { return this; };
         };
 
         // mock jQuery
         function buildMember(name, selector, defaultFn) {
-            return function () {
-                tracked.push(name + ': ' + selector);
+            
+            // we want to track calls to the mocked jQuery
+            // we'll record the selector, the name of the member invoke,
+            // and the value passed to the member
+            // each entry will look like:
+            //     selector.member(arg)
+            // for example, if we invoke:
+            //     $('a').attr('href')
+            // we'll see the following in the tracked array:
+            //    a.attr(href)
+            // or if we invoke:
+            //     $('form').submit(function() {});
+            // we'll see :
+            //    form.submit()
+            
+            return function (arg) {
+                var arg_text = (arg && typeof(arg) !== 'function') ? arg : '';
+                tracked.push(selector + '.' + name + '(' + arg_text + ')');
                 var fn = getBehavior('$.' + name, defaultFn);
-                return fn.apply(this, arguments);
+                return fn.apply($(arg), arguments);
             };
         }
 
-        var jqueryMembers = ['append', 'children', 'empty', 'expander', 'html', 'last', 'next', 'toggle', 'toggleClass'];
+        var jqueryMembers = ['append', 'children', 'empty', 'find', 'expander', 'html', 'last', 'next', 'on', 'toggle', 'toggleClass'];
 
         var $ = function (selector) {
             var jquery = {},
@@ -65,7 +81,8 @@ limitations under the License. */
                 jquery[member] = buildMember(member, selector);
             }
 
-            jquery.attr = buildMember('attr', selector, function(name, value) { return ''; });
+            jquery.attr = buildMember('attr', selector, function (name, value) { return ''; });
+            jquery.submit = buildMember('submit', selector, function () { return ''; });
             jquery.each = function (fn) {
                 fn(0, selector + ' item');
             };

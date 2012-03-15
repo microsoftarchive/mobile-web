@@ -26,4 +26,63 @@ limitations under the License. */
         equal(typeof module, 'object');
     });
 
+    test('fillup module should invoke unobtrusive validation', function () {
+
+        expect(1);
+
+        var m = mocks.create();
+        var mockForm = m.$();
+        mockForm.submit = function () { };
+
+        m.$.validator = {
+            unobtrusive: {
+                parse: function (form) {
+                    ok(true);
+                }
+            }
+        };
+
+        var module = app.fillupAdd(m);
+        module.postrender({}, mockForm, {});
+    });
+
+    test('fillup module should attach submit handler on form', function () {
+
+        expect(1);
+
+        var m = mocks.create();
+        
+        m.$.validator = {
+            unobtrusive: {
+                parse: function (form) {
+                }
+            }
+        };
+
+        var module = app.fillupAdd(m);
+        module.postrender({}, m.$('view'), {});
+
+        ok(m.tracked.contains('form.submit()'));
+
+    });
+
+    test('fillup module should search for a form tag', function () {
+
+        expect(1);
+
+        var m = mocks.create();
+        
+        m.$.validator = {
+            unobtrusive: {
+                parse: function (form) {
+                }
+            }
+        };
+
+        var module = app.fillupAdd(m);
+        module.postrender({}, m.$('view'), {});
+
+        ok(m.tracked.contains('view.find(form)'));
+    });
+
 } (window.specs = window.specs || {}, window.mstats));
