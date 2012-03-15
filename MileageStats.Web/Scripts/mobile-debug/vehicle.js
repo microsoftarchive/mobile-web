@@ -59,7 +59,7 @@ limitations under the License. */
 
         function postrender(model, el, context) {
 
-            var form = el.find('form'),
+            var form = el.find('form').first(),
                 action = form.attr('action');
 
             $.validator.unobtrusive.parse(form);
