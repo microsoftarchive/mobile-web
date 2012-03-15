@@ -53,7 +53,10 @@
                 }
                 else
                 {
+                    if (vehicleIdQueryStringBuilder.Length > 0)
+                    {
                     <li><img src="@Url.Action("GetChartImage", new { UserId = Model.UserId, ChartName = Model.ChartName, StartDate = Model.StartDate, EndDate = Model.EndDate })@vehicleIdQueryStringBuilder.ToString()" title="@Model.ChartName" alt="@Model.ChartName" /></li>
+                    }
                 }
   
                 <li>
