@@ -34,7 +34,7 @@ limitations under the License. */
         transition.to({ registration: { route: '/my/route'} }, '#view');
 
         //assert
-        ok(m.tracked.contains('html: #my-route'));
+        ok(m.tracked.contains('#my-route.html()'));
     });
 
     test('module invokes an ajax calls by default to url when registered to fetch', function () {
@@ -120,7 +120,7 @@ limitations under the License. */
         }, '#view', /:(\w)*/g);
         // this regex is hard-coded into the router
 
-        ok(m.tracked.contains('html: #my-route'));
+        ok(m.tracked.contains('#my-route.html()'));
     });
 
     test('module matches template with an embedded named arg when the correct regex is passed', function () {
@@ -138,7 +138,7 @@ limitations under the License. */
         // this regex is hard-coded into the router
 
         //assert
-        ok(m.tracked.contains('html: #my-route-more'));
+        ok(m.tracked.contains('#my-route-more.html()'));
     });
 
 
