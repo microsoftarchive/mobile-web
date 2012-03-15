@@ -17,6 +17,8 @@ limitations under the License. */
 
 using System;
 using MileageStats.Domain.Models;
+using System.ComponentModel.DataAnnotations;
+using MileageStats.Domain.Properties;
 
 namespace MileageStats.Web.Models
 {
@@ -53,21 +55,25 @@ namespace MileageStats.Web.Models
         /// <summary>
         /// Price per unit.
         /// </summary>
+        [Display(Name = "FillupEntryPricePerUnitLabelText", ResourceType = typeof(Resources))]
         public string PricePerUnit { get; private  set; }
 
         /// <summary>
         /// Total number of units.
         /// </summary>
+        [Display(Name = "FillupEntryTotalUnitsLabelText", ResourceType = typeof(Resources))]
         public string TotalUnits { get; private  set; }
 
         /// <summary>
         /// Name of the gas station
         /// </summary>
+        [Display(Name = "FillUpEntryVendorLabelText", ResourceType = typeof(Resources))]
         public string Vendor { get; private  set; }
 
         /// <summary>
         /// Any additional transaction fees
         /// </summary>
+        [Display(Name = "FillupEntryTransactionFeeLabelText", ResourceType = typeof(Resources))]
         public string TransactionFee { get; private  set; }
 
         /// <summary>
@@ -78,6 +84,7 @@ namespace MileageStats.Web.Models
         /// <summary>
         /// Total cost of the fillup (includes transaction fee)
         /// </summary>
+        [Display(Name = "FillupEntryTotalCostLabelText", ResourceType = typeof(Resources))]
         public string TotalCost { get; private  set; }
     }
 }
