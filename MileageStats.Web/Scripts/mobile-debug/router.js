@@ -98,7 +98,7 @@ limitations under the License. */
     }
 
     function buildRegExpForMatching(route) {
-        var pattern = route.replace(/\//g, '\\/').replace(namedParametersPattern, '(\\w)+') + '$';
+        var pattern = route.replace(/\//g, '\\/').replace(namedParametersPattern, '(\\w+)') + '$';
         return new RegExp(pattern);
     }
 
