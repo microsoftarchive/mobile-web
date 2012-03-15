@@ -151,7 +151,7 @@ limitations under the License. */
             transition: {
                 to: function () { transition_not_invoked = false; }
             },
-            window: { onhashchange: function () {} }
+            window: { onhashchange: function () { } }
         });
         var router = app.router(m);
 
@@ -166,6 +166,32 @@ limitations under the License. */
         router.initialize();
 
         ok(transition_not_invoked);
+    });
+
+    test('router invoke transition with the correct params for the target', function () {
+
+        expect(1);
+
+        var m = mocks.create({
+            transition: {
+                to: function (target, defaultRegion, namedParametersPattern, callback) {
+                    equal(target.params.id, 123);
+                }
+            },
+            window: { onhashchange: function () { } }
+        });
+
+        var router = app.router(m);
+
+        router.setDefaultRegion('#view');
+        router.register('/my/route/:id');
+
+        // simulate hash change
+        m.window.location = {
+            hash: '#/my/route/123'
+        };
+
+        router.initialize();
     });
 
 } (window.specs = window.specs || {}, window.mstats));
