@@ -29,10 +29,6 @@ limitations under the License. */
 //        return orig.apply(this, arguments);
 //    };
 
-    function makeRelativeToRoot(url) {
-        return (rootUrl + url).replace('//', '/');
-    }
-
     function displayErrors(errors) {
         var item, el;
         var errorList;
@@ -103,7 +99,7 @@ limitations under the License. */
                 dataType: 'json',
                 data: input,
                 type: 'POST',
-                url: makeRelativeToRoot(action),
+                url: action,
                 success: onSuccess(next)
             });
             return false;
