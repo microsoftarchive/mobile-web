@@ -17,8 +17,7 @@ limitations under the License. */
 
 (window.mstats = window.mstats || {}).fillupAdd = function (require) {
 
-    var rootUrl = require('rootUrl'),
-        $ = require('$');
+    var $ = require('$');
 
     var urlPattern = '/Vehicle/:vehicleId/Fillup/List';
 
@@ -28,10 +27,6 @@ limitations under the License. */
 //        $(this).trigger(ev);
 //        return orig.apply(this, arguments);
 //    };
-
-    function makeRelativeToRoot(url) {
-        return (rootUrl + url).replace('//', '/');
-    }
 
     function displayErrors(errors) {
         var item, el;
@@ -103,7 +98,7 @@ limitations under the License. */
                 dataType: 'json',
                 data: input,
                 type: 'POST',
-                url: makeRelativeToRoot(action),
+                url: action,
                 success: onSuccess(next)
             });
             return false;

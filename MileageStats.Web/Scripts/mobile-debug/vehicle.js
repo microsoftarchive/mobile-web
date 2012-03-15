@@ -18,8 +18,7 @@ limitations under the License. */
 (function (mstats) {
     var ctr = function (require) {
 
-        var rootUrl = require('rootUrl'),
-            $ = require('$');
+        var $ = require('$');
 
         var urlPattern = '/Vehicle/:vehicleId/Details';
 
@@ -52,11 +51,6 @@ limitations under the License. */
             };
         }
 
-        //TODO: refactor copied code
-        function makeRelativeToRoot(url) {
-            return (rootUrl + url).replace('//', '/');
-        }
-
         function postrender(model, el, context) {
 
             var form = el.find('form').first(),
@@ -78,7 +72,7 @@ limitations under the License. */
                     dataType: 'json',
                     data: input,
                     type: 'POST',
-                    url: makeRelativeToRoot(action),
+                    url: action,
                     success: onSuccess()
                 });
                 return false;
