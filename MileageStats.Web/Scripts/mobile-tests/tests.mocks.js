@@ -69,7 +69,7 @@ limitations under the License. */
             };
         }
 
-        var jqueryMembers = ['append', 'children', 'empty', 'find', 'expander', 'html', 'last', 'next', 'on', 'toggle', 'toggleClass'];
+        var jqueryMembers = ['append', 'children', 'empty', 'find', 'expander', 'html', 'last', 'next', 'on', 'toggle', 'toggleClass', 'first'];
 
         var $ = function (selector) {
             var jquery = {},
@@ -83,6 +83,7 @@ limitations under the License. */
 
             jquery.attr = buildMember('attr', selector, function (name, value) { return ''; });
             jquery.submit = buildMember('submit', selector, function () { return ''; });
+            jquery.data = buildMember('data', selector, function () { return ''; });
             jquery.each = function (fn) {
                 fn(0, selector + ' item');
             };

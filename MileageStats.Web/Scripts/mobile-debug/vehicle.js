@@ -18,7 +18,8 @@ limitations under the License. */
 (function (mstats) {
     var ctr = function (require) {
 
-        var $ = require('$');
+        var $ = require('$'),
+            confirmPrompt = require('confirm');
 
         var urlPattern = '/Vehicle/:vehicleId/Details';
 
@@ -79,7 +80,7 @@ limitations under the License. */
             });
 
             el.find('#DeleteVehicleButton').click(function (event) {
-                var answer = confirm("Are you sure you want to delete this vehicle and all of it's related data?");
+                var answer = confirmPrompt("Are you sure you want to delete this vehicle and all of it's related data?");
                 if (!answer) {
                     event.preventDefault();
                 }
@@ -87,9 +88,9 @@ limitations under the License. */
             });
 
             var $vehicleEditForm = el.find('#vehicleEditForm'),
-                $yearSelect = el.find('#Year', $vehicleEditForm),
-                $makeSelect = el.find('#MakeName', $vehicleEditForm),
-                $modelSelect = el.find('#ModelName', $vehicleEditForm),
+                $yearSelect = el.find('#Year'),
+                $makeSelect = el.find('#MakeName'),
+                $modelSelect = el.find('#ModelName'),
                 makesUrl = $vehicleEditForm.data('makes-url'),
                 modelsUrl = $vehicleEditForm.data('models-url');
 

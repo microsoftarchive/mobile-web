@@ -68,7 +68,10 @@ limitations under the License. */
         var find_invoked = 0;
 
         var mockView = {
-            find: assertion
+            find: function(selector) {
+                    if (selector === '#reminderMenu_1') find_invoked++;
+                    return { addClass: function () { } };
+                    }
         };
 
         var module = app.dashboard(mocks.create(mockExpander));
@@ -80,11 +83,6 @@ limitations under the License. */
             ImminentReminders: [{ VehicleId: 1 }, { VehicleId: 1 }, { VehicleId: 1}]
         }
         }, mockView);
-
-        function assertion(selector) {
-            if (selector === '#reminderMenu_1') find_invoked++;
-            return { addClass: function () { } };
-        }
 
         equal(find_invoked, 1);
     });

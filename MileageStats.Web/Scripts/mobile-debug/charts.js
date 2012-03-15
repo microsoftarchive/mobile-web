@@ -17,8 +17,6 @@ limitations under the License. */
 
 (window.mstats = window.mstats || {}).charts = function (require) {
 
-    var $ = require('$');
-
     function postrender(model, el) {
 
         el.find('#ChartRefreshButton').click(function () {

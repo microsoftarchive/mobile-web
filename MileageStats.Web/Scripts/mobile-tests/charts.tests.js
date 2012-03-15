@@ -30,10 +30,7 @@ limitations under the License. */
 
         expect(6);
         var module = app.charts(mocks.create());
-        var clickEventHandler;
-        var submitEventHandler;
-        var testSubmitEventCancelled = false;
-        var testSubmitEvent = { preventDefault: function () { testSubmitEventCancelled = true; } };
+        var testSubmitEvent = { preventDefault: function () { ok(true, "We expect that preventDefault is called."); } };
 
         var chartImage = { attr: function (attributeName, attributeValue) {
             equal(attributeName, 'src');
@@ -49,37 +46,37 @@ limitations under the License. */
                     case '#ChartRefreshButton':
                         return {
                             click: function (clickEventSubscription) {
-                                clickEventHandler = clickEventSubscription;
+                                clickEventSubscription();
                             }
-                        }; break;
+                        }; 
                     case 'form':
                         return {
                             submit: function (submitEventSubscription) {
-                                submitEventHandler = submitEventSubscription;
+                                submitEventSubscription(testSubmitEvent);
                             }
-                        }; break;
+                        }; 
                     case 'select[name=ChartName] option:selected':
                         return {
                             val: function () { return 'testchartname'; }
-                        }; break;
+                        }; 
                     case 'select[name=StartDate] option:selected':
                         return {
                             val: function () { return 'teststartdate'; }
-                        }; break;
+                        }; 
                     case 'select[name=EndDate] option:selected':
                         return {
                             val: function () { return 'testenddate'; }
-                        }; break;
+                        }; 
                     case 'input:checkbox[name=VehicleIds]:checked':
                         return {
                             each: function (fn) { return { value: 123 }; }
-                        }; break;
+                        }; 
                     case '#GetChartImageUrl':
                         return {
                             val: function () { return 'testchartimageurl'; }
-                        }; break;
+                        }; 
                     case '#chartimage':
-                        return chartImage; break;
+                        return chartImage; 
 
                     default: result = 'unknown';
                 }
@@ -88,10 +85,6 @@ limitations under the License. */
         };
 
         module.postrender({}, mockView);
-
-        clickEventHandler();
-        submitEventHandler(testSubmitEvent);
-        ok(testSubmitEventCancelled, 'submit event not cancelled.');
 
     });
 

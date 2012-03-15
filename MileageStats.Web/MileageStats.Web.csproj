@@ -317,6 +317,7 @@
     <Content Include="Scripts\desktop-debug\mstats.vehicle.js" />
     <Content Include="Scripts\mobile-debug\vehicle.js" />
     <Content Include="Scripts\mobile-tests\charts.tests.js" />
+    <Content Include="Scripts\mobile-tests\vehicle.tests.js" />
     <Content Include="Scripts\mobile-tests\fillup-add.tests.js" />
     <Content Include="Scripts\mobile-tests\expander.tests.js" />
     <Content Include="Scripts\mobile-tests\dashboard.tests.js" />

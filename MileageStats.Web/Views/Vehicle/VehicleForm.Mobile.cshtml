@@ -1,7 +1,6 @@
 ﻿@model MileageStats.Web.Models.VehicleFormModel
 @Html.AntiForgeryToken()
-<div id="vehicleEditForm" data-makes-url="@Url.Action("MakesForYear", "MakeAndModel")" data-models-url="@Url.Action("ModelsForMake", "MakeAndModel")">
-<ul>
+<ul id="vehicleEditForm" data-makes-url="@Url.Action("MakesForYear", "MakeAndModel")" data-models-url="@Url.Action("ModelsForMake", "MakeAndModel")">
     
     @if (Html.IsRenderingForMustache())
     {
@@ -122,4 +121,3 @@
     @Html.ValidationSummary(true)
     @Html.ValidationMessage("Save")
 </ul>
-</div>
