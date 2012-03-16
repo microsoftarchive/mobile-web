@@ -70,7 +70,7 @@ namespace MileageStats.Web.Controllers
             }
 
             Response.ContentType = "text/javascript";
-
+            
             return PartialView("Profile.js", model);
         }
 
@@ -78,6 +78,7 @@ namespace MileageStats.Web.Controllers
         /// Tries to get the profile from the cache before parsing the file in disk
         /// </summary>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         private ProfileManifest GetProfile()
         {
             var model = HttpContext.Cache["profile"] as ProfileManifest;
@@ -91,7 +92,7 @@ namespace MileageStats.Web.Controllers
                         model = this._profileRepository.GetProfile("generic");
                         HttpContext.Cache.Add("profile",
                             model,
-                            null,
+                            new CacheDependency(this._profileRepository.GetManifestPath("generic")),
                             Cache.NoAbsoluteExpiration,
                             TimeSpan.FromHours(1),
                             CacheItemPriority.Normal,
