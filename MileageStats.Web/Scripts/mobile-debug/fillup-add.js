@@ -30,7 +30,7 @@ limitations under the License. */
     }
 
     return {
-        fetch: false,
+        fetch: true,
         postrender: postrender
     };
 

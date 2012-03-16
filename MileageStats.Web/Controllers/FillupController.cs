@@ -99,7 +99,7 @@ namespace MileageStats.Web.Controllers
 
             ViewBag.IsFirstFillup = (!fillups.Any());
 
-            return View(newFillupEntry); 
+            return new ContentTypeAwareResult(newFillupEntry); 
         }
 
         [HttpPost]
