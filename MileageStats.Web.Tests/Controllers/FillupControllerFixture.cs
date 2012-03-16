@@ -170,7 +170,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             var result = controller.Add(defaultVehicleId);
 
-            Assert.IsType(typeof(ViewResult), result);
+            Assert.IsType(typeof(ContentTypeAwareResult), result);
         }
 
         [Fact]
