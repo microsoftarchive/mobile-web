@@ -19,64 +19,15 @@ limitations under the License. */
     var ctr = function (require) {
 
         var $ = require('$'),
-            confirmPrompt = require('confirm');
-
+            confirmPrompt = require('confirm'),
+            formSubmitter = require('formSubmitter');
+        
         var urlPattern = '/Vehicle/:vehicleId/Details';
-
-        //TODO: refactor copied code
-        function nextUrl(params) {
-            var p;
-            for (p in params) {
-                urlPattern = urlPattern.replace(':' + p, params[p]);
-            }
-            return urlPattern;
-        }
-
-        //TODO: refactor copied code
-        function validate(form) {
-            // here we look for the validation object that has been
-            // attached to the form. this assumes the present of 
-            // jQuery validation and MVC's unobtrusive validation scripts.
-            var validationInfo = $(form).data('unobtrusiveValidation');
-            return !validationInfo || !validationInfo.validate || validationInfo.validate();
-        }
-
-        //TODO: refactor copied code
-        function onSuccess() {
-            return function (res, status, xhr) {
-                if (res.Errors) {
-                    displayErrors(res.Errors);
-                } else {
-                    window.location.hash = nextUrl({ vehicleId: res.Model.Vehicle.VehicleId });
-                }
-            };
-        }
 
         function postrender(model, el, context) {
 
-            var form = el.find('form').first(),
-                action = form.attr('action');
-
-            $.validator.unobtrusive.parse(form);
-
-            form.submit(function (evt) {
-
-                evt.preventDefault();
-
-                if (!validate(this)) {
-                    return;
-                }
-
-                var input = form.serialize();
-
-                $.ajax({
-                    dataType: 'json',
-                    data: input,
-                    type: 'POST',
-                    url: action,
-                    success: onSuccess()
-                });
-                return false;
+            formSubmitter.attach(el, function (response) {
+                window.location.hash = urlPattern.replace(':vehicleId', response.Model.Vehicle.VehicleId);
             });
 
             el.find('#DeleteVehicleButton').click(function (event) {
@@ -84,7 +35,6 @@ limitations under the License. */
                 if (!answer) {
                     event.preventDefault();
                 }
-
             });
 
             var $vehicleEditForm = el.find('#vehicleEditForm'),
@@ -114,10 +64,6 @@ limitations under the License. */
             });
         };
 
-        return {
-            postrender: postrender
-        };
-
         function updateList(data, $selectList) {
             $.each(data,
               function (key, value) {
@@ -127,7 +73,11 @@ limitations under the License. */
                     .text(value)
                     );
               });
-        };
+          };
+
+          return {
+              postrender: postrender
+          };
     };
     mstats.vehicleEdit = ctr;
     mstats.vehicleAdd = ctr;

@@ -20,69 +20,31 @@ limitations under the License. */
     module('fillup add specs');
 
     test('fillup module constructs itself', function () {
-        var module = app.fillupAdd(mocks.create());
+        var module = app.fillupAdd(mocks.create({ formSubmitter: { attach:function () {
+        }
+        }}));
 
         ok(module != undefined, true);
         equal(typeof module, 'object');
     });
 
-    test('fillup module should invoke unobtrusive validation', function () {
 
-        expect(1);
+    test('fillup module should invoke formSubmitter with the correct arguments', function () {
 
-        var m = mocks.create();
-        var mockForm = m.$();
-        mockForm.submit = function () { };
+        expect(2);
 
-        m.$.validator = {
-            unobtrusive: {
-                parse: function (form) {
-                    ok(true);
+        var m = mocks.create({
+            formSubmitter: {
+                attach: function (el, callback) {
+                    equal(typeof el, 'object');
+                    equal(typeof callback, 'function');
                 }
             }
-        };
-
-        var module = app.fillupAdd(m);
-        module.postrender({}, mockForm, {});
-    });
-
-    test('fillup module should attach submit handler on form', function () {
-
-        expect(1);
-
-        var m = mocks.create();
-        
-        m.$.validator = {
-            unobtrusive: {
-                parse: function (form) {
-                }
-            }
-        };
+        });
 
         var module = app.fillupAdd(m);
         module.postrender({}, m.$('view'), {});
 
-        ok(m.tracked.contains('form.submit()'));
-
-    });
-
-    test('fillup module should search for a form tag', function () {
-
-        expect(1);
-
-        var m = mocks.create();
-        
-        m.$.validator = {
-            unobtrusive: {
-                parse: function (form) {
-                }
-            }
-        };
-
-        var module = app.fillupAdd(m);
-        module.postrender({}, m.$('view'), {});
-
-        ok(m.tracked.contains('view.find(form)'));
     });
 
 } (window.specs = window.specs || {}, window.mstats));

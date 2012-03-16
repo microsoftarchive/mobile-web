@@ -35,10 +35,13 @@ limitations under the License. */
 
     test('router delegates to transition when hash changed', function () {
 
+        expect(1);
+        
         var m = mocks.create({
             transition: {
                 to: function () {
-                    assertion(arguments);
+                    var view = arguments[1];
+                    equal(view, '#view');
                 }
             },
             window: { onhashchange: function () { } }
@@ -55,10 +58,7 @@ limitations under the License. */
         };
         m.window.onhashchange();
 
-        function assertion() {
-            var view = arguments[0][1];
-            equal(view, '#view');
-        }
+
     });
 
     test('router modifies the href on anchor tags matching registered routes', function () {
