@@ -242,9 +242,6 @@ namespace MileageStats.Web
                 else
                 {
                     Context.User = new GenericPrincipal(mileageStatsIdentity, null);
-
-                    // Reset cookie for a sliding expiration.
-                    formsAuthentication.SetAuthCookie(Context, ticket);
                 }
             }
         }
