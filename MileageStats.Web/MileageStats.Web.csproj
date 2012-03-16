@@ -288,6 +288,8 @@
     <Content Include="Scripts\MileageStats.Mobile.min.js" />
     <Content Include="Scripts\desktop-debug\mstats.tile.js" />
     <Content Include="Scripts\mobile-debug\charts.js" />
+    <Content Include="Scripts\mobile-debug\reminder-fulfill.js" />
+    <Content Include="Scripts\mobile-debug\reminder-add.js" />
     <Content Include="Scripts\mobile-debug\formSubmitter.js" />
     <Content Include="Scripts\mobile-debug\transition.js" />
     <Content Include="Scripts\mobile-debug\dashboard.js" />
@@ -318,6 +320,8 @@
     <Content Include="Scripts\desktop-debug\mstats.vehicle.js" />
     <Content Include="Scripts\mobile-debug\vehicle.js" />
     <Content Include="Scripts\mobile-tests\charts.tests.js" />
+    <Content Include="Scripts\mobile-tests\reminder-fulfill.tests.js" />
+    <Content Include="Scripts\mobile-tests\reminder-add.tests.js" />
     <Content Include="Scripts\mobile-tests\vehicle.tests.js" />
     <Content Include="Scripts\mobile-tests\formSubmitter.tests.js" />
     <Content Include="Scripts\mobile-tests\fillup-add.tests.js" />

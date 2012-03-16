@@ -1,27 +1,30 @@
 ﻿@model MileageStats.Web.Models.ReminderFormModel
 @Html.AntiForgeryToken()
+@{
+    var today = DateTime.Now;
+}
 <ul>
     <li>
         @Html.LabelFor(model => model.Title)
-        @Html.TextBoxFor(model => model.Title, new { id = "ReminderTitle", maxlength = "50" })
         @Html.ValidationMessageFor(model => model.Title)
+        @Mustache.TextBoxFor(model => model.Title, new { id = "ReminderTitle", maxlength = "50" })
     </li>
     <li>
         @Html.LabelFor(model => model.Remarks)
-        @Html.TextAreaFor(model => model.Remarks, new { wrap = "soft" })
         @Html.ValidationMessageFor(model => model.Remarks)
+        @Mustache.TextAreaFor(model => model.Remarks, new { wrap = "soft" })
     </li>
     <li class="psuedo-date">
         <label for="due-date">Date <em>(mm/dd/yyyy)</em></label>
-        @Html.MonthPickerFor(model => model.DueDateMonth, Model.DueDate.GetValueOrDefault(), false)
-        @Html.DayPickerFor(model => model.DueDateDay, Model.DueDate.GetValueOrDefault(), false)
-        @Html.YearPickerFor(model => model.DueDateYear, Model.DueDate.GetValueOrDefault(), false)
         @Html.ValidationMessageFor(model => model.DueDate)
+        @Html.DropDownListFor(model => model.DueDateMonth, SelectListFor.Month(i => today.Month == i))
+        @Html.DropDownListFor(model => model.DueDateDay, SelectListFor.Date(i => today.Day == i))
+        @Html.DropDownListFor(model => model.DueDateYear, SelectListFor.Year(i => today.Year == i))
     </li>
     <li>
         @Html.LabelFor(model => model.DueDistance)
-        @Mustache.InputTypeFor(model => model.DueDistance)
         @Html.ValidationMessageFor(model => model.DueDistance)
+        @Mustache.InputTypeFor(model => model.DueDistance)
     </li>
 </ul>
 
@@ -29,6 +32,6 @@
 
 <ol class="hbox button-group">
 	<li><button type="submit"><span>Save</span></button></li>
-	<li class="icon false invert"><a href="@Url.Action("ListByGroup", "Reminder", new { vehicleId = Model.VehicleId })"><span>Cancel</span></a></li>
+	<li class="icon false invert"><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m=>m.VehicleId)})"><span>Cancel</span></a></li>
 </ol>
 

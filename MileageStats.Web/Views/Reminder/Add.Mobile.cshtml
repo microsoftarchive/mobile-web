@@ -6,20 +6,19 @@
 <nav>
     <ol class="title">
         <li><a href="@Url.Action("Index", "Dashboard")" class="dashboard icon only"><span>Dashboard</span></a></li>
-        <li>@ViewBag.VehicleName</li>
+        <li>@Mustache.ViewBag("VehicleName")</li>
     </ol>
     <ol class="breadcrumbs">
-	    <li><a href="@Url.Action("ListByGroup", "Reminder", new { vehicleId = Model.VehicleId })">Reminders</a></li>
+	    <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })">Reminders</a></li>
 	    <li>Add Reminder</li>
     </ol>
 </nav>
 @{Html.RenderPartial("_Flash.Mobile");}
-<div class="view">
-    @using (Html.BeginForm())
-    {
-        if (Model != null)
-        { 
-        @Html.Partial("ReminderForm.Mobile", Model) 
-        }
-    }
-</div>
+@using (var section = Mustache.Section("Model"))
+{
+    <div class="view">
+        <form method="POST" action="@Url.UnencodedAction("Add", "Reminder", new { vehicleId = Mustache.Value(m => m.VehicleId) })">
+            @Html.Partial("~/Views/Reminder/ReminderForm.Mobile.cshtml", Model)
+        </form> 
+    </div>
+}

@@ -43,6 +43,7 @@ limitations under the License. */
 				type: 'GET',
 				url: appendJsonFormat(makeRelativeToRoot(target.url)),
 				success: onSuccess,
+				cache: false,
 				error: error(host)
 			});
 

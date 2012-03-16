@@ -135,7 +135,7 @@ namespace MileageStats.Web.Controllers
                 DueDateYear = DateTime.Now.Year.ToString()
             };
 
-            return View(reminder);
+            return new ContentTypeAwareResult(reminder);
         }
 
         [HttpPost]
@@ -158,7 +158,7 @@ namespace MileageStats.Web.Controllers
                 }
             }
             this.SetAlertMessage(Messages.PleaseFixInvalidData);
-            return View(reminder);
+            return new ContentTypeAwareResult(reminder);
         }
 
         public ActionResult Fulfill(int vehicleId, int id)
