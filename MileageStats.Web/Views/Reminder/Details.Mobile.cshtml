@@ -21,18 +21,23 @@
 @using (var section = Mustache.Section("Model"))
 {
     <div class="view">
-            <dl class="list">
-                <dt>@Html.LabelFor(model => model.Reminder.Title)</dt>
-                <dd>@Mustache.Value(m => m.Reminder.Title)</dd>
+        <h2>Reminder Details</h2>
+        <p>If you wish to edit any of the details specific to this fill-up you may do so by pressing the button below.</p>
 
-                <dt>@Html.LabelFor(model => model.Reminder.DueDate)</dt>
-                <dd>@Mustache.Value(m => m.Reminder.DueDate)</dd>
+        <dl class="list">
+            <dt>@Html.Label("Title")</dt>
+            <dd>@Mustache.Value(m => m.Reminder.Title)</dd>
 
-                <dt>@Html.LabelFor(model => model.Reminder.DueDistance)</dt>
-                <dd>@Mustache.Value(m => m.Reminder.DueDistance)</dd>
-                <dt>@Html.LabelFor(model => model.Reminder.Remarks)</dt>
-                <dd>@Mustache.Value(m => m.Reminder.Remarks)</dd>
-            </dl>
+            <dt>@Html.Label("Remarks")</dt>
+            <dd>@Mustache.Value(m => m.Reminder.Remarks)</dd>
+
+            <dt>@Html.Label("Due Date")</dt>
+            <dd>@Mustache.Value(m => m.Reminder.DueDate)</dd>
+
+            <dt>@Html.Label("Due when odometer reads")</dt>
+            <dd>@Mustache.Value(m => m.Reminder.DueDistance)</dd>
+
+        </dl>
     
         <ol class="hbox button-group">
             <li>
@@ -44,13 +49,13 @@
                         @Html.Raw("{{^Reminder.IsFulfilled}}")
                         <button type="submit" value="fulfill" name="action"><span>Fulfill</span></button>
                         @Html.Raw("{{/Reminder.IsFulfilled}}")
-                            }
-                            else
-                            {
-                            <button type="submit" value="fulfill" name="action" @(Model.Reminder.IsFulfilled ? "disabled" : "")>
-                                <span>Fulfill</span>
-                            </button>
-                            }
+                    }
+                    else
+                    {
+                        <button type="submit" value="fulfill" name="action" @(Model.Reminder.IsFulfilled ? "disabled" : "")>
+                            <span>Fulfill</span>
+                        </button>
+                    }
                 </form>
             </li>
             <li class="icon false invert"><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})"><span>Cancel</span></a></li>
