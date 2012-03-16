@@ -25,6 +25,9 @@ namespace MileageStats.Web.MobileProfiler.ClientProfile
 {
     public interface IProfileManifestRepository
     {
+        string GetManifestPath(string name);
+
         ProfileManifest GetProfile(string name);
+        
     }
 }

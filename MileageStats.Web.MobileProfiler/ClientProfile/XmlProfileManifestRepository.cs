@@ -36,9 +36,14 @@ namespace MileageStats.Web.MobileProfiler.ClientProfile
             _virtualPath = virtualPath;
         }
 
+        public string GetManifestPath(string name)
+        {
+            return _virtualPathResolver(_virtualPath + name + ".xml");
+        }
+
         public ProfileManifest GetProfile(string name)
         {
-            var filePath = _virtualPathResolver(_virtualPath + name + ".xml");
+            var filePath = GetManifestPath(name);
 
             using (var sr = new StreamReader(filePath))
             using (var reader = XmlReader.Create(sr))
