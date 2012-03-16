@@ -12,8 +12,8 @@
     @using (var breadcrumbsection = Mustache.Section("Model"))
     {
         <ol class="breadcrumbs">
-            <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })">Fillups</a></li>
-            <li>@Mustache.Value(m => m.Vendor) : @Mustache.Value(m => m.Date)</li>
+            <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })">Fill ups</a></li>
+            <li>@Mustache.Value(m => m.DateShort) - @Mustache.Value(m => m.Vendor)</li>
         </ol>
     }
 </nav>
@@ -21,6 +21,8 @@
 @using (var section = Mustache.Section("Model"))
 {
     <div class="view">
+        <h2>Fill-up Details</h2>
+		<p>If you wish to edit any of the details specific to this fill-up you may do so by pressing the button below.</p>
         <dl class="list">
             <dt>@Html.LabelFor(model => model.Date)</dt>
             <dd>@Mustache.Value(m => m.Date)</dd>
@@ -45,7 +47,7 @@
         </dl>
 
         <ol class="hbox button-group">
-	        <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Back</span></a></li>
+            <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Back</span></a></li>
         </ol>
     </div>
 }

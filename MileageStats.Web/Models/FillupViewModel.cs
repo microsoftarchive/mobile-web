@@ -27,11 +27,12 @@ namespace MileageStats.Web.Models
         public FillupViewModel(FillupEntry entry)
         {
             FillupEntryId = entry.FillupEntryId;
-            Date = String.Format("{0:d MMM yyyy}", entry.Date);
+            Date = String.Format("{0:MMMM d, yyyy}", entry.Date);
+            DateShort = String.Format("{0:MM/dd/yyyy}", entry.Date);
             TotalUnits = String.Format("{0:#00.000}", entry.TotalUnits);
-            Odometer = entry.Odometer;
+            Odometer = String.Format("{0:N0}", entry.Odometer);
             TransactionFee = String.Format("{0:C}", entry.TransactionFee);
-            PricePerUnit = String.Format("{0:0.000}", entry.PricePerUnit);
+            PricePerUnit = String.Format("{0:C}", entry.PricePerUnit);
             Remarks = entry.Remarks;
             Vendor = entry.Vendor;
             TotalCost = String.Format("{0:C}", entry.TotalCost);
@@ -48,9 +49,14 @@ namespace MileageStats.Web.Models
         public string Date { get; private  set; }
 
         /// <summary>
+        /// Date of the fillup. in MM/dd/yyyy format
+        /// </summary>
+        public string DateShort { get; private set; }
+
+        /// <summary>
         /// Odometer reading for the fillup.
         /// </summary>
-        public int Odometer { get; private  set; }
+        public string Odometer { get; private  set; }
 
         /// <summary>
         /// Price per unit.
