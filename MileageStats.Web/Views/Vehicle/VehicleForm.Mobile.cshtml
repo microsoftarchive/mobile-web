@@ -46,7 +46,7 @@
                     <button type="submit" name="action" value="Save">
                         <span>Save</span></button>
                 </li>
-                <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.Value(m=>m.VehicleId) })"><span>Cancel</span></a></li>
+                <li class="icon false invert"><a href="@Mustache.Value(m=>m.CancelUrl)"><span>Cancel</span></a></li>
             </ol>
         </li>
     }
@@ -69,7 +69,7 @@
                     <li>
                         <button type="submit" name="action" value="UpdateMakes">
                             <span>Next</span></button></li>
-                    <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Cancel</span></a></li>
+                    <li class="icon false invert"><a href="@Model.CancelUrl"><span>Cancel</span></a></li>
                 </ol>
             </li>
         }
@@ -88,7 +88,7 @@
                     <li>
                         <button type="submit" name="action" value="UpdateModels">
                             <span>Next</span></button></li>
-                    <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Cancel</span></a></li>
+                    <li class="icon false invert"><a href="@Model.CancelUrl"><span>Cancel</span></a></li>
                 </ol>
             </li>
         }
@@ -114,7 +114,7 @@
                 <li>
                     <button type="submit" name="action" value="Save">
                         <span>Save</span></button></li>
-                <li class="icon false invert"><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.Value(m => m.VehicleId) })"><span>Cancel</span></a></li>
+                <li class="icon false invert"><a href="@Model.CancelUrl"><span>Cancel</span></a></li>
             </ol>
         }
     }

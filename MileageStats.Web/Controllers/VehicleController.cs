@@ -87,7 +87,10 @@ namespace MileageStats.Web.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            return SetupVehicleForm(new VehicleFormModel());
+            return SetupVehicleForm(new VehicleFormModel
+                                        {
+                                            CancelUrl = Url.Action("Index", "Dashboard")
+                                        });
         }
 
         [HttpPost]
@@ -126,7 +129,6 @@ namespace MileageStats.Web.Controllers
         {
             var vehicleForm = GetVehicleForm(vehicleId);
 
-            //return new ContentTypeAwareResult(SetupVehicleForm(vehicleForm));
             return SetupVehicleForm(vehicleForm);
         }
 
@@ -151,7 +153,8 @@ namespace MileageStats.Web.Controllers
                                       Year = selected.Year,
                                       MakeName = selected.MakeName,
                                       ModelName = selected.ModelName,
-                                      SortOrder = selected.SortOrder
+                                      SortOrder = selected.SortOrder,
+                                      CancelUrl = Url.Action("Details", "Vehicle", new { vehicleId })
                                   };
             return vehicleForm;
         }

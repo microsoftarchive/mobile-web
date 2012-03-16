@@ -99,5 +99,7 @@ namespace MileageStats.Web.Models
         public string ModelName { get; set; }
 
         public string Action { get; set; }
+
+        public string CancelUrl { get; set; }
     }
 }
