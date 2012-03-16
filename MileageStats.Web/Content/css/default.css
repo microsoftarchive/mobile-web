@@ -812,11 +812,12 @@ form .psuedo-date label {
 
 form .psuedo-date select {
     display: table-cell;
-    width: 27%
+    vertical-align: middle;
+    width: 27.5%
 }
 
 form .psuedo-date select:nth-child(3) {
-    width: 17%;
+    width: 17.5%;
     margin: 0 2%
 }
 
@@ -885,21 +886,4 @@ em {
 
 .legend :nth-child(10) {
     color: #ff5800
-}
-
-#main {
-    transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -webkit-transition: opacity 1s;
-    -o-transition: opacity 1s;
-    -ms-transition: opacity 1s;
-}
-
-.swapping 
-{
-    opacity: 0.2;
-}
-
-.validation-error span {
-    display: block;
 }
