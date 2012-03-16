@@ -19,95 +19,28 @@ limitations under the License. */
 
     module('vehicle add/edit specs');
 
-    test('vehicle module constructs itself', function () {
-        var m = mocks.create({ confirm: function () { return true; } });
-        var module = app.vehicleAdd(m);
+    var stubFormSubmitter = {
+        attach: function () {
+        }
+    };
 
+    var default_mocks = {
+        confirm: function () { return true; },
+        formSubmitter: stubFormSubmitter
+    };
+
+    test('vehicle module constructs itself', function () {
+        var module = app.vehicleAdd(mocks.create(default_mocks));
 
         ok(module != undefined, true);
         equal(typeof module, 'object');
-    });
-
-    test('vehicle module should invoke unobtrusive validation', function () {
-
-        expect(1);
-
-        var m = mocks.create({ confirm: function () { return true; } });
-        var mockView = m.$();
-        mockView.submit = function () { };
-
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'form':
-                    return mockView;
-                case '#vehicleEditForm':
-                    return mockView;
-                case '#DeleteVehicleButton':
-                    return { click: function () { } };
-                case '#Year':
-                    return { change: function () { } };
-                case '#MakeName':
-                    return { change: function () { } };
-                default:
-                    return m.$(selector);
-            }
-        };
-
-        m.$.validator = {
-            unobtrusive: {
-                parse: function (form) {
-                    ok(true);
-                }
-            }
-        };
-
-        var module = app.vehicleAdd(m);
-        module.postrender({}, mockView, {});
-    });
-
-
-    test('vehicle module should attach submit handler on form', function () {
-
-        expect(1);
-
-        var m = mocks.create({ confirm: function () { return true; } });
-        var mockView = m.$('form');
-
-        mockView.submit = function (submitEventSubscription) {
-            ok(true, "Trying to attach to submit event.");
-        };
-
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'form':
-                    return {
-                        first: function () { return mockView; }
-                    };
-                case '#vehicleEditForm':
-                    return mockView;
-                case '#DeleteVehicleButton':
-                    return { click: function () { } };
-                case '#Year':
-                    return { change: function () { } };
-                case '#MakeName':
-                    return { change: function () { } };
-                default:
-                    return m.$(selector);
-            }
-        };
-
-        m.$.validator = { unobtrusive: { parse: function (form) { } } };
-
-        var module = app.vehicleAdd(m);
-        module.postrender({}, mockView, {});
-
     });
 
     test('vehicle module should attach to change events for Year and MakeName elements', function () {
 
         expect(2);
 
-        var m = mocks.create({ confirm: function () { return true; } });
+        var m = mocks.create(default_mocks);
         var mockView = m.$();
 
         mockView.find = function (selector) {
@@ -135,11 +68,8 @@ limitations under the License. */
             }
         };
 
-        m.$.validator = { unobtrusive: { parse: function (form) { } } };
-
         var module = app.vehicleAdd(m);
         module.postrender({}, mockView, {});
-
     });
 
     test('vehicle module should attach to click event for DeleteVehicleButton and cancel event if not confirmed', function () {
@@ -147,7 +77,10 @@ limitations under the License. */
         expect(2);
 
         var clickEvent = { preventDefault: function () { ok(true, "Trying to cancel click event."); } };
-        var m = mocks.create({ confirm: function () { return false; } });
+        var m = mocks.create({
+            confirm: function () { return false; },
+            formSubmitter: stubFormSubmitter
+        });
         var mockView = m.$();
 
         mockView.find = function (selector) {
@@ -174,7 +107,44 @@ limitations under the License. */
             }
         };
 
-        m.$.validator = { unobtrusive: { parse: function (form) { } } };
+        var module = app.vehicleAdd(m);
+        module.postrender({}, mockView, {});
+
+    });
+
+    test('vehicle module should invoke formSubmitter with the correct arguments', function () {
+
+        expect(2);
+
+        var m = mocks.create({
+            confirm: function () { return true; },
+            formSubmitter: {
+                attach: function (el, callback) {
+                    equal(typeof el, 'object');
+                    equal(typeof callback, 'function');
+                }
+            }
+        });
+        var mockView = m.$();
+
+        mockView.find = function (selector) {
+            switch (selector) {
+                case 'form':
+                    return {
+                        first: function () { return mockView; }
+                    };
+                case '#vehicleEditForm':
+                    return mockView;
+                case '#DeleteVehicleButton':
+                    return { click: function () {} };
+                case '#Year':
+                    return { change: function () {} };
+                case '#MakeName':
+                    return { change: function () {} };
+                default:
+                    return m.$(selector);
+            }
+        };
 
         var module = app.vehicleAdd(m);
         module.postrender({}, mockView, {});

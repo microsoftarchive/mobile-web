@@ -46,7 +46,7 @@ limitations under the License. */
 
         // mock jQuery
         function buildMember(name, selector, defaultFn) {
-            
+
             // we want to track calls to the mocked jQuery
             // we'll record the selector, the name of the member invoke,
             // and the value passed to the member
@@ -60,16 +60,31 @@ limitations under the License. */
             //     $('form').submit(function() {});
             // we'll see :
             //    form.submit()
-            
+
             return function (arg) {
-                var arg_text = (arg && typeof(arg) !== 'function') ? arg : '';
-                tracked.push(selector + '.' + name + '(' + arg_text + ')');
+                var arg_text = (arg && typeof (arg) !== 'function') ? arg : '';
+                var context = selector || this.__parent__;
+                tracked.push(context + '.' + name + '(' + arg_text + ')');
                 var fn = getBehavior('$.' + name, defaultFn);
-                return fn.apply($(arg), arguments);
+                var el = $(arg);
+                el.__parent__ = context;
+                return fn.apply(el, arguments);
             };
         }
 
-        var jqueryMembers = ['append', 'children', 'empty', 'find', 'expander', 'html', 'last', 'next', 'on', 'toggle', 'toggleClass', 'first'];
+        var jqueryMembers = [
+            'append',
+            'children',
+            'empty',
+            'find',
+            'first',
+            'html',
+            'last',
+            'next',
+            'on',
+            'toggle',
+            'toggleClass'
+        ];
 
         var $ = function (selector) {
             var jquery = {},
@@ -84,6 +99,7 @@ limitations under the License. */
             jquery.attr = buildMember('attr', selector, function (name, value) { return ''; });
             jquery.submit = buildMember('submit', selector, function () { return ''; });
             jquery.data = buildMember('data', selector, function () { return ''; });
+            jquery.serialize = buildMember('serialize', selector, function () { return ''; });
             jquery.each = function (fn) {
                 fn(0, selector + ' item');
             };
