@@ -18,21 +18,26 @@ limitations under the License. */
 (function (app, global, $) {
 
 	// ** bootstrapper **
-	// iterate through the modules calling the
-	// constructor functions for each module
-	// and storing the resulting export
-	// back as the same name.
-	// we also pass in depedencies to each module
-	var module;
+    // this is entry point for the main javascript
 
-	// this function is responsible for fulfilling
-	// depedencies in modules
-	function require(service) {
-		// this is a simplified approach to resolving
+    function require(service) {
+        // this function is responsible for resolving depedencies
+        // it assists us in keeping our modules isolated from the 
+        // global scope which is useful for composition as well 
+        // as unit testing 
+        
+        // in this context, 'service' can be a globally scoped
+        // object such as `window` or jQuery's `$`
+        // in addition, it can refer to one of the "modules" that
+        // that has been attached to `app`, where `app` is the 
+        // local variable for `mstats`.
+        
+	    if (service in global) return global[service];
+	    
+		// below is a simplified approach to resolving items.
 		// a more thorough approach would check for
-		// cyclical registration
-		if (service in global) return global[service];
-
+	    // cyclical registration
+        
 		if (service in app) {
 			if (typeof app[service] === 'function') {
 				app[service] = app[service](require);
@@ -44,10 +49,23 @@ limitations under the License. */
 	}
 
 	$(function () {
-		var registration;
-		
+	    var registration,
+	        module;
+
+	    // we consider each property of `app` to be a "registration"
+	    // in other words, each module is responsible for telling 
+	    // the global `mstats` object about itself.
+	    // we iterate through these "registrations" and invoke any that
+		// happen to be functions. we store the result of the invocation
+	    // back as the same name.
+	    
+        // we also pass `require` to each module, in order to allow 
+	    // individual modules to resolve their dependencies
+	    
 		for (registration in app) {
-			module = app[registration];
+		    
+            module = app[registration];
+		    
 			// check to see if the module is
 			// a function or an object and only apply it
 			// when it is a function
@@ -62,6 +80,11 @@ limitations under the License. */
 		app.router.setDefaultRegion('#main');
 		var register = app.router.register;
 
+		// from an MVC perspective, you can think of these as 
+		// associating a route with a controller
+		// however, these routes correspond to the portion of 
+	    // the url after the #
+	    
 		register('/Dashboard/Index', app.dashboard);
 
 		register('/Vehicle/:vehicleId/Details');
@@ -78,12 +101,6 @@ limitations under the License. */
 
 		register('/Vehicle/:id/Edit', mstats.vehicleEdit);
 		register('/Vehicle/Add', mstats.vehicleAdd);
-	    
-		// these forms are special cases, we need to address them
-		//register('/Vehicle/Edit/:id');
-		//register('/Vehicle/Edit');
-		//register('/Vehicle/Add/:id');
-		
 
 		// the root url
 		register('/', app.dashboard);
@@ -93,7 +110,5 @@ limitations under the License. */
         // add a visual indicator when in SPA
         $('header h1').after('<span class="spa">SPA</span>');
 	});
-
-
 
 })(window.mstats = window.mstats || {}, window, $);

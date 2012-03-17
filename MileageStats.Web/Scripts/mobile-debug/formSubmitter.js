@@ -17,6 +17,16 @@ limitations under the License. */
 
 (function (mstats) {
 
+    // this module searches the provided jQuery object 
+    // for a form element, it takes the first one and 
+    // then sets up the unobstrusive validation that is
+    // part of ASP.NET MVC 3. after that, it wires an
+    // event handler for submission of the form that
+    // results in an AJAX request to the url specified
+    // in the form's action.
+    // this has an implicit depedency on the jQuery 
+    // validation plugin
+
     mstats.formSubmitter = function (require) {
 
         var $ = require('$');
@@ -30,33 +40,45 @@ limitations under the License. */
         }
 
         function displayErrors(errors) {
-            var item, el;
+            var item;
             var errorList;
             var msg;
 
+            // we want to visually associate any errors returned from
+            // server. (note that this differs from the client-side
+            // validation)
+            // this makes assumption about the structure of the markup
+
             for (item in errors) {
-                el = $('[data-valmsg-for="' + item + '"]');
-                el.parent('li').addClass('validation-error');
+                // `item` is the name of the field with the input error
+                // `errorList` is the list of validation errors associated 
+                // with that field
                 errorList = errors[item];
                 msg = '';
+                
                 for (var i = 0; i < errorList.length; i++) {
                     msg = msg + errorList[i];
                 }
-                el.html(msg);
+
+                // `data-valmsg-for` is an attribute that is emit by
+                // the unobtrusive validation code
+                $('[data-valmsg-for="' + item + '"]').html(msg);
             }
         }
 
-        function onSuccess(done) {
+        function onSuccess(callback) {
+            // we create this function in a closure
+            // in order to trap the callback
             return function (res, status, xhr) {
                 if (res.Errors) {
                     displayErrors(res.Errors);
                 } else {
-                    done(res);
+                    callback(res);
                 }
             };
         }
 
-        function attachFormSubmission(el, done) {
+        function attachFormSubmission(el, callback) {
 
             var form = el.find('form').first(),
                 action = form.attr('action');
@@ -78,7 +100,7 @@ limitations under the License. */
                     data: input,
                     type: 'POST',
                     url: action,
-                    success: onSuccess(done)
+                    success: onSuccess(callback)
                 });
                 return false;
             });
