@@ -22,15 +22,22 @@ limitations under the License. */
         el.find('#ChartRefreshButton').click(function () {
             var chartNameCriteria = "&ChartName=" + el.find('select[name=ChartName] option:selected').val();
             var vehicleIdCriteria = "";
+            var vehiclePositions = "";
             var startDateCriteria = "&StartDate=" + el.find('select[name=StartDate] option:selected').val();
             var endDateCriteria = "&EndDate=" + el.find('select[name=EndDate] option:selected').val();
-            el.find('input:checkbox[name=VehicleIds]:checked').each(function (index) {
-                vehicleIdCriteria = vehicleIdCriteria + "&VehicleIds=" + this.value;
+            el.find('input:checkbox[name=VehicleIds]').each(function (index) {
+                if (this.checked) {
+                    vehicleIdCriteria = vehicleIdCriteria + "&VehicleIds=" + this.value;
+                    vehiclePositions = vehiclePositions + "&Positions=" + index;
+                }
             });
             var getChartImageUrl = el.find('#GetChartImageUrl').val();
-            var fullChartUrl = getChartImageUrl + chartNameCriteria + startDateCriteria + endDateCriteria + vehicleIdCriteria;
+            var fullChartUrl = getChartImageUrl + chartNameCriteria + startDateCriteria + endDateCriteria + vehicleIdCriteria + vehiclePositions;
 
-            el.find("#chartimage").attr("src", fullChartUrl);
+            var chartImage = el.find("#chartimage");
+            chartImage.attr("src", fullChartUrl);
+            chartImage.attr("style", "");
+            
 
         });
 

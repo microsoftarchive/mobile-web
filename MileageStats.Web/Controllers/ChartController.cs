@@ -36,7 +36,8 @@ namespace MileageStats.Web.Controllers
     {
         private const int DESKTOP_CHART_WIDTH = 800;
         private const int DESKTOP_CHART_HEIGHT = 450;
-        private const String CHARTS_THEME = @"<Chart Palette=""None"" PaletteCustomColors=""#4bb2c5;#c5b47f;#EAA228;#579575;#839557;#958c12;#953579;#4b5de4;#d8b83f;#ff5800""></Chart>"; 
+        private string[] colors = { "#4bb2c5", "#c5b47f", "#EAA228", "#579575", "#839557", "#958c12", "#953579", "#4b5de4", "#d8b83f", "#ff5800" };
+        private const String CHARTS_THEME = @"<Chart Palette=""None"" PaletteCustomColors=""{0}""></Chart>"; 
 
         private readonly IChartDataService chartDataService;
 
@@ -173,7 +174,15 @@ namespace MileageStats.Web.Controllers
                 seriesData = this.chartDataService.CalculateSeriesForUser(userId, DateTime.UtcNow.AddMonths(-12), null);                
             }
 
-            var myChart = new Chart(chartWidth, chartHeight, CHARTS_THEME);
+            var selectedVehicleColors = new List<string>();
+            foreach (var position in chartFormModel.Positions)
+            {
+                selectedVehicleColors.Add(colors[position]);
+            }
+
+            var themeColors = string.Join(";", selectedVehicleColors);
+            var theme = string.Format(CHARTS_THEME, themeColors);
+            var myChart = new Chart(chartWidth, chartHeight, theme);
                 
 
             if (!Request.Browser.IsMobileDevice)

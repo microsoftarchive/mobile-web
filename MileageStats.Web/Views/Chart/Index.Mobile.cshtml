@@ -5,8 +5,20 @@
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
 
     var vehicleIdQueryStringBuilder = new StringBuilder();
+    var vehiclePositionQSBuilder = new StringBuilder();
+    
     if (!Html.IsRenderingForMustache())
     {
+        var listOfAllVehicleModels = Model.AllVehicleModels.ToList();
+        
+        for (int i = 0; i < listOfAllVehicleModels.Count; i++)
+        {
+              if(Model.VehicleIds.Contains(listOfAllVehicleModels[i].VehicleId))
+              {
+                  vehiclePositionQSBuilder.AppendFormat("&Positions={0}", i);
+              }
+        }
+        
         foreach (int vehicleId in Model.VehicleIds)
         {
             vehicleIdQueryStringBuilder.AppendFormat("&VehicleIds={0}", vehicleId);
@@ -49,13 +61,13 @@
                 </li>
                 @if (Html.IsRenderingForMustache())
                 {
-                    <li><img id="chartimage" /></li>
+                    <li><img id="chartimage" style="display:none" /></li>
                 }
                 else
                 {
                     if (vehicleIdQueryStringBuilder.Length > 0)
                     {
-                    <li><img src="@Url.Action("GetChartImage", new { UserId = Model.UserId, ChartName = Model.ChartName, StartDate = Model.StartDate, EndDate = Model.EndDate })@vehicleIdQueryStringBuilder.ToString()" title="@Model.ChartName" alt="@Model.ChartName" /></li>
+                    <li><img src="@Url.Action("GetChartImage", new { UserId = Model.UserId, ChartName = Model.ChartName, StartDate = Model.StartDate, EndDate = Model.EndDate })@vehicleIdQueryStringBuilder.ToString()@vehiclePositionQSBuilder.ToString()" title="@Model.ChartName" alt="@Model.ChartName" /></li>
                     }
                 }
   
