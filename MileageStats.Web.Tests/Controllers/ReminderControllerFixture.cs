@@ -83,7 +83,7 @@ namespace MileageStats.Web.Tests.Controllers
         }
 
         [Fact]
-        public void WhenAddReminderGetWithValidVehicleId_ThenReturnsView()
+        public void WhenAddReminderGetWithValidVehicleId_ThenReturnsContentTypeAwareResult()
         {
             MockDefaultHandlers();
             
@@ -92,7 +92,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             ActionResult result = controller.Add(defaultVehicleId);
 
-            Assert.IsType<ViewResult>(result);
+            Assert.IsType<ContentTypeAwareResult>(result);
         }
 
         [Fact]
@@ -103,11 +103,9 @@ namespace MileageStats.Web.Tests.Controllers
             ReminderController controller = GetTestableReminderController();
 
             ActionResult result = controller.Add(defaultVehicleId, null);
-            
-            Assert.IsType(typeof(ViewResult), result);
 
-            var viewResult = result as ViewResult;
-            Assert.Equal(MileageStats.Web.Properties.Messages.PleaseFixInvalidData, viewResult.TempData["alert"]); 
+            Assert.IsType(typeof(ContentTypeAwareResult), result);
+            Assert.Equal(MileageStats.Web.Properties.Messages.PleaseFixInvalidData,  controller.TempData["alert"]);
         }
 
         [Fact]
@@ -121,7 +119,7 @@ namespace MileageStats.Web.Tests.Controllers
             var reminderForm = new ReminderFormModel();
             ActionResult result = controller.Add(defaultVehicleId, reminderForm);
 
-            Assert.IsType(typeof(ViewResult), result);
+            Assert.IsType(typeof(ContentTypeAwareResult), result);
         }
 
         [Fact]
@@ -396,9 +394,9 @@ namespace MileageStats.Web.Tests.Controllers
 
             Assert.NotNull(data);
             Assert.Equal(3, data.Count());
-            Assert.Equal("active", data.First(d => d.Status == ReminderSummaryModel.StatusActive).Reminders.First().Title);
-            Assert.Equal("overdue", data.First(d => d.Status == ReminderSummaryModel.StatusOverdue).Reminders.First().Title);
-            Assert.Equal("fulfilled", data.First(d => d.Status == ReminderSummaryModel.StatusFulfilled).Reminders.First().Title);
+            Assert.Equal("active", data.First(d => d.Status == ReminderState.Active).Reminders.First().Title);
+            Assert.Equal("overdue", data.First(d => d.Status == ReminderState.Overdue).Reminders.First().Title);
+            Assert.Equal("fulfilled", data.First(d => d.Status == ReminderState.Fulfilled).Reminders.First().Title);
         }
 
         private ReminderController GetTestableReminderController()

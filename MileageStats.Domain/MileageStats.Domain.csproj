@@ -112,6 +112,7 @@
     <Compile Include="Models\IVehicleStatistics.cs" />
     <Compile Include="Models\Reminder.cs" />
     <Compile Include="Models\ReminderModel.cs" />
+    <Compile Include="Models\ReminderState.cs" />
     <Compile Include="Models\ReminderSummaryModel.cs" />
     <Compile Include="Models\StatisticSeries.cs" />
     <Compile Include="Models\StatisticSeriesEntry.cs" />

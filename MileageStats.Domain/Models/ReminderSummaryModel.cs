@@ -21,10 +21,6 @@ namespace MileageStats.Domain.Models
 {
     public class ReminderSummaryModel
     {
-        public const string StatusActive = "Active";
-        public const string StatusOverdue = "Overdue";
-        public const string StatusFulfilled = "Fulfilled";
-        
         private readonly Reminder _reminder;
 
         public ReminderSummaryModel(Reminder reminder)
@@ -102,13 +98,13 @@ namespace MileageStats.Domain.Models
             }
         }
 
-        public string Status
+        public ReminderState Status
         {
             get
             {
-                if (IsFulfilled) return StatusFulfilled;
-                if (IsOverdue) return StatusOverdue;
-                return StatusActive;
+                if (IsFulfilled) return ReminderState.Fulfilled;
+                if (IsOverdue) return ReminderState.Overdue;
+                return ReminderState.Active;
             }
         }
     }

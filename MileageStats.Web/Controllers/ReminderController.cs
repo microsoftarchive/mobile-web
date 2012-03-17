@@ -115,7 +115,10 @@ namespace MileageStats.Web.Controllers
                                         Reminders = grouping
                                     };
 
-            return new ContentTypeAwareResult(groups.ToList());
+            var listOfReminderListViewModels = groups.ToList();
+            listOfReminderListViewModels.Sort(new ReminderListViewModelCompare());
+
+            return new ContentTypeAwareResult(listOfReminderListViewModels);
         }
 
         public ActionResult Add(int vehicleId)
@@ -217,4 +220,13 @@ namespace MileageStats.Web.Controllers
             return fullTitle;
         }
     }
+
+    public class ReminderListViewModelCompare : IComparer<ReminderListViewModel>
+    {
+        public int Compare(ReminderListViewModel x, ReminderListViewModel y)
+        {
+            return (int)x.Status - (int)y.Status;
+        }
+    } 
+
 }
