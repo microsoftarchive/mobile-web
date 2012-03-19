@@ -13,7 +13,7 @@
             @Html.LabelFor(model => model.Year)
             @Html.ValidationMessageFor(model => model.Year)
             <select id="Year" name="Year">
-                <option>--Select a Year--</option>
+                <option value="">--Select a Year--</option>
                 @Html.Raw("{{#__view__.Years}}");
                 <option value="@Html.Raw("{{Value}}")" @Html.Raw("{{#Selected}}selected{{/Selected}}")>@Html.Raw("{{Text}}")</option>
                 @Html.Raw("{{/__view__.Years}}");
