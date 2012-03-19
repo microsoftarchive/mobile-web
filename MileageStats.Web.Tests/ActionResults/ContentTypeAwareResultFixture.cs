@@ -139,6 +139,25 @@ namespace MileageStats.Web.Tests.ActionResults
         }
 
         [Fact]
+        public void when_everything_is_accepted_then_return_viewresult()
+        {
+            var controller = new ExampleController();
+            var action = (ContentTypeAwareResult)controller.DefaultActionResult();
+
+            var view = new Mock<ViewResult>();
+            view.Setup(x => x.ExecuteResult(It.IsAny<ControllerContext>()))
+                .Verifiable();
+            action.WhenHtml = (x, v, t) => view.Object;
+
+            var context = MockContextFor(controller);
+            context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "*/*" });
+
+            action.ExecuteResult(context.Object);
+
+            view.VerifyAll();
+        }
+
+        [Fact]
         public void when_type_contains_additional_data_it_is_still_recognized()
         {
             var controller = new ExampleController();

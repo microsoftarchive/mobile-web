@@ -118,7 +118,10 @@ namespace MileageStats.Web
             _supportedTypes = new Dictionary<string, Func<object, ViewDataDictionary, TempDataDictionary, ActionResult>>
                                   {
                                       {"application/json", WhenJson},
-                                      {"text/html", WhenHtml}
+                                      {"text/html", WhenHtml},
+                                      // Some browsers send */* in the accept header meaning they expect
+                                      // any representation the server could return
+                                      {"*/*", WhenHtml}, 
                                   };
 
             // mime types can follow a form like:
@@ -131,9 +134,9 @@ namespace MileageStats.Web
 
             if (types.Count == 0)
             {
-                // The format passed in the query string is used
-                // when no accept header is found in the request
-
+                // Some browsers are not sending any Accept header. For those scenarios,
+                // the client is always passing the expected content type as a query string
+                // argument. For example ?format=json
                 var format = context.HttpContext.Request.QueryString["format"];
                 var contentType = GetContentTypeForFormat(format);
 
