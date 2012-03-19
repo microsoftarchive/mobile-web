@@ -800,13 +800,13 @@ form h4 {
 }
 
 form .psuedo-date {
+    width: 100%;
     display: table;
-    table-layout: fixed;
-    width: 100%
+    table-layout: fixed
 }
 
 form .psuedo-date label {
-    display: block;
+    display: table-row;
     width: 100%
 }
 

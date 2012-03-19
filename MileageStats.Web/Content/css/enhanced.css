@@ -1,3 +1,15 @@
+#main {
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    -ms-transition: opacity 1s;
+    transition: opacity 1s
+}
+
+.swapping {
+    opacity: 0.2
+}
+
 .button-group a,.button-group button,.button-group .button {
     -moz-border-radius: 0.35em;
     -webkit-border-radius: 0.35em;
