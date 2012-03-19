@@ -1,0 +1,36 @@
+/* @group Sass Imports */
+@import "includes/definitions";
+/* @end */
+
+#content {
+	width: 100%;
+	display: table;
+	table-layout: fixed;
+	#main {
+		width: 100%;
+		float: left;
+		display: table-cell;
+	}
+
+	#tab-dashboard { border: none;}
+	#tab-charts {display: none;}
+	#extended {
+		width: 52.5%;
+		display: table-cell;
+		border-left: 1px solid lighten($highlight, 35%);
+		vertical-align: top;
+		.title li:last-child {
+			display: block;
+			text-align: center;
+			text-transform: uppercase;
+			background-color: $primary;
+			background-image: none;
+		}
+		img {width: 100%; height: auto;}
+	}
+}
+
+@media screen and (min-width: 1020px) {
+	#content #extended {width: 67.5%;}
+}
+

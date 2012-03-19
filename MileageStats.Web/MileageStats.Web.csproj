@@ -230,8 +230,13 @@
     <Content Include="Content\command-hover.jpg" />
     <Content Include="Content\command-reminders.png" />
     <Content Include="Content\css\default.css" />
+    <Content Include="Content\css\default.scss" />
     <Content Include="Content\css\enhanced.css" />
+    <Content Include="Content\css\enhanced.scss" />
     <Content Include="Content\css\extended.css" />
+    <Content Include="Content\css\extended.scss" />
+    <Content Include="Content\css\includes\definitions.scss" />
+    <Content Include="Content\css\includes\reset.scss" />
     <Content Include="Content\details-pane.jpg" />
     <Content Include="Content\error-background.png" />
     <Content Include="Content\error-dashboard.png" />
