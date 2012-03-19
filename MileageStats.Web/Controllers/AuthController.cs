@@ -80,7 +80,7 @@ namespace MileageStats.Web.Controllers
             catch (Exception)
             {
                 this.SetAlertMessage(Messages.AuthController_SignIn_UnableToAuthenticateWithProvider);
-                return RedirectToAction("SignIn");
+                return RedirectToAction("Index");
             }
         }
 
@@ -109,15 +109,15 @@ namespace MileageStats.Web.Controllers
 
                     this.SetConfirmationMessage(Messages.AuthController_CanceledAuthentication);
 
-                    return RedirectToAction("SignIn");
+                    return RedirectToAction("Index");
 
                 case AuthenticationStatus.Failed:
                     this.SetAlertMessage(response.Exception.Message);
-                    return RedirectToAction("SignIn");
+                    return RedirectToAction("Index");
 
                 default:
                     this.SetAlertMessage(Messages.AuthController_SignIn_UnableToAuthenticateWithProvider);
-                    return RedirectToAction("SignIn");
+                    return RedirectToAction("Index");
             }
         }
 

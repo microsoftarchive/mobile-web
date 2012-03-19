@@ -325,7 +325,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             ActionResult result = authController.SignInResponse();
             Assert.IsType(typeof (RedirectToRouteResult), result);
-            Assert.Equal("SignIn", ((RedirectToRouteResult) result).RouteValues["action"]);
+            Assert.Equal("Index", ((RedirectToRouteResult)result).RouteValues["action"]);
         }
 
         [Fact]
@@ -352,7 +352,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             ActionResult result = authController.SignInResponse();
             Assert.IsType(typeof (RedirectToRouteResult), result);
-            Assert.Equal("SignIn", ((RedirectToRouteResult) result).RouteValues["action"]);
+            Assert.Equal("Index", ((RedirectToRouteResult) result).RouteValues["action"]);
         }
 
         [Fact]
@@ -365,7 +365,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             ActionResult result = authController.SignInResponse();
             Assert.IsType(typeof (RedirectToRouteResult), result);
-            Assert.Equal("SignIn", ((RedirectToRouteResult) result).RouteValues["action"]);
+            Assert.Equal("Index", ((RedirectToRouteResult)result).RouteValues["action"]);
             Assert.NotNull(authController.TempData["alert"]);
         }
 
@@ -382,7 +382,7 @@ namespace MileageStats.Web.Tests.Controllers
             var result = authController.SignInWithProvider(@"http://providerUrl");
 
             Assert.IsType(typeof (RedirectToRouteResult), result);
-            Assert.Equal("SignIn", ((RedirectToRouteResult) result).RouteValues["action"]);
+            Assert.Equal("Index", ((RedirectToRouteResult)result).RouteValues["action"]);
             Assert.NotNull(authController.TempData["alert"]);
         }
 

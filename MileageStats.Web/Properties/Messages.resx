@@ -127,7 +127,7 @@
     <value>Unable to authenticate at this time.</value>
   </data>
   <data name="AuthController_SignIn_UnableToAuthenticateWithProvider" xml:space="preserve">
-    <value>We are unable to authenticate you with provider at this time.  Please check your provider URL and try again.</value>
+    <value>We are unable to authenticate you with provider at this time. If you provided your own OpenID URL, please check the URL and try again.</value>
   </data>
   <data name="FillupController_FillupAddedMessage" xml:space="preserve">
     <value>Successfully added fill up</value>
