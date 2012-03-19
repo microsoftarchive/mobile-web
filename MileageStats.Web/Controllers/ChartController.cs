@@ -175,9 +175,17 @@ namespace MileageStats.Web.Controllers
             }
 
             var selectedVehicleColors = new List<string>();
-            foreach (var position in chartFormModel.Positions)
+            
+            if (chartFormModel.Positions == null)
             {
-                selectedVehicleColors.Add(colors[position]);
+                selectedVehicleColors.Add(colors[0]);
+            }
+            else
+            {
+                foreach (var position in chartFormModel.Positions)
+                {
+                    selectedVehicleColors.Add(colors[position]);
+                }                
             }
 
             var themeColors = string.Join(";", selectedVehicleColors);
