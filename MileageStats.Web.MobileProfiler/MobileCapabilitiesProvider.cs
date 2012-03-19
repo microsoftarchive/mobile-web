@@ -36,6 +36,12 @@ namespace MileageStats.Web.MobileProfiler
 
         public MobileCapabilitiesProvider(IWURFLManager manager, IProfileCookieEncoder encoder)
         {
+            if (manager == null)
+                throw new ArgumentNullException("manager");
+
+            if (encoder == null)
+                throw new ArgumentNullException("encoder");
+
             _manager = manager;
             _encoder = encoder;
         }
