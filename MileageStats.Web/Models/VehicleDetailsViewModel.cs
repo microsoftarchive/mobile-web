@@ -58,6 +58,8 @@ namespace MileageStats.Web.Models
         public int UserId { get; set; }
         public IEnumerable<ReminderSummaryModel> OverdueReminders { get; set; }
 
+        public int VehicleId { get; set; }
+
         void MakeConsistent()
         {
             if (Vehicle == null || VehicleList == null) return;

@@ -61,6 +61,7 @@ namespace MileageStats.Web.Controllers
 
             var vm = new VehicleDetailsViewModel
                          {
+                             VehicleId = vehicleId,
                              VehicleList = new VehicleListViewModel(vehicles, vehicleId) { IsCollapsed = true },
                              Vehicle = selected,
                              OverdueReminders = overdue,
@@ -107,7 +108,10 @@ namespace MileageStats.Web.Controllers
                 {
                     this.SetConfirmationMessage(Messages.VehicleController_VehicleAdded);
 
-                    return RedirectToAction("Details", "Vehicle", new { vehicleId });
+                    return new ContentTypeAwareResult(new { VehicleId = vehicleId })
+                    {
+                        WhenHtml = (m, v, t) => RedirectToAction("Details", "Vehicle", new { vehicleId })
+                    };
                 }
             }
 

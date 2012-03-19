@@ -198,10 +198,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             ActionResult result = controller.Add(vehicleForm, null, "Save");
 
-            var redirect = (RedirectToRouteResult)result;
-
-            Assert.Equal("Vehicle", redirect.RouteValues["controller"]);
-            Assert.Equal("Details", redirect.RouteValues["action"]);
+            Assert.IsAssignableFrom<ContentTypeAwareResult>(result);
         }
 
         [Fact]

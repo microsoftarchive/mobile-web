@@ -27,7 +27,7 @@ limitations under the License. */
         function postrender(model, el, context) {
 
             formSubmitter.attach(el, function (response) {
-                window.location.hash = urlPattern.replace(':vehicleId', response.Model.Vehicle.VehicleId);
+                window.location.hash = urlPattern.replace(':vehicleId', response.Model.VehicleId);
             });
 
             el.find('#DeleteVehicleButton').click(function (event) {
