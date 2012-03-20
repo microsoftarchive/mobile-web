@@ -40,7 +40,6 @@
 			</dl>
 		</div>
 		<h2>Last 12 Months</h2>
-		<p>The following graphs provide an glimpse </p>
 		<dl class="details">
 			<dt>Average fuel efficiency</dt>
 			<dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m=>m.UserId), ChartName = "FuelEfficiency", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId") })" /></dd>
