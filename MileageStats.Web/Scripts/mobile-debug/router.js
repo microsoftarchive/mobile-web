@@ -20,6 +20,7 @@ limitations under the License. */
     var window = require('window'),
         rootUrl = require('rootUrl'),
 	    transition = require('transition'),
+        app = require('mstats'),
         $ = require('$');
 
     var routes = {},
@@ -120,13 +121,21 @@ limitations under the License. */
 
     function initialize() {
         if (!supportsHashChange) return;
-        
+
         var pathname = window.location.pathname;
-        
+
         if (!window.location.hash) {
+            // the initial hit of the page, w/o any hash
             window.location.hash = '#/' + pathname.replace(rootUrl, '');
             overrideLinks();
+        } else if (window.location.hash === '#/') {
+            // the root hash, probably the result of a refresh
+            window.onhashchange();
         } else {
+            // if the page is refresh, and the hash is something
+            // other than the root, then we don't want to load 
+            // the initial model
+            app.initialModel = null;
             window.onhashchange();
         }
     }

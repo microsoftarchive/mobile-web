@@ -20,6 +20,7 @@ limitations under the License. */
 	var templating = require('Mustache'),
         rootUrl = require('rootUrl'),
 		window = require('window'),
+        app = require('mstats'),
         $ = require('$');
 
 	var cssClassForTransition = 'swapping';
@@ -49,9 +50,9 @@ limitations under the License. */
 
 		} else {
             var response = {
-                Model: mstats.initialModel
+                Model: app.initialModel
             };
-            mstats.initialModel = null;
+            app.initialModel = null;
             onSuccess(response);
 		}
 	}
