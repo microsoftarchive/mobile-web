@@ -20,6 +20,7 @@ limitations under the License. */
 	var templating = require('Mustache'),
         rootUrl = require('rootUrl'),
 		window = require('window'),
+		notifications = require('notifications'),
         $ = require('$');
 
 	var cssClassForTransition = 'swapping';
@@ -48,11 +49,11 @@ limitations under the License. */
 			});
 
 		} else {
-            var response = {
-                Model: mstats.initialModel
-            };
-            mstats.initialModel = null;
-            onSuccess(response);
+			var response = {
+				Model: mstats.initialModel
+			};
+			mstats.initialModel = null;
+			onSuccess(response);
 		}
 	}
 
@@ -74,13 +75,15 @@ limitations under the License. */
 				model = registration.prerender(model);
 			}
 
+			notifications.subscribe(model);
+
 			view = templating.to_html(template, model);
 			host.empty();
 			host.append(view);
 			el = host.children().last();
 
 			if (registration.postrender) {
-			    registration.postrender(model, el, target);
+				registration.postrender(model, el, target);
 			}
 
 			host.removeClass(cssClassForTransition);

@@ -296,6 +296,7 @@
     <Content Include="Scripts\mobile-debug\reminder-fulfill.js" />
     <Content Include="Scripts\mobile-debug\reminder-add.js" />
     <Content Include="Scripts\mobile-debug\formSubmitter.js" />
+    <Content Include="Scripts\mobile-debug\notifications.js" />
     <Content Include="Scripts\mobile-debug\transition.js" />
     <Content Include="Scripts\mobile-debug\dashboard.js" />
     <Content Include="Scripts\mobile-debug\fillup-add.js" />
