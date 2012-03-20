@@ -120,13 +120,12 @@ limitations under the License. */
 
     function initialize() {
         if (!supportsHashChange) return;
-
+        
+        var pathname = window.location.pathname;
+        
         if (!window.location.hash) {
-            if (window.location.pathname === rootUrl) {
-                window.location.hash = '#/';
-            } else {
-                overrideLinks();
-            }
+            window.location.hash = '#/' + pathname.replace(rootUrl, '');
+            overrideLinks();
         } else {
             window.onhashchange();
         }

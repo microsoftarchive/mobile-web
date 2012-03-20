@@ -73,6 +73,7 @@ limitations under the License. */
         }
 
         var jqueryMembers = [
+            'addClass',
             'append',
             'children',
             'empty',
@@ -82,6 +83,7 @@ limitations under the License. */
             'last',
             'next',
             'on',
+            'removeClass',
             'toggle',
             'toggleClass'
         ];

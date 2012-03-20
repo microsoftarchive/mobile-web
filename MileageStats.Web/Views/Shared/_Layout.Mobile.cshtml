@@ -1,4 +1,8 @@
 ﻿<!DOCTYPE HTML>
+@{
+    var shouldEnableSpa = (Request.Browser.IsWow() && User.Identity.IsAuthenticated);
+    var initialMainCssClass = shouldEnableSpa ? "swapping" : string.Empty;
+}
 <html>
 <head>
     <meta charset="UTF-8" />
@@ -19,7 +23,8 @@
      }
 </head>
     <body>
-        @if (Request.Browser.IsWow() && User.Identity.IsAuthenticated){
+        @if (shouldEnableSpa)
+        {
             Html.RenderPartial("_spaTemplates");
         }
         <!-- application bar -->
@@ -35,7 +40,7 @@
         </header>
         <!-- #content region(s) -->
         <div id="content">
-            <div id="main">
+            <div id="main" class="@initialMainCssClass">
                 @RenderBody()
             </div>
         </div>
@@ -50,7 +55,7 @@
         { 
             <script type="text/javascript" src="@Url.Action("ProfileScript", "MobileProfile")"></script>	 
         }
-        @if (Request.Browser.IsWow() && User.Identity.IsAuthenticated)
+        @if (shouldEnableSpa)
         {
             <script type="text/javascript">
                 // allowing the server to set the root URL for the site, 
@@ -65,7 +70,7 @@
             <script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>
             <script src="@Url.Content("~/Scripts/mustache.js")"></script>
             
-			if (User.Identity.IsAuthenticated && HttpContext.Current.IsDebuggingEnabled)
+			if (HttpContext.Current.IsDebuggingEnabled)
 			{
 				<script src="@Url.Content("~/Scripts/mobile-debug/app.js")"></script>
                 <script src="@Url.Content("~/Scripts/mobile-debug/charts.js")"></script>
@@ -78,10 +83,7 @@
 				<script src="@Url.Content("~/Scripts/mobile-debug/router.js")"></script>
 				<script src="@Url.Content("~/Scripts/mobile-debug/transition.js")"></script>
                 <script src="@Url.Content("~/Scripts/mobile-debug/vehicle.js")"></script>
-            }
-
-            if (User.Identity.IsAuthenticated && !HttpContext.Current.IsDebuggingEnabled)
-            {
+            } else {
 				<script src="@Url.Content("~/Scripts/MileageStats.Mobile.min.js")"></script>
 			}         
 			

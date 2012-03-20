@@ -160,7 +160,8 @@ limitations under the License. */
 
         // simulate hash change
         m.window.location = {
-            hash: ''
+            hash: '',
+            pathname: ''
         };
 
         router.initialize();

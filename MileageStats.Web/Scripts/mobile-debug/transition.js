@@ -34,9 +34,9 @@ limitations under the License. */
 		var template = getTemplateFor(route, namedParametersPattern);
 		var onSuccess = success(host, template, target, callback);
 
-		host.toggleClass(cssClassForTransition);
+		host.removeClass(cssClassForTransition).addClass(cssClassForTransition);
 
-		if (registration.fetch) {
+		if (registration.fetch && !mstats.initialModel) {
 
 			$.ajax({
 				dataType: 'json',
@@ -48,8 +48,11 @@ limitations under the License. */
 			});
 
 		} else {
-			// do we ever need to render a template with default values?
-			onSuccess({});
+            var response = {
+                Model: mstats.initialModel
+            };
+            mstats.initialModel = null;
+            onSuccess(response);
 		}
 	}
 
@@ -80,7 +83,7 @@ limitations under the License. */
 			    registration.postrender(model, el, target);
 			}
 
-			host.toggleClass(cssClassForTransition);
+			host.removeClass(cssClassForTransition);
 
 			if (callback) callback(model, el);
 		};

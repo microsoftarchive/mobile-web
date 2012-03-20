@@ -398,6 +398,7 @@
     <Content Include="Views\Shared\_Error.Mobile.cshtml" />
     <Content Include="Views\Shared\_spaTemplates.cshtml" />
     <Content Include="Views\Reminder\ListByGroup.Mobile.cshtml" />
+    <Content Include="Views\Shared\_spa.mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Index.cshtml" />

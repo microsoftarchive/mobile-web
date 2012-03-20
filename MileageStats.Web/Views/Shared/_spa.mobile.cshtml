@@ -1,0 +1,12 @@
+﻿@using System.Web.Script.Serialization
+@{
+    Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+
+    var serializer = new JavaScriptSerializer();
+    var json = serializer.Serialize(Model);
+}
+
+<script>
+    this.mstats = this.mstats || { };
+    this.mstats.initialModel = @Html.Raw(json);
+</script>

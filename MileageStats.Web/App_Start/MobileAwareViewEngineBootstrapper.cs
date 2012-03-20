@@ -144,6 +144,13 @@ namespace MileageStats.Web.App_Start
             if (controllerContext.RouteData.DataTokens.ContainsKey("area"))
                 area = controllerContext.RouteData.DataTokens["area"].ToString();
 
+            if (controllerContext.HttpContext.Request.Browser.IsWow()
+                && controllerContext.HttpContext.User.Identity.IsAuthenticated
+                && !isPartialView)
+            {
+                viewName = "_spa";
+            }
+
             // Apply the view modifier
             var newViewName = string.Format("{0}.{1}", viewName, _viewModifier);
 
