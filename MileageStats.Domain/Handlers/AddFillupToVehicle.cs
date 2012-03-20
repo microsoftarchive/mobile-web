@@ -111,7 +111,7 @@ namespace MileageStats.Domain.Handlers
                                  TotalUnits = source.TotalUnits,
                                  TransactionFee = source.TransactionFee,
                                  VehicleId = source.VehicleId,
-                                 Vendor = source.Vendor,
+                                 Vendor = source.Vendor ?? source.Location,
                                  UnitOfMeasure = source.UnitOfMeasure
                              };
             return fillup;

@@ -22,6 +22,5 @@ namespace MileageStats.Domain.Contracts
     public interface IMapService
     {
         IEnumerable<string> SearchKeywordLocation(string keyword, double latitude, double longitude);
-        string ReverseGeoCodeLocationCountry(double latitude, double longitude);
     }
 }

@@ -141,6 +141,26 @@ namespace MileageStats.Domain.Tests
         }
 
         [Fact]
+        public void WhenAddingFillup_UsesLocationIfVendorNull()
+        {
+            _vehicleRepo
+                .Setup(r => r.GetVehicle(DefaultUserId, DefaultVehicleId))
+                .Returns(_vehicle);
+
+            var fillupForm = new FillupEntryFormModel
+                                 {
+                                     Vendor = null,
+                                     Location = "testlocation"
+                                 };
+
+            var handler = new AddFillupToVehicle(_vehicleRepo.Object, _fillupRepositoryMock.Object);
+            handler.Execute(DefaultUserId, DefaultVehicleId, fillupForm);
+
+            _fillupRepositoryMock
+                .Verify(r => r.Create(DefaultUserId, DefaultVehicleId, It.Is<FillupEntry>(f=>f.Vendor=="testlocation")));
+        }
+
+        [Fact]
         public void WhenAddingFillupAndVehicleRepositoryThrows_ThenWrapsException()
         {
             _vehicleRepo

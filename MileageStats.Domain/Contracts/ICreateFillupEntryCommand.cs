@@ -57,6 +57,8 @@ namespace MileageStats.Domain.Contracts
 
         string Vendor { get; set; }
 
+        string Location { get; set; }
+
         double TransactionFee { get; set; }
 
         string Remarks { get; set; }

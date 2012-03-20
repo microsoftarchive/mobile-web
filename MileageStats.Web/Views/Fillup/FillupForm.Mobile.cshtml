@@ -4,9 +4,9 @@
     var today = DateTime.Now;
 }
 @Html.ValidationSummary(true)
-<ul>
+<ul id="fillupForm" data-fillup-stations-url="@Url.Action("GetFillupStations", "GeoLocation")">
     <li class="psuedo-date">
-        <label for="Date">Date <em>(mm/dd/yyyy)</em></label>
+        <label for="Date">Date</label>
         @Html.ValidationMessageFor(model => model.Date)
         @Html.DropDownListFor(model => model.DateMonth, SelectListFor.Month(i => today.Month == i))
         @Html.DropDownListFor(model => model.DateDay, SelectListFor.Date(i => today.Day == i))
@@ -27,11 +27,31 @@
         @Html.ValidationMessageFor(model => model.TotalUnits)
         @Mustache.InputTypeFor(model => model.TotalUnits)
     </li>
+    @if(Html.IsRenderingForMustache())
+    {
+    <li>
+		<label for="Location">Fill-up station</label>
+		<select name="Location"></select>
+	</li>
+	<li>
+		<input type="checkbox" name="use-api-location" value="1" />Locate nearby fill-up stations.
+	</li>
+	<li>
+        <label for="new-location">Or add a new fill-up station</label>
+        @Html.ValidationMessageFor(model => model.Vendor)
+        @Mustache.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) 
+	</li>
+
+    }
+    else
+    {
     <li>
         @Html.LabelFor(model => model.Vendor)
 		@Html.ValidationMessageFor(model => model.Vendor)
         @Mustache.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) 
     </li>
+    }
+    
     <li>
         @Html.LabelFor(model => model.TransactionFee)
         @Html.ValidationMessageFor(model => model.TransactionFee)

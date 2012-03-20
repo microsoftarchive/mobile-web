@@ -28,16 +28,20 @@ limitations under the License. */
 
     test('charts subscribes to button click and searches for form values in the given view. also subscribes to submit event and cancels default', function () {
 
-        expect(6);
+        expect(7);
         var module = app.charts(mocks.create());
-        var testSubmitEvent = { preventDefault: function () { ok(true, "We expect that preventDefault is called."); } };
+        var testSubmitEvent = { preventDefault: function () { ok(true, "Expect that preventDefault is called."); } };
 
         var chartImage = { attr: function (attributeName, attributeValue) {
-            equal(attributeName, 'src');
-            equal(0, attributeValue.indexOf('testchartimageurl'));
-            ok(attributeValue.indexOf('&ChartName=testchartname') > 0);
-            ok(attributeValue.indexOf('&StartDate=teststartdate') > 0);
-            ok(attributeValue.indexOf('&EndDate=testenddate') > 0);
+            if (attributeName == 'src') {
+                equal(0, attributeValue.indexOf('testchartimageurl'), 'Expect testchartimageurl to be at index zero of src attrib value');
+                ok(attributeValue.indexOf('&ChartName=testchartname') > 0, 'Expect ChartName constraint');
+                ok(attributeValue.indexOf('&StartDate=teststartdate') > 0, 'Expect StartDate constraint');
+                ok(attributeValue.indexOf('&EndDate=testenddate') > 0, 'Expect EndDate constraint');
+            } else {
+                equal(attributeName, 'style');
+                equal(attributeValue, '');
+            }
         }
         };
         var mockView = {
@@ -48,35 +52,35 @@ limitations under the License. */
                             click: function (clickEventSubscription) {
                                 clickEventSubscription();
                             }
-                        }; 
+                        };
                     case 'form':
                         return {
                             submit: function (submitEventSubscription) {
                                 submitEventSubscription(testSubmitEvent);
                             }
-                        }; 
+                        };
                     case 'select[name=ChartName] option:selected':
                         return {
                             val: function () { return 'testchartname'; }
-                        }; 
+                        };
                     case 'select[name=StartDate] option:selected':
                         return {
                             val: function () { return 'teststartdate'; }
-                        }; 
+                        };
                     case 'select[name=EndDate] option:selected':
                         return {
                             val: function () { return 'testenddate'; }
-                        }; 
-                    case 'input:checkbox[name=VehicleIds]:checked':
+                        };
+                    case 'input:checkbox[name=VehicleIds]':
                         return {
                             each: function (fn) { return { value: 123 }; }
-                        }; 
+                        };
                     case '#GetChartImageUrl':
                         return {
                             val: function () { return 'testchartimageurl'; }
-                        }; 
+                        };
                     case '#chartimage':
-                        return chartImage; 
+                        return chartImage;
 
                     default: result = 'unknown';
                 }

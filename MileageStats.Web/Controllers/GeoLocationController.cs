@@ -36,16 +36,9 @@ namespace MileageStats.Web.Controllers
 
         // GET: /GeoLocation/
 
-        public JsonResult GetGasStations(double latitude, double longitude)
+        public JsonResult GetFillupStations(double latitude, double longitude)
         {
             return Json(this.mapService.SearchKeywordLocation("Gas Stations", latitude, longitude), JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetCountry(double latitude, double longitude)
-        {
-            return Json(this.mapService.ReverseGeoCodeLocationCountry(latitude, longitude), JsonRequestBehavior.AllowGet);
-        }
-
-        
+        }        
     }
 }

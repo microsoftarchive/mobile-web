@@ -18,6 +18,7 @@ limitations under the License. */
 (window.mstats = window.mstats || {}).fillupAdd = function (require) {
 
     var formSubmitter = require('formSubmitter');
+    var navigator = require('navigator');
 
     var urlPattern = '/Vehicle/:vehicleId/Fillup/List';
 
@@ -27,7 +28,44 @@ limitations under the License. */
             window.location.hash = urlPattern.replace(':vehicleId', context.params.vehicleId);
         });
 
+        var $fillupForm = el.find('#fillupForm');
+        var $useGeoCoordinateToGetFillupStationsCheckbox = el.find('input:checkbox[name=use-api-location]');
+        var $fillupStationSelect = el.find('select[name=Location]');
+        var $fillupStationTextbox = el.find('input[name=Vendor]');
+        var fillupStationsUrl = $fillupForm.data('fillup-stations-url');
+
+        $fillupStationSelect.attr('disabled', 'disabled');
+
+        $useGeoCoordinateToGetFillupStationsCheckbox.click(function () {
+            if ($useGeoCoordinateToGetFillupStationsCheckbox.is(':checked') && navigator.geolocation) {
+                $fillupStationTextbox.attr('disabled', 'disabled');
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    //Get country name from GeoLocationController 
+                    var getGasStationsUrl = fillupStationsUrl + '?latitude=' + position.coords.latitude + "&longitude=" + position.coords.longitude;
+                    $.getJSON(getGasStationsUrl, function (data) {
+                        $fillupStationSelect.removeAttr('disabled');
+                        updateList(data, $fillupStationSelect);
+                    });
+                });
+            }
+            else {
+                $fillupStationTextbox.removeAttr('disabled');
+                $fillupStationSelect.attr('disabled', 'disabled');
+            }
+
+        });
     }
+
+    function updateList(data, $selectList) {
+        $.each(data,
+              function (key, value) {
+                  $selectList.append(
+                    $('<option></option>')
+                    .attr('value', value)
+                    .text(value)
+                  );
+              });
+    };
 
     return {
         fetch: true,

@@ -118,6 +118,8 @@ namespace MileageStats.Web.Models
         [Display(Name = "FillUpEntryVendorLabelText", ResourceType = typeof(Resources))]
         public string Vendor { get; set; }
 
+        public string Location { get; set; }
+
         [Required(ErrorMessageResourceName = "FillupEntryTransactionFeeRequired", ErrorMessageResourceType = typeof(Resources))]
         [Range(0.0d, 100.0d, ErrorMessageResourceName = "FillupEntryTransactionFeeRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "FillupEntryTransactionFeeLabelText", ResourceType = typeof(Resources))]

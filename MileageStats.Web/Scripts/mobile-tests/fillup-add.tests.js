@@ -20,9 +20,16 @@ limitations under the License. */
     module('fillup add specs');
 
     test('fillup module constructs itself', function () {
-        var module = app.fillupAdd(mocks.create({ formSubmitter: { attach:function () {
-        }
-        }}));
+
+        var m = mocks.create({
+            formSubmitter: {
+                attach: function () { }
+            },
+            navigator: {
+                geolocation: {}
+            }
+        });
+        var module = app.fillupAdd(m);
 
         ok(module != undefined, true);
         equal(typeof module, 'object');
@@ -39,11 +46,210 @@ limitations under the License. */
                     equal(typeof el, 'object');
                     equal(typeof callback, 'function');
                 }
+            },
+            navigator: {
+                geolocation: {}
             }
         });
 
+        var mockView = m.$('view');
+        mockView.find = function (selector) {
+            switch (selector) {
+                case 'input:checkbox[name=use-api-location]':
+                    return { click: function () { } };
+                default:
+                    return m.$(selector);
+            }
+        };
+
         var module = app.fillupAdd(m);
-        module.postrender({}, m.$('view'), {});
+        module.postrender({}, mockView, {});
+
+    });
+
+    test('fillup module attaches to click event of use-api-location checkbox', function () {
+
+        expect(1);
+
+        var m = mocks.create({
+            formSubmitter: {
+                attach: function () { }
+            },
+            navigator: {
+                geolocation: {}
+            }
+        });
+
+        var mockView = m.$('view');
+        mockView.find = function (selector) {
+            switch (selector) {
+                case 'input:checkbox[name=use-api-location]':
+                    return { click: function () {
+                        ok(true, "Expect to subscribe to client event of checkbox.");
+                    }
+                    };
+                default:
+                    return m.$(selector);
+            }
+        };
+
+        var module = app.fillupAdd(m);
+        module.postrender({}, mockView, {});
+
+    });
+
+    test('fillup module disables Vendor controls by default', function () {
+
+        expect(2);
+
+        var m = mocks.create({
+            formSubmitter: {
+                attach: function () { }
+            },
+            navigator: {
+                geolocation: {}
+            }
+        });
+
+        var mockView = m.$('view');
+        mockView.find = function (selector) {
+            switch (selector) {
+                case 'input:checkbox[name=use-api-location]':
+                    return {
+                        click: function () { }
+                    };
+                case 'select[name=Location]':
+                    return {
+                        attr: function (attributeName, attributeValue) {
+                            equal(attributeName, "disabled");
+                            equal(attributeValue, "disabled");
+                        }
+                    };
+                default:
+                    return m.$(selector);
+            }
+        };
+
+        var module = app.fillupAdd(m);
+        module.postrender({}, mockView, {});
+
+    });
+
+    test('fillup module enables Location and disables Vendor controls if use-api-location is checked', function () {
+
+        expect(6);
+
+        var m = mocks.create({
+            formSubmitter: {
+                attach: function () { }
+            },
+            navigator: {
+                geolocation: {
+                    getCurrentPosition: function (callback) {
+                        callback({
+                            coords: {
+                                latitude: "123",
+                                longitude: "456"
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        $.getJSON = function (url, callback) {
+            callback(["value1", "value2"]);
+        };
+
+        var mockView = m.$('view');
+        mockView.find = function (selector) {
+            switch (selector) {
+                case 'input:checkbox[name=use-api-location]':
+                    return {
+                        click: function (clickEventSubscription) {
+                            clickEventSubscription();
+                        },
+                        is: function (valueToCheck) {
+                            equal(':checked', valueToCheck);
+                            return true;
+                        }
+                    };
+                case 'input[name=Vendor]':
+                    return {
+                        attr: function (attributeName, attributeValue) {
+                            equal(attributeName, "disabled");
+                            equal(attributeValue, "disabled");
+                        }
+                    };
+                case 'select[name=Location]':
+                    return {
+                        attr: function(attributeName, attributeValue) {
+                            equal(attributeName, "disabled");
+                            equal(attributeValue, "disabled");
+                        },
+                        removeAttr: function(attributeName) {
+                            equal(attributeName, "disabled");
+                        },
+                        append: function() {
+                        }
+                    };
+                default:
+                    return m.$(selector);
+            }
+        };
+
+        var module = app.fillupAdd(m);
+        module.postrender({}, mockView, {});
+
+    });
+
+    test('fillup module disables Location and enables Vendor controls if use-api-location is unchecked', function () {
+
+        expect(6);
+
+        var m = mocks.create({
+            formSubmitter: {
+                attach: function () { }
+            },
+            navigator: {
+                geolocation: {}
+            }
+        });
+
+        var mockView = m.$('view');
+        mockView.find = function (selector) {
+            switch (selector) {
+                case 'input:checkbox[name=use-api-location]':
+                    return {
+                        click: function (clickEventSubscription) {
+                            clickEventSubscription();
+                        },
+                        is: function (valueToCheck) {
+                            equal(':checked', valueToCheck);
+                            return false;
+                        }
+                    };
+                case 'input[name=Vendor]':
+                    return {
+                        removeAttr: function (attributeName) {
+                            equal(attributeName, "disabled");
+                        }
+                    };
+
+                case 'select[name=Location]':
+                    return {
+                        attr: function (attributeName, attributeValue) {
+                            equal(attributeName, "disabled");
+                            equal(attributeValue, "disabled");
+                        }
+                    };
+                default:
+                    return m.$(selector);
+            }
+        };
+
+        var module = app.fillupAdd(m);
+        module.postrender({}, mockView, {});
 
     });
 
