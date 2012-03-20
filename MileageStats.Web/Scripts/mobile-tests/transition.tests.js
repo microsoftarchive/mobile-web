@@ -19,8 +19,14 @@ limitations under the License. */
 
     module('transition specs');
 
+    var default_mocks = {
+        mstats: {
+            rooturl: '/'
+        }
+    };
+
     test('transition module constructs itself', function () {
-        var module = app.transition(mocks.create());
+        var module = app.transition(mocks.create(default_mocks));
 
         ok(module != undefined, true);
         equal(typeof module, 'object');
@@ -28,7 +34,7 @@ limitations under the License. */
 
     test('module infers template id from route', function () {
 
-        var m = mocks.create();
+        var m = mocks.create(default_mocks);
         var transition = app.transition(m);
 
         transition.to({ registration: { route: '/my/route'} }, '#view');
@@ -39,7 +45,7 @@ limitations under the License. */
 
     test('module invokes an ajax calls by default to url when registered to fetch', function () {
 
-        var m = mocks.create();
+        var m = mocks.create(default_mocks);
         var transition = app.transition(m);
 
         transition.to({
@@ -56,7 +62,7 @@ limitations under the License. */
 
     test('module appends format to url before making an ajax calls registered to fetch', function () {
 
-		var m = mocks.create();
+        var m = mocks.create(default_mocks);
 		var transition = app.transition(m);
 
 		transition.to({
@@ -73,7 +79,7 @@ limitations under the License. */
 
     test('module will not invoke an ajax call when registrater not to fetch', function () {
 
-        var m = mocks.create();
+        var m = mocks.create(default_mocks);
         var transition = app.transition(m);
 
         transition.to({
@@ -90,7 +96,7 @@ limitations under the License. */
 
     test('module matches invokes correct ajax url when route has a named arg', function () {
 
-        var m = mocks.create();
+        var m = mocks.create(default_mocks);
         var transition = app.transition(m);
 
         transition.to({
@@ -108,7 +114,7 @@ limitations under the License. */
 
     test('module matches template with a named arg when the correct regex is passed', function () {
 
-        var m = mocks.create();
+        var m = mocks.create(default_mocks);
         var transition = app.transition(m);
 
         transition.to({
@@ -125,7 +131,7 @@ limitations under the License. */
 
     test('module matches template with an embedded named arg when the correct regex is passed', function () {
 
-        var m = mocks.create();
+        var m = mocks.create(default_mocks);
         var transition = app.transition(m);
 
         transition.to({

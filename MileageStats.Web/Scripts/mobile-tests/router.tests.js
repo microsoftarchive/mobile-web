@@ -23,7 +23,10 @@ limitations under the License. */
         transition: {
             to: function (target, defaultRegion, namedParametersPattern, callback) { callback(); }
         },
-        window: { onhashchange: function () { } }
+        window: { onhashchange: function () { } },
+        mstats: {
+            rooturl: '/'
+        }
     };
 
     test('router module constructs itself', function () {
@@ -36,7 +39,7 @@ limitations under the License. */
     test('router delegates to transition when hash changed', function () {
 
         expect(1);
-        
+
         var m = mocks.create({
             transition: {
                 to: function () {
@@ -44,7 +47,10 @@ limitations under the License. */
                     equal(view, '#view');
                 }
             },
-            window: { onhashchange: function () { } }
+            window: { onhashchange: function () { } },
+            mstats: {
+                rooturl: '/'
+            }
         });
 
         var router = app.router(m);
@@ -118,13 +124,18 @@ limitations under the License. */
 
     test('router invoke transition when first initialized if # is in the url', function () {
 
+        expect(1);
+
         var transition_invoked = false;
 
         var m = mocks.create({
             transition: {
                 to: function () { transition_invoked = true; }
             },
-            window: { onhashchange: function () { } }
+            window: { onhashchange: function () { } },
+            mstats: {
+                rooturl: '/'
+            }
         });
 
         var router = app.router(m);
@@ -151,7 +162,10 @@ limitations under the License. */
             transition: {
                 to: function () { transition_not_invoked = false; }
             },
-            window: { onhashchange: function () { } }
+            window: { onhashchange: function () { } },
+            mstats: {
+                rooturl: '/'
+            }
         });
         var router = app.router(m);
 
@@ -179,7 +193,10 @@ limitations under the License. */
                     equal(target.params.id, 123);
                 }
             },
-            window: { onhashchange: function () { } }
+            window: { onhashchange: function () { } },
+            mstats: {
+                rooturl: '/'
+            }
         });
 
         var router = app.router(m);
@@ -195,4 +212,69 @@ limitations under the License. */
         router.initialize();
     });
 
+    test('router resets initial model during initialized if # is not the root', function () {
+
+        expect(2);
+
+        var initialModel = {};
+
+        var m = mocks.create({
+            transition: {
+                to: function () { }
+            },
+            window: { onhashchange: function () { } },
+            mstats: {
+                rooturl: '/',
+                initialModel: initialModel
+            }
+        });
+
+        var router = app.router(m);
+        router.setDefaultRegion('#view');
+        router.register('/inital/page');
+
+        // simulate hash change
+        m.window.location = {
+            hash: '#/inital/page'
+        };
+
+        equal(m.mstats.initialModel, initialModel);
+
+        router.initialize();
+
+        // assert
+        equal(m.mstats.initialModel, null);
+    });
+
+    test('router does not resets initial model during initialized if # is the root', function () {
+
+        expect(1);
+
+        var initialModel = {};
+
+        var m = mocks.create({
+            transition: {
+                to: function () { }
+            },
+            window: { onhashchange: function () { } },
+            mstats: {
+                rooturl: '/',
+                initialModel: initialModel
+            }
+        });
+
+        var router = app.router(m);
+        router.setDefaultRegion('#view');
+        router.register('/inital/page');
+
+        // simulate hash change
+        m.window.location = {
+            hash: '#/'
+        };
+
+        router.initialize();
+
+        // assert
+        equal(m.mstats.initialModel, initialModel);
+    });
 } (window.specs = window.specs || {}, window.mstats));
