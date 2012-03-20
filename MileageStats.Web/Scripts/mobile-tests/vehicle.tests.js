@@ -114,12 +114,12 @@ limitations under the License. */
 
     test('vehicle module should invoke formSubmitter with the correct arguments', function () {
 
-        expect(2);
+        expect(4);
 
         var m = mocks.create({
             confirm: function () { return true; },
             formSubmitter: {
-                attach: function (el, callback) {
+                attach: function (el, callback, selector) {
                     equal(typeof el, 'object');
                     equal(typeof callback, 'function');
                 }

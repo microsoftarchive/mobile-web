@@ -196,10 +196,9 @@ namespace MileageStats.Web.Controllers
 
             this.SetConfirmationMessage(Messages.VehicleController_VehicleDeleted);
 
-            return new ContentTypeAwareResult
+            return new ContentTypeAwareResult()
             {
-                WhenHtml = (m, v, t) => RedirectToAction("Index", "Dashboard"),
-                WhenJson = (m, v, t) => new HttpStatusCodeResult((int)HttpStatusCode.OK, Messages.VehicleController_VehicleDeleted)
+                WhenHtml = (m, v, t) => RedirectToAction("Index", "Dashboard")
             };
         }
 

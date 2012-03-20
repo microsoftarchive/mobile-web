@@ -16,69 +16,74 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 (function (mstats) {
-    var ctr = function (require) {
+	var ctr = function (require) {
 
-        var $ = require('$'),
+		var $ = require('$'),
             confirmPrompt = require('confirm'),
+			rootUrl = require('rootUrl'),
             formSubmitter = require('formSubmitter');
-        
-        var urlPattern = '/Vehicle/:vehicleId/Details';
 
-        function postrender(model, el, context) {
+		var urlPattern = '/Vehicle/:vehicleId/Details';
 
-            formSubmitter.attach(el, function (response) {
-                window.location.hash = urlPattern.replace(':vehicleId', response.Model.VehicleId);
-            });
+		function postrender(model, el, context) {
 
-            el.find('#DeleteVehicleButton').click(function (event) {
-                var answer = confirmPrompt("Are you sure you want to delete this vehicle and all of it's related data?");
-                if (!answer) {
-                    event.preventDefault();
-                }
-            });
+			formSubmitter.attach(el, function (response) {
+				window.location.hash = urlPattern.replace(':vehicleId', response.Model.VehicleId);
+			});
 
-            var $vehicleEditForm = el.find('#vehicleEditForm'),
+			formSubmitter.attach(el, function (response) {
+				window.location.hash = rootUrl;
+			}, '#DeleteVehicleForm');
+
+			el.find('#DeleteVehicleButton').click(function (event) {
+				var answer = confirmPrompt("Are you sure you want to delete this vehicle and all of it's related data?");
+				if (!answer) {
+					event.preventDefault();
+				}
+			});
+
+			var $vehicleEditForm = el.find('#vehicleEditForm'),
                 $yearSelect = el.find('#Year'),
                 $makeSelect = el.find('#MakeName'),
                 $modelSelect = el.find('#ModelName'),
                 makesUrl = $vehicleEditForm.data('makes-url'),
                 modelsUrl = $vehicleEditForm.data('models-url');
 
-            $yearSelect.change(function () {
-                $.post(makesUrl,
+			$yearSelect.change(function () {
+				$.post(makesUrl,
                 { year: $yearSelect.val() },
                 function (data) {
-                    $makeSelect.children().not(':first').remove();
-                    $modelSelect.children().not(':first').remove();
-                    updateList(data, $makeSelect);
+                	$makeSelect.children().not(':first').remove();
+                	$modelSelect.children().not(':first').remove();
+                	updateList(data, $makeSelect);
                 });
-            });
+			});
 
-            $makeSelect.change(function () {
-                $.post(modelsUrl,
+			$makeSelect.change(function () {
+				$.post(modelsUrl,
                 { year: $yearSelect.val(), make: $makeSelect.val() },
                 function (data) {
-                    $modelSelect.children().not(':first').remove();
-                    updateList(data, $modelSelect);
+                	$modelSelect.children().not(':first').remove();
+                	updateList(data, $modelSelect);
                 });
-            });
-        };
+			});
+		};
 
-        function updateList(data, $selectList) {
-            $.each(data,
+		function updateList(data, $selectList) {
+			$.each(data,
               function (key, value) {
-                  $selectList.append(
+              	$selectList.append(
                     $('<option></option>')
                     .attr('value', value)
                     .text(value)
                     );
               });
-          };
+		};
 
-          return {
-              postrender: postrender
-          };
-    };
-    mstats.vehicleEdit = ctr;
-    mstats.vehicleAdd = ctr;
+		return {
+			postrender: postrender
+		};
+	};
+	mstats.vehicleEdit = ctr;
+	mstats.vehicleAdd = ctr;
 } (this.mstats = this.mstats || {}));

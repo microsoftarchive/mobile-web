@@ -326,6 +326,7 @@
     <Content Include="Scripts\desktop-debug\mstats.vehicle.js" />
     <Content Include="Scripts\mobile-debug\vehicle.js" />
     <Content Include="Scripts\mobile-tests\charts.tests.js" />
+    <Content Include="Scripts\mobile-tests\notifications.tests.js" />
     <Content Include="Scripts\mobile-tests\reminder-fulfill.tests.js" />
     <Content Include="Scripts\mobile-tests\reminder-add.tests.js" />
     <Content Include="Scripts\mobile-tests\vehicle.tests.js" />

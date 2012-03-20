@@ -23,7 +23,7 @@
             <li class="icon false">
                 @if (Request.Browser.IsWow())
                 {
-                    <form action="@Url.UnencodedAction("Delete", "Vehicle", new {id = Mustache.Value(m => m.VehicleId)})" method="POST">
+                    <form action="@Url.UnencodedAction("Delete", "Vehicle", new {id = Mustache.Value(m => m.VehicleId)})" id="DeleteVehicleForm" method="POST">
                         @Html.AntiForgeryToken()
 
                         <button id="DeleteVehicleButton" type="submit" value="delete" name="action">

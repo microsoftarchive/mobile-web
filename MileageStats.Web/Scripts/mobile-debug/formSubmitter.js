@@ -80,9 +80,9 @@ limitations under the License. */
 			};
 		}
 
-		function attachFormSubmission(el, callback) {
+		function attachFormSubmission(el, callback, formSelector) {
 
-			var form = el.find('form').first(),
+			var form = (formSelector) ? el.find(formSelector).first() : el.find('form').first(),
                 action = form.attr('action');
 
 			$.validator.unobtrusive.parse(form);
