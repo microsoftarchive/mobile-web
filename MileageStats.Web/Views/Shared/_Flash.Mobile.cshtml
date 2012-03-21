@@ -3,21 +3,7 @@
  in addition, they are the keys used 
  to set message in TempData
 *@
-@if (Html.IsRenderingForMustache())
-{
-    @:{{#FlashAlert}}
-    <div class="flash alert">
-        <p>{{FlashAlert}}</p>
-    </div>
-    @:{{/FlashAlert}}
-
-    @:{{#FlashConfirm}}
-    <div class="flash confirm">
-        <p>{{FlashConfirm}}</p>
-    </div>
-    @:{{/FlashConfirm}}
-}
-else
+@if (!Html.IsRenderingForMustache())
 {
     foreach (var pair in TempData.Where(x => new[] { "alert", "notify", "confirm" }.Contains(x.Key)))
     {
