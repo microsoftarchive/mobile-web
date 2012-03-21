@@ -292,6 +292,7 @@
     <Content Include="Profiles\Generic.xml" />
     <Content Include="Scripts\MileageStats.Mobile.min.js" />
     <Content Include="Scripts\desktop-debug\mstats.tile.js" />
+    <Content Include="Scripts\mobile-debug\ajax.js" />
     <Content Include="Scripts\mobile-debug\charts.js" />
     <Content Include="Scripts\mobile-debug\reminder-fulfill.js" />
     <Content Include="Scripts\mobile-debug\reminder-add.js" />

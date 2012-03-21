@@ -29,7 +29,8 @@ limitations under the License. */
 
 	mstats.formSubmitter = function (require) {
 
-		var $ = require('$'),
+	    var $ = require('$'),
+	        ajax = require('ajax'),
 			notifications = require('notifications');
 
 		function validate(form) {
@@ -97,7 +98,7 @@ limitations under the License. */
 
 				var input = form.serialize();
 
-				$.ajax({
+				ajax.post({
 					dataType: 'json',
 					data: input,
 					type: 'POST',

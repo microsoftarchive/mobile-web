@@ -72,6 +72,7 @@
             
 			if (HttpContext.Current.IsDebuggingEnabled)
 			{
+				<script src="@Url.Content("~/Scripts/mobile-debug/ajax.js")"></script>
 				<script src="@Url.Content("~/Scripts/mobile-debug/app.js")"></script>
                 <script src="@Url.Content("~/Scripts/mobile-debug/charts.js")"></script>
 				<script src="@Url.Content("~/Scripts/mobile-debug/dashboard.js")"></script>
@@ -84,9 +85,9 @@
 				<script src="@Url.Content("~/Scripts/mobile-debug/transition.js")"></script>
                 <script src="@Url.Content("~/Scripts/mobile-debug/vehicle.js")"></script>
 				<script src="@Url.Content("~/Scripts/mobile-debug/notifications.js")"></script>
-			}
-			else
-			{
+            }
+            else
+            {
 				<script src="@Url.Content("~/Scripts/MileageStats.Mobile.min.js")"></script>
 			}         
 			
