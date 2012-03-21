@@ -105,7 +105,7 @@ limitations under the License. */
                         return;
                     }
 
-                    that.data.Reminders = data.model;
+                    that.data.Reminders = data.Model.model;
                     that.data.VehicleId = that.options.selectedVehicleId;
                     that._updateSelectedReminder();
                     that._applyTemplate();
