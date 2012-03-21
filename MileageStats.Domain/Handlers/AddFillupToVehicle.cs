@@ -106,10 +106,10 @@ namespace MileageStats.Domain.Handlers
                                  Date = source.Date,
                                  Distance = source.Distance,
                                  Odometer = source.Odometer,
-                                 PricePerUnit = source.PricePerUnit,
+                                 PricePerUnit = source.PricePerUnit.Value,
                                  Remarks = source.Remarks,
-                                 TotalUnits = source.TotalUnits,
-                                 TransactionFee = source.TransactionFee,
+                                 TotalUnits = source.TotalUnits.Value,
+                                 TransactionFee = source.TransactionFee.Value,
                                  VehicleId = source.VehicleId,
                                  Vendor = source.Vendor ?? source.Location,
                                  UnitOfMeasure = source.UnitOfMeasure

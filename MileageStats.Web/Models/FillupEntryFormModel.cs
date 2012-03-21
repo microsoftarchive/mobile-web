@@ -98,7 +98,7 @@ namespace MileageStats.Web.Models
         [Range(0.1d, 100.0d, ErrorMessageResourceName = "FillupEntryPricePerUnitRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "FillupEntryPricePerUnitLabelText", ResourceType = typeof(Resources))]
         [InputType("number", "6", "0.01", "3.75")]
-        public double PricePerUnit { get; set; }
+        public double? PricePerUnit { get; set; }
 
         /// <summary>
         /// Total number of units.
@@ -107,7 +107,7 @@ namespace MileageStats.Web.Models
         [Range(1.0d, 1000.0d, ErrorMessageResourceName = "FillupEntryTotalUnitsRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "FillupEntryTotalUnitsLabelText", ResourceType = typeof(Resources))]
         [InputType("number", "7", "0.001", "10.123")]
-        public double TotalUnits { get; set; }
+        public double? TotalUnits { get; set; }
 
         [Required(ErrorMessageResourceName = "FillUpEntryUnitOfMeasureRequired", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "FillupEntryUnitOfMeasureLabelText", ResourceType = typeof(Resources))]
@@ -124,41 +124,11 @@ namespace MileageStats.Web.Models
         [Range(0.0d, 100.0d, ErrorMessageResourceName = "FillupEntryTransactionFeeRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "FillupEntryTransactionFeeLabelText", ResourceType = typeof(Resources))]
         [InputType("number", "6", "0.01", "0.45")]
-        public double TransactionFee { get; set; }
+        public double? TransactionFee { get; set; }
 
         [TextMultilineValidator]
         [StringLength(250, ErrorMessageResourceName = "FillupEntryRemarksStringLengthValidationError", ErrorMessageResourceType = typeof(Resources))]
         public string Remarks { get; set; }
-
-        /// <summary>
-        /// Total cost of fillup.
-        /// </summary>
-        [Display(Name = "FillupEntryTotalCostLabelText", ResourceType = typeof(Resources))]
-        public double TotalCost
-        {
-            get { return (this.PricePerUnit * this.TotalUnits) + this.TransactionFee; }
-        }
-
-        /// <summary>
-        /// Total cost of fillup.
-        /// </summary>
-        [Display(Name = "FillupEntryTotalFuelCostLabelText", ResourceType = typeof(Resources))]
-        public double TotalFuelCost
-        {
-            get { return this.PricePerUnit * this.TotalUnits; }
-        }
-
-        [Display(Name = "FillupEntryFuelEfficiencyLabelText", ResourceType = typeof(Resources))]
-        public double? FuelEfficiency
-        {
-            get { return this.Distance / this.TotalUnits; }
-        }
-
-        [Display(Name = "FillupEntryCostPerUnitLabelText", ResourceType = typeof(Resources))]
-        public double? CostPerUnit
-        {
-            get { return this.TotalCost / this.Distance; }
-        }
 
         #region Cached Calculations
 
