@@ -51,7 +51,7 @@ namespace MileageStats.Domain.Handlers
 
                 if (!fillups.Any()) yield break;
 
-                var priorFillup = fillups.Where(f => f.Date < fillup.Date).FirstOrDefault();
+                var priorFillup = fillups.LastOrDefault(f => f.Date < fillup.Date);
 
                 if ((priorFillup != null) && (priorFillup.Odometer >= fillup.Odometer))
                 {
