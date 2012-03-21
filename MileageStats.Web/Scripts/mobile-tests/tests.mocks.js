@@ -22,7 +22,7 @@ limitations under the License. */
 
 	// we'll generate a fresh instance of our mocks
 	// for each unit test
-	function generate(existing, behaviors) {
+	function generate(existing) {
 
 		// some of our mocks will record what they do
 		// so that we can verify behavior
@@ -36,84 +36,6 @@ limitations under the License. */
 			return false;
 		};
 
-		// we can pass into our generate function a hash of 
-		// behaviors, this will allow us to define behavior
-		// specific to individual unit tests
-		function getBehavior(target, defaultFn) {
-			if (behaviors && behaviors[target]) return behaviors[target];
-			return defaultFn || function () { return this; };
-		};
-
-		// mock jQuery
-		function buildMember(name, selector, defaultFn) {
-
-			// we want to track calls to the mocked jQuery
-			// we'll record the selector, the name of the member invoke,
-			// and the value passed to the member
-			// each entry will look like:
-			//     selector.member(arg)
-			// for example, if we invoke:
-			//     $('a').attr('href')
-			// we'll see the following in the tracked array:
-			//    a.attr(href)
-			// or if we invoke:
-			//     $('form').submit(function() {});
-			// we'll see :
-			//    form.submit()
-
-			return function (arg) {
-				var arg_text = (arg && typeof (arg) !== 'function') ? arg : '';
-				var context = selector || this.__parent__;
-				tracked.push(context + '.' + name + '(' + arg_text + ')');
-				var fn = getBehavior('$.' + name, defaultFn);
-				var el = $(arg);
-				el.__parent__ = context;
-				return fn.apply(el, arguments);
-			};
-		}
-
-		var jqueryMembers = [
-            'addClass',
-            'append',
-            'children',
-            'empty',
-            'find',
-            'first',
-            'html',
-            'last',
-            'next',
-            'on',
-            'removeClass',
-            'toggle',
-            'toggleClass'
-        ];
-
-		var $ = function (selector) {
-			var jquery = {},
-                member,
-                i = jqueryMembers.length - 1;
-
-			for (; i >= 0; i--) {
-				member = jqueryMembers[i];
-				jquery[member] = buildMember(member, selector);
-			}
-
-			jquery.attr = buildMember('attr', selector, function (name, value) { return ''; });
-			jquery.submit = buildMember('submit', selector, function () { return ''; });
-			jquery.data = buildMember('data', selector, function () { return ''; });
-			jquery.serialize = buildMember('serialize', selector, function () { return ''; });
-			jquery.each = function (fn) {
-				fn(0, selector + ' item');
-			};
-
-			return jquery;
-		};
-
-		$.ajax = function (args) {
-			tracked.push('ajax: ' + args.url);
-			if (args.success) args.success({});
-		};
-
 		var notifications = {
 			send: function (model) {
 				tracked.push('flash: ' + model.FlashAlert);
@@ -124,9 +46,12 @@ limitations under the License. */
 			}
 		};
 
-		// return a hash of the objects we are mocking
-		return merge({
-			$: $,
+        // return a hash of the objects we are mocking
+        // note: we're not actually mocking out jQuery 
+        // however it is included here, because some 
+	    // modules require it.
+        return merge({
+            $:$,
 			Mustache: {
 				to_html: function () {
 					return 'template';

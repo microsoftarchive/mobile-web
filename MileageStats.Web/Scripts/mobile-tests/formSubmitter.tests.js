@@ -17,7 +17,18 @@ limitations under the License. */
 
 (function (specs, app) {
 
-    module('formSubmitter specs');
+    var ajax = $.ajax,
+        validator = $.validator;
+
+    module('formSubmitter specs', {
+        setup: function () {
+            $.validator = stubUnobtrusive;
+        },
+        teardown: function () {
+            $.validator = validator;
+            $.ajax = ajax;
+        }
+    });
 
     test('formSubmitter module constructs itself', function () {
 
@@ -31,126 +42,101 @@ limitations under the License. */
 
         expect(1);
 
-        var m = mocks.create();
-        var mockForm = m.$();
-        mockForm.submit = function () { };
+        var form = $('<div><form/></div>');
 
-        m.$.validator = {
+        $.validator = {
             unobtrusive: {
-                parse: function (form) {
+                parse: function () {
                     ok(true);
                 }
             }
         };
 
-        var module = app.formSubmitter(m);
-        module.attach(mockForm, function () {
-        });
-    });
-
-    test('formSubmitter module should attach submit handler on form', function () {
-
-        expect(1);
-
-        var m = mocks.create();
-
-        m.$.validator = stubUnobtrusive;
-
-        var module = app.formSubmitter(m);
-        module.attach(m.$('view'), {});
-
-        ok(m.tracked.contains('form.submit()'));
-
+        var module = app.formSubmitter(mocks.create());
+        module.attach(form, function () { });
     });
 
     test('formSubmitter module should prevent default event when form is submitted', function () {
 
-        expect(1);
+        expect(2);
 
-        var m = mocks.create({},
-            {
-                '$.data': getValidatorThatReturns(false)
-            });
+        var view = $('<div><form/></div>'),
+            form = view.find('form');
+        form.data('unobtrusiveValidation', getValidatorThatReturns(false));
 
-        m.$.validator = stubUnobtrusive;
+        $.validator = stubUnobtrusive;
 
-        var mockView = whenFormSubmitted(function (submission) {
-            submission({
-                preventDefault: function () { ok(true); }
-            });
+        var module = app.formSubmitter(mocks.create({}));
+
+        form.submit(function (evt) {
+            ok(!evt.isDefaultPrevented());
         });
 
-        var module = app.formSubmitter(m);
-        module.attach(mockView, {});
+        module.attach(view, {});
+
+        form.submit(function (evt) {
+            ok(evt.isDefaultPrevented());
+        });
+
+        form.triggerHandler('submit');
     });
 
     test('formSubmitter module should serialize form when form is valid', function () {
 
         expect(1);
 
-        var m = mocks.create({},
-            {
-                '$.data': getValidatorThatReturns(true),
-                '$.submit': function (handler) {
-                    handler({ preventDefault: function () { }
-                    });
-                }
-            });
+        var view = $('<div><form><input type="text" name="field" value="value"/></form></div>'),
+            form = view.find('form');
+        form.data('unobtrusiveValidation', getValidatorThatReturns(true));
 
-        m.$.validator = stubUnobtrusive;
+        $.validator = stubUnobtrusive;
+        $.ajax = function (options) {
+            equal(options.data, 'field=value');
+        };
 
-        var module = app.formSubmitter(m);
-        module.attach(m.$('view'), function () {
-
-        });
-        ok(m.tracked.contains('form.serialize()'));
+        var module = app.formSubmitter(mocks.create());
+        module.attach(view, function () { });
+        form.triggerHandler('submit');
     });
-
 
     test('formSubmitter module should invoke a callback after the form is successfully submitted', function () {
 
         expect(1);
 
-        var m = mocks.create({},
-            {
-                '$.data': getValidatorThatReturns(true),
-                '$.submit': function (handler) {
-                    handler({ preventDefault: function () { }
-                    });
-                }
-            });
+        var view = $('<div><form/></div>'),
+            form = view.find('form');
+        form.find('form').data('unobtrusiveValidation', getValidatorThatReturns(true));
 
-        m.$.validator = stubUnobtrusive;
+        $.ajax = function (options) {
+            options.success({});
+        };
 
-        var module = app.formSubmitter(m);
-        module.attach(m.$('view'), function () {
+        var module = app.formSubmitter(mocks.create());
+
+        module.attach(view, function () {
             ok(true);
         });
+
+        form.triggerHandler('submit');
     });
 
     test('formSubmitter module should submit via ajax form when form is valid', function () {
 
         expect(1);
 
-        var m = mocks.create({},
-            {
-                '$.attr': function () {
-                    return 'url/to/post/form/to';
-                },
-                '$.data': getValidatorThatReturns(true),
-                '$.submit': function (handler) {
-                    handler({ preventDefault: function () { }
-                    });
-                }
-            });
+        var view = $('<div><form action="url/to/post/form/to"/></div>'),
+            form = view.find('form');
+        form.find('form').data('unobtrusiveValidation', getValidatorThatReturns(true));
 
-        m.$.validator = stubUnobtrusive;
+        $.ajax = function (options) {
+            equal(options.url, 'url/to/post/form/to');
+        };
 
-        var module = app.formSubmitter(m);
-        module.attach(m.$('view'), function () {
-        });
+        var module = app.formSubmitter(mocks.create());
 
-        ok(m.tracked.contains('ajax: url/to/post/form/to'));
+        module.attach(view, function () { });
+
+        form.triggerHandler('submit');
     });
 
     // represents the api that the formSubmitter module
@@ -162,33 +148,13 @@ limitations under the License. */
         }
     };
 
-    // provides a mock element for attach the submit handler,
-    // the handler passed in receives a function as an argument
-    function whenFormSubmitted(handler) {
-        return {
-            find: function () {
-                return {
-                    first: function () {
-                        return {
-                            attr: function () {
-                            },
-                            submit: handler
-                        };
-                    }
-                };
-            }
-        };
-    }
-
     // returns a "validator" object, whose validate method
     // returns the value specified
     function getValidatorThatReturns(isValid) {
-        return function () {
-            return {
-                validate: function (form) {
-                    return isValid;
-                }
-            };
+        return {
+            validate: function (form) {
+                return isValid;
+            }
         };
     }
 

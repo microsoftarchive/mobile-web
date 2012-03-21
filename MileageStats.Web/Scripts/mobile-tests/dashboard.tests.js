@@ -35,69 +35,51 @@ limitations under the License. */
 
     test('dashboard module should flag an element associated with a vehicle that has an overdue reminder', function () {
 
-        var find_invoked = false;
+        expect(1);
 
-        var mockView = {
-            find: assertion
+        var view = $('<div><div id="reminderMenu_99"/></div>');
+
+        var response = {
+            Model: {
+                VehicleListViewModel: {
+                    Vehicles: [{ VehicleId: 99}]
+                },
+                ImminentReminders: [{ VehicleId: 99}]
+            }
         };
 
         var module = app.dashboard(mocks.create(mockExpander));
+        module.postrender(response, view);
 
-        module.postrender({ Model: {
-            VehicleListViewModel: {
-                Vehicles: [{ VehicleId: 1}]
-            },
-            ImminentReminders: [{ VehicleId: 1}]
-        }
-        }, mockView);
-
-        function assertion(selector) {
-            find_invoked = (selector === '#reminderMenu_1');
-            return {
-                addClass: function (cssClass) {
-                    equal(cssClass, 'flag');
-                }
-            };
-        }
-
-        ok(find_invoked);
+        ok(view.find('#reminderMenu_99').hasClass('flag'));
     });
 
-    test('dashboard module should only flag an element associated with a particular vehicle once', function () {
+    test('dashboard module should flag every vehicle that has an associated overdue reminder', function () {
 
-        var find_invoked = 0;
-
-        var mockView = {
-            find: function(selector) {
-                    if (selector === '#reminderMenu_1') find_invoked++;
-                    return { addClass: function () { } };
-                    }
-        };
+        var view = $('<div><div id="reminderMenu_1" /><div id="reminderMenu_2" /></div>');
 
         var module = app.dashboard(mocks.create(mockExpander));
 
         module.postrender({ Model: {
             VehicleListViewModel: {
-                Vehicles: [{ VehicleId: 1}]
+                Vehicles: [{ VehicleId: 1 }, { VehicleId: 2}]
             },
-            ImminentReminders: [{ VehicleId: 1 }, { VehicleId: 1 }, { VehicleId: 1}]
+            ImminentReminders: [{ VehicleId: 1 }, { VehicleId: 1 }, { VehicleId: 2}]
         }
-        }, mockView);
+        }, view);
 
-        equal(find_invoked, 1);
+        var class1 = view.find('#reminderMenu_1').attr('class');
+        var class2 = view.find('#reminderMenu_2').attr('class');
+        equal(class1, 'flag');
+        equal(class2, 'flag');
     });
 
     test('dashboard module should invoke expander module', function () {
 
         expect(1);
-        
-        // the view and response are inconsequential for this test
 
-        var view = {
-            find: function () {
-                return { addClass: function () { } };
-            }
-        };
+        // the view and response are inconsequential for this test
+        var view = $('<div/>');
 
         var response = {
             Model: {
@@ -113,9 +95,8 @@ limitations under the License. */
                 }
             }
         }));
-        
+
         module.postrender(response, view);
     });
-
 
 } (window.specs = window.specs || {}, window.mstats));

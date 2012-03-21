@@ -17,7 +17,8 @@ limitations under the License. */
 
 (window.mstats = window.mstats || {}).transition = function (require) {
 
-	var templating = require('Mustache'),
+    var templating = require('Mustache'),
+	    document = require('document'),
         rootUrl = require('rootUrl'),
 		window = require('window'),
         app = require('mstats'),
@@ -30,7 +31,7 @@ limitations under the License. */
 
 		var registration = target.registration,
             region = registration.region || defaultRegion,
-            host = $(region),
+            host = $(region, document),
             route = registration.route;
 
 		var template = getTemplateFor(route, namedParametersPattern);
@@ -129,7 +130,7 @@ limitations under the License. */
             .replace(/--/g, '-')                    // collapse double -
             .replace(/-$/, ''); // remove trailing -
 
-		var template = $(id);
+		var template = $(id, document);
 		if (template.length === 0) {
 			return '<h1>No Template Found!</h1><h2>' + id + '</h2>';
 		}

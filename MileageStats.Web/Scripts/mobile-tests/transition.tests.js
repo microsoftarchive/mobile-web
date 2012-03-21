@@ -17,70 +17,90 @@ limitations under the License. */
 
 (function (specs, app) {
 
-    module('transition specs');
+    var defaultMocks;
+    var ajax = $.ajax;
 
-    var default_mocks = {
-        mstats: {
-            rooturl: '/'
+    module('transition specs', {
+        setup: function () {
+            defaultMocks = {
+                mstats: {
+                    rooturl: '/'
+                },
+                document: $('<div/>')[0]
+            };
+            $.ajax = function (options) {
+                options.success();
+            };
+        },
+        teardown: function () {
+            $.ajax = ajax;
         }
-    };
+    });
 
     test('transition module constructs itself', function () {
-        var module = app.transition(mocks.create(default_mocks));
+        var module = app.transition(mocks.create(defaultMocks));
 
         ok(module != undefined, true);
         equal(typeof module, 'object');
     });
 
     test('module infers template id from route', function () {
+        expect(1);
 
-        var m = mocks.create(default_mocks);
+        var dom = $('<div><script id="my-route" type="text/html">template</script><div id="view">old content</div></div>');
+        defaultMocks.document = dom;
+        var m = mocks.create(defaultMocks);
         var transition = app.transition(m);
 
         transition.to({ registration: { route: '/my/route'} }, '#view');
 
-        //assert
-        ok(m.tracked.contains('#my-route.html()'));
+        var content = dom.find('#view').html();
+        equal(content, 'template');
     });
 
     test('module invokes an ajax calls by default to url when registered to fetch', function () {
+        expect(1);
 
-        var m = mocks.create(default_mocks);
-        var transition = app.transition(m);
+        var transition = app.transition(mocks.create(defaultMocks));
+
+        $.ajax = function (options) {
+            equal(options.url, '/my/route?format=json');
+        };
 
         transition.to({
             url: '/my/route',
             registration: {
-             route: '/my/route',
-             fetch: true
-         }
+                route: '/my/route',
+                fetch: true
+            }
         }, '#view');
-
-        //assert
-           ok(m.tracked.contains('ajax: /my/route?format=json'));
     });
 
     test('module appends format to url before making an ajax calls registered to fetch', function () {
+        expect(1);
 
-        var m = mocks.create(default_mocks);
-		var transition = app.transition(m);
+        var transition = app.transition(mocks.create(defaultMocks));
 
-		transition.to({
-       		url: '/my/route',
-       		registration: {
-       			route: '/my/route',
-       			fetch: true
-       		}
-		}, '#view');
+        $.ajax = function (options) {
+            ok(options.url.indexOf('format=json') > -1);
+        };
 
-		//assert
-		ok(m.tracked.contains('ajax: /my/route?format=json'));
+        transition.to({
+            url: '/my/route',
+            registration: {
+                route: '/my/route',
+                fetch: true
+            }
+        }, '#view');
     });
 
     test('module will not invoke an ajax call when registrater not to fetch', function () {
 
-        var m = mocks.create(default_mocks);
-        var transition = app.transition(m);
+        $.ajax = function (options) {
+            ok(false, 'ajax should not be invoked');
+        };
+
+        var transition = app.transition(mocks.create(defaultMocks));
 
         transition.to({
             url: '/my/route',
@@ -89,15 +109,16 @@ limitations under the License. */
                 fetch: false
             }
         }, '#view');
-
-        //assert
-        ok(!m.tracked.contains('ajax: /my/route'));
     });
 
     test('module matches invokes correct ajax url when route has a named arg', function () {
+        expect(1);
 
-        var m = mocks.create(default_mocks);
-        var transition = app.transition(m);
+        var transition = app.transition(mocks.create(defaultMocks));
+
+        $.ajax = function (options) {
+            equal(options.url, '/my/route/1?format=json');
+        };
 
         transition.to({
             url: '/my/route/1',
@@ -106,45 +127,46 @@ limitations under the License. */
                 fetch: true
             }
         }, '#view');
-
-
-        //assert
-         ok(m.tracked.contains('ajax: /my/route/1?format=json'));
     });
 
     test('module matches template with a named arg when the correct regex is passed', function () {
+        expect(1);
 
-        var m = mocks.create(default_mocks);
-        var transition = app.transition(m);
+        var dom = $('<div> <script id="my-route" type="text/html">template</script> <div id="view">old content</div> </div>');
+        defaultMocks.document = dom;
+
+        var transition = app.transition(mocks.create(defaultMocks));
 
         transition.to({
             url: '/my/route/1',
             registration: {
-                route: '/my/route/:id',
-                fetch: true
+                route: '/my/route/:id'
             }
         }, '#view', /:(\w)*/g);
         // this regex is hard-coded into the router
 
-        ok(m.tracked.contains('#my-route.html()'));
+        var content = dom.find('#view').html();
+        equal(content, 'template');
     });
 
     test('module matches template with an embedded named arg when the correct regex is passed', function () {
+        expect(1);
 
-        var m = mocks.create(default_mocks);
-        var transition = app.transition(m);
+        var dom = $('<div> <script id="my-route-more" type="text/html">template</script> <div id="view">old content</div> </div>');
+        defaultMocks.document = dom;
+
+        var transition = app.transition(mocks.create(defaultMocks));
 
         transition.to({
             url: '/my/route/1/more',
             registration: {
-                route: '/my/route/:id/more',
-                fetch: true
+                route: '/my/route/:id/more'
             }
         }, '#view', /:(\w)*/g);
         // this regex is hard-coded into the router
 
-        //assert
-        ok(m.tracked.contains('#my-route-more.html()'));
+        var content = dom.find('#view').html();
+        equal(content, 'template');
     });
 
 

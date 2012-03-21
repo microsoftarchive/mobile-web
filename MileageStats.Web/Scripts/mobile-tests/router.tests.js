@@ -17,41 +17,40 @@ limitations under the License. */
 
 (function (specs, app) {
 
-    module('router specs');
-
-    var default_mocks = {
-        transition: {
-            to: function (target, defaultRegion, namedParametersPattern, callback) { callback(); }
-        },
-        window: { onhashchange: function () { } },
-        mstats: {
-            rooturl: '/'
+    var defaultMocks;
+    
+    module('router specs', {
+        setup:function() {
+            defaultMocks = {
+                transition: {
+                    to: function (target, defaultRegion, namedParametersPattern, callback) { callback(); }
+                },
+                window: { onhashchange: function () { } },
+                mstats: {
+                    rooturl: '/'
+                },
+                document: $('<div/>')[0]
+            };
         }
-    };
+    });
 
     test('router module constructs itself', function () {
-        var router = app.router(mocks.create(default_mocks));
+        var router = app.router(mocks.create(defaultMocks));
 
         ok(router != undefined, true);
         equal(typeof router, 'object');
     });
 
     test('router delegates to transition when hash changed', function () {
-
         expect(1);
 
-        var m = mocks.create({
-            transition: {
-                to: function () {
-                    var view = arguments[1];
-                    equal(view, '#view');
-                }
-            },
-            window: { onhashchange: function () { } },
-            mstats: {
-                rooturl: '/'
+        defaultMocks.transition = {
+            to: function () {
+                var view = arguments[1];
+                equal(view, '#view');
             }
-        });
+        };
+        var m = mocks.create(defaultMocks);
 
         var router = app.router(m);
 
@@ -63,24 +62,15 @@ limitations under the License. */
             hash: '#/my/route'
         };
         m.window.onhashchange();
-
-
     });
 
     test('router modifies the href on anchor tags matching registered routes', function () {
-        var overriddenLink = '';
-
-        var m = mocks.create(default_mocks,
-            {
-                // when attr is called inside the module
-                // we expect it to be called with a
-                // modified url that includes a #
-                '$.attr': function (name, value) {
-                    if (!value) return '/my/route';
-                    overriddenLink = value;
-                }
-            });
-
+        expect(1);
+        
+        var dom = $('<div><a href="/my/route"/></div>');
+        defaultMocks.document = dom;
+        var m = mocks.create(defaultMocks);
+        
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -93,62 +83,53 @@ limitations under the License. */
         m.window.onhashchange();
 
         // assert
-        equal(overriddenLink, '/#/my/route');
+        equal(dom.find('a').attr('href'), '/#/my/route');
     });
 
     test('router modifies the href on anchor tags matching registered routes with named args', function () {
-        var overriddenLink = '';
-        var m = mocks.create(default_mocks,
-            {
-                '$.attr': function (name, value) {
-                    if (!value) return '/my/route/1';
-                    overriddenLink = value;
-                }
-            }
-        );
+        expect(1);
 
+        var dom = $('<div><a href="/my/route/1"/></div>');
+        
+        defaultMocks.document = dom;
+        var m = mocks.create(defaultMocks);
+        
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
         router.register('/my/route/:id');
 
         // simulate hash change
+        router.register('/something/unrelated');
         m.window.location = {
-            hash: '#/my/route/x'
+            hash: '#/something/unrelated'
         };
         m.window.onhashchange();
 
         //assert
-        equal(overriddenLink, '/#/my/route/1');
+        equal(dom.find('a').attr('href'), '/#/my/route/1');
     });
 
     test('router invoke transition when first initialized if # is in the url', function () {
-
         expect(1);
 
         var transition_invoked = false;
 
-        var m = mocks.create({
-            transition: {
-                to: function () { transition_invoked = true; }
-            },
-            window: { onhashchange: function () { } },
-            mstats: {
-                rooturl: '/'
-            }
-        });
+        defaultMocks.transition = {
+            to: function() { transition_invoked = true; }
+        };
+        var m = mocks.create(defaultMocks);
+        var module = app.router(m);
 
-        var router = app.router(m);
-
-        router.setDefaultRegion('#view');
-        router.register('/inital/page');
+        module.setDefaultRegion('#view');
+        module.register('/inital/page');
 
         // simulate hash change
         m.window.location = {
             hash: '#/inital/page'
         };
 
-        router.initialize();
+        module.initialize();
 
         // assert
         ok(transition_invoked);
@@ -158,15 +139,11 @@ limitations under the License. */
 
         var transition_not_invoked = true;
 
-        var m = mocks.create({
-            transition: {
-                to: function () { transition_not_invoked = false; }
-            },
-            window: { onhashchange: function () { } },
-            mstats: {
-                rooturl: '/'
-            }
-        });
+        defaultMocks.transition = {
+            to: function () { transition_not_invoked = false; }
+        };
+        var m = mocks.create(defaultMocks);
+        
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -187,17 +164,13 @@ limitations under the License. */
 
         expect(1);
 
-        var m = mocks.create({
-            transition: {
-                to: function (target, defaultRegion, namedParametersPattern, callback) {
-                    equal(target.params.id, 123);
-                }
-            },
-            window: { onhashchange: function () { } },
-            mstats: {
-                rooturl: '/'
+        defaultMocks.transition = {
+            to: function (target, defaultRegion, namedParametersPattern, callback) {
+                equal(target.params.id, 123);
             }
-        });
+        };
+        
+        var m = mocks.create(defaultMocks);
 
         var router = app.router(m);
 
@@ -218,16 +191,8 @@ limitations under the License. */
 
         var initialModel = {};
 
-        var m = mocks.create({
-            transition: {
-                to: function () { }
-            },
-            window: { onhashchange: function () { } },
-            mstats: {
-                rooturl: '/',
-                initialModel: initialModel
-            }
-        });
+        var m = mocks.create(defaultMocks);
+        m.mstats.initialModel = initialModel;
 
         var router = app.router(m);
         router.setDefaultRegion('#view');
@@ -252,16 +217,8 @@ limitations under the License. */
 
         var initialModel = {};
 
-        var m = mocks.create({
-            transition: {
-                to: function () { }
-            },
-            window: { onhashchange: function () { } },
-            mstats: {
-                rooturl: '/',
-                initialModel: initialModel
-            }
-        });
+        var m = mocks.create(defaultMocks);
+        m.mstats.initialModel = initialModel;
 
         var router = app.router(m);
         router.setDefaultRegion('#view');
@@ -277,4 +234,5 @@ limitations under the License. */
         // assert
         equal(m.mstats.initialModel, initialModel);
     });
+    
 } (window.specs = window.specs || {}, window.mstats));

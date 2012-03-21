@@ -21,6 +21,7 @@ limitations under the License. */
         rootUrl = require('rootUrl'),
 	    transition = require('transition'),
         app = require('mstats'),
+        document = require('document'),
         $ = require('$');
 
     var routes = {},
@@ -109,7 +110,7 @@ limitations under the License. */
         // another approach would be to do this check
         // in the click handler for the link
 
-        $('a[href]').each(function (i, a) {
+        $('a[href]', document).each(function (i, a) {
             var anchor = $(a);
             var match;
             var href = anchor.attr('href');

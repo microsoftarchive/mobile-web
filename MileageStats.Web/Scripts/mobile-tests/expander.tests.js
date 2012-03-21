@@ -19,11 +19,6 @@ limitations under the License. */
 
     module('expander specs');
 
-    var stubFunction = function () {
-    };
-
-    var verifyFunction = function() { ok(true); };
-
     test('expander module constructs itself', function () {
         var module = app.expander(mocks.create());
 
@@ -31,106 +26,28 @@ limitations under the License. */
         equal(typeof module, 'object');
     });
 
-    test('expander searches for "headers" in the given view', function () {
-
-        var module = app.expander(mocks.create());
-        var header = '';
-
-        var view = {
-            find: function (selector) {
-                header = selector;
-                return {
-                    next: function () {
-                        return {
-                            toggle: stubFunction
-                        };
-                    },
-                    click: stubFunction
-                };
-            }
-        };
-
-        module.attach(view);
-
-        equal(header, 'dl.widget dt');
-    });
-
     test('expander toggles the "child" elements for the "headers" in the given view', function () {
 
-        expect(2);
-
-        var module = app.expander(mocks.create());
-        var child = '';
-
-        var view = {
-            find: function () {
-                return {
-                    next: function (selector) {
-                        child = selector;
-                        return {
-                            toggle: verifyFunction
-                        };
-                    },
-                    click: stubFunction
-                };
-            }
-        };
-
-        module.attach(view);
-
-        equal(child, 'dd');
-    });
-
-    test('expander attaches a click handler to "headers"', function () {
         expect(1);
 
-        var m = mocks.create();
-        var module = app.expander(m);
+        var module = app.expander(mocks.create());
 
-        var view = {
-            find: function () {
-                return {
-                    next: function () {
-                        return {
-                            toggle: stubFunction
-                        };
-                    },
-                    click: function (handler) {
-                        equal(typeof handler, 'function');
-                    }
-                };
-            }
-        };
+        var view = $('#qunit-fixture').html('<div><dl class="widget"><dt/><dd>content</dd></dl></div>');
 
         module.attach(view);
+        equal(view.find('dd').css('display'), 'none');
     });
 
     test('expander should toggle children when the header is clicked', function () {
+        expect(1);
 
-        expect(2);
-        var m = mocks.create();
-        var module = app.expander(m);
+        var module = app.expander(mocks.create());
 
-        var view = {
-            find: function () {
-                return {
-                    next: function () {
-                        return {
-                            toggle: stubFunction
-                        };
-                    },
-                    click: function (handler) {
-                        handler.call('child', {
-                            preventDefault: verifyFunction
-                        });
-                    }
-                };
-            }
-        };
-
+        var view = $('#qunit-fixture').html('<div><dl class="widget"><dt/><dd>content</dd></dl></div>');
         module.attach(view);
 
-        ok(m.tracked.contains('dd.toggle()'));
+        view.find('dt').click();
+        equal(view.find('dd').css('display'), 'block');
     });
 
 } (window.specs = window.specs || {}, window.mstats));
