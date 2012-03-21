@@ -74,7 +74,7 @@ limitations under the License. */
 				if (res.Errors) {
 					displayErrors(res.Errors);
 				} else {
-					notifications.send(res);
+					notifications.log(res);
 					callback(res);
 				}
 			};

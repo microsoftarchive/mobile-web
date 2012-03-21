@@ -31,26 +31,30 @@ limitations under the License. */
 
 		var module = app.notifications(mocks.create());
 
-		module.send({ FlashAlert: 'test' });
+		module.log({ FlashAlert: 'test' });
 
-		var newModel = {};
-		module.subscribe(newModel);
+		var view = $('<html></html>')
+			.append('<nav></nav>');
+
+		module.renderTo(view);
 
 		//assert
-		ok(newModel.FlashAlert == 'test');
+		ok(view.find('.alert').length > 0);
 	});
 
 	test('notifications module should persist confirmations', function () {
 
 		var module = app.notifications(mocks.create());
 
-		module.send({ FlashConfirm: 'test' });
+		module.log({ FlashConfirm: 'test' });
 
-		var newModel = {};
-		module.subscribe(newModel);
+		var view = $('<html></html>')
+			.append('<nav></nav>');
+
+		module.renderTo(view);
 
 		//assert
-		ok(newModel.FlashConfirm == 'test');
+		ok(view.find('.confirm').length > 0);
 	});
 
 } (window.specs = window.specs || {}, window.mstats));
