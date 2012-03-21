@@ -37,11 +37,11 @@ limitations under the License. */
 		};
 
 		var notifications = {
-			send: function (model) {
+			log: function (model) {
 				tracked.push('flash: ' + model.FlashAlert);
 				tracked.push('confirm: ' + model.FlashConfirm);
 			},
-			subscribe: function (model) {
+			renderTo: function (view) {
 				tracked.push('subscribe');
 			}
 		};

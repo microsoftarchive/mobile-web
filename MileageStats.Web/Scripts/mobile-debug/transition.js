@@ -77,8 +77,6 @@ limitations under the License. */
 				model = registration.prerender(model);
 			}
 
-			notifications.subscribe(model);
-
 			view = templating.to_html(template, model);
 			host.empty();
 			host.append(view);
@@ -87,6 +85,8 @@ limitations under the License. */
 			if (registration.postrender) {
 				registration.postrender(model, el, target);
 			}
+
+			notifications.renderTo(host);
 
 			host.removeClass(cssClassForTransition);
 

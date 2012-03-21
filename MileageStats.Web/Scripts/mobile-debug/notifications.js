@@ -25,26 +25,34 @@ limitations under the License. */
 		var alert = null,
 			confirm = null;
 
-		function send(model) {
+		function log(model) {
 			alert = model.FlashAlert || null;
 			confirm = model.FlashConfirm || null;
 		}
 
-		function subscribe(model) {
+		function renderTo(el) {
+			var container;
+
 			if (confirm) {
-				model.FlashConfirm = confirm;
+				container = $('<div><p>' + confirm + '</p></div>')
+							.addClass('flash confirm')
+
+				el.find('nav').first().after(container)
 				confirm = null;
 			}
 
 			if (alert) {
-				model.FlashAlert = alert;
+				container = $('<div><p>' + confirm + '</p></div>')
+							.addClass('flash alert')
+
+				el.find('nav').first().after(container);
 				alert = null;
 			}
 		}
 
 		return {
-			send: send,
-			subscribe: subscribe
+			log: log,
+			renderTo: renderTo
 		};
 
 	};
