@@ -99,7 +99,7 @@ namespace MileageStats.Domain.Tests
                                  Date = DateTime.UtcNow,
                                  TotalUnits = 10,
                                  PricePerUnit = 1.0,
-                                 Odometer = 500 //less than prior fillup
+                                 Odometer = 1500 //less than prior fillup
                              };
 
             var fillUps = new List<FillupEntry>
@@ -107,8 +107,14 @@ namespace MileageStats.Domain.Tests
                                   new FillupEntry
                                       {
                                           FillupEntryId = 1,
-                                          Date = DateTime.UtcNow.AddDays(-1),
+                                          Date = DateTime.UtcNow.AddDays(-10),
                                           Odometer = 1000
+                                      },
+                                  new FillupEntry
+                                      {
+                                          FillupEntryId = 2,
+                                          Date = DateTime.UtcNow.AddDays(-1),
+                                          Odometer = 2000
                                       }
                               };
 
