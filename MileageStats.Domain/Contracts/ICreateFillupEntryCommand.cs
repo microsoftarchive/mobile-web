@@ -46,12 +46,12 @@ namespace MileageStats.Domain.Contracts
         /// <summary>
         /// Price per unit.
         /// </summary>
-        double PricePerUnit { get; set; }
+        double? PricePerUnit { get; set; }
 
         /// <summary>
         /// Total number of units.
         /// </summary>
-        double TotalUnits { get; set; }
+        double? TotalUnits { get; set; }
 
         FillupUnits UnitOfMeasure { get; set; }
 
@@ -59,7 +59,7 @@ namespace MileageStats.Domain.Contracts
 
         string Location { get; set; }
 
-        double TransactionFee { get; set; }
+        double? TransactionFee { get; set; }
 
         string Remarks { get; set; }
 

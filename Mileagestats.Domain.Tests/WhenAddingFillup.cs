@@ -49,7 +49,12 @@ namespace MileageStats.Domain.Tests
                 .Setup(r => r.GetVehicle(DefaultUserId, DefaultVehicleId))
                 .Returns(_vehicle);
 
-            var fillupForm = new FillupEntryFormModel();
+            var fillupForm = new FillupEntryFormModel
+                                 {
+                                    PricePerUnit = 0,
+                                    TotalUnits = 0,
+                                    TransactionFee = 0
+                                 };
 
             var handler = new AddFillupToVehicle(_vehicleRepo.Object, _fillupRepositoryMock.Object);
             handler.Execute(DefaultUserId, DefaultVehicleId, fillupForm);
@@ -76,7 +81,10 @@ namespace MileageStats.Domain.Tests
                                  {
                                      FillupEntryId = 3,
                                      Date = new DateTime(2011, 3, 26),
-                                     Odometer = 1000
+                                     Odometer = 1000,
+                                     PricePerUnit = 0,
+                                     TotalUnits = 0,
+                                     TransactionFee = 0
                                  };
 
             _fillupRepositoryMock
@@ -106,7 +114,10 @@ namespace MileageStats.Domain.Tests
             {
                 FillupEntryId = 3,
                 Date = new DateTime(2011, 3, 25),
-                Odometer = 1000
+                Odometer = 1000,
+                PricePerUnit = 0,
+                TotalUnits = 0,
+                TransactionFee = 0
             };
 
             _fillupRepositoryMock
@@ -128,7 +139,15 @@ namespace MileageStats.Domain.Tests
 
             var fillups = new FillupEntry[] {};
 
-            var fillupForm = new FillupEntryFormModel { FillupEntryId = 3, Date = new DateTime(2011, 3, 25), Odometer = 1000 };
+            var fillupForm = new FillupEntryFormModel
+                                 {
+                                     FillupEntryId = 3, 
+                                     Date = new DateTime(2011, 3, 25),
+                                     Odometer = 1000,
+                                     PricePerUnit = 0,
+                                     TotalUnits = 0,
+                                     TransactionFee = 0
+                                 };
 
             _fillupRepositoryMock
                  .Setup(x => x.GetFillups(DefaultVehicleId))
@@ -150,7 +169,10 @@ namespace MileageStats.Domain.Tests
             var fillupForm = new FillupEntryFormModel
                                  {
                                      Vendor = null,
-                                     Location = "testlocation"
+                                     Location = "testlocation",
+                                     PricePerUnit = 0,
+                                     TotalUnits = 0,
+                                     TransactionFee = 0
                                  };
 
             var handler = new AddFillupToVehicle(_vehicleRepo.Object, _fillupRepositoryMock.Object);
