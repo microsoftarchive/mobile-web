@@ -17,43 +17,49 @@ limitations under the License. */
 
 (function (mstats) {
 
-	// this module persist message notifications across different
-	// ajax calls, so they can be correctly rendered in the views
+    // this module persist message notifications across different
+    // ajax calls, so they can be correctly rendered in the views
 
-	mstats.notifications = function (require) {
+    mstats.notifications = function (require) {
 
-		var alert = null,
-			confirm = null;
+        var alertMessage = null,
+			confirmMessage = null;
 
-		function log(model) {
-			alert = model.FlashAlert || null;
-			confirm = model.FlashConfirm || null;
-		}
+        function log(model) {
+            alertMessage = model.FlashAlert || null;
+            confirmMessage = model.FlashConfirm || null;
+        }
 
-		function renderTo(el) {
-			var container;
+        function renderTo(el) {
+            UpdateFlashMessage(confirmMessage, "confirm", el);
+            confirmMessage = null;
+            UpdateFlashMessage(alertMessage, "alert", el);
+            alertMessage = null;
+        }
 
-			if (confirm) {
-				container = $('<div><p>' + confirm + '</p></div>')
-							.addClass('flash confirm')
+        return {
+            log: log,
+            renderTo: renderTo
+        };
 
-				el.find('nav').first().after(container)
-				confirm = null;
-			}
+    };
 
-			if (alert) {
-			    container = $('<div><p>' + alert + '</p></div>')
-							.addClass('flash alert')
+    function UpdateFlashMessage(flashMessage, flashMessageType, context) {
+        var flashContainer = context.find('#flash' + flashMessageType);
+        if (flashMessage) {
+            if (flashContainer.length > 0) {
+                flashContainer.text(flashMessage);
+            } else {
+                var newContainer = $('<div><p id="flash' + flashMessageType + '">' + flashMessage + '</p></div>')
+                        .addClass('flash ' + flashMessageType);
 
-				el.find('nav').first().after(container);
-				alert = null;
-			}
-		}
-
-		return {
-			log: log,
-			renderTo: renderTo
-		};
-
-	};
+                context.find('nav').first().after(newContainer);
+            }
+        } else {
+            //Clear out flash message
+            if (flashContainer.length > 0) {
+                flashContainer.text();
+            }
+        }
+    }
 } (this.mstats = this.mstats || {}));
