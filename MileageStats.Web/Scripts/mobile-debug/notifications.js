@@ -58,7 +58,7 @@ limitations under the License. */
         } else {
             //Clear out flash message
             if (flashContainer.length > 0) {
-                flashContainer.text();
+                flashContainer.text('');
             }
         }
     }

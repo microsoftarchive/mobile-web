@@ -17,44 +17,82 @@ limitations under the License. */
 
 (function (specs, app) {
 
-	module('notifications specs');
+    module('notifications specs');
 
-	test('notifications module constructs itself', function () {
+    test('notifications module constructs itself', function () {
 
-		var module = app.notifications(mocks.create());
+        var module = app.notifications(mocks.create());
 
-		ok(module != undefined, true);
-		equal(typeof module, 'object');
-	});
+        ok(module != undefined, true);
+        equal(typeof module, 'object');
+    });
 
-	test('notifications module should persist alerts', function () {
+    test('notifications module should persist alerts', function () {
 
-		var module = app.notifications(mocks.create());
+        var module = app.notifications(mocks.create());
 
-		module.log({ FlashAlert: 'test' });
+        module.log({ FlashAlert: 'test' });
 
-		var view = $('<html></html>')
+        var view = $('<html></html>')
 			.append('<nav></nav>');
 
-		module.renderTo(view);
+        module.renderTo(view);
 
-		//assert
-		ok(view.find('.alert').length > 0);
-	});
+        //assert
+        ok(view.find('.alert').length > 0);
+    });
 
-	test('notifications module should persist confirmations', function () {
+    test('notifications module should persist confirmations', function () {
 
-		var module = app.notifications(mocks.create());
+        var module = app.notifications(mocks.create());
 
-		module.log({ FlashConfirm: 'test' });
+        module.log({ FlashConfirm: 'test' });
 
-		var view = $('<html></html>')
+        var view = $('<html></html>')
 			.append('<nav></nav>');
 
-		module.renderTo(view);
+        module.renderTo(view);
 
-		//assert
-		ok(view.find('.confirm').length > 0);
-	});
+        //assert
+        ok(view.find('.confirm').length > 0);
+    });
 
+    test('notifications module should not duplicate confirmations', function () {
+
+        var module = app.notifications(mocks.create());
+
+        module.log({ FlashConfirm: 'test' });
+
+        var view = $('<html></html>')
+			    .append('<nav></nav>');
+
+        module.renderTo(view);
+
+        //assert
+        ok(view.find('.confirm').length == 1);
+    });
+
+    test('notifications module should clear alert', function () {
+
+        expect(2);
+
+        var module = app.notifications(mocks.create());
+
+        module.log({ FlashAlert: 'test' });
+
+        var view = $('<html></html>')
+			    .append('<nav></nav>');
+
+        module.renderTo(view);
+
+        //assert
+        ok(view.find('#flashalert').html().length > 0, "Expect flashalert container has value.");
+
+        //simulate navigating to another SPA view
+        module.renderTo(view);
+
+        //assert after navigation
+        ok(view.find('#flashalert').html().length == 0, "Expect flashalert container is empty.");
+
+    });
 } (window.specs = window.specs || {}, window.mstats));

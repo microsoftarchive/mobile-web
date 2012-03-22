@@ -28,7 +28,7 @@ limitations under the License. */
 
     test('charts subscribes to button click and searches for form values in the given view. also subscribes to submit event and cancels default', function () {
 
-        expect(7);
+        expect(8);
         var module = app.charts(mocks.create());
         var testSubmitEvent = { preventDefault: function () { ok(true, "Expect that preventDefault is called."); } };
 
@@ -50,7 +50,11 @@ limitations under the License. */
                     case '#ChartRefreshButton':
                         return {
                             click: function (clickEventSubscription) {
-                                clickEventSubscription();
+                                if (clickEventSubscription) {
+                                    clickEventSubscription();
+                                } else {
+                                    ok(true, 'Expect click() called in postrender.');
+                                }
                             }
                         };
                     case 'form':
