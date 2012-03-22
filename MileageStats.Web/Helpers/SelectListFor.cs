@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using MileageStats.Domain.Properties;
 
 namespace MileageStats.Web.Helpers
 {
@@ -55,7 +56,7 @@ namespace MileageStats.Web.Helpers
         {
             var months = new List<SelectListItem>();
 
-            for (int i = 0; i > -10; i--)
+            for (int i = 0; i > -12; i--)
             {
                 var date = DateTime.Now.AddMonths(i);
                 var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
@@ -73,7 +74,7 @@ namespace MileageStats.Web.Helpers
         {
             var months = new List<SelectListItem>();
 
-            for (int i = 0; i > -10; i--)
+            for (int i = 0; i > -12; i--)
             {
                 var date = DateTime.Now.AddMonths(i);
                 var nextMonth = date.AddMonths(1);
@@ -87,6 +88,15 @@ namespace MileageStats.Web.Helpers
                 });
             }
             return months;
+        } 
+
+        public static IEnumerable<SelectListItem> Charts()
+        {
+            var allCharts = new List<SelectListItem>();
+            allCharts.Add(new SelectListItem { Text = @Resources.ChartController_AverageFuelEfficiencyChart_Title, Value = "FuelEfficiency" });
+            allCharts.Add(new SelectListItem { Text = @Resources.ChartController_TotalDistance_Title, Value = "TotalDistance" });
+            allCharts.Add(new SelectListItem { Text = @Resources.ChartController_TotalCost_Title, Value = "TotalCost" });
+            return allCharts;
         } 
     }
 }

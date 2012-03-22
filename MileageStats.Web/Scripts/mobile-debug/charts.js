@@ -37,13 +37,21 @@ limitations under the License. */
             var chartImage = el.find("#chartimage");
             chartImage.attr("src", fullChartUrl);
             chartImage.attr("style", "");
-            
+
 
         });
 
         el.find('form').submit(function (event) {
             event.preventDefault();
         });
+
+        //Set default chart values
+        var firstVehicleCheckbox = el.find('input:checkbox[name=VehicleIds]:first');
+        if (firstVehicleCheckbox) {
+            firstVehicleCheckbox.attr('checked', true);
+        }
+        el.find('#ChartRefreshButton').click();
+
     }
 
     return {

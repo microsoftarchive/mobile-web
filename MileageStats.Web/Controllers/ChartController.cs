@@ -57,17 +57,20 @@ namespace MileageStats.Web.Controllers
 
         private ActionResult SetupChartFormModel(ChartFormModel chartFormModel)
         {
-            var allCharts = new List<SelectListItem>();
-            allCharts.Add(new SelectListItem { Text = @Resources.ChartController_AverageFuelEfficiencyChart_Title, Value = "FuelEfficiency" });
-            allCharts.Add(new SelectListItem { Text = @Resources.ChartController_TotalDistance_Title, Value = "TotalDistance" });
-            allCharts.Add(new SelectListItem { Text = @Resources.ChartController_TotalCost_Title, Value = "TotalCost" });
-            chartFormModel.AllCharts = allCharts;
-
             chartFormModel.AllVehicleModels = Using<GetVehicleListForUser>()
                 .Execute(chartFormModel.UserId).ToArray();
 
-            chartFormModel.PriorMonthStartYears = SelectListFor.PriorMonthStartYear(d => d == chartFormModel.StartDate);
-            chartFormModel.PriorMonthEndYears = SelectListFor.PriorMonthEndYear(d => d == chartFormModel.EndDate);
+            //Set default chart values
+            if (string.IsNullOrEmpty(chartFormModel.ChartName))
+            {
+                chartFormModel.ChartName = "FuelEfficiency";
+
+                var firstModel = chartFormModel.AllVehicleModels.FirstOrDefault();
+                if (firstModel != null)
+                {
+                    chartFormModel.VehicleIds.Add(firstModel.VehicleId);
+                }
+            }
 
             return new ContentTypeAwareResult(chartFormModel);
         }

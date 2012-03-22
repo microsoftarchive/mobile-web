@@ -27,21 +27,14 @@ namespace MileageStats.Web.Models
     {
         public ChartFormModel()
         {
-            //Default Chart values
-            StartDate = DateTime.UtcNow.AddMonths(-12);
-            EndDate = DateTime.UtcNow;
-            ChartName = "FuelEfficiency";     
             VehicleIds = new List<int>();
         }
         public int UserId { get; set; }
         public string ChartName { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public IList<int> VehicleIds { get; set; }
         public IList<int> Positions { get; set; } 
         public VehicleModel[] AllVehicleModels { get; set; }
-        public IEnumerable<SelectListItem> AllCharts { get; set; }
-        public IEnumerable<SelectListItem> PriorMonthStartYears { get; set; }
-        public IEnumerable<SelectListItem> PriorMonthEndYears { get; set; }
     }
 }

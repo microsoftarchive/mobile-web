@@ -45,18 +45,10 @@
                     <h4>Chart Data</h4>
                     @if (Html.IsRenderingForMustache())
                     {
-                        <input type="hidden" id="GetChartImageUrl" value="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m=>m.UserId)})" />
-                        
-                        <select id="ChartName" name="ChartName">
-                            @Html.Raw("{{#AllCharts}}");
-                            <option value="@Html.Raw("{{Value}}")">@Html.Raw("{{Text}}")</option>
-                            @Html.Raw("{{/AllCharts}}");
-                        </select>
-                    }
-                    else
-                    {
-                        @Html.DropDownListFor(model => model.ChartName, Model.AllCharts);
-                    }             
+                        <input type="hidden" id="GetChartImageUrl" value="@Url.UnencodedAction("GetChartImage", "Chart", new {UserId = Mustache.Value(m => m.UserId)})" />
+                    }    
+
+                    @Html.DropDownListFor(model => model.ChartName, SelectListFor.Charts())
                                                                              
                 </li>
                 @if (Html.IsRenderingForMustache())
@@ -90,27 +82,8 @@
                 </li>
                 <li class="range">
                     <h4>Date Range</h4>
-                    @if (Html.IsRenderingForMustache())
-                    {
-                        <label for="StartDate">From</label> 
-                        <select name="StartDate">
-                            @Html.Raw("{{#PriorMonthStartYears}}");
-                            <option value="@Html.Raw("{{Value}}")">@Html.Raw("{{Text}}")</option>
-                            @Html.Raw("{{/PriorMonthStartYears}}");
-                        </select>
-                    
-                        <label for="EndDate">To</label>
-                        <select name="EndDate">
-                            @Html.Raw("{{#PriorMonthEndYears}}");
-                            <option value="@Html.Raw("{{Value}}")">@Html.Raw("{{Text}}")</option>
-                            @Html.Raw("{{/PriorMonthEndYears}}");
-                        </select>
-                    }
-                    else
-                    {
-                        <label for="StartDate">From</label>@Mustache.DropDownListFor(model => model.StartDate, SelectListFor.PriorMonthStartYear(d => Model.StartDate == d))
-                        <label for="EndDate">To</label>@Mustache.DropDownListFor(model => model.EndDate, SelectListFor.PriorMonthEndYear(d => Model.EndDate == d))                    
-                    }
+                    <label for="StartDate">From</label>@Html.DropDownListFor(model => model.StartDate, SelectListFor.PriorMonthStartYear(d => new DateTime(DateTime.Now.Year, 1, 1) == d))
+                    <label for="EndDate">To</label>@Html.DropDownListFor(model => model.EndDate, SelectListFor.PriorMonthEndYear(d => DateTime.Now == d))                    
                 </li>
             </ul>
 
