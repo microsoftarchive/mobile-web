@@ -20,7 +20,22 @@ limitations under the License. */
 
         var $ = require('$');
 
-        var cache = {};
+        var cache = {},
+        namedParametersPattern = /:(\w)*/g;
+
+        var invalidations = {
+            '/Vehicle/Add': ['/', '/Charts'],
+            '/Vehicle/:id/Fillup/Add': ['/', '/Charts', '/Vehicle/:id/Fillup/List', '/Vehicle/:id/Details'],
+            '/Vehicle/:id/Edit': ['/', '/Charts', '/Vehicle/:id/Details'],
+            '/Vehicle/Delete/:id': ['/', '/Charts', '/Vehicle/:id/Details'],
+            '/Vehicle/:id/Reminder/Add': ['/', '/Vehicle/:id/Reminder/ListByGroup'],
+            '/Vehicle/:id/Reminder/:reminderId/Fulfill': ['/', '/Vehicle/:id/Reminder/ListByGroup', '/Vehicle/:id/Reminder/:reminderId/Details']
+        };
+
+        function buildRegExpForMatching(route) {
+            var pattern = route.replace(/\//g, '\\/').replace(namedParametersPattern, '(\\w+)') + '$';
+            return new RegExp(pattern);
+        }
 
         function get(token) {
             return cache[token];
@@ -31,17 +46,74 @@ limitations under the License. */
         }
 
         function clear(token) {
-            cache[token] = undefined;
+            if (cache[token]) {
+                delete cache[token];
+            }
         }
 
         function enforceInvalidations(url) {
-            if (url.toLowerCase().indexOf('add') > -1 || url.toLowerCase().indexOf('edit') > -1) {
-                cache = { };
+            var entry,
+                re,
+                params,
+                routesToRemove,
+                actualUrls;
+
+            for (entry in invalidations) {
+                re = buildRegExpForMatching(entry);
+                if (url.match(re)) {
+                    params = extractedNameParameters(re, entry, url);
+                    routesToRemove = invalidations[entry];
+                    actualUrls = combineValuesWithRoutes(params, routesToRemove);
+                    invalidate(actualUrls);
+                }
+            }
+        }
+
+        function invalidate(entries) {
+            forEach(entries, clear);
+        }
+
+        function extractedNameParameters(re, entry, url) {
+            var named, i;
+            var values = url.match(re);
+            var names = entry.match(namedParametersPattern);
+
+            var params = {};
+
+            for (i = 0; i < names.length; i++) {
+                named = ':' + names[i].slice(1);
+                params[named] = values[i + 1];
+            }
+
+            return params;
+        }
+
+        function combineValuesWithRoutes(params, routes) {
+
+            var urls = [];
+
+            forEach(routes, function (route) {
+                var name;
+                for (name in params) {
+                    route = route.replace(name, params[name]);
+                }
+                urls.push(route);
+            });
+
+            return urls;
+        }
+
+        function forEach(array, op) {
+            var len = array.length,
+                index = 0;
+
+            for (; index < len; index++) {
+                op(array[index]);
             }
         }
 
         function request(options) {
-            var url = options.url,
+            var url = options.url.replace('?format=json', ''),
                 success = options.success,
                 cachedData = get(url);
 
