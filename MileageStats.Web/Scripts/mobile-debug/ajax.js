@@ -18,7 +18,8 @@ limitations under the License. */
 (function (mstats) {
     mstats.ajax = function (require) {
 
-        var $ = require('$');
+        var rootUrl = require('rootUrl'),
+            $ = require('$');
 
         var cache = {},
         namedParametersPattern = /:(\w)*/g;
@@ -96,6 +97,7 @@ limitations under the License. */
                 var name;
                 for (name in params) {
                     route = route.replace(name, params[name]);
+                    route = route.replace('/', rootUrl);
                 }
                 urls.push(route);
             });
