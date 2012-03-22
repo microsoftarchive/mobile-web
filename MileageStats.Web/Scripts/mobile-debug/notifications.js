@@ -17,43 +17,54 @@ limitations under the License. */
 
 (function (mstats) {
 
-	// this module persist message notifications across different
-	// ajax calls, so they can be correctly rendered in the views
+    // this module persist message notifications across different
+    // ajax calls, so they can be correctly rendered in the views
 
-	mstats.notifications = function (require) {
+    mstats.notifications = function (require) {
 
-		var alert = null,
+        var alert = null,
 			confirm = null;
 
-		function log(model) {
-			alert = model.FlashAlert || null;
-			confirm = model.FlashConfirm || null;
-		}
+        function log(model) {
+            alert = model.FlashAlert || null;
+            confirm = model.FlashConfirm || null;
+        }
 
-		function renderTo(el) {
-			var container;
+        function renderTo(el) {
+            var container;
 
-			if (confirm) {
-				container = $('<div><p>' + confirm + '</p></div>')
+            if (confirm) {
+                var flashConfirmContainer = el.find('#flashconfirm');
+                if (flashConfirmContainer) {
+                    flashConfirmContainer.text(confirm);
+                } else {
+                    container = $('<div><p id="flashconfirm">' + confirm + '</p></div>')
 							.addClass('flash confirm')
 
-				el.find('nav').first().after(container)
-				confirm = null;
-			}
+                    el.find('nav').first().after(container)
+                }
 
-			if (alert) {
-			    container = $('<div><p>' + alert + '</p></div>')
-							.addClass('flash alert')
+                confirm = null;
+            }
 
-				el.find('nav').first().after(container);
-				alert = null;
-			}
-		}
+            if (alert) {
+                var flashAlertContainer = el.find('#flashalert');
+                if (flashAlertContainer.length > 0) {
+                    flashAlertContainer.text(alert);
+                } else {
+                    container = $('<div><p id="flashalert">' + alert + '</p></div>')
+                        .addClass('flash alert');
 
-		return {
-			log: log,
-			renderTo: renderTo
-		};
+                    el.find('nav').first().after(container);
+                }
+                alert = null;
+            }
+        }
 
-	};
+        return {
+            log: log,
+            renderTo: renderTo
+        };
+
+    };
 } (this.mstats = this.mstats || {}));
