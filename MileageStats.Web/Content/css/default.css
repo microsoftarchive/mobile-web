@@ -206,7 +206,11 @@ body > footer {
 /* @end */
 /* @group .title and .breadcrumbs styles */
 .title, .breadcrumbs {
-  background-color: #7d8b97; }
+  background-color: #7d8b97; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; } 
+
   .title li, .breadcrumbs li {
     color: white;
     padding: 0.75em;
