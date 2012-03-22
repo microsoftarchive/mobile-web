@@ -35,6 +35,11 @@ limitations under the License. */
         var fillupStationsUrl = $fillupForm.data('fillup-stations-url');
 
         $fillupStationSelect.attr('disabled', 'disabled');
+        
+        if (!navigator.geolocation) {
+            $useGeoCoordinateToGetFillupStationsCheckbox.attr("style", "display:none");
+            $fillupStationSelect.attr("style", "display:none");
+        }
 
         $useGeoCoordinateToGetFillupStationsCheckbox.click(function () {
             if ($useGeoCoordinateToGetFillupStationsCheckbox.is(':checked') && navigator.geolocation) {
