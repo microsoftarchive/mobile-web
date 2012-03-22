@@ -81,9 +81,11 @@ limitations under the License. */
 
             var params = {};
 
-            for (i = 0; i < names.length; i++) {
-                named = ':' + names[i].slice(1);
-                params[named] = values[i + 1];
+            if (names) {
+                for (i = 0; i < names.length; i++) {
+                    named = ':' + names[i].slice(1);
+                    params[named] = values[i + 1];
+                }                
             }
 
             return params;
