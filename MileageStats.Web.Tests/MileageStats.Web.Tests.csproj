@@ -88,6 +88,8 @@
     <Compile Include="Controllers\ReminderControllerFixture.cs" />
     <Compile Include="Controllers\VehicleControllerFixture.cs" />
     <Compile Include="Forms\VehicleFormModelFixture.cs" />
+    <Compile Include="Helpers\BrowserExtensionsFixture.cs" />
+    <Compile Include="Helpers\ControllerExtensionsFixture.cs" />
     <Compile Include="Helpers\HtmlHelpersFixture.cs" />
     <Compile Include="Helpers\MustacheHelpersFixture.cs" />
     <Compile Include="Helpers\VehicleHelperFixture.cs" />

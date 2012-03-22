@@ -285,6 +285,32 @@ namespace MileageStats.Web.Tests.ActionResults
             response.Verify(x => x.Write("{\"Model\":null,\"__view__\":{\"testkey\":\"testvalue\"}}"));
         }
 
+        [Fact]
+        public void when_modelstate_has_errors_put_errors_in_model()
+        {
+            var controller = new ExampleController();
+            var action = (ContentTypeAwareResult)controller.ViewDataContent();
+
+            var context = MockContextFor(controller);
+            var response = new Mock<HttpResponseBase>();
+
+            string serializedModel = null;
+
+            response.Setup(r => r.Write(It.IsAny<string>())).Callback<string>(s =>
+                {
+                    serializedModel = s;
+                });
+
+            controller.ModelState.AddModelError("test", new Exception());
+
+            context.Setup(x => x.HttpContext.Request.AcceptTypes).Returns(new[] { "application/json" });
+            context.SetupGet(x => x.HttpContext.Response).Returns(() => response.Object);
+
+            action.ExecuteResult(context.Object);
+
+            Assert.True(serializedModel.Contains("Errors"));
+        }
+
         private static Mock<ControllerContext> MockContextFor(ControllerBase controller)
         {
             var context = new Mock<ControllerContext>();
