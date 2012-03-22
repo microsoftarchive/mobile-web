@@ -183,14 +183,14 @@ limitations under the License. */
                     };
                 case 'select[name=Location]':
                     return {
-                        attr: function(attributeName, attributeValue) {
+                        attr: function (attributeName, attributeValue) {
                             equal(attributeName, "disabled");
                             equal(attributeValue, "disabled");
                         },
-                        removeAttr: function(attributeName) {
+                        removeAttr: function (attributeName) {
                             equal(attributeName, "disabled");
                         },
-                        append: function() {
+                        append: function () {
                         }
                     };
                 default:
@@ -255,7 +255,7 @@ limitations under the License. */
 
     test('fillup module hides Location controls by if GeoLocation API not available', function () {
 
-        expect(5);
+        expect(6);
 
         var m = mocks.create({
             formSubmitter: {
@@ -269,21 +269,28 @@ limitations under the License. */
             switch (selector) {
                 case 'input:checkbox[name=use-api-location]':
                     return {
-                        click: function () {},
+                        click: function () {
+                        }
+                    };
+                case '#GeoLocationSelect':
+                    return {
                         attr: function (attributeName, attributeValue) {
                             equal(attributeName, "style");
                             equal(attributeValue, "display:none");
                         }
                     };
-                case 'select[name=Location]':
+                case '#GeoLocationCheckbox':
                     return {
                         attr: function (attributeName, attributeValue) {
-                            if (attributeName== "style") {
-                                equal(attributeValue, "display:none");
-                            } else {
-                                equal(attributeName, "disabled");
-                                equal(attributeValue, "disabled");
-                            }
+                            equal(attributeName, "style");
+                            equal(attributeValue, "display:none");
+                        }
+                    };
+                case 'label[for=new-location]':
+                    return {
+                        attr: function (attributeName, attributeValue) {
+                            equal(attributeName, "style");
+                            equal(attributeValue, "display:none");
                         }
                     };
                 default:

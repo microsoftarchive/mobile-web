@@ -29,15 +29,16 @@
     </li>
     @if(Html.IsRenderingForMustache())
     {
-    <li>
+    <li id="GeoLocationSelect">
 		<label for="Location">Fill-up station</label>
 		<select name="Location"></select>
 	</li>
-	<li>
+	<li id="GeoLocationCheckbox">
 		<input type="checkbox" name="use-api-location" value="1" />Locate nearby fill-up stations.
 	</li>
 	<li>
         <label for="new-location">Or add a new fill-up station</label>
+        @Html.LabelFor(model => model.Vendor)
         @Html.ValidationMessageFor(model => model.Vendor)
         @Mustache.TextBoxFor(model => model.Vendor, new { maxlength = "20" }) 
 	</li>

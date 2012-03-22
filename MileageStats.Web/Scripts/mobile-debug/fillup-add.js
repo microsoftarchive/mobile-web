@@ -34,11 +34,12 @@ limitations under the License. */
         var $fillupStationTextbox = el.find('input[name=Vendor]');
         var fillupStationsUrl = $fillupForm.data('fillup-stations-url');
 
-        $fillupStationSelect.attr('disabled', 'disabled');
-        
         if (!navigator.geolocation) {
-            $useGeoCoordinateToGetFillupStationsCheckbox.attr("style", "display:none");
-            $fillupStationSelect.attr("style", "display:none");
+            el.find('#GeoLocationSelect').attr("style", "display:none");
+            el.find('#GeoLocationCheckbox').attr("style", "display:none");
+            el.find('label[for=new-location]').attr("style", "display:none");
+        } else {
+            $fillupStationSelect.attr('disabled', 'disabled');
         }
 
         $useGeoCoordinateToGetFillupStationsCheckbox.click(function () {
