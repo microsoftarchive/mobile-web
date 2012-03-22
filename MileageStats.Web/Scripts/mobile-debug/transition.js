@@ -18,127 +18,128 @@ limitations under the License. */
 (window.mstats = window.mstats || {}).transition = function (require) {
 
     var templating = require('Mustache'),
-	    document = require('document'),
+        document = require('document'),
         rootUrl = require('rootUrl'),
-		window = require('window'),
+        window = require('window'),
         app = require('mstats'),
-	notifications = require('notifications'),
+        notifications = require('notifications'),
+        ajax = require('ajax'),
         $ = require('$');
 
-	var cssClassForTransition = 'swapping';
+    var cssClassForTransition = 'swapping';
 
-	function transitionTo(target, defaultRegion, namedParametersPattern, callback) {
+    function transitionTo(target, defaultRegion, namedParametersPattern, callback) {
 
-		var registration = target.registration,
+        var registration = target.registration,
             region = registration.region || defaultRegion,
             host = $(region, document),
             route = registration.route;
 
-		var template = getTemplateFor(route, namedParametersPattern);
-		var onSuccess = success(host, template, target, callback);
+        var template = getTemplateFor(route, namedParametersPattern);
+        var onSuccess = success(host, template, target, callback);
 
-		host.removeClass(cssClassForTransition).addClass(cssClassForTransition);
+        host.removeClass(cssClassForTransition).addClass(cssClassForTransition);
 
-		if (registration.fetch && !mstats.initialModel) {
+        if (registration.fetch && !mstats.initialModel) {
 
-			$.ajax({
-				dataType: 'json',
-				type: 'GET',
-				url: appendJsonFormat(makeRelativeToRoot(target.url)),
-				success: onSuccess,
-				cache: false,
-				error: error(host)
-			});
+            ajax.request({
+                dataType: 'json',
+                type: 'GET',
+                url: appendJsonFormat(makeRelativeToRoot(target.url)),
+                success: onSuccess,
+                cache: false,
+                error: error(host)
+            });
 
-		} else {
-			var response = {
+        } else {
+            var response = {
                 Model: app.initialModel
-			};
+            };
             app.initialModel = null;
-			onSuccess(response);
-		}
-	}
+            onSuccess(response);
+        }
+    }
 
-	function success(host, template, target, callback) {
+    function success(host, template, target, callback) {
 
-		var registration = target.registration;
+        var registration = target.registration;
 
-		return function (model, status, xhr) {
+        return function (model, status, xhr) {
 
-			var view, el;
+            var view, el;
 
-			// append route data to the model 
-			// we use the well known name '__route__'
-			// assuming that it will be unlikely to
-			// collide with any existing properties
-			model.__route__ = target.params;
+            // append route data to the model 
+            // we use the well known name '__route__'
+            // assuming that it will be unlikely to
+            // collide with any existing properties
+            model.__route__ = target.params;
 
-			if (registration.prerender) {
-				model = registration.prerender(model);
-			}
+            if (registration.prerender) {
+                model = registration.prerender(model);
+            }
 
-			view = templating.to_html(template, model);
-			host.empty();
-			host.append(view);
-			el = host.children().last();
+            view = templating.to_html(template, model);
+            host.empty();
+            host.append(view);
+            el = host.children().last();
 
-			if (registration.postrender) {
-				registration.postrender(model, el, target);
-			}
+            if (registration.postrender) {
+                registration.postrender(model, el, target);
+            }
 
-			notifications.renderTo(host);
+            notifications.renderTo(host);
 
-			host.removeClass(cssClassForTransition);
+            host.removeClass(cssClassForTransition);
 
-			if (callback) callback(model, el);
-		};
-	}
+            if (callback) callback(model, el);
+        };
+    }
 
-	function error(host) {
+    function error(host) {
 
-		return function (xhr, status, errorThrown) {
-			if (xhr.status == 401) {
-				window.location = rootUrl;
-			}
+        return function (xhr, status, errorThrown) {
+            if (xhr.status == 401) {
+                window.location = rootUrl;
+            }
 
-			host.empty();
-			host.append('<div>' + status + ': ' + errorThrown + '</div>');
-		};
-	}
+            host.empty();
+            host.append('<div>' + status + ': ' + errorThrown + '</div>');
+        };
+    }
 
-	function makeRelativeToRoot(url) {
-		return (rootUrl + url).replace('//', '/');
-	}
+    function makeRelativeToRoot(url) {
+        return (rootUrl + url).replace('//', '/');
+    }
 
-	function appendJsonFormat(url) {
-		if (url.indexOf('?') > 0) {
-			return url + '&format=json';
-		}
-		else {
-			return url + '?format=json';
-		}
-	}
+    function appendJsonFormat(url) {
+        if (url.indexOf('?') > 0) {
+            return url + '&format=json';
+        }
+        else {
+            return url + '?format=json';
+        }
+    }
 
-	function getTemplateFor(route, namedParametersPattern) {
+    function getTemplateFor(route, namedParametersPattern) {
 
-		// templateId could be cached at registration
+        // templateId could be cached at registration
 
-		var id = '#' + route
+        var id = '#' + route
             .replace(namedParametersPattern, '')    // remove named parameters
             .replace(/^\//, '')                     // remove leading /
             .replace(/\//g, '-').toLowerCase()      // convert / to  -
             .replace(/--/g, '-')                    // collapse double -
             .replace(/-$/, ''); // remove trailing -
 
-		var template = $(id, document);
-		if (template.length === 0) {
-			return '<h1>No Template Found!</h1><h2>' + id + '</h2>';
-		}
-		return template.html();
-	}
+        var template = $(id, document);
+        if (template.length === 0) {
+            return '<h1>No Template Found!</h1><h2>' + id + '</h2>';
+        }
+        return template.html();
+    }
 
-	return {
-		to: transitionTo
-	};
+    return {
+        to: transitionTo
+    };
 
 };

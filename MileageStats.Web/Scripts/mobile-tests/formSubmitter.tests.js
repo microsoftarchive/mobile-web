@@ -17,8 +17,7 @@ limitations under the License. */
 
 (function (specs, app) {
 
-    var ajax = $.ajax,
-        validator = $.validator;
+    var validator = $.validator;
 
     module('formSubmitter specs', {
         setup: function () {
@@ -26,13 +25,12 @@ limitations under the License. */
         },
         teardown: function () {
             $.validator = validator;
-            $.ajax = ajax;
         }
     });
 
     test('formSubmitter module constructs itself', function () {
 
-        var module = app.formSubmitter(mocks.create());
+        var module = app.formSubmitter(mocks.create({ ajax:{} }));
 
         ok(module != undefined, true);
         equal(typeof module, 'object');
@@ -52,7 +50,7 @@ limitations under the License. */
             }
         };
 
-        var module = app.formSubmitter(mocks.create());
+        var module = app.formSubmitter(mocks.create({ ajax: {} }));
         module.attach(form, function () { });
     });
 
@@ -66,7 +64,7 @@ limitations under the License. */
 
         $.validator = stubUnobtrusive;
 
-        var module = app.formSubmitter(mocks.create({}));
+        var module = app.formSubmitter(mocks.create({ ajax: {} }));
 
         form.submit(function (evt) {
             ok(!evt.isDefaultPrevented());
@@ -90,11 +88,14 @@ limitations under the License. */
         form.data('unobtrusiveValidation', getValidatorThatReturns(true));
 
         $.validator = stubUnobtrusive;
-        $.ajax = function (options) {
-            equal(options.data, 'field=value');
+
+        var ajax = {
+            post: function(options) {
+                equal(options.data, 'field=value');
+            }
         };
 
-        var module = app.formSubmitter(mocks.create());
+        var module = app.formSubmitter(mocks.create({ ajax: ajax }));
         module.attach(view, function () { });
         form.triggerHandler('submit');
     });
@@ -107,11 +108,13 @@ limitations under the License. */
             form = view.find('form');
         form.find('form').data('unobtrusiveValidation', getValidatorThatReturns(true));
 
-        $.ajax = function (options) {
-            options.success({});
+        var ajax = {
+            post: function (options) {
+                options.success({});
+            }
         };
 
-        var module = app.formSubmitter(mocks.create());
+        var module = app.formSubmitter(mocks.create({ ajax: ajax }));
 
         module.attach(view, function () {
             ok(true);
@@ -128,11 +131,13 @@ limitations under the License. */
             form = view.find('form');
         form.find('form').data('unobtrusiveValidation', getValidatorThatReturns(true));
 
-        $.ajax = function (options) {
-            equal(options.url, 'url/to/post/form/to');
+        var ajax = {
+            post: function (options) {
+                equal(options.url, 'url/to/post/form/to');
+            }
         };
 
-        var module = app.formSubmitter(mocks.create());
+        var module = app.formSubmitter(mocks.create({ ajax: ajax }));
 
         module.attach(view, function () { });
 

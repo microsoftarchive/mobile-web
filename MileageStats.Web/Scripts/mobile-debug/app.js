@@ -50,7 +50,7 @@ limitations under the License. */
 
     $(function () {
         var registration,
-	        module;
+            module;
 
         // we consider each property of `app` to be a "registration"
         // in other words, each module is responsible for telling 

@@ -18,7 +18,6 @@ limitations under the License. */
 (function (specs, app) {
 
     var defaultMocks;
-    var ajax = $.ajax;
 
     module('transition specs', {
         setup: function () {
@@ -26,14 +25,14 @@ limitations under the License. */
                 mstats: {
                     rooturl: '/'
                 },
-                document: $('<div/>')[0]
+                document: $('<div/>')[0],
+                ajax: {
+                    request: function (options) { options.success(); }
+                }
             };
-            $.ajax = function (options) {
-                options.success();
-            };
+
         },
         teardown: function () {
-            $.ajax = ajax;
         }
     });
 
@@ -61,11 +60,11 @@ limitations under the License. */
     test('module invokes an ajax calls by default to url when registered to fetch', function () {
         expect(1);
 
-        var transition = app.transition(mocks.create(defaultMocks));
-
-        $.ajax = function (options) {
+        defaultMocks.ajax.request = function(options) {
             equal(options.url, '/my/route?format=json');
         };
+        
+        var transition = app.transition(mocks.create(defaultMocks));
 
         transition.to({
             url: '/my/route',
@@ -79,11 +78,11 @@ limitations under the License. */
     test('module appends format to url before making an ajax calls registered to fetch', function () {
         expect(1);
 
-        var transition = app.transition(mocks.create(defaultMocks));
-
-        $.ajax = function (options) {
+        defaultMocks.ajax.request = function (options) {
             ok(options.url.indexOf('format=json') > -1);
         };
+        
+        var transition = app.transition(mocks.create(defaultMocks));
 
         transition.to({
             url: '/my/route',
@@ -96,7 +95,7 @@ limitations under the License. */
 
     test('module will not invoke an ajax call when registrater not to fetch', function () {
 
-        $.ajax = function (options) {
+        defaultMocks.ajax.request = function (options) {
             ok(false, 'ajax should not be invoked');
         };
 
@@ -114,11 +113,11 @@ limitations under the License. */
     test('module matches invokes correct ajax url when route has a named arg', function () {
         expect(1);
 
-        var transition = app.transition(mocks.create(defaultMocks));
-
-        $.ajax = function (options) {
+        defaultMocks.ajax.request = function (options) {
             equal(options.url, '/my/route/1?format=json');
         };
+
+        var transition = app.transition(mocks.create(defaultMocks));
 
         transition.to({
             url: '/my/route/1',
