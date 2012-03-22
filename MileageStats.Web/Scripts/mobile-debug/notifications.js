@@ -42,7 +42,7 @@ limitations under the License. */
 			}
 
 			if (alert) {
-				container = $('<div><p>' + confirm + '</p></div>')
+			    container = $('<div><p>' + alert + '</p></div>')
 							.addClass('flash alert')
 
 				el.find('nav').first().after(container);

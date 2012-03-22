@@ -71,11 +71,12 @@ limitations under the License. */
 		function onSuccess(callback) {
 			// we create this function in a closure
 			// in order to trap the callback
-			return function (res, status, xhr) {
-				if (res.Errors) {
+		    return function (res, status, xhr) {
+		        notifications.log(res);
+		        if (res.Errors) {
+		            notifications.renderTo($('#main'));
 					displayErrors(res.Errors);
 				} else {
-					notifications.log(res);
 					callback(res);
 				}
 			};
