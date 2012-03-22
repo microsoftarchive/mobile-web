@@ -36,7 +36,7 @@ namespace MileageStats.Domain.Contracts
         /// <summary>
         /// Date of the fillup.
         /// </summary>
-        DateTime Date { get; set; }
+        DateTime? Date { get; set; }
 
         /// <summary>
         /// Odometer reading for the fillup.

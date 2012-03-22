@@ -367,7 +367,7 @@
     <value>This date must be a date in the future.</value>
   </data>
   <data name="FillupEntryDateRequired" xml:space="preserve">
-    <value>Date is required.</value>
+    <value>Valid date is required.</value>
   </data>
   <data name="FillupEntryOdometerRequired" xml:space="preserve">
     <value>Odometer is required.</value>
@@ -431,5 +431,8 @@
   </data>
   <data name="UpdateReminderUnauthorized" xml:space="preserve">
     <value>You don't have permissions to update the reminder</value>
+  </data>
+  <data name="DateInvalid" xml:space="preserve">
+    <value>Date is invalid.</value>
   </data>
 </root>

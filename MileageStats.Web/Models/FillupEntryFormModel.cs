@@ -53,7 +53,7 @@ namespace MileageStats.Web.Models
         [Required(ErrorMessageResourceName = "FillupEntryDateRequired", ErrorMessageResourceType = typeof(Resources))]
         [PastDate]
         [StoreRestrictedDate]
-        public DateTime Date 
+        public DateTime? Date 
         { 
             get 
             {
@@ -68,6 +68,10 @@ namespace MileageStats.Web.Models
                     if (DateTime.TryParse(string.Join("/", this.DateYear, this.DateMonth, this.DateDay), out date))
                     {
                         this.date = date;
+                    }
+                    else
+                    {
+                        return null;
                     }
                 }
                 
