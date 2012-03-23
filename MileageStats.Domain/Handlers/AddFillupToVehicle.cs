@@ -103,7 +103,7 @@ namespace MileageStats.Domain.Handlers
             var fillup = new FillupEntry
                              {
                                  FillupEntryId = source.FillupEntryId,
-                                 Date = source.Date,
+                                 Date = source.Date.Value,
                                  Distance = source.Distance,
                                  Odometer = source.Odometer,
                                  PricePerUnit = source.PricePerUnit.Value,

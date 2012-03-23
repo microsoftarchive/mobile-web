@@ -15,6 +15,7 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -38,7 +39,6 @@ namespace MileageStats.Domain.Handlers
 
         public virtual IEnumerable<ValidationResult> Execute(int userId, int vehicleId, ICreateFillupEntryCommand fillup)
         {
-
             var foundVehicle = _vehicleRepository.GetVehicle(userId, vehicleId);
 
             if (foundVehicle == null)
