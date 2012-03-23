@@ -29,6 +29,9 @@ using System.Linq;
 using System.Web.Helpers;
 using MileageStats.Domain.Properties;
 using MileageStats.Domain.Handlers;
+using System.Reflection;
+using System.Web.Hosting;
+using System.Web;
 
 namespace MileageStats.Web.Controllers
 {
@@ -44,6 +47,9 @@ namespace MileageStats.Web.Controllers
         public ChartController(GetUserByClaimId getUser, IChartDataService chartDataService, IServiceLocator serviceLocator)
             : base(getUser, serviceLocator)
         {
+            if (chartDataService == null)
+                throw new ArgumentNullException("chartDataService");
+
             this.chartDataService = chartDataService;
         }
 
@@ -193,7 +199,7 @@ namespace MileageStats.Web.Controllers
 
             var themeColors = string.Join(";", selectedVehicleColors);
             var theme = string.Format(CHARTS_THEME, themeColors);
-            var myChart = new Chart(chartWidth, chartHeight, theme);
+            var myChart = GetChartInstance(chartWidth, chartHeight, theme);
                 
 
             if (!Request.Browser.IsMobileDevice)
@@ -270,6 +276,18 @@ namespace MileageStats.Web.Controllers
             }
 
             return isDataPlotted;
+        }
+
+        private Chart GetChartInstance(int chartWidth, int chartHeight, string theme)
+        {
+            //Workaround for passing the HttpContextBase to the Chart constructor, which is internal
+            //The public constructor gets the current HttpContext, which can not be set in unit tests
+            var constructors = typeof(Chart).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic);
+                  
+            var chart = (Chart)constructors[0].Invoke(new object[] { this.HttpContext,  null, 
+                chartWidth, chartHeight, theme, null });
+ 
+            return chart;
         }
     }
 }
