@@ -25,10 +25,10 @@ limitations under the License. */
         namedParametersPattern = /:(\w)*/g;
 
         var invalidations = {
-            '/Vehicle/Add': ['/', '/Charts'],
-            '/Vehicle/:id/Fillup/Add': ['/', '/Charts', '/Vehicle/:id/Fillup/List', '/Vehicle/:id/Details'],
-            '/Vehicle/:id/Edit': ['/', '/Charts', '/Vehicle/:id/Details'],
-            '/Vehicle/Delete/:id': ['/', '/Charts', '/Vehicle/:id/Details'],
+            '/Vehicle/Add': ['/', '/Chart'],
+            '/Vehicle/:id/Fillup/Add': ['/', '/Chart', '/Vehicle/:id/Fillup/List', '/Vehicle/:id/Details', '/Vehicle/:id/Fillup/Add'],
+            '/Vehicle/:id/Edit': ['/', '/Chart', '/Vehicle/:id/Details'],
+            '/Vehicle/Delete/:id': ['/', '/Chart', '/Vehicle/:id/Details'],
             '/Vehicle/:id/Reminder/Add': ['/', '/Vehicle/:id/Reminder/ListByGroup'],
             '/Vehicle/:id/Reminder/:reminderId/Fulfill': ['/', '/Vehicle/:id/Reminder/ListByGroup', '/Vehicle/:id/Reminder/:reminderId/Details']
         };
