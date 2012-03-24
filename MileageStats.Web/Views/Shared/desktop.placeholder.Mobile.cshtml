@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+    // this is a placeholder for the legacy desktop experience
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Legacy Desktop Experience</title>
+    <!-- mobile friendly <meta> tags -->
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+    <meta http-equiv="cleartype" content="on" />
+    <!-- mobile first, responsive design stylesheets -->
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/default.css")" media="screen, handheld" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/extended.css")" media="only screen and (min-width: 640px)" />
+    @if (Request.Browser.IsWow())
+    {
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/enhanced.css")" media="only screen and (min-width: 320px) and (color)" />
+    }
+</head>
+<body>
+    <!-- application bar -->
+    <header>
+        <h1>
+            <a href="@Url.Action("Index", "Dashboard")">Mileage Stats</a></h1>
+        @if (Request.IsAuthenticated)
+        {
+            <ul>
+                <li><a href="@Url.Action("SignOut", "Auth")">Sign out</a></li>
+            </ul>
+        }
+    </header>
+    <!-- #content region(s) -->
+    <div id="content">
+        <div id="main">
+            <!-- view -->
+            <div class="view">
+                <h2>
+                    Switch to Desktop</h2>
+                <p>
+                    Unfortunately the current version of our desktop site is unlikely to perform very
+                    well on most mobile devices. Instead of crashing your browser we thought we'd simple
+                    show you a lovely picture of what the desktop site looks like.</p>
+                <figure style="margin: 1em 0;">
+                    <img src="@Url.Content("~/Content/mileagestats_desktop.jpg")" alt="Mileage Stats Desktop Application" />
+                    <figcaption style="font-size: .8em">The sign in page for the Mileage Stats desktop site. </figcaption>
+                </figure>
+                <p>
+                    We also have a <a href="http://channel9.msdn.com/posts/Project-Silk-Mileage-Stats-Application"
+                        title="Project Silk: Mileage Stats Application" style="display: inline">video</a>
+                    available that describes the desktop application experience, but as it's high-quality
+                    and rather large make sure you're on a high-bandwidth wifi connection before viewing
+                    it.</p>
+                <ol class="hbox button-group">
+                    <li class="icon back left"><a href="@Url.Action("SwitchView","ViewSwitcher", new { mobile=true, returnUrl="/"})"><span>Back</span></a></li>
+                    <li class="invert disabled"><a href=""><span></span></a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- #extended content region -->
+        <div id="extended">
+            <nav>
+                <ol class="title">
+                    <li>Extended Region</li>
+                </ol>
+            </nav>
+            <div class="view">
+                <h1>
+                    Extended View</h1>
+                <p>
+                    This area is only displayed on clients that have a sufficient screen size.</p>
+            </div>
+        </div>
+    </div>
+    <!-- application footer region -->
+    <footer>
+        @Html.Partial("_ViewSwitcher")
+        <p>
+            &copy; Copyright 2012 Microsoft</p>
+    </footer>
+</body>
+</html>

@@ -403,6 +403,7 @@
     <Content Include="Views\Shared\_spaTemplates.cshtml" />
     <Content Include="Views\Reminder\ListByGroup.Mobile.cshtml" />
     <Content Include="Views\Shared\_spa.mobile.cshtml" />
+    <Content Include="Views\Shared\desktop.placeholder.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Index.cshtml" />

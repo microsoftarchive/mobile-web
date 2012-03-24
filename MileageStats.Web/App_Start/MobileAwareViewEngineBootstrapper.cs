@@ -120,13 +120,27 @@ namespace MileageStats.Web.App_Start
             var viewSwitcher = controllerContext.RequestContext.HttpContext.Request.Cookies["ViewSwitcher"];
 
             // if the mobile flag has been explicitly turned off, then
-            // we'll pass to the next view engine in the chain
+            // we'll display a placeholder page where the legacy (desktop)
+            // experience would typically be.
             // also note that we'll never check for this flag unless 
             // the initial condition for using the engine has been met
             if (viewSwitcher != null && viewSwitcher["Mobile"] != null && String.Equals(viewSwitcher["Mobile"], "false"))
             {
-                // again, since conditions were not met, we return an empty array for the 'attempts'
-                return new ViewEngineResult(new string[] { });
+                // if we did not want to show the placeholder, then
+                // we'd want to pass to the next view engine in the chain
+                // an empty array for the values we 'attempted', like this:
+                // return new ViewEngineResult(new string[] { });
+
+                return (isPartialView)
+                           ? new ViewEngineResult(new string[] {})
+                           : FindModifiedView(controllerContext, "desktop.placeholder", masterName, useCache, false);
+            }
+
+            if (controllerContext.HttpContext.Request.Browser.IsWow()
+                && controllerContext.HttpContext.User.Identity.IsAuthenticated
+                && !isPartialView)
+            {
+                viewName = "_spa";
             }
 
             // all of the necessary conditions have been met, we can be constructing the name 
@@ -144,38 +158,29 @@ namespace MileageStats.Web.App_Start
             if (controllerContext.RouteData.DataTokens.ContainsKey("area"))
                 area = controllerContext.RouteData.DataTokens["area"].ToString();
 
-            if (controllerContext.HttpContext.Request.Browser.IsWow()
-                && controllerContext.HttpContext.User.Identity.IsAuthenticated
-                && !isPartialView)
-            {
-                viewName = "_spa";
-            }
-
             // Apply the view modifier
             var newViewName = string.Format("{0}.{1}", viewName, _viewModifier);
 
             // Create the key for caching purposes          
             string keyPath = Path.Combine(area, controller, newViewName);
 
-            string cacheLocation = ViewLocationCache.GetViewLocation(controllerContext.HttpContext, keyPath);
-
             // Try the cache          
             if (useCache)
             {
+                string cacheLocation = ViewLocationCache.GetViewLocation(controllerContext.HttpContext, keyPath);
+
                 //If using the cache, check to see if the location is cached.                              
                 if (!string.IsNullOrWhiteSpace(cacheLocation))
                 {
-                    if (isPartialView)
-                    {
-                        return new ViewEngineResult(CreatePartialView(controllerContext, cacheLocation), this);
-                    }
-                    else
-                    {
-                        return new ViewEngineResult(CreateView(controllerContext, cacheLocation, masterName), this);
-                    }
+                    return isPartialView 
+                        ? new ViewEngineResult(CreatePartialView(controllerContext, cacheLocation), this) 
+                        : new ViewEngineResult(CreateView(controllerContext, cacheLocation, masterName), this);
                 }
             }
-            string[] locationFormats = string.IsNullOrEmpty(area) ? ViewLocationFormats : AreaViewLocationFormats;
+
+            string[] locationFormats = string.IsNullOrEmpty(area) 
+                ? ViewLocationFormats 
+                : AreaViewLocationFormats;
 
             // for each of the paths defined, format the string and see if that path exists. When found, cache it.          
             foreach (string rootPath in locationFormats)
@@ -184,20 +189,15 @@ namespace MileageStats.Web.App_Start
                                             ? string.Format(rootPath, newViewName, controller)
                                             : string.Format(rootPath, newViewName, controller, area);
 
-                if (FileExists(controllerContext, currentPath))
-                {
-                    ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, keyPath, currentPath);
+                if (!FileExists(controllerContext, currentPath)) continue;
 
-                    if (isPartialView)
-                    {
-                        return new ViewEngineResult(CreatePartialView(controllerContext, currentPath), this);
-                    }
-                    else
-                    {
-                        return new ViewEngineResult(CreateView(controllerContext, currentPath, masterName), this);
-                    }
-                }
+                ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, keyPath, currentPath);
+
+                return isPartialView 
+                           ? new ViewEngineResult(CreatePartialView(controllerContext, currentPath), this) 
+                           : new ViewEngineResult(CreateView(controllerContext, currentPath, masterName), this);
             }
+
             return new ViewEngineResult(new string[] { }); // we found nothing and we pretend we looked nowhere
         }
     }
