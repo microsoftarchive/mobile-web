@@ -43,6 +43,20 @@
             <div id="main" class="@initialMainCssClass">
                 @RenderBody()
             </div>
+            <div id="extended">
+		        <nav>
+			        <ol class="title">
+				        <li>Extended Region</li>
+			        </ol>
+		        </nav>
+		        <div class="view">
+                    <h1>Extended View</h1>
+                    <p>This region is only displayed on clients with a sufficient screen size.</p>
+                    <p>This behavior is part of a technique known as <a href="http://www.alistapart.com/articles/responsive-web-design/">Responsive Web Design</a>
+                        and is implemented using <a href=""http://www.w3.org/TR/css3-mediaqueries/">CSS Media Queries</a>.</p>
+                    <p>For specifics on the implementation in MileageStats Mobile, examine the css files searching for rules making use of <span>@@media</span>.</p>
+		        </div>
+	        </div>
         </div>
 
         <!-- application footer region -->
