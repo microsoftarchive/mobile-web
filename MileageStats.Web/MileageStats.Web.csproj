@@ -396,7 +396,6 @@
     <Content Include="Views\Fillup\ListPartial.Mobile.cshtml" />
     <Content Include="Views\Shared\_ViewSwitcher.cshtml" />
     <Content Include="Views\Shared\_Flash.Mobile.cshtml" />
-    <None Include="Views\Profile\Edit.mustache" />
     <Content Include="Views\Vehicle\ConfirmDelete.cshtml" />
     <Content Include="Views\Shared\_Error.cshtml" />
     <Content Include="Views\Shared\_Error.Mobile.cshtml" />

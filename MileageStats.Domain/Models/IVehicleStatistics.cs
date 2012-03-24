@@ -13,12 +13,12 @@ namespace MileageStats.Domain.Models
         double AverageFuelEfficiency { get; }
 
         /// <summary>
-        /// Gets the average cost to drive per distance (e.g. $/Mile or €/Kilometer)
+        /// Gets the average cost to drive per distance (e.g. $/Mile or ï¿½/Kilometer)
         /// </summary>
         double AverageCostToDrive { get; }
 
         /// <summary>
-        /// Gets the average cost to drive per month (e.g. $/Month or €/Month) between the first entry and today.
+        /// Gets the average cost to drive per month (e.g. $/Month or ï¿½/Month) between the first entry and today.
         /// </summary>
         double AverageCostPerMonth { get; }
 

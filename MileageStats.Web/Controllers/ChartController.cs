@@ -19,8 +19,6 @@ using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
 using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Models;
-using MileageStats.Web.Helpers;
-using MileageStats.Web.MobileProfiler;
 using MileageStats.Web.Models;
 using System;
 using System.Diagnostics;
@@ -30,8 +28,6 @@ using System.Web.Helpers;
 using MileageStats.Domain.Properties;
 using MileageStats.Domain.Handlers;
 using System.Reflection;
-using System.Web.Hosting;
-using System.Web;
 
 namespace MileageStats.Web.Controllers
 {
