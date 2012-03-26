@@ -99,8 +99,8 @@ limitations under the License. */
                 var name;
                 for (name in params) {
                     route = route.replace(name, params[name]);
-                    route = route.replace('/', rootUrl);
                 }
+                route = route.replace('/', rootUrl);
                 urls.push(route);
             });
 
