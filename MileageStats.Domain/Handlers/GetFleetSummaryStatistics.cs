@@ -42,6 +42,10 @@ namespace MileageStats.Domain.Handlers
                         let statistics = CalculateStatistics.Calculate(fillups, includeFirst: false)
                         select statistics;
 
+            // These statistic calculations are for illustrative purposes only.
+            // If you were to build this application for real, you probably want to calculate this
+            // data more accurately and cache the results.
+
             return new FleetStatistics(stats);
         }
     }
