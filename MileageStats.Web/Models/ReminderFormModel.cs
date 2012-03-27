@@ -27,7 +27,7 @@ namespace MileageStats.Web.Models
     /// <summary>
     /// A reminder for a user to service their vehicle.
     /// </summary>
-    [AtLeastOneNonNullPropertyValidation("DueDate", "DueDistance", ErrorMessage = "Due Date or Due Distance is required.")]
+    [AtLeastOneNonNullPropertyValidation("DueDate", "DueDistance", ErrorMessage = "Valid Due Date or Due Distance is required.")]
     public class ReminderFormModel : ICreateReminderCommand
     {
         private int? lastVehicleOdometer;

@@ -16,7 +16,7 @@
     </li>
     <li class="psuedo-date">
         <label for="due-date">Date <em>(mm/dd/yyyy)</em></label>
-        @Html.ValidationMessageFor(model => model.DueDate)
+        <span class="field-validation-valid" data-valmsg-for="DueDate" data-valmsg-replace="true"></span>
         @Html.DropDownListFor(model => model.DueDateMonth, SelectListFor.Month(i => today.Month == i))
         @Html.DropDownListFor(model => model.DueDateDay, SelectListFor.Date(i => today.Day == i))
         @Html.DropDownListFor(model => model.DueDateYear, SelectListFor.Year(i => today.Year == i))
