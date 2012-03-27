@@ -54,7 +54,7 @@
                     and rather large make sure you're on a high-bandwidth wifi connection before viewing
                     it.</p>
                 <ol class="hbox button-group">
-                    <li class="icon back left"><a href="@Url.Action("SwitchView","ViewSwitcher", new { mobile=true, returnUrl="/"})"><span>Back</span></a></li>
+                    <li class="icon back left"><a href="@Url.Action("SwitchView","ViewSwitcher", new { mobile=true, returnUrl=Request.Url})"><span>Back</span></a></li>
                     <li class="invert disabled"><a href=""><span></span></a></li>
                 </ol>
             </div>
