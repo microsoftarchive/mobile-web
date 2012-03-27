@@ -67,7 +67,7 @@
                     <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
                         <span>Fill Ups </span></a></li>
                     <li>
-						<a id="reminderMenu_@(Mustache.Value(vehicle, i => i.VehicleId))" @overdueReminderFlag href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
+						<a id="reminderMenu_@(Mustache.Value(vehicle, i => i.VehicleId))" @overdueReminderFlag href="@Url.UnencodedAction("List", "Reminder", new { vehicleId = Mustache.Value(vehicle, i => i.VehicleId) })">
                         <span >Reminders</span></a></li>
                 </ol>
             </dd>

@@ -4,7 +4,7 @@
         @Html.LabelFor(model => model.Date)<span> (mm/dd/yyyy)</span>
     </div>
     <div class="editor-field">
-        @Html.TextBox("Date", Model == null || Model.Date == null ? string.Empty : Model.Date.ToShortDateString(), new { maxlength = "10" })
+        @Html.TextBox("Date", Model == null || Model.Date == null ? string.Empty : Model.Date.Value.ToShortDateString(), new { maxlength = "10" })
         @Html.ValidationMessageFor(model => model.Date)
     </div>   
     <div class="editor-label">

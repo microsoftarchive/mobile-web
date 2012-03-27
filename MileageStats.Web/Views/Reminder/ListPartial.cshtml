@@ -1,9 +1,19 @@
-﻿@using MileageStats.Web.Models
-@model SelectedItemList<MileageStats.Domain.Models.ReminderSummaryModel>
-<div class="list nav">
-    @foreach (var item in Model)
+﻿@using MileageStats.Domain.Models
+@using MileageStats.Web.Models
+@model List<MileageStats.Web.Models.ReminderListViewModel>
+@{
+    var flattenedReminderListModel = new List<ReminderSummaryModel>();
+    foreach (var reminderListViewModel in Model)
     {
-        var selectedId = (Model.SelectedItem == null) ? -1 : Model.SelectedItem.ReminderId;
+        flattenedReminderListModel.AddRange(reminderListViewModel.Reminders);
+    }
+    var selectedItemReminderList = new SelectedItemList<MileageStats.Domain.Models.ReminderSummaryModel>(flattenedReminderListModel);
+    selectedItemReminderList.SelectedItem = selectedItemReminderList.FirstOrDefault();
+}
+<div class="list nav">
+    @foreach (var item in selectedItemReminderList)
+    {
+        var selectedId = (selectedItemReminderList.SelectedItem == null) ? -1 : selectedItemReminderList.SelectedItem.ReminderId;
         <a class="list-item @(item.ReminderId == selectedId ? "selected" : String.Empty) @(item.IsOverdue ? "overdue": null)" href="@Url.Action("Details", "Reminder", new { id = item.ReminderId })">
             <h1>@item.Title</h1>
             <p class="title">Due @item.DueOnFormatted

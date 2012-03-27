@@ -29,8 +29,8 @@ limitations under the License. */
             '/Vehicle/:id/Fillup/Add': ['/', '/Chart', '/Vehicle/:id/Fillup/List', '/Vehicle/:id/Details', '/Vehicle/:id/Fillup/Add'],
             '/Vehicle/:id/Edit': ['/', '/Chart', '/Vehicle/:id/Details'],
             '/Vehicle/Delete/:id': ['/', '/Chart', '/Vehicle/:id/Details'],
-            '/Vehicle/:id/Reminder/Add': ['/', '/Vehicle/:id/Reminder/ListByGroup'],
-            '/Vehicle/:id/Reminder/:reminderId/Fulfill': ['/', '/Vehicle/:id/Reminder/ListByGroup', '/Vehicle/:id/Reminder/:reminderId/Details']
+            '/Vehicle/:id/Reminder/Add': ['/', '/Vehicle/:id/Reminder/List'],
+            '/Vehicle/:id/Reminder/:reminderId/Fulfill': ['/', '/Vehicle/:id/Reminder/List', '/Vehicle/:id/Reminder/:reminderId/Details']
         };
 
         function buildRegExpForMatching(route) {

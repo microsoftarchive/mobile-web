@@ -16,6 +16,7 @@
     </li>
     <li class="psuedo-date">
         <label for="due-date">Date <em>(mm/dd/yyyy)</em></label>
+        @Html.ValidationMessageFor(model=>model.DueDate)
         <span class="field-validation-valid" data-valmsg-for="DueDate" data-valmsg-replace="true"></span>
         @Html.DropDownListFor(model => model.DueDateMonth, SelectListFor.Month(i => today.Month == i))
         @Html.DropDownListFor(model => model.DueDateDay, SelectListFor.Date(i => today.Day == i))
@@ -32,6 +33,6 @@
 
 <ol class="hbox button-group">
 	<li><button type="submit"><span>Save</span></button></li>
-	<li class="icon false invert"><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m=>m.VehicleId)})"><span>Cancel</span></a></li>
+	<li class="icon false invert"><a href="@Url.UnencodedAction("List", "Reminder", new { vehicleId = Mustache.Value(m=>m.VehicleId)})"><span>Cancel</span></a></li>
 </ol>
 

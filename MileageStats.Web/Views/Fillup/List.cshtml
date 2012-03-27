@@ -1,6 +1,11 @@
 ﻿@model List<MileageStats.Web.Models.FillupListViewModel>
 @{    
-    ViewBag.Title = "Fill ups for " + ViewBag.VehicleName;    
+    ViewBag.Title = "Fill ups for " + ViewBag.VehicleName;
+    var flattenedfillupListModel = new List<MileageStats.Web.Models.FillupViewModel>();
+    foreach (var fillupListVM in Model)
+    {
+        flattenedfillupListModel.AddRange(fillupListVM.Fillups);
+    } 
 }
 <div id="details-page">
     <div id="scrollable">
@@ -28,7 +33,7 @@
                                 }
                             </div>
                             <div class="aside">
-                                @Html.Partial("ListPartial", Model)
+                                @Html.Partial("ListPartial", flattenedfillupListModel)
                             </div>
                             <div class="display article">
                                 @{if (ViewBag.SelectedFillup != null)

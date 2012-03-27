@@ -63,9 +63,9 @@ namespace MileageStats.Web.Tests.Controllers
                                    new Reminder {ReminderId = 2}
                                 };
 
-            MockHandlerFor<GetUnfulfilledRemindersForVehicle>(
+            MockHandlerFor<GetAllRemindersForVehicle>(
                 x => x
-                         .Setup(h => h.Execute(_defaultUser.UserId, defaultVehicleId, 0))
+                         .Setup(h => h.Execute(defaultVehicleId))
                          .Returns(reminders));
 
             MockHandlerFor<GetVehicleById>(
@@ -76,10 +76,10 @@ namespace MileageStats.Web.Tests.Controllers
             ReminderController controller = GetTestableReminderController();
             ActionResult result = controller.List(defaultVehicleId);
 
-            var model = result.Extract<ReminderDetailsViewModel>();
+            var model = result.Extract<List<ReminderListViewModel>>();
 
-            Assert.Equal(reminders.Length, model.Reminders.Count());
-            Assert.Equal(reminders[0].ReminderId, model.Reminder.ReminderId);
+            Assert.Equal(reminders.Length, model[0].Reminders.Count());
+            Assert.Equal(reminders[0].ReminderId, model[0].Reminders.First().ReminderId);
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace MileageStats.Web.Tests.Controllers
         }
 
         [Fact]
-        public void WhenAddReminderWithValidReminder_ThenReturnsToReminderListByGroupView()
+        public void WhenAddReminderWithValidReminder_ThenReturnsToReminderListView()
         {
             var formModel = new ReminderFormModel();
 
@@ -164,7 +164,7 @@ namespace MileageStats.Web.Tests.Controllers
             var result = (RedirectToRouteResult)controller.Add(defaultVehicleId, formModel);
 
             Assert.NotNull(result);
-            Assert.Equal("ListByGroup", result.RouteValues["action"]);
+            Assert.Equal("List", result.RouteValues["action"]);
             Assert.Equal("Reminder", result.RouteValues["controller"]);
         }
 
@@ -326,9 +326,9 @@ namespace MileageStats.Web.Tests.Controllers
                                     new Reminder {ReminderId = 2}
                                 };
 
-            MockHandlerFor<GetUnfulfilledRemindersForVehicle>(
+            MockHandlerFor<GetAllRemindersForVehicle>(
                 x => x
-                         .Setup(h => h.Execute(_defaultUser.UserId, defaultVehicleId, 0))
+                         .Setup(h => h.Execute(defaultVehicleId))
                          .Returns(reminders));
 
             MockHandlerFor<GetVehicleById>(
@@ -338,13 +338,12 @@ namespace MileageStats.Web.Tests.Controllers
 
             var controller = GetTestableReminderController();
 
-            var result = (ContentTypeAwareResult)controller.ListPartial(defaultVehicleId);
-            var data = (SelectedItemList<ReminderSummaryModel>)result.Model;
+            var result = (ContentTypeAwareResult)controller.List(defaultVehicleId);
+            var data = (List<ReminderListViewModel>)result.Model;
 
             Assert.NotNull(data);
-            Assert.NotNull(data.List);
-            Assert.Equal(reminders.Count(), data.List.Count());
-            Assert.Equal("test reminder", data.List.First().Title);
+            Assert.Equal(reminders.Count(), data.First().Reminders.Count());
+            Assert.Equal("test reminder", data.First().Reminders.First().Title);
         }
 
         [Fact]
@@ -365,7 +364,7 @@ namespace MileageStats.Web.Tests.Controllers
         }
 
         [Fact]
-        public void WhenGettingListByGroup_ThenRemindersReturned()
+        public void WhenGettingList_ThenRemindersReturnedGrouped()
         {
             var vehicle = new VehicleModel(new Vehicle {VehicleId = defaultVehicleId},
                                            new VehicleStatisticsModel());
@@ -389,7 +388,7 @@ namespace MileageStats.Web.Tests.Controllers
 
             var controller = GetTestableReminderController();
 
-            var result = (ContentTypeAwareResult)controller.ListByGroup(defaultVehicleId);
+            var result = (ContentTypeAwareResult)controller.List(defaultVehicleId);
             var data = (List<ReminderListViewModel>)result.Model;
 
             Assert.NotNull(data);

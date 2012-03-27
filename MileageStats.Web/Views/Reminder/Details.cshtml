@@ -1,5 +1,4 @@
-﻿@using MileageStats.Domain.Models
-@model MileageStats.Web.Models.ReminderDetailsViewModel
+﻿@model MileageStats.Domain.Models.ReminderSummaryModel
 @{
     ViewBag.Title = "Reminders for " + ViewBag.VehicleName;
 }
@@ -32,18 +31,15 @@
                                 @{ Html.RenderAction("ListPartial", new { vehicleId = Html.RouteValue("vehicleId") }); }
                             </div>
                             <div class="display article">
-                            @{if (Model.Reminder != null)
-                              {
-                                @Html.Partial("DetailsPartial", Model.Reminder)
+                                @Html.Partial("DetailsPartial", Model)
                                 <div>
-                                    @using (Html.BeginForm("Fulfill", "Reminder", new { id = Model.Reminder.ReminderId }, FormMethod.Post))
-                                    {
-                                        <button data-action="reminder-fulfill-selected" class="button generic small" type="submit">
-                                            <img src="@Url.Content("~/Content/button-fulfill.png")" title="Fulfill Reminder" alt="Save" />
-                                        </button>                    
-                                    }
+                                @using (Html.BeginForm("Fulfill", "Reminder", new { id = Model.ReminderId }, FormMethod.Post))
+                                {
+                                    <button data-action="reminder-fulfill-selected" class="button generic small" type="submit">
+                                        <img src="@Url.Content("~/Content/button-fulfill.png")" title="Fulfill Reminder" alt="Save" />
+                                    </button>                    
+                                }
                                 </div>                               
-                            }}
                             </div>
                         </div>
                     </div>

@@ -19,7 +19,7 @@ limitations under the License. */
 
     var formSubmitter = require('formSubmitter');
 
-    var urlPattern = '/Vehicle/:vehicleId/Reminder/ListByGroup';
+    var urlPattern = '/Vehicle/:vehicleId/Reminder/List';
 
     function postrender(model, el, context) {
 

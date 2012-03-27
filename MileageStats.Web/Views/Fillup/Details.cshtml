@@ -1,11 +1,12 @@
-﻿@model System.Collections.Generic.List<MileageStats.Web.Models.FillupViewModel>
+﻿@model MileageStats.Web.Models.FillupViewModel
 @{
-    ViewBag.Title = "Fill ups for " + ViewBag.VehicleName;    
+    ViewBag.Title = "Fill ups for " + ViewBag.VehicleName;
+    var vehicleId = Html.RouteValue("vehicleId");
 }
 <div id="details-page">
     <div id="scrollable">
         <div>
-             @Html.Partial("ListPartial", Model)
+             @{Html.RenderAction("ListPartial", "Vehicle", new { vehicleId, isCollapsed=true });}
         </div>
     </div>
     <div id="fixed">
@@ -13,13 +14,13 @@
             <div id="info" class="framed article">
                 <div>
                     <div id="details-pane" class="tab opened section">
-                        @Html.ActionLink(" ", "Details", "Vehicle", new { id = Html.RouteValue("vehicleId") }, new { @class = "trigger" })
+                        @Html.ActionLink(" ", "Details", "Vehicle", new { id = vehicleId }, new { @class = "trigger" })
                     </div>
                     <div id="fillups-pane" class="tab opened section">
                         <a></a>
                         <div class="content">
                             <div class="header">
-                                @using (Html.BeginForm("Add", "Fillup", new { vehicleId = Html.RouteValue("vehicleId") }, FormMethod.Get))
+                                @using (Html.BeginForm("Add", "Fillup", new { vehicleId }, FormMethod.Get))
                                 {
                                     <button data-action="fillup-add-selected" class="button generic small" type="submit">
                                         <img src="@Url.Content("~/Content/button-add.png")" title="Add Fill up" alt="Add" />
@@ -27,16 +28,15 @@
                                 }
                             </div>
                             <div class="aside">
-                                @Html.Partial("ListPartial", Model)
+                                @{ Html.RenderAction("ListPartial"); }
                             </div>
                             <div class="display article">
-                                @{if (ViewBag.SelectedFillup != null)
-                                  { @Html.Partial("DetailsPartial", (MileageStats.Web.Models.FillupViewModel)ViewBag.SelectedFillup) }}
+                                  @Html.Partial("DetailsPartial", Model)
                             </div>
                         </div>
                     </div>
                     <div id="reminders-pane" class="tab section">
-                        @Html.ActionLink(" ", "List", "Reminder", new { vehicleId = Html.RouteValue("vehicleId") }, new { @class = "trigger" })
+                        @Html.ActionLink(" ", "List", "Reminder", new { vehicleId }, new { @class = "trigger" })
                     </div>
                 </div>
             </div>

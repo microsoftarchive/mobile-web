@@ -9,7 +9,7 @@
         <li>@Mustache.ViewBag("VehicleName")</li>
     </ol>
     <ol class="breadcrumbs">
-	    <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })">Reminders</a></li>
+	    <li><a href="@Url.UnencodedAction("List", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })">Reminders</a></li>
 	    <li>Add Reminder</li>
     </ol>
 </nav>

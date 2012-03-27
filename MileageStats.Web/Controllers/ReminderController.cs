@@ -55,47 +55,27 @@ namespace MileageStats.Web.Controllers
         public ActionResult Details(int vehicleId, int id)
         {
             var reminder = Using<GetReminder>().Execute(id);
-            var reminders = GetUnfulfilledRemindersByVehicle(vehicleId);
-            var reminderSummaryViewModels = reminders
-                .Select(x => new ReminderSummaryModel(x))
-                .ToList();
-
-            var viewModel = new ReminderDetailsViewModel
-            {
-                Reminder = new ReminderSummaryModel(reminder),
-                Reminders = new SelectedItemList<ReminderSummaryModel>(reminderSummaryViewModels, x => x.FirstOrDefault(item => item.ReminderId == id)),
-            };
+            var viewModel = new ReminderSummaryModel(reminder);
 
             return new ContentTypeAwareResult(viewModel);
         }
 
+        [ChildActionOnly]
+        public ActionResult ListPartial(int vehicleId)
+        {
+            var listOfReminderListViewModels = GetListOfReminderListViewModels(vehicleId);
+
+            return new ContentTypeAwareResult(listOfReminderListViewModels);
+        }
+
         public ActionResult List(int vehicleId)
         {
-            var reminders = GetUnfulfilledRemindersByVehicle(vehicleId);
-            var reminderSummaryViewModels = reminders
-                .Select(x => new ReminderSummaryModel(x))
-                .ToList();
+            var listOfReminderListViewModels = GetListOfReminderListViewModels(vehicleId);
 
-            var viewModel = new ReminderDetailsViewModel
-            {
-                Reminder = new ReminderSummaryModel(reminders.FirstOrDefault()),
-                Reminders = new SelectedItemList<ReminderSummaryModel>(reminderSummaryViewModels, Enumerable.FirstOrDefault),
-            };
-
-            return View(viewModel);
+            return new ContentTypeAwareResult(listOfReminderListViewModels);
         }
 
-        public ActionResult ListPartial(int vehicleId, int? id = null)
-        {
-            var reminders = GetUnfulfilledRemindersByVehicle(vehicleId)
-                .Select(r => new ReminderSummaryModel(r));
-
-            var reminderItemList = new SelectedItemList<ReminderSummaryModel>(reminders, list=> list.FirstOrDefault(x=>x.ReminderId == id));
-
-            return new ContentTypeAwareResult(reminderItemList);
-        }
-
-        public ActionResult ListByGroup(int vehicleId)
+        private List<ReminderListViewModel> GetListOfReminderListViewModels(int vehicleId)
         {
             var vehicle = Using<GetVehicleById>().Execute(CurrentUserId, vehicleId);
 
@@ -117,8 +97,7 @@ namespace MileageStats.Web.Controllers
 
             var listOfReminderListViewModels = groups.ToList();
             listOfReminderListViewModels.Sort(new ReminderListViewModelCompare());
-
-            return new ContentTypeAwareResult(listOfReminderListViewModels);
+            return listOfReminderListViewModels;
         }
 
         public ActionResult Add(int vehicleId)
@@ -157,7 +136,7 @@ namespace MileageStats.Web.Controllers
 
                     this.SetConfirmationMessage(Messages.ReminderController_ReminderAdded);
 
-                    return RedirectToAction("ListByGroup", "Reminder", new { Id = vehicleId });
+                    return RedirectToAction("List", "Reminder", new { vehicleId });
                 }
             }
             this.SetAlertMessage(Messages.PleaseFixInvalidData);
@@ -172,7 +151,7 @@ namespace MileageStats.Web.Controllers
 
             return new ContentTypeAwareResult
                        {
-                           WhenHtml = (x,v,t) => RedirectToAction("ListByGroup", "Reminder", new {vehicleId})
+                           WhenHtml = (x, v, t) => RedirectToAction("List", "Reminder", new { vehicleId })
                        };
         }
 

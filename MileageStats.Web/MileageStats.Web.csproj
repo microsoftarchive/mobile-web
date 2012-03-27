@@ -180,7 +180,6 @@
     <Compile Include="Models\MileageStatsIdentity.cs" />
     <Compile Include="Models\OverdueReminderViewModel.cs" />
     <Compile Include="Models\JsonRemindersOverdueListViewModel.cs" />
-    <Compile Include="Models\ReminderDetailsViewModel.cs" />
     <Compile Include="Models\ReminderFormModel.cs" />
     <Compile Include="Models\SelectedItemList.cs" />
     <Compile Include="Models\VehicleAddViewModel.cs" />
@@ -378,7 +377,7 @@
     <Content Include="Views\Shared\_Error.cshtml" />
     <Content Include="Views\Shared\_Error.Mobile.cshtml" />
     <Content Include="Views\Shared\_spaTemplates.cshtml" />
-    <Content Include="Views\Reminder\ListByGroup.Mobile.cshtml" />
+    <Content Include="Views\Reminder\List.Mobile.cshtml" />
     <Content Include="Views\Shared\_spa.mobile.cshtml" />
     <Content Include="Views\Shared\desktop.placeholder.Mobile.cshtml" />
   </ItemGroup>

@@ -13,7 +13,7 @@
     <ol class="tabs vehicle-details" >
         <li><a href="@Url.UnencodedAction("Details", "Vehicle", new { vehicleId = Mustache.RouteValue("vehicleId") })">Details</a></li>
         <li><a href="@Url.UnencodedAction("List", "Fillup", new { vehicleId = Mustache.RouteValue("vehicleId") })" class="selected">Fill Ups</a></li>
-        <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })">Reminders</a></li>
+        <li><a href="@Url.UnencodedAction("List", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })">Reminders</a></li>
     </ol>
 </nav>
 

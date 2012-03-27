@@ -22,7 +22,7 @@
                             <div class="glass"></div>
                         </div>
                         <div class="actions">
-                            <a href="@Url.Action("Details", "Vehicle", new { id = vehicle.VehicleId })" class="avatar" data-action="vehicle-details-selected">
+                            <a href="@Url.Action("Details", "Vehicle", new { vehicleId = vehicle.VehicleId })" class="avatar" data-action="vehicle-details-selected">
                                 @if (vehicle.PhotoId > 0)
                                 {
                                     <img src="@Url.RouteUrl("VehiclePhotoRoute", new { vehiclePhotoId = vehicle.PhotoId})" alt="Vehicle Photo for @vehicle.Name" title="Photo" />
@@ -33,7 +33,7 @@
                                 }
                             </a>
                             <div class="nav">
-                                <a href="@Url.Action("Details", "Vehicle", new { id = vehicle.VehicleId })" data-action="vehicle-details-selected" alt="Details" title="Details">
+                                <a href="@Url.Action("Details", "Vehicle", new { vehicleId = vehicle.VehicleId })" data-action="vehicle-details-selected" alt="Details" title="Details">
                                     <div class="hover"></div>
                                     <div class="active"></div>
                                     <img alt="Details" src="@Url.Content("~/Content/command-details.png")" />

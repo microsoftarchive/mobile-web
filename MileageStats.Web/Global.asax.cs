@@ -117,12 +117,6 @@ namespace MileageStats.Web
                 );
 
             routes.MapRoute(
-                "ListByGroup", // Route name
-                "Vehicle/{vehicleId}/{controller}/ListByGroup", // URL with parameters
-                new { action = "ListByGroup", vehicleId = UrlParameter.Optional } // Parameter defaults
-                );
-
-            routes.MapRoute(
                 "JsonListRoute", // Route name
                 "{controller}/JsonList/{vehicleId}", // URL with parameters
                 new { action = "JsonList" } // Parameter defaults

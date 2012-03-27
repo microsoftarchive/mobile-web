@@ -1,6 +1,15 @@
-﻿@model MileageStats.Web.Models.ReminderDetailsViewModel
+﻿@using MileageStats.Domain.Models
+@using MileageStats.Web.Models
+@model List<MileageStats.Web.Models.ReminderListViewModel>
 @{
     ViewBag.Title = "Reminders for " + ViewBag.VehicleName;
+    var flattenedReminderListModel = new List<ReminderSummaryModel>();
+    foreach (var reminderListViewModel in Model)
+    {
+        flattenedReminderListModel.AddRange(reminderListViewModel.Reminders);
+    }
+    var selectedItemReminderList = new SelectedItemList<MileageStats.Domain.Models.ReminderSummaryModel>(flattenedReminderListModel);
+    selectedItemReminderList.SelectedItem = selectedItemReminderList.FirstOrDefault();
 }
 <div id="details-page">
     <div id="scrollable">
@@ -28,14 +37,14 @@
                                 }
                             </div>
                             <div class="aside">
-                                @Html.Partial("ListPartial", Model.Reminders)
+                                @Html.Partial("ListPartial", Model)
                             </div>
                             <div class="display article">
-                                @{if (Model.Reminder != null)
+                                @{if (selectedItemReminderList.SelectedItem != null)
                                   {
-                                    @Html.Partial("DetailsPartial", Model.Reminder)
+                                    @Html.Partial("DetailsPartial", selectedItemReminderList.SelectedItem)
                                     <div>
-                                        @using (Html.BeginForm("Fulfill", "Reminder", new { id = Model.Reminder.ReminderId }, FormMethod.Post))
+                                        @using (Html.BeginForm("Fulfill", "Reminder", new { id = selectedItemReminderList.SelectedItem.ReminderId }, FormMethod.Post))
                                         {
                                             <button data-action="reminder-fulfill-selected" class="button generic small" type="submit">
                                                 <img src="@Url.Content("~/Content/button-fulfill.png")" title="Fulfill Reminder" alt="Fulfill" />

@@ -1,5 +1,4 @@
-﻿@using MileageStats.Domain.Models
-@model MileageStats.Web.Models.ReminderDetailsViewModel
+﻿@model MileageStats.Domain.Models.ReminderSummaryModel
 @{
     ViewBag.Title = "Reminders for " + ViewBag.VehicleName;
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
@@ -12,8 +11,8 @@
 @using (var section1 = Mustache.Section("Model"))
 {
     <ol class="breadcrumbs">
-        <li><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new {vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})">Reminders</a></li>
-        <li>@Mustache.Value(m => m.Reminder.Title)</li>
+        <li><a href="@Url.UnencodedAction("List", "Reminder", new {vehicleId = Mustache.Value(m => m.VehicleId)})">Reminders</a></li>
+        <li>@Mustache.Value(m => m.Title)</li>
     </ol>
 }
 </nav>
@@ -24,22 +23,22 @@
         <h2>Reminder Details</h2>
         <dl class="list">
             <dt>@Html.Label("Title")</dt>
-            <dd>@Mustache.Value(m => m.Reminder.Title)</dd>
+            <dd>@Mustache.Value(m => m.Title)</dd>
 
             <dt>@Html.Label("Remarks")</dt>
-            <dd>@Mustache.Value(m => m.Reminder.Remarks)</dd>
+            <dd>@Mustache.Value(m => m.Remarks)</dd>
 
             <dt>@Html.Label("Due Date")</dt>
-            <dd>@Mustache.Value(m => m.Reminder.DueDate)</dd>
+            <dd>@Mustache.Value(m => m.DueDate)</dd>
 
             <dt>@Html.Label("Due when odometer reads")</dt>
-            <dd>@Mustache.Value(m => m.Reminder.DueDistance)</dd>
+            <dd>@Mustache.Value(m => m.DueDistance)</dd>
 
         </dl>
     
         <ol class="hbox button-group">
             <li>
-                <form action="@Url.UnencodedAction("Fulfill", "Reminder", new {id = Mustache.Value(m => m.Reminder.ReminderId), vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})" method="post">
+                <form action="@Url.UnencodedAction("Fulfill", "Reminder", new {id = Mustache.Value(m => m.ReminderId), vehicleId = Mustache.Value(m => m.VehicleId)})" method="post">
                     @if(Html.IsRenderingForMustache()){
                         @Html.Raw("{{#Reminder.IsFulfilled}}")
                         <button type="submit" value="fulfill" name="action" disabled><span>Fulfill</span></button>
@@ -50,13 +49,13 @@
                     }
                     else
                     {
-                        <button type="submit" value="fulfill" name="action" @(Model.Reminder.IsFulfilled ? "disabled" : "")>
+                        <button type="submit" value="fulfill" name="action" @(Model.IsFulfilled ? "disabled" : "")>
                             <span>Fulfill</span>
                         </button>
                     }
                 </form>
             </li>
-            <li class="icon false invert"><a href="@Url.UnencodedAction("ListByGroup", "Reminder", new { vehicleId = Mustache.Value(m => m.Reminder.VehicleId)})"><span>Cancel</span></a></li>
+            <li class="icon false invert"><a href="@Url.UnencodedAction("List", "Reminder", new { vehicleId = Mustache.Value(m => m.VehicleId)})"><span>Cancel</span></a></li>
         </ol>
     </div>
 }
