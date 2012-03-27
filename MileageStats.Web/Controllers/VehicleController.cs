@@ -65,7 +65,8 @@ namespace MileageStats.Web.Controllers
                              VehicleList = new VehicleListViewModel(vehicles, vehicleId) { IsCollapsed = true },
                              Vehicle = selected,
                              OverdueReminders = overdue,
-                             UserId = CurrentUserId
+                             UserId = CurrentUserId,
+                             DateTimeTicks = DateTime.Now.Ticks
                          };
             vm.VehicleList.IsCollapsed = true;
 
