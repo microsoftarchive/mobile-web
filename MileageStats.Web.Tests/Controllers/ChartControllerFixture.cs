@@ -1,4 +1,21 @@
-﻿using System;
+﻿/*  
+Copyright Microsoft Corporation
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0 
+
+THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED 
+ARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE, 
+MERCHANTABLITY OR NON-INFRINGEMENT. 
+
+See the Apache 2 License for the specific language governing permissions and
+limitations under the License. */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,7 +99,7 @@ namespace MileageStats.Web.Tests.Controllers
         }
 
         [Fact]
-        public void WhenRequestingChartImageForMobile_ThenChartImageIsReturned()
+        public void WhenRequestingChartImageForFuelEfficiencyInMobile_ThenChartImageIsReturned()
         {
             var browserCapabilities = new Mock<HttpBrowserCapabilitiesBase>();
             browserCapabilities.SetupGet(b => b.IsMobileDevice).Returns(true);
@@ -113,6 +130,76 @@ namespace MileageStats.Web.Tests.Controllers
                     EndDate = DateTime.Now
                 });
             
+            Assert.IsType<FileContentResult>(result);
+        }
+
+        [Fact]
+        public void WhenRequestingChartImageForTotalDistanceInMobile_ThenChartImageIsReturned()
+        {
+            var browserCapabilities = new Mock<HttpBrowserCapabilitiesBase>();
+            browserCapabilities.SetupGet(b => b.IsMobileDevice).Returns(true);
+
+            var controller = GetTestableChartController();
+            controller.Request.SetHttpBrowserCapabilities(browserCapabilities.Object);
+
+            var data = new StatisticSeries();
+            data.Entries.Add(new StatisticSeriesEntry
+            {
+                AverageFuelEfficiency = 10,
+                Month = 12,
+                Name = "test",
+                TotalCost = 20,
+                TotalDistance = 30,
+                Year = 2012
+            });
+
+            this._chartDataService.Setup(d => d.CalculateSeriesForVehicle(_defaultUser.UserId, 1,
+                It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(data);
+
+            var result = controller.GetChartImage(new ChartFormModel
+            {
+                UserId = _defaultUser.UserId,
+                VehicleIds = new int[] { 1 },
+                ChartName = "TotalDistance",
+                StartDate = DateTime.Now.Subtract(TimeSpan.FromHours(5)),
+                EndDate = DateTime.Now
+            });
+
+            Assert.IsType<FileContentResult>(result);
+        }
+
+        [Fact]
+        public void WhenRequestingChartImageForTotalCostInMobile_ThenChartImageIsReturned()
+        {
+            var browserCapabilities = new Mock<HttpBrowserCapabilitiesBase>();
+            browserCapabilities.SetupGet(b => b.IsMobileDevice).Returns(true);
+
+            var controller = GetTestableChartController();
+            controller.Request.SetHttpBrowserCapabilities(browserCapabilities.Object);
+
+            var data = new StatisticSeries();
+            data.Entries.Add(new StatisticSeriesEntry
+            {
+                AverageFuelEfficiency = 10,
+                Month = 12,
+                Name = "test",
+                TotalCost = 20,
+                TotalDistance = 30,
+                Year = 2012
+            });
+
+            this._chartDataService.Setup(d => d.CalculateSeriesForVehicle(_defaultUser.UserId, 1,
+                It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(data);
+
+            var result = controller.GetChartImage(new ChartFormModel
+            {
+                UserId = _defaultUser.UserId,
+                VehicleIds = new int[] { 1 },
+                ChartName = "TotalCost",
+                StartDate = DateTime.Now.Subtract(TimeSpan.FromHours(5)),
+                EndDate = DateTime.Now
+            });
+
             Assert.IsType<FileContentResult>(result);
         }
 

@@ -21,6 +21,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Moq;
+using System.Web.Caching;
 
 //
 // Courtesy of Scott Hanselman: http://www.hanselman.com/blog/ASPNETMVCSessionAtMix08TDDAndMvcMockHelpers.aspx
@@ -74,6 +75,14 @@ namespace MileageStats.Web.Tests.Mocks
             HttpCookieCollection cookies)
         {
             Mock.Get(response)
+                .SetupGet(r => r.Cookies)
+                .Returns(cookies);
+        }
+
+        public static void SetHttpCookies(this HttpRequestBase request,
+           HttpCookieCollection cookies)
+        {
+            Mock.Get(request)
                 .SetupGet(r => r.Cookies)
                 .Returns(cookies);
         }

@@ -81,22 +81,25 @@ namespace MileageStats.Web.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         private ProfileManifest GetProfile()
         {
-            var model = HttpContext.Cache["profile"] as ProfileManifest;
+            var model = (this.HttpContext.Cache != null) ? this.HttpContext.Cache["profile"] as ProfileManifest : null;
             if (model == null)
             {
                 lock (ProfileLock)
                 {
-                    model = HttpContext.Cache["profile"] as ProfileManifest;
+                    model = (this.HttpContext.Cache != null) ? HttpContext.Cache["profile"] as ProfileManifest : null;
                     if (model == null)
                     {
                         model = this._profileRepository.GetProfile("generic");
-                        HttpContext.Cache.Add("profile",
-                            model,
-                            new CacheDependency(this._profileRepository.GetManifestPath("generic")),
-                            Cache.NoAbsoluteExpiration,
-                            TimeSpan.FromHours(1),
-                            CacheItemPriority.Normal,
-                            null);
+                        if (HttpContext.Cache != null)
+                        {
+                            HttpContext.Cache.Add("profile",
+                                model,
+                                new CacheDependency(this._profileRepository.GetManifestPath("generic")),
+                                Cache.NoAbsoluteExpiration,
+                                TimeSpan.FromHours(1),
+                                CacheItemPriority.Normal,
+                                null);
+                        }
                     }
                 }
             }
