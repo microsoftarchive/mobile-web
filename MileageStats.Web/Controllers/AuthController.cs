@@ -54,11 +54,9 @@ namespace MileageStats.Web.Controllers
             if (Request.IsAuthenticated)
                 return RedirectToAction("Index", "Dashboard");
 
-#if DEBUG
-            // NOTE: When we are in debug mode, we are using a mock OpenId provider.
-            // For convenience we fill in the url for the fake provider
-            ViewData["providerUrl"] = "http://oturner.myidprovider.org/";
-#endif
+            // for convenience we fill in the url for a fake openid provider
+            ViewData["providerUrl"] = "http://not/a/real/openid/url";
+
             return View();
         }        
 
