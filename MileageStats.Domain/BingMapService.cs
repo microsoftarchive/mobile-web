@@ -21,7 +21,6 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using MileageStats.Domain.Contracts;
-using MileageStats.Domain.GeocodeService;
 using MileageStats.Domain.SearchService;
 
 namespace MileageStats.Domain
@@ -56,29 +55,6 @@ namespace MileageStats.Domain
                 results.Add(string.Format("{0} ({1})", searchResult.Name, searchResult.Distance));
             }
             return results;
-        }
-
-        public string ReverseGeoCodeLocationCountry(double latitude, double longitude)
-        {
-            var reverseGeocodeRequest = new ReverseGeocodeRequest();
-
-            // Set the credentials using a valid Bing Maps key
-            reverseGeocodeRequest.Credentials = new GeocodeService.Credentials();
-            reverseGeocodeRequest.Credentials.ApplicationId = GetBingMapsApplicationKey();
-
-            // Set the point to use to find a matching address
-            var point = new GeocodeService.Location { Latitude = latitude, Longitude = longitude };
-
-            reverseGeocodeRequest.Location = point;
-
-            //Make the search request 
-            GeocodeResponse geocodeResponse;
-            using (var geocodeService = new GeocodeServiceClient("BasicHttpBinding_IGeocodeService"))
-            {
-                geocodeResponse = geocodeService.ReverseGeocode(reverseGeocodeRequest);
-            }
-
-            return geocodeResponse.Results[0].Address.CountryRegion;
         }
 
         private string GetBingMapsApplicationKey()
