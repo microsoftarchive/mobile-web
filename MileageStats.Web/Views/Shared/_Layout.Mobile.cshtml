@@ -65,10 +65,7 @@
             <p>
                 &copy; Copyright 2012 Microsoft</p>
         </footer>
-        @if (ViewContext.HttpContext.Request.Browser.SupportsJavascript())
-        { 
-            <script type="text/javascript" src="@Url.Action("ProfileScript", "MobileProfile")"></script>	 
-        }
+        <script type="text/javascript" src="@Url.Action("ProfileScript", "MobileProfile")"></script>	 
         @if (shouldEnableSpa)
         {
             <script type="text/javascript">
