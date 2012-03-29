@@ -59,10 +59,10 @@ namespace MileageStats.Web.MobileProfiler
             // The profile cookie is parsed for getting the device capabilities inferred on
             // the client side
             var profileCookie = request.Cookies["profile"];
-            
+
             return (profileCookie != null)
                 ? encoder.GetDeviceCapabilities(profileCookie)
-                : new Dictionary<string, string>();
+                : new Dictionary<string, string> { {AllCapabilities.Javascript, "false"} };
         };
 
         public static readonly Func<HttpRequestBase, IDictionary<string, string>> DetermineCapsByAlgorithm = request =>
