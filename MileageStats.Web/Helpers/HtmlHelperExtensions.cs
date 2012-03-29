@@ -99,5 +99,21 @@ namespace System.Web.Mvc.Html
             var value = helper.ViewContext.RouteData.Values[key];
             return (value == null) ? string.Empty : value.ToString();
         }
+
+        public static IDisposable EnableUnobtrusiveValidation<TModel>(this HtmlHelper<TModel> helper)
+        {
+            // the data-dash attributes for MVC's unobtrustive validation 
+            // are not emitted unless the following code is executed
+            // generally, this is handled by the BeginForm helper
+            // however, in order to render a form action that was compatiable
+            // with the Mustache version of the view, we had to implement
+            // this logic manually.
+            // this is not required in with MVC 4:
+            // http://bradwilson.typepad.com/blog/2010/10/mvc3-unobtrusive-validation.html
+
+            // in general, this approach should be used with caution.
+            helper.ViewContext.FormContext = new FormContext { FormId = "form" };
+            return new DelegatingDisposable(helper.ViewContext.OutputClientValidation);
+        }
     }
 }

@@ -17,8 +17,11 @@
 @using (var section = Mustache.Section("Model"))
 {
     <div class="view">
+        @using(Html.EnableUnobtrusiveValidation())
+        {
         <form method="POST" action="@Url.UnencodedAction("Add", "Reminder", new { vehicleId = Mustache.Value(m => m.VehicleId) })">
             @Html.Partial("~/Views/Reminder/ReminderForm.Mobile.cshtml", Model)
         </form> 
+        }
     </div>
 }

@@ -18,15 +18,11 @@
 @using (var section = Mustache.Section("Model"))
 {
     <div class="view">
-        @{
-            ViewContext.FormContext = new FormContext();
-            ViewContext.FormContext.FormId = "form";
-        }
+        @using(Html.EnableUnobtrusiveValidation())
+        {
         <form id="form" method="POST" action="@Url.UnencodedAction("Add", "Fillup", new {vehicleId = Mustache.RouteValue("vehicleId")})">
             @{ Html.RenderPartial("~/Views/Fillup/FillupForm.Mobile.cshtml", Model); }
         </form>
-        @{
-            ViewContext.OutputClientValidation();
         }
     </div>
 }
