@@ -40,12 +40,12 @@
             <li>
                 <form action="@Url.UnencodedAction("Fulfill", "Reminder", new {id = Mustache.Value(m => m.ReminderId), vehicleId = Mustache.Value(m => m.VehicleId)})" method="post">
                     @if(Html.IsRenderingForMustache()){
-                        @Html.Raw("{{#Reminder.IsFulfilled}}")
+                        @Html.Raw("{{#IsFulfilled}}")
                         <button type="submit" value="fulfill" name="action" disabled><span>Fulfill</span></button>
-                        @Html.Raw("{{/Reminder.IsFulfilled}}")
-                        @Html.Raw("{{^Reminder.IsFulfilled}}")
+                        @Html.Raw("{{/IsFulfilled}}")
+                        @Html.Raw("{{^IsFulfilled}}")
                         <button type="submit" value="fulfill" name="action"><span>Fulfill</span></button>
-                        @Html.Raw("{{/Reminder.IsFulfilled}}")
+                        @Html.Raw("{{/IsFulfilled}}")
                     }
                     else
                     {
