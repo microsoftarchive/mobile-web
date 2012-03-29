@@ -62,7 +62,7 @@ namespace MileageStats.Data.InMemory
             {
                 var user = new User
                 {
-                    AuthorizationId = "http://oturner.myidprovider.org/",
+                    AuthorizationId = "http://not/a/real/openid/url",
                     DisplayName = "Sample User",
                     Country = "United States"
                 };

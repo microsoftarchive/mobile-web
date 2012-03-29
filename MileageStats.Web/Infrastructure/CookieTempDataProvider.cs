@@ -26,6 +26,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MileageStats.Web.Infrastructure
 {
+    /// <summary>
+    /// This implementation replaces the built-in provider that uses the Http session
+    /// for storing the temporary messages. All the Ajax calls to an MVC controller that requires
+    /// the use of a session are serialized and can not be executed in parallel. By disabling the session
+    /// and using this implementation, better performance results can be obtained.
+    /// </summary>
     public class CookieTempDataProvider : ITempDataProvider
     {
         internal const string TempDataCookieKey = "__ControllerTempData";

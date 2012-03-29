@@ -10,7 +10,9 @@ using MileageStats.Web.Infrastructure;
 namespace MileageStats.Web.Infrastructure
 {
     /// <summary>
-    /// This module suppress the http redirects made by forms authentication for any ajax call
+    /// This module suppress the http redirects made by forms authentication for any ajax call. 
+    /// It becomes handy in scenarios where several ajax calls were made after the user session expired, and
+    /// a redirection to the login page may generate unexpected results on the client side.
     /// </summary>
     public class SuppressFormsAuthenticationRedirectModule : IHttpModule
     {

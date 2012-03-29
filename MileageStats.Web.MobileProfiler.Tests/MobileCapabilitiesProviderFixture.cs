@@ -92,7 +92,8 @@ namespace MileageStats.Web.MobileProfiler.Tests
 
             var caps = MobileCapabilitiesProvider.DetermineCapsByProfilingClient(request, encoder.Object);
 
-            Assert.True(caps.Count == 0);
+            Assert.True(caps.ContainsKey(AllCapabilities.Javascript));
+            Assert.Equal("false", caps[AllCapabilities.Javascript]);
         }
 
         [Fact]

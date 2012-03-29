@@ -10,10 +10,8 @@
 	@using (Html.BeginForm("SignInWithProvider", "Auth"))
     {
         <ul>
-            <li><a href="@Url.Action("SignInWithProvider", "Auth", new {providerUrl = "http://www.myopenid.com"})" class="openid-provider button"><img src="@Url.Content("~/Content/button-yahoo.png")" alt="Yahoo" /></a></li>
-            <li><a href="@Url.Action("SignInWithProvider", "Auth", new {providerUrl = "http://www.yahoo.com"})" class="openid-provider button"><img src="@Url.Content("~/Content/button-openid.png")" alt="My OpenID" /></a></li>
             <li>
-                <label for="providerUrl">or via your own OpenID URL provider</label>
+                <label for="providerUrl">Your own OpenID URL provider</label>
                 @Html.TextBox("providerUrl", null, new { maxlength = 200, placeholder="http://openidprovider.org", tabindex="1",required="required" })
             </li>
             <li>

@@ -69,11 +69,9 @@ namespace MileageStats.Web
             RegisterPerRequest<IMapService, MockMapService>(container);
             //RegisterPerRequest<IMapService, BingMapService>(container);
 
-#if DEBUG
+            // authentication provider
             RegisterPerRequest<IOpenIdRelyingParty, LocalFakeRelyingParty>(container);
-#else
-            RegisterPerRequest<IOpenIdRelyingParty, DefaultOpenIdRelyingParty>(container);
-#endif
+            // RegisterPerRequest<IOpenIdRelyingParty, DefaultOpenIdRelyingParty>(container);
             return container;
         }
 

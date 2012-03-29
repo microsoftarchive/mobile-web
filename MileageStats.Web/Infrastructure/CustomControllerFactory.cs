@@ -24,6 +24,10 @@ using System.Web.Routing;
 
 namespace MileageStats.Web.Infrastructure
 {
+    /// <summary>
+    /// This custom controller factory injects the CookieTempDataProvider automatically for
+    /// any instanciated controller.
+    /// </summary>
     public class CustomControllerFactory : DefaultControllerFactory
     {
         /// <summary> 

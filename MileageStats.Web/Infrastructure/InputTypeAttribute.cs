@@ -22,6 +22,10 @@ using System.Web;
 
 namespace MileageStats.Web.Infrastructure
 {
+    /// <summary>
+    /// An attribute for adding Html5 input type semmantics to an existing model
+    /// property. 
+    /// </summary>
     public class InputTypeAttribute : Attribute
     {
         public InputTypeAttribute(string type, string length)
