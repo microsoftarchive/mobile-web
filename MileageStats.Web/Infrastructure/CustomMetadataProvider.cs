@@ -24,6 +24,10 @@ using MileageStats.Web.Models;
 
 namespace MileageStats.Web.Infrastructure
 {
+    /// <summary>
+    /// An extension for decorating model classes with Html5 input attributes such as placeHolder or step to name
+    /// a few
+    /// </summary>
     public class CustomMetadataProvider : DataAnnotationsModelMetadataProvider
     {
         protected override ModelMetadata CreateMetadata(IEnumerable<Attribute> attributes, Type containerType, Func<object> modelAccessor, Type modelType, string propertyName)
