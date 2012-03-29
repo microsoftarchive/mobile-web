@@ -27,7 +27,6 @@ using DotNetOpenAuth.OpenId.RelyingParty;
 
 namespace MileageStats.Web.Authentication
 {
-#if DEBUG
     /// <summary>
     /// A fake OpenIdRelyingParty to provide an 'offline' authentication capability.
     /// This is a sample only to allow easily running the RI without needing an openID.
@@ -39,7 +38,7 @@ namespace MileageStats.Web.Authentication
     /// </remarks>    
     public class LocalFakeRelyingParty : IOpenIdRelyingParty
     {
-        public DotNetOpenAuth.OpenId.RelyingParty.IAuthenticationResponse GetResponse()
+        public IAuthenticationResponse GetResponse()
         {
             return new MockAuthenticationResponse(HttpContext.Current);
         }
@@ -142,5 +141,4 @@ namespace MileageStats.Web.Authentication
             }
         }
     }
-#endif
 }

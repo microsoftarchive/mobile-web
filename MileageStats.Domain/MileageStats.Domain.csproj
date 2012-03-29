@@ -130,11 +130,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Service References\GeocodeService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\SearchService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -158,26 +153,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\GeocodeService\Arrays.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\GeocodeService\common.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\GeocodeService\contracts.wsdl" />
-    <None Include="Service References\GeocodeService\contracts.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\GeocodeService\geocode.wsdl" />
-    <None Include="Service References\GeocodeService\geocode.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\GeocodeService\MileageStats.Domain.GeocodeService.GeocodeResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\GeocodeService\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\SearchService\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -200,20 +175,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\GeocodeService\" />
     <WCFMetadataStorage Include="Service References\SearchService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\GeocodeService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\GeocodeService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\GeocodeService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\SearchService\configuration91.svcinfo" />

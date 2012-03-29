@@ -35,6 +35,7 @@ namespace MileageStats.Web.Controllers
     {
         private const int DESKTOP_CHART_WIDTH = 800;
         private const int DESKTOP_CHART_HEIGHT = 450;
+        private const int MOBILE_CHART_MAXWIDTH = 320;
         private string[] colors = { "#4bb2c5", "#c5b47f", "#EAA228", "#579575", "#839557", "#958c12", "#953579", "#4b5de4", "#d8b83f", "#ff5800" };
         private const String CHARTS_THEME = @"<Chart Palette=""None"" PaletteCustomColors=""{0}""></Chart>"; 
 
@@ -163,7 +164,7 @@ namespace MileageStats.Web.Controllers
 
             if (Request.Browser.IsMobileDevice)
             {
-                chartWidth = Request.Browser.ScreenPixelsWidth;
+                chartWidth = Math.Min(Request.Browser.ScreenPixelsWidth, MOBILE_CHART_MAXWIDTH);
 
                 foreach (var vehicleId in chartFormModel.VehicleIds)
                 {

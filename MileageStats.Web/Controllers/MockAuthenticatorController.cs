@@ -20,7 +20,6 @@ using System.Web.Mvc;
 
 namespace MileageStats.Web.Controllers
 {
-#if DEBUG
     /// <summary>
     /// A mock authenticator to support an offline experience for the app.
     /// </summary>
@@ -35,7 +34,7 @@ namespace MileageStats.Web.Controllers
                                  {
                                      ReturnUrl = returnUrl,
                                      ProviderUrl = providerUrl,
-                                     claimed_identifier = "http://oturner.myidprovider.org/"                                     
+                                     claimed_identifier = "http://not/a/real/openid/url"                                     
                                  });
         }
     }
@@ -49,5 +48,4 @@ namespace MileageStats.Web.Controllers
         [Display(Name = "Claimed Identifier")]
         public string claimed_identifier { get; set; }        
     }
-#endif
 }
