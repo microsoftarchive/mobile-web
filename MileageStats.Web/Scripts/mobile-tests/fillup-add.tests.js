@@ -52,56 +52,15 @@ limitations under the License. */
             }
         });
 
-        var mockView = m.$('view');
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'input:checkbox[name=use-api-location]':
-                    return { click: function () { } };
-                default:
-                    return m.$(selector);
-            }
-        };
+        var view = $('<div></div>');
 
         var module = app.fillupAdd(m);
-        module.postrender({}, mockView, {});
-
-    });
-
-    test('fillup module attaches to click event of use-api-location checkbox', function () {
-
-        expect(1);
-
-        var m = mocks.create({
-            formSubmitter: {
-                attach: function () { }
-            },
-            navigator: {
-                geolocation: {}
-            }
-        });
-
-        var mockView = m.$('view');
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'input:checkbox[name=use-api-location]':
-                    return { click: function () {
-                        ok(true, "Expect to subscribe to client event of checkbox.");
-                    }
-                    };
-                default:
-                    return m.$(selector);
-            }
-        };
-
-        var module = app.fillupAdd(m);
-        module.postrender({}, mockView, {});
+        module.postrender({}, view, {});
 
     });
 
     test('fillup module disables Vendor controls by default', function () {
 
-        expect(2);
-
         var m = mocks.create({
             formSubmitter: {
                 attach: function () { }
@@ -111,33 +70,19 @@ limitations under the License. */
             }
         });
 
-        var mockView = m.$('view');
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'input:checkbox[name=use-api-location]':
-                    return {
-                        click: function () { }
-                    };
-                case 'select[name=Location]':
-                    return {
-                        attr: function (attributeName, attributeValue) {
-                            equal(attributeName, "disabled");
-                            equal(attributeValue, "disabled");
-                        }
-                    };
-                default:
-                    return m.$(selector);
-            }
-        };
+        var view = $('<div><input name="use-api-location" type="checkbox"></input><select name="Location"></select></div>');
 
         var module = app.fillupAdd(m);
-        module.postrender({}, mockView, {});
+        module.postrender({}, view, {});
+
+        var locationSelect = view.find('select[name=Location]');
+        equal(locationSelect.attr('disabled'), 'disabled');
 
     });
 
-    test('fillup module enables Location and disables Vendor controls if use-api-location is checked', function () {
+    test('fillup module enables Location and gets geolocation data calls service to get nearby fillups and populates Location', function () {
 
-        expect(6);
+        expect(8    );
 
         var m = mocks.create({
             formSubmitter: {
@@ -146,6 +91,7 @@ limitations under the License. */
             navigator: {
                 geolocation: {
                     getCurrentPosition: function (callback) {
+                        ok(true, "Expect to call getCurrentPosition");
                         callback({
                             coords: {
                                 latitude: "123",
@@ -158,54 +104,27 @@ limitations under the License. */
         });
 
         $.getJSON = function (url, callback) {
+            ok(url.indexOf('?latitude=123') > 0, "Expect to see latitude value passed in QS.");
+            ok(url.indexOf('&longitude=456') > 0, "Expect to see longitude value passed in QS.");
             callback(["value1", "value2"]);
         };
 
-        var mockView = m.$('view');
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'input:checkbox[name=use-api-location]':
-                    return {
-                        click: function (clickEventSubscription) {
-                            clickEventSubscription();
-                        },
-                        is: function (valueToCheck) {
-                            equal(':checked', valueToCheck);
-                            return true;
-                        }
-                    };
-                case 'input[name=Vendor]':
-                    return {
-                        attr: function (attributeName, attributeValue) {
-                            equal(attributeName, "disabled");
-                            equal(attributeValue, "disabled");
-                        }
-                    };
-                case 'select[name=Location]':
-                    return {
-                        attr: function (attributeName, attributeValue) {
-                            equal(attributeName, "disabled");
-                            equal(attributeValue, "disabled");
-                        },
-                        removeAttr: function (attributeName) {
-                            equal(attributeName, "disabled");
-                        },
-                        append: function () {
-                        }
-                    };
-                default:
-                    return m.$(selector);
-            }
-        };
+        var view = $('<div><input name="use-api-location" type="checkbox" checked></input><select name="Location"></select><input name="Vendor" type="text"></input></div>');
 
         var module = app.fillupAdd(m);
-        module.postrender({}, mockView, {});
+        module.postrender({}, view, {});
 
+        view.find('input:checkbox[name=use-api-location]').trigger('click');
+
+        equal(view.find('input[name=Vendor]').attr('disabled'), 'disabled');
+        equal(view.find('select[name=Location]').attr('disabled'), undefined);
+
+        equal(view.find('select[name=Location]').children().size(), 2);
+        equal(view.find('select[name=Location]').children('option[value=value1]').size(), 1);
+        equal(view.find('select[name=Location]').children('option[value=value2]').size(), 1);
     });
 
     test('fillup module disables Location and enables Vendor controls if use-api-location is unchecked', function () {
-
-        expect(6);
 
         var m = mocks.create({
             formSubmitter: {
@@ -216,46 +135,19 @@ limitations under the License. */
             }
         });
 
-        var mockView = m.$('view');
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'input:checkbox[name=use-api-location]':
-                    return {
-                        click: function (clickEventSubscription) {
-                            clickEventSubscription();
-                        },
-                        is: function (valueToCheck) {
-                            equal(':checked', valueToCheck);
-                            return false;
-                        }
-                    };
-                case 'input[name=Vendor]':
-                    return {
-                        removeAttr: function (attributeName) {
-                            equal(attributeName, "disabled");
-                        }
-                    };
-
-                case 'select[name=Location]':
-                    return {
-                        attr: function (attributeName, attributeValue) {
-                            equal(attributeName, "disabled");
-                            equal(attributeValue, "disabled");
-                        }
-                    };
-                default:
-                    return m.$(selector);
-            }
-        };
+        var view = $('<div><input name="use-api-location" type="checkbox"></input><select name="Location"></select><input name="Vendor" type="text"></input></div>');
 
         var module = app.fillupAdd(m);
-        module.postrender({}, mockView, {});
+        module.postrender({}, view, {});
+
+        view.find('input:checkbox[name=use-api-location]').trigger('click');
+
+        equal(view.find('input[name=Vendor]').attr('disabled'), undefined);
+        equal(view.find('select[name=Location]').attr('disabled'), 'disabled');
 
     });
 
     test('fillup module hides Location controls by if GeoLocation API not available', function () {
-
-        expect(6);
 
         var m = mocks.create({
             formSubmitter: {
@@ -264,42 +156,14 @@ limitations under the License. */
             navigator: {}
         });
 
-        var mockView = m.$('view');
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'input:checkbox[name=use-api-location]':
-                    return {
-                        click: function () {
-                        }
-                    };
-                case '#GeoLocationSelect':
-                    return {
-                        attr: function (attributeName, attributeValue) {
-                            equal(attributeName, "style");
-                            equal(attributeValue, "display:none");
-                        }
-                    };
-                case '#GeoLocationCheckbox':
-                    return {
-                        attr: function (attributeName, attributeValue) {
-                            equal(attributeName, "style");
-                            equal(attributeValue, "display:none");
-                        }
-                    };
-                case 'label[for=new-location]':
-                    return {
-                        attr: function (attributeName, attributeValue) {
-                            equal(attributeName, "style");
-                            equal(attributeValue, "display:none");
-                        }
-                    };
-                default:
-                    return m.$(selector);
-            }
-        };
+        var view = $('<div><li id="GeoLocationCheckbox"><input name="use-api-location" type="checkbox" checked></input></li><li id="GeoLocationSelect"></li><label for="new-location"></label></div>');
 
         var module = app.fillupAdd(m);
-        module.postrender({}, mockView, {});
+        module.postrender({}, view, {});
+
+        equal(view.find('#GeoLocationSelect').attr('style'), "display: none;");
+        equal(view.find('#GeoLocationCheckbox').attr('style'), "display: none;");
+        equal(view.find('label[for=new-location]').attr('style'), "display: none;");
 
     });
 

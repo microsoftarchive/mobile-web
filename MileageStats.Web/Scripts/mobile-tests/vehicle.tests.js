@@ -36,40 +36,52 @@ limitations under the License. */
         equal(typeof module, 'object');
     });
 
-    test('vehicle module should attach to change events for Year and MakeName elements', function () {
+    test('vehicle module gets Makes when Year changes', function () {
 
-        expect(2);
-
+        expect(5);
+        
         var m = mocks.create(default_mocks);
-        var mockView = m.$();
 
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'form':
-                    return {
-                        first: function () { return mockView; }
-                    };
-                case '#vehicleEditForm':
-                    return mockView;
-                case '#DeleteVehicleButton':
-                    return { click: function () { } };
-                case '#Year':
-                    return { change: function () {
-                        ok(true, "Trying to attach to Year change event");
-                    }
-                    };
-                case '#MakeName':
-                    return { change: function () {
-                        ok(true, "Trying to attach to MakeName change event");
-                    }
-                    };
-                default:
-                    return m.$(selector);
-            }
+        $.post = function (url, data, callback) {
+            equal(url.indexOf('makesUrl'), 0, "Expect to see Makes URL");
+            equal(data.year, 1990);
+            callback(["MakeName1", "MakeName2"]);
         };
 
+        var view = $('<div><div id="vehicleEditForm" data-makes-url="makesUrl"><select id="Year"><option value="1990"/></select><select id="MakeName"></select></div></div>');
+
         var module = app.vehicleAdd(m);
-        module.postrender({}, mockView, {});
+        module.postrender({}, view, {});
+
+        view.find('#Year').change();
+
+        equal(view.find('#MakeName').children().size(), 2);
+        equal(view.find('#MakeName').children('option[value=MakeName1]').size(), 1);
+        equal(view.find('#MakeName').children('option[value=MakeName2]').size(), 1);
+    });
+
+    test('vehicle module gets Models when Makes changes', function () {
+
+        expect(5);
+
+        var m = mocks.create(default_mocks);
+
+        $.post = function (url, data, callback) {
+            equal(url.indexOf('modelsUrl'), 0, "Expect to see Models URL");
+            equal(data.year, 1990);
+            callback(["Model1", "Model2"]);
+        };
+
+        var view = $('<div><div id="vehicleEditForm" data-models-url="modelsUrl"><select id="Year"><option value="1990"/></select><select id="MakeName"><option value="testMakeName"/></select><select id="ModelName"></select></div></div>');
+
+        var module = app.vehicleAdd(m);
+        module.postrender({}, view, {});
+
+        view.find('#MakeName').change();
+
+        equal(view.find('#ModelName').children().size(), 2);
+        equal(view.find('#ModelName').children('option[value=Model1]').size(), 1);
+        equal(view.find('#ModelName').children('option[value=Model2]').size(), 1);
     });
 
     test('vehicle module should attach to click event for DeleteVehicleButton and cancel event if not confirmed', function () {
@@ -125,29 +137,11 @@ limitations under the License. */
                 }
             }
         });
-        var mockView = m.$();
-
-        mockView.find = function (selector) {
-            switch (selector) {
-                case 'form':
-                    return {
-                        first: function () { return mockView; }
-                    };
-                case '#vehicleEditForm':
-                    return mockView;
-                case '#DeleteVehicleButton':
-                    return { click: function () {} };
-                case '#Year':
-                    return { change: function () {} };
-                case '#MakeName':
-                    return { change: function () {} };
-                default:
-                    return m.$(selector);
-            }
-        };
+        
+        var view = $('<div></div>');
 
         var module = app.vehicleAdd(m);
-        module.postrender({}, mockView, {});
+        module.postrender({}, view, {});
 
     });
 
