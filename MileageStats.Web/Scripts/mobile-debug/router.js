@@ -126,12 +126,18 @@ limitations under the License. */
         var pathname = window.location.pathname;
 
         if (!window.location.hash) {
+            // we normalize the path, because in some cases
+            // the trailing slash won't be present
+            if (pathname.substr(-1) !== '/') pathname = pathname + '/';
+            
             // the initial hit of the page, w/o any hash
             window.location.hash = '#/' + pathname.replace(rootUrl, '');
             overrideLinks();
+            
         } else if (window.location.hash === '#/') {
             // the root hash, probably the result of a refresh
             window.onhashchange();
+            
         } else {
             // if the page is refresh, and the hash is something
             // other than the root, then we don't want to load 
