@@ -60,7 +60,6 @@ namespace MileageStats.Web.Controllers
             return new ContentTypeAwareResult(viewModel);
         }
 
-        [ChildActionOnly]
         public ActionResult ListPartial(int vehicleId)
         {
             var listOfReminderListViewModels = GetListOfReminderListViewModels(vehicleId);

@@ -16,6 +16,18 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 (function (mstats, $) {
+    
+    function flattenReminderGroups(groups) {
+        var out = [],
+            i = 0;
+
+        for (; i < groups.length; i++) {
+            out = out.concat(groups[i].Reminders);
+        }
+
+        return out;
+    }
+    
     $.widget('mstats.reminders', {
         // default options
         options: {
@@ -105,8 +117,10 @@ limitations under the License. */
                         return;
                     }
 
-                    that.data.Reminders = data.Model.model;
-                    that.data.VehicleId = that.options.selectedVehicleId;
+                    that.data = {
+                        VehicleId: that.options.selectedVehicleId,
+                        Reminders: flattenReminderGroups(data.Model.model)
+                    };
                     that._updateSelectedReminder();
                     that._applyTemplate();
 
@@ -125,6 +139,7 @@ limitations under the License. */
                 data = this.data,
                 reminder,
                 i;
+
             if (data.Reminders && data.Reminders.length) {
                 if (selectedReminderId > 0) {
                     for (i = 0; i < data.Reminders.length; i += 1) {
@@ -217,7 +232,7 @@ limitations under the License. */
         },
 
         _createRequestUrl: function () {
-        	return this.options.dataUrl.substitute(this.options.selectedVehicleId);
+            return this.options.dataUrl.substitute(this.options.selectedVehicleId);
         },
 
         fulfillReminder: function (fulfillmentUrl) {

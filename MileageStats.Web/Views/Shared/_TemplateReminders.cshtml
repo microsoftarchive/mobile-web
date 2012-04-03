@@ -40,8 +40,8 @@
             <div class="display-label"><label for="Remarks">Remarks</label></div>
             <div class="display-field remarks wrap">{{if SelectedReminder.Remarks }}${SelectedReminder.Remarks} {{else}} (not entered) {{/if}}</div>
             <div>
-                <form action="@HttpUtility.UrlDecode(Url.Action("Fulfill", "Reminder", new { vehicleId = "${VehicleId}", id = "${SelectedReminder.ReminderId}"}))" method="post">
-                <button data-action="reminder-fulfill-selected" data-action-url="@HttpUtility.UrlDecode(Url.Action("Fulfill", "Reminder", new { vehicleId = "${VehicleId}", id = "${SelectedReminder.ReminderId}"}))" class="button generic small" type="submit">
+                <form action="@HttpUtility.UrlDecode(Url.Action("Fulfill", "Reminder", new { vehicleId = "${SelectedReminder.VehicleId}", id = "${SelectedReminder.ReminderId}"}))" method="post">
+                <button data-action="reminder-fulfill-selected" data-action-url="@HttpUtility.UrlDecode(Url.Action("Fulfill", "Reminder", new { vehicleId = "${SelectedReminder.VehicleId}", id = "${SelectedReminder.ReminderId}"}))" class="button generic small" type="submit">
                     <img src="@Url.Content("~/Content/button-fulfill.png")" title="Fulfill Reminder" alt="Fulfill" />
                 </button>
                 </form>
