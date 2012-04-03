@@ -15,7 +15,7 @@
         @Mustache.TextAreaFor(model => model.Remarks, new { wrap = "soft" })
     </li>
     <li class="psuedo-date">
-        <label for="DueDate">Date <em>(mm/dd/yyyy)</em></label>
+        <label for="DueDate">Date</label>
         @Html.ValidationMessageFor(model=>model.DueDate)
         @Html.DropDownListFor(model => model.DueDateMonth, SelectListFor.Month(i => today.Month == i))
         @Html.DropDownListFor(model => model.DueDateDay, SelectListFor.Date(i => today.Day == i))
