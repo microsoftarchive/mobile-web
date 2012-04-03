@@ -50,4 +50,17 @@ limitations under the License. */
         equal(view.find('.widget').attr('class'), 'widget');
     });
 
+    test('expander should not react when a child element is clicked', function () {
+        expect(1);
+
+        var module = app.expander(mocks.create());
+
+        var view = $('#qunit-fixture').html('<div><dl class="widget"><dt/><dd>content</dd></dl></div>');
+        module.attach(view);
+        view.find('dt').click(); // simulate opening the widget
+        
+        view.find('dd').click(); // simulate clicking a child
+        equal(view.find('.widget').attr('class'), 'widget');
+    });
+
 } (window.specs = window.specs || {}, window.mstats));

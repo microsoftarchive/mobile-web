@@ -27,9 +27,9 @@ limitations under the License. */
 
             widget.addClass('closed');
             
-            widget.click(function (e) {
+            widget.children('dt').click(function (e) {
 				e.preventDefault();
-				$(this).toggleClass('closed');
+				$(this).parent(selector).toggleClass('closed');
 			});
         }
 
