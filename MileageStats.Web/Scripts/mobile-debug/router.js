@@ -100,7 +100,7 @@ limitations under the License. */
     }
 
     function buildRegExpForMatching(route) {
-        var pattern = route.replace(/\//g, '\\/').replace(namedParametersPattern, '(\\w+)') + '$';
+        var pattern = '^' + route.replace(/\//g, '\\/').replace(namedParametersPattern, '(\\w+)') + '$';
         return new RegExp(pattern);
     }
 
@@ -129,15 +129,15 @@ limitations under the License. */
             // we normalize the path, because in some cases
             // the trailing slash won't be present
             if (pathname.substr(-1) !== '/') pathname = pathname + '/';
-            
+
             // the initial hit of the page, w/o any hash
             window.location.hash = '#/' + pathname.replace(rootUrl, '');
             overrideLinks();
-            
+
         } else if (window.location.hash === '#/') {
             // the root hash, probably the result of a refresh
             window.onhashchange();
-            
+
         } else {
             // if the page is refresh, and the hash is something
             // other than the root, then we don't want to load 
