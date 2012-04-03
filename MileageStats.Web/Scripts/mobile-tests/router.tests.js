@@ -18,9 +18,9 @@ limitations under the License. */
 (function (specs, app) {
 
     var defaultMocks;
-    
+
     module('router specs', {
-        setup:function() {
+        setup: function () {
             defaultMocks = {
                 transition: {
                     to: function (target, defaultRegion, namedParametersPattern, callback) { callback(); }
@@ -66,11 +66,11 @@ limitations under the License. */
 
     test('router modifies the href on anchor tags matching registered routes', function () {
         expect(1);
-        
+
         var dom = $('<div><a href="/my/route"/></div>');
         defaultMocks.document = dom;
         var m = mocks.create(defaultMocks);
-        
+
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -90,10 +90,10 @@ limitations under the License. */
         expect(1);
 
         var dom = $('<div><a href="/my/route/1"/></div>');
-        
+
         defaultMocks.document = dom;
         var m = mocks.create(defaultMocks);
-        
+
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -116,7 +116,7 @@ limitations under the License. */
         var transition_invoked = false;
 
         defaultMocks.transition = {
-            to: function() { transition_invoked = true; }
+            to: function () { transition_invoked = true; }
         };
         var m = mocks.create(defaultMocks);
         var module = app.router(m);
@@ -143,7 +143,7 @@ limitations under the License. */
             to: function () { transition_not_invoked = false; }
         };
         var m = mocks.create(defaultMocks);
-        
+
         var router = app.router(m);
 
         router.setDefaultRegion('#view');
@@ -169,7 +169,7 @@ limitations under the License. */
                 equal(target.params.id, 123);
             }
         };
-        
+
         var m = mocks.create(defaultMocks);
 
         var router = app.router(m);
@@ -234,5 +234,30 @@ limitations under the License. */
         // assert
         equal(m.mstats.initialModel, initialModel);
     });
-    
+
+    test('router should respect root url when overriding links', function () {
+        expect(1);
+
+        var dom = $('<div><a href="/virtual.directory/my/route"/></div>');
+
+        defaultMocks.document = dom;
+        defaultMocks.rootUrl = '/virtual.directory/';
+        var m = mocks.create(defaultMocks);
+
+        var router = app.router(m);
+
+        router.setDefaultRegion('#view');
+        router.register('/my/route');
+
+        // simulate hash change
+        router.register('/something/unrelated');
+        m.window.location = {
+            hash: '#/something/unrelated'
+        };
+        m.window.onhashchange();
+
+        //assert
+        equal(dom.find('a').attr('href'), '/virtual.directory/#/my/route');
+    });
+
 } (window.specs = window.specs || {}, window.mstats));

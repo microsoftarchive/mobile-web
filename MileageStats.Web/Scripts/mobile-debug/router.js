@@ -113,7 +113,7 @@ limitations under the License. */
         $('a[href]', document).each(function (i, a) {
             var anchor = $(a);
             var match;
-            var href = anchor.attr('href');
+            var href = anchor.attr('href').replace(rootUrl, '/');
             if (href.indexOf('#') === -1 && (match = matchRoute(href))) {
                 anchor.attr('href', rootUrl + '#' + match.url);
             }
