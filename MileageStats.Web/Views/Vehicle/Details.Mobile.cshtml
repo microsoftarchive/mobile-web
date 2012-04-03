@@ -40,14 +40,21 @@
 			</dl>
 		</div>
 		<h2>Last 12 Months</h2>
-		<dl class="details">
-			<dt>Average fuel efficiency</dt>
-			<dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m=>m.UserId), ChartName = "FuelEfficiency", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId"), Ticks = Mustache.Value(m=>m.DateTimeTicks) })" /></dd>
-			<dt>Total distance travelled</dt>
-			<dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m => m.UserId), ChartName = "TotalDistance", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId"), Ticks = Mustache.Value(m => m.DateTimeTicks) })" /></dd>
-			<dt>Total cost</dt>
-			<dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m => m.UserId), ChartName = "TotalCost", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId"), Ticks = Mustache.Value(m => m.DateTimeTicks) })" /></dd>
-		</dl>
+        <dl class="details">
+            <!-- 
+                The following three charts will show up as broken images if there are not fillups 
+                for this vehicle. We leave this to you to implement a fix for this situation.
+                Possible fixes: 
+                1) Check for more than 1 fillup and only then show charts
+                2) Replace broken charts with text suggesting user should add fillups
+            -->
+            <dt>Average fuel efficiency</dt>
+            <dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m=>m.UserId), ChartName = "FuelEfficiency", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId"), Ticks = Mustache.Value(m=>m.DateTimeTicks) })" /></dd>
+            <dt>Total distance travelled</dt>
+            <dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m => m.UserId), ChartName = "TotalDistance", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId"), Ticks = Mustache.Value(m => m.DateTimeTicks) })" /></dd>
+            <dt>Total cost</dt>
+            <dd><img src="@Url.UnencodedAction("GetChartImage", "Chart", new { UserId = Mustache.Value(m => m.UserId), ChartName = "TotalCost", StartDate = DateTime.Now.AddYears(-1), EndDate = DateTime.Now, VehicleIds = Mustache.RouteValue("vehicleId"), Ticks = Mustache.Value(m => m.DateTimeTicks) })" /></dd>
+        </dl>
 		<h2>Edit Vehicle</h2>
 		<p>If you wish to edit the name or any other details specific to this vehicle you may do so by pressing the button below.</p>
 		<ol class="button-group">
