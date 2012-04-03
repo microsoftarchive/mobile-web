@@ -26,7 +26,7 @@ limitations under the License. */
         equal(typeof module, 'object');
     });
 
-    test('expander toggles the "child" elements for the "headers" in the given view', function () {
+    test('expander applies "closed" class to widgets in the given view', function () {
 
         expect(1);
 
@@ -35,10 +35,10 @@ limitations under the License. */
         var view = $('#qunit-fixture').html('<div><dl class="widget"><dt/><dd>content</dd></dl></div>');
 
         module.attach(view);
-        equal(view.find('dd').css('display'), 'none');
+        equal(view.find('.widget').attr('class'), 'widget closed');
     });
 
-    test('expander should toggle children when the header is clicked', function () {
+    test('expander should remove "closed" class when the header is clicked', function () {
         expect(1);
 
         var module = app.expander(mocks.create());
@@ -47,7 +47,7 @@ limitations under the License. */
         module.attach(view);
 
         view.find('dt').click();
-        equal(view.find('dd').css('display'), 'block');
+        equal(view.find('.widget').attr('class'), 'widget');
     });
 
 } (window.specs = window.specs || {}, window.mstats));

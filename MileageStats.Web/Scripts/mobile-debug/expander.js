@@ -20,17 +20,16 @@ limitations under the License. */
         
         var $ = require('$');
         
-        var parent = 'dl.widget dt',
-            child = 'dd';
+        var selector = 'dl.widget';
         
         function attach(view) {
-            var header = view.find(parent);
+            var widget = view.find(selector);
+
+            widget.addClass('closed');
             
-            header.next(child).toggle();
-            
-            header.click(function (e) {
+            widget.click(function (e) {
 				e.preventDefault();
-				$(this).next(child).toggle();
+				$(this).toggleClass('closed');
 			});
         }
 
