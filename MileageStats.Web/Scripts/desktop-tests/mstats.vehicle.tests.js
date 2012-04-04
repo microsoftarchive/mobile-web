@@ -44,19 +44,16 @@ limitations under the License. */
                                     '<a href="/Vehicle/Details/4" data-action="vehicle-details-selected" alt="details">' +
                                         '<div class="hover"></div>' +
                                         '<div class="active"></div>' +
-                                        '<img alt="Details" src="@Url.Content("~/Content/command-details.png")" />' +
                                         '<div class="glass"></div>' +
                                     '</a>' +
                                     '<a href="/Fillup/List/4" data-action="vehicle-fillups-selected" alt="fillups">' +
                                         '<div class="hover"></div>' +
                                         '<div class="active"></div>' +
-                                        '<img alt="Fill ups" src="@Url.Content("~/Content/command-fillups.png")" />' +
                                         '<div class="glass"></div>' +
                                     '</a>' +
                                     '<a href="/Reminder/List/4" data-action="vehicle-reminders-selected" alt="reminders">' +
                                         '<div class="hover"></div>' +
                                         '<div class="active"></div>' +
-                                        '<img alt="Reminders" src="@Url.Content("~/Content/command-reminders.png")" />' +
                                         '<div class="glass"></div>' +
                                     '</a>' +
                                 '</div>' +

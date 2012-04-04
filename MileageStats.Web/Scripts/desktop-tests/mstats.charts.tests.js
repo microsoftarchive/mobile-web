@@ -29,7 +29,7 @@ limitations under the License. */
             };
 
             $('#qunit-fixture').append(
-                '<div id="main-chart" data-chart-url="JsonGetFleetStatisticSeries", "Home")">' +
+                '<div id="main-chart" data-chart-url="JsonGetFleetStatisticSeries")">' +
                     '<div>' +
                         '<div id="nav">' +
                             '<a id="fuel-efficiency-link">Average Fuel Efficiency</a> |' +

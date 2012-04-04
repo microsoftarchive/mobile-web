@@ -119,7 +119,12 @@ limitations under the License. */
 
                     that.data = {
                         VehicleId: that.options.selectedVehicleId,
-                        Reminders: flattenReminderGroups(data.Model.model)
+                        Reminders: function (){
+                            if (data && data.Model){
+                                return flattenReminderGroups(data.Model.model);
+                            }   
+                            return {};
+                        }
                     };
                     that._updateSelectedReminder();
                     that._applyTemplate();
@@ -232,7 +237,7 @@ limitations under the License. */
         },
 
         _createRequestUrl: function () {
-            return this.options.dataUrl.substitute(this.options.selectedVehicleId);
+            return mstats.substitute(this.options.dataUrl, this.options.selectedVehicleId);
         },
 
         fulfillReminder: function (fulfillmentUrl) {

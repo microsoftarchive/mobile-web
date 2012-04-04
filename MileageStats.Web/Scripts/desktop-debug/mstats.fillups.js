@@ -77,7 +77,7 @@ limitations under the License. */
             var selectedVehicleId = this.options.selectedVehicleId;
             this._hideFillups();
             this.options.sendRequest({
-                url: this.options.dataUrl.substitute(selectedVehicleId),
+                url: mstats.substitute(this.options.dataUrl, selectedVehicleId),
                 success: function (data) {
                     if (!$(that.options.templateId).length) {
                         that._showFillups();
@@ -87,7 +87,12 @@ limitations under the License. */
 
                     that.data = {
                         VehicleId: selectedVehicleId,
-                        Fillups: flattenFillupGroups(data.Model.model)
+                        Fillups: function (){
+                            if (data && data.Model){
+                                return flattenFillupGroups(data.Model.model);
+                            }   
+                            return {};
+                        }
                     };
                     that._updateSelectedFillup();
                     that._applyTemplate();

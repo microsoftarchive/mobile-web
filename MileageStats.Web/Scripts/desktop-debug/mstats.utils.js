@@ -18,7 +18,7 @@ limitations under the License. */
 (function (mstats, $) {
 
     var dashboardUrl = '/';
-    
+
     mstats.log = function (args) {
         if (typeof console !== 'undefined' && typeof console.log !== 'undefined') {
             console.log(args);
@@ -80,7 +80,7 @@ limitations under the License. */
         var money = mstats.makeMoney(val);
         return (Math.round(money)).toString();
     };
-    
+
     mstats.getRelativeEndpointUrl = function (endpoint) {
         var i,
             splitString = function (string) {
@@ -100,7 +100,7 @@ limitations under the License. */
             splitRoot = splitString(mstats.rootUrl),
             splitUrl = splitString(endpoint),
             result = '';
-        
+
         if (!endpoint) {
             return '';
         }
@@ -114,27 +114,27 @@ limitations under the License. */
 
         return result;
     };
-    
-    mstats.getBaseUrl = function() {
+
+    mstats.getBaseUrl = function () {
         return mstats.getRelativeEndpointUrl(dashboardUrl);
     };
-    
-     function buildFunction(widget, options) {
+
+    function buildFunction(widget, options) {
         var context = options[widget],
             fn;
-        
-        if(!context) {
+
+        if (!context) {
             mstats.log('Attempted to create a helper for ' + widget + ' but the widget was not found in the options.');
             return;
         }
-        
+
         fn = context[widget];
-        return function() {
-                    var result = fn.apply(context, arguments);
-                    return result;
-                };
+        return function () {
+            var result = fn.apply(context, arguments);
+            return result;
+        };
     }
-    
+
     // The preferred means of invoking public methods on a widget stored in options 
     // results in the awkward syntax: this.options.widget.widget('methodToInvoke')
     // Here we setup a set of helper methods to make the meaning of the code more
@@ -142,7 +142,7 @@ limitations under the License. */
     // methods is located here, so there is less chance of errors at the site
     // where we consume this generated api.
     // The new syntax is: this._widget('methodToInvoke')
-    mstats.setupWidgetInvocationMethods = function(host, options, widgetNames) {
+    mstats.setupWidgetInvocationMethods = function (host, options, widgetNames) {
         var i,
             widgetName;
 
@@ -150,6 +150,21 @@ limitations under the License. */
             widgetName = widgetNames[i];
             host["_" + widgetName] = buildFunction(widgetName, options);
         }
+    };
+
+    mstats.replaceAll = function (str, patternToFind, replacementString) {
+        if (!str) return '';
+        return str.replace(new RegExp(patternToFind, "gi"), replacementString);
+    };
+
+    mstats.substitute = function (str) {
+        var formatted = str;
+
+        for (var i = 0; i < arguments.length; i++) {
+            formatted = mstats.replaceAll(formatted, "\\{" + i + "\\}", arguments[i]);
+        }
+
+        return formatted;
     };
 
 } (this.mstats = this.mstats || {}, jQuery));
