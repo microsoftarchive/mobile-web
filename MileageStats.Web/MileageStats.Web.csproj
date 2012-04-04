@@ -337,7 +337,6 @@
     <Content Include="Scripts\desktop-debug\mstats.events.js" />
     <Content Include="Scripts\desktop-debug\mstats.vehicle-list.js" />
     <Content Include="Scripts\desktop-debug\mstats.charts.js" />
-    <Content Include="Scripts\jquery.simulate.js" />
     <Content Include="Scripts\desktop-tests\mstats.charts.tests.js" />
     <Content Include="Scripts\desktop-tests\mstats.pinnedsite.tests.js" />
     <Content Include="Scripts\desktop-tests\mstats.pubsub.tests.js" />
