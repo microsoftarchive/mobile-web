@@ -15,6 +15,7 @@
             <jqPlotPluginFiles Include="$(SolutionDir)packages\jqPlot.1.0.0\Content\Scripts\jqPlot\plugins\*.*" />
             <QUnitFiles Include="$(SolutionDir)packages\QUnit-MVC.1.6.2.0\content\**\*.*" />
             <MustacheFiles Include="$(SolutionDir)packages\mustache.js.0.4.1\content\**\*.*" />
+            <jquerySimulateFiles Include="$(SolutionDir)packages\jquery.simulate.1.0.0\content\Scripts\jQuery.Simulate\jquery.simulate.js" />
         </ItemGroup>
     
         <!-- jqPlot -->
@@ -82,5 +83,25 @@
             Text="@(MustacheCopiedFiles)"
             Importance="high" />
 
+      <!-- jQuery.Simulate -->
+      <!-- mustache -->
+
+      <Message
+          Text="Copying jQuery.Simulate assets for project..."
+          Importance="high" />
+
+      <Copy
+          SkipUnchangedFiles="true"
+          SourceFiles="@(jquerySimulateFiles)"
+          DestinationFolder="$(ProjectDir)Scripts\jQuery.Simulate" >
+        <Output
+            TaskParameter="CopiedFiles"
+            ItemName="jquerySimulateCopiedFiles" />
+      </Copy>
+
+      <Message
+          Text="@(jquerySimulateCopiedFiles)"
+          Importance="high" />
+      
     </Target>
 </Project>
