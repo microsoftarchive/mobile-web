@@ -19,7 +19,7 @@
             @Html.LabelFor(model => model.DueDate)<span> (mm/dd/yyyy)</span>
         </div>
         <div class="editor-field">
-            @Html.TextBoxFor(model => model.DueDate, new { maxlength = "10" })
+            @Html.TextBox("DueDate", Model.DueDate.Value.ToShortDateString(), new { maxlength = "10" })
             @Html.ValidationMessageFor(model => model.DueDate)
         </div>
         <div class="editor-label">
