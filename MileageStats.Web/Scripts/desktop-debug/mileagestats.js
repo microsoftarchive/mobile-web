@@ -90,20 +90,4 @@ $(function () {
         summaryPane: summaryPane,
         vehicleList: vehicleList
        });
-
-       
 });
-
-String.prototype.replaceAll = function (patternToFind, replacementString) {
-	return this.replace(new RegExp(patternToFind, "gi"), replacementString);
-}
-
-String.prototype.substitute = function () {
-	var formatted = this;
-
-	for (var i = 0; i < arguments.length; i++) {
-		formatted = formatted.replaceAll("\\{" + i + "\\}", arguments[i]);
-	}
-
-	return formatted;
-}

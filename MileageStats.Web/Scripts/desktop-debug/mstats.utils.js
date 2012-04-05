@@ -159,9 +159,9 @@ limitations under the License. */
 
     mstats.substitute = function (str) {
         var formatted = str;
-
-        for (var i = 0; i < arguments.length; i++) {
-            formatted = mstats.replaceAll(formatted, "\\{" + i + "\\}", arguments[i]);
+        var args = Array.prototype.slice.call(arguments, 1);
+        for (var i = 0; i < args.length; i++) {
+            formatted = mstats.replaceAll(formatted, "\\{" + i + "\\}", args[i]);
         }
 
         return formatted;
