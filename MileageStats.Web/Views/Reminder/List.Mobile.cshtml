@@ -23,25 +23,25 @@
         <ol class="button-group">
             <li class="add icon"><a href="@Url.UnencodedAction("Add", "Reminder", new { vehicleId = Mustache.RouteValue("vehicleId") })"><span>Add a new reminder</span></a></li>
         </ol>
-        <dl class="fillup widget">
 
-            @foreach (var item in Mustache.Loop(m => m))
-            {
-                <dt><h2><a href="#">@Mustache.Value(item, m => m.StatusName)</a></h2></dt>
-                <dd>
-                    <table>
-                        <thead><tr><th>Reminder</th><th>Due on or at</th></tr></thead>
-                        @foreach (var reminder in Mustache.Loop(item, m => m.Reminders))
-                        {
-                            var url = Url.UnencodedAction("Details", "Reminder", new {vehicleId = Mustache.RouteValue("vehicleId"), id = Mustache.Value(reminder, m => m.ReminderId)});
-                            <tr>
-                                <td><a href="@url">@Mustache.Value(reminder, m => m.Title)</a></td>
-                                <td><a href="@url">@Mustache.Value(reminder, m => m.DueOnFormatted)</a></td>
-                            </tr>
-                        }
-                    </table>
-                </dd>
-            }
+        @foreach (var item in Mustache.Loop(m => m))
+        {
+        <dl class="fillup widget">
+            <dt><h2><a href="#">@Mustache.Value(item, m => m.StatusName)</a></h2></dt>
+            <dd>
+                <table>
+                    <thead><tr><th>Reminder</th><th>Due on or at</th></tr></thead>
+                    @foreach (var reminder in Mustache.Loop(item, m => m.Reminders))
+                    {
+                        var url = Url.UnencodedAction("Details", "Reminder", new {vehicleId = Mustache.RouteValue("vehicleId"), id = Mustache.Value(reminder, m => m.ReminderId)});
+                        <tr>
+                            <td><a href="@url">@Mustache.Value(reminder, m => m.Title)</a></td>
+                            <td><a href="@url">@Mustache.Value(reminder, m => m.DueOnFormatted)</a></td>
+                        </tr>
+                    }
+                </table>
+            </dd>
         </dl>
+        }
     </div>
 }

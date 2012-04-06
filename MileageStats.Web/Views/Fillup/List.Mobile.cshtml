@@ -24,10 +24,10 @@
         <ol class="hbox button-group">
             <li class="icon add"><a href="@Url.UnencodedAction("Add", "Fillup", new {vehicleId = Mustache.RouteValue("vehicleId")})"><span>Add New Fill up</span></a></li>
         </ol>
-        <dl class="fillup widget">
 
-            @foreach (var item in Mustache.Loop(m => m))
-            {
+        @foreach (var item in Mustache.Loop(m => m))
+        {
+            <dl class="fillup widget">
                 <dt><h2><a href="">@Mustache.Value(item, m => m.Month) @Mustache.Value(item, m => m.Year)</a></h2></dt>
                 <dd>
                     <table>
@@ -43,7 +43,7 @@
                         }
                     </table>
                 </dd>
-            }
-        </dl>
+            </dl>
+        }
     </div>
 }
