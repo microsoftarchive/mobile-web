@@ -1,14 +1,14 @@
 ﻿@using MileageStats.Domain.Models
 @using MileageStats.Web.Models
-@model List<MileageStats.Web.Models.ReminderListViewModel>
+@model List<ReminderListViewModel>
 @{
     ViewBag.Title = "Reminders for " + ViewBag.VehicleName;
-    var flattenedReminderListModel = new List<ReminderSummaryModel>();
-    foreach (var reminderListViewModel in Model)
-    {
-        flattenedReminderListModel.AddRange(reminderListViewModel.Reminders);
-    }
-    var selectedItemReminderList = new SelectedItemList<MileageStats.Domain.Models.ReminderSummaryModel>(flattenedReminderListModel);
+    var reminders = Model
+        .Where(x => x.Status != ReminderState.Fulfilled)
+        .SelectMany(x => x.Reminders)
+        .ToList();
+
+    var selectedItemReminderList = new SelectedItemList<ReminderSummaryModel>(reminders);
     selectedItemReminderList.SelectedItem = selectedItemReminderList.FirstOrDefault();
 }
 <div id="details-page">
@@ -37,7 +37,7 @@
                                 }
                             </div>
                             <div class="aside">
-                                @Html.Partial("ListPartial", Model)
+                                @Html.Partial("ListPartial", reminders)
                             </div>
                             <div class="display article">
                                 @{if (selectedItemReminderList.SelectedItem != null)

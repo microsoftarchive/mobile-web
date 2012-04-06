@@ -62,9 +62,12 @@ namespace MileageStats.Web.Controllers
 
         public ActionResult ListPartial(int vehicleId)
         {
-            var listOfReminderListViewModels = GetListOfReminderListViewModels(vehicleId);
+            var reminders = GetListOfReminderListViewModels(vehicleId)
+                .Where(x => x.Status != ReminderState.Fulfilled)
+                .SelectMany(x => x.Reminders)
+                .ToList();
 
-            return new ContentTypeAwareResult(listOfReminderListViewModels);
+            return new ContentTypeAwareResult(reminders);
         }
 
         public ActionResult List(int vehicleId)

@@ -1,20 +1,22 @@
-﻿@using MileageStats.Domain.Models
+﻿@using System.Globalization
+@using MileageStats.Domain.Models
 @using MileageStats.Web.Models
-@model List<MileageStats.Web.Models.ReminderListViewModel>
+@model List<ReminderSummaryModel>
 @{
-    var flattenedReminderListModel = new List<ReminderSummaryModel>();
-    foreach (var reminderListViewModel in Model)
-    {
-        flattenedReminderListModel.AddRange(reminderListViewModel.Reminders);
-    }
-    var selectedItemReminderList = new SelectedItemList<MileageStats.Domain.Models.ReminderSummaryModel>(flattenedReminderListModel);
-    selectedItemReminderList.SelectedItem = selectedItemReminderList.FirstOrDefault();
+    var reminders = new SelectedItemList<ReminderSummaryModel>(Model);
+    
+    reminders.SelectedItem = (Html.RouteValue("id") != string.Empty) 
+        ? reminders.FirstOrDefault(x => x.ReminderId.ToString(CultureInfo.InvariantCulture) == Html.RouteValue("id")) 
+        : reminders.FirstOrDefault();
+        
+    var selectedId = (reminders.SelectedItem == null) ? -1 : reminders.SelectedItem.ReminderId;
 }
 <div class="list nav">
-    @foreach (var item in selectedItemReminderList)
+    @foreach (var item in reminders)
     {
-        var selectedId = (selectedItemReminderList.SelectedItem == null) ? -1 : selectedItemReminderList.SelectedItem.ReminderId;
-        <a class="list-item @(item.ReminderId == selectedId ? "selected" : String.Empty) @(item.IsOverdue ? "overdue": null)" href="@Url.Action("Details", "Reminder", new { id = item.ReminderId })">
+        var selectedClass = item.ReminderId == selectedId ? "selected" : string.Empty;
+        var overdueClass = item.IsOverdue ? "overdue" : string.Empty;
+        <a class="list-item @(selectedClass) @(overdueClass)" href="@Url.Action("Details", "Reminder", new { id = item.ReminderId })">
             <h1>@item.Title</h1>
             <p class="title">Due @item.DueOnFormatted
             </p>            

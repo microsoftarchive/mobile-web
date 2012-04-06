@@ -17,19 +17,6 @@ limitations under the License. */
 
 (function (mstats, $) {
 
-    function flattenReminderGroups(data) {
-        if (!data || !data.Model) return [];
-        var groups = data.Model.model;
-        var out = [],
-            i = 0;
-
-        for (; i < groups.length; i++) {
-            out = out.concat(groups[i].Reminders);
-        }
-
-        return out;
-    }
-    
     $.widget('mstats.reminders', {
         // default options
         options: {
@@ -118,7 +105,7 @@ limitations under the License. */
                         mstats.log('reminders: Cannot apply templates as there is no template defined.');
                         return;
                     }
-                    var reminders = flattenReminderGroups(data);
+                    var reminders = (data && data.Model) ? data.Model.model : [];
                     that.data = {
                         VehicleId: that.options.selectedVehicleId,
                         SelectedReminder: reminders.length ? reminders[0] : {},
