@@ -16,8 +16,10 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 (function (mstats, $) {
-    
-    function flattenReminderGroups(groups) {
+
+    function flattenReminderGroups(data) {
+        if (!data || !data.Model) return [];
+        var groups = data.Model.model;
         var out = [],
             i = 0;
 
@@ -116,15 +118,11 @@ limitations under the License. */
                         mstats.log('reminders: Cannot apply templates as there is no template defined.');
                         return;
                     }
-
+                    var reminders = flattenReminderGroups(data);
                     that.data = {
                         VehicleId: that.options.selectedVehicleId,
-                        Reminders: function (){
-                            if (data && data.Model){
-                                return flattenReminderGroups(data.Model.model);
-                            }   
-                            return {};
-                        }
+                        SelectedReminder: reminders.length ? reminders[0] : {},
+                        Reminders: reminders
                     };
                     that._updateSelectedReminder();
                     that._applyTemplate();

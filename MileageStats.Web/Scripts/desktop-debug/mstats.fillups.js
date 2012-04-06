@@ -17,10 +17,12 @@ limitations under the License. */
 
 (function (mstats, $) {
 
-    function flattenFillupGroups(groups) {
+    function flattenFillupGroups(data) {
+        if (!data || !data.Model) return [];
+        var groups = data.Model.model;
         var out = [],
             i = 0;
-        
+
         for (; i < groups.length; i++) {
             out = out.concat(groups[i].Fillups);
         }
@@ -84,15 +86,11 @@ limitations under the License. */
                         mstats.log('Fillups: Cannot apply templates as there is no template defined.');
                         return;
                     }
-
+                    var fillups = flattenFillupGroups(data);
                     that.data = {
                         VehicleId: selectedVehicleId,
-                        Fillups: function (){
-                            if (data && data.Model){
-                                return flattenFillupGroups(data.Model.model);
-                            }   
-                            return {};
-                        }
+                        SelectedFillup: fillups.length ? fillups[0] : {},
+                        Fillups: fillups
                     };
                     that._updateSelectedFillup();
                     that._applyTemplate();
