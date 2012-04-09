@@ -355,6 +355,8 @@
     <Content Include="Views\Chart\Index.Mobile.cshtml" />
     <Content Include="Views\Browser\Index.cshtml" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <None Include="Content\readme.md" />
+    <None Include="Helpers\readme.md" />
     <None Include="Views\Error\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
