@@ -39,7 +39,7 @@ limitations under the License. */
     test('vehicle module gets Makes when Year changes', function () {
 
         expect(5);
-        
+
         var m = mocks.create(default_mocks);
 
         $.post = function (url, data, callback) {
@@ -137,7 +137,30 @@ limitations under the License. */
                 }
             }
         });
-        
+
+        var view = $('<div></div>');
+
+        var module = app.vehicleAdd(m);
+        module.postrender({}, view, {});
+
+    });
+
+    test('vehicle module should redirect to / after deleting a vehicle', function () {
+
+        expect(1);
+
+        var m = mocks.create({
+            window: { location: { hash:'something-else' } },
+            confirm: function () { return true; },
+            formSubmitter: {
+                attach: function (el, callback, selector) {
+                    if (selector !== '#DeleteVehicleForm') return;
+                    callback();
+                    equal(m.window.location.hash, '/');
+                }
+            }
+        });
+
         var view = $('<div></div>');
 
         var module = app.vehicleAdd(m);

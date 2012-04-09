@@ -18,9 +18,9 @@ limitations under the License. */
 (function (mstats) {
 	var ctr = function (require) {
 
-		var $ = require('$'),
+	    var $ = require('$'),
+	        window = require('window'),
             confirmPrompt = require('confirm'),
-			rootUrl = require('rootUrl'),
             formSubmitter = require('formSubmitter');
 
 		var urlPattern = '/Vehicle/:vehicleId/Details';
@@ -32,7 +32,7 @@ limitations under the License. */
 			});
 
 			formSubmitter.attach(el, function (response) {
-				window.location.hash = rootUrl;
+				window.location.hash = '/';
 			}, '#DeleteVehicleForm');
 
 			el.find('#DeleteVehicleButton').click(function (event) {
