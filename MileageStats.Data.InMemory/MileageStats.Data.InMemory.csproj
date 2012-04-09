@@ -58,13 +58,15 @@
     <EmbeddedResource Include="Photos\BMW.jpg" />
     <EmbeddedResource Include="Photos\Honda.jpg" />
     <EmbeddedResource Include="Photos\Jeep.jpg" />
-    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MileageStats.Domain\MileageStats.Domain.csproj">
       <Project>{A90A6E16-E9F0-49DC-88B2-82882DF86DC3}</Project>
       <Name>MileageStats.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

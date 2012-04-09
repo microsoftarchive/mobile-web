@@ -1,1 +1,0 @@
-﻿This is an intentionally simplified data store. It is not meant to represent real-world data access.

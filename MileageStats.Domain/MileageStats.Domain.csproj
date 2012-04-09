@@ -153,6 +153,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="readme.md" />
     <None Include="Service References\SearchService\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
