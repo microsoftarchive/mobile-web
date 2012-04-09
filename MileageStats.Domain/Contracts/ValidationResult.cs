@@ -22,28 +22,18 @@ namespace MileageStats.Domain.Contracts
     /// </summary>
     public class ValidationResult
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationResult"/> class.
-        /// </summary>
+
         public ValidationResult()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationResult"/> class.
-        /// </summary>
-        /// <param name="memeberName">Name of the memeber.</param>
-        /// <param name="message">The message.</param>
-        public ValidationResult(string memeberName, string message)
+        public ValidationResult(string memberName, string message)
         {
-            this.MemberName = memeberName;
+            this.MemberName = memberName;
             this.Message = message;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationResult"/> class.
-        /// </summary>
-        /// <param name="message">The message.</param>
+
         public ValidationResult(string message)
         {
             this.Message = message;
