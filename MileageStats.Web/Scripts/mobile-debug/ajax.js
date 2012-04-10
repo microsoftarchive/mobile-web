@@ -27,8 +27,8 @@ limitations under the License. */
         var invalidations = {
             '/Vehicle/Add': ['/', '/Chart'],
             '/Vehicle/:id/Fillup/Add': ['/', '/Chart', '/Vehicle/:id/Fillup/List', '/Vehicle/:id/Details', '/Vehicle/:id/Fillup/Add'],
-            '/Vehicle/:id/Edit': ['/', '/Chart', '/Vehicle/:id/Details'],
-            '/Vehicle/Delete/:id': ['/', '/Chart', '/Vehicle/:id/Details'],
+            '/Vehicle/:id/Edit': ['/', '/Chart', '/Vehicle/:id/Details', '/Vehicle/:id/Edit'],
+            '/Vehicle/Delete/:id': ['/', '/Chart', '/Vehicle/:id/Details', '/Vehicle/:id/Edit'],
             '/Vehicle/:id/Reminder/Add': ['/', '/Vehicle/:id/Reminder/List'],
             '/Vehicle/:id/Reminder/:reminderId/Fulfill': ['/', '/Vehicle/:id/Reminder/List', '/Vehicle/:id/Reminder/:reminderId/Details']
         };
