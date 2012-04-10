@@ -25,7 +25,7 @@ namespace MileageStats.Domain.Contracts
         /// <summary>
         /// Calculates the series of statistics of all vehicles for the specified user.
         /// </summary>
-        /// <param name="userId">The user id.</param>
+        /// <param name="userId">The user ID.</param>
         /// <param name="startDate">The start date for filtering.</param>
         /// <param name="endDate">The end date for filtering.</param>
         /// <returns>A statistical series.</returns>
@@ -34,7 +34,7 @@ namespace MileageStats.Domain.Contracts
         /// <summary>
         /// Calculates the series of statistics for the specified vehicle.
         /// </summary>
-        /// <param name="userId">The user id.</param>
+        /// <param name="userId">The user ID.</param>
         /// <param name="startDate">The start date for filtering.</param>
         /// <param name="endDate">The end date for filtering.</param>
         /// <returns>A statistical series.</returns>

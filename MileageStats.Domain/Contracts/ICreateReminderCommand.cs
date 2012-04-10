@@ -22,7 +22,7 @@ namespace MileageStats.Domain.Contracts
     public interface ICreateReminderCommand
     {
         /// <summary>
-        /// Gets or sets the entity ID of reminder.
+        /// Gets or sets the entity ID of the reminder.
         /// </summary>
         /// <value>
         /// An integer identifying the entity.
@@ -62,10 +62,10 @@ namespace MileageStats.Domain.Contracts
         DateTime? DueDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the distance the reminder is due when reached
+        /// Gets or sets the odometer reading at which the reminder is due.
         /// </summary>
         /// <value>
-        /// A number or null.
+        /// An integer or null.
         /// </value>
         int? DueDistance { get; set; }
 

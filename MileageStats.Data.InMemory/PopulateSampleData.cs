@@ -9,7 +9,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 
 THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED 
-ARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE, 
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE, 
 MERCHANTABLITY OR NON-INFRINGEMENT. 
 
 See the Apache 2 License for the specific language governing permissions and
@@ -158,7 +158,7 @@ namespace MileageStats.Data.InMemory
                 return;
             }
 
-            // create overdue by mileage reminder
+            // create "overdue by mileage" reminder
             vehicle.Reminders.Add(new Reminder
                            {
                                DueDate = null,
@@ -169,7 +169,7 @@ namespace MileageStats.Data.InMemory
                                VehicleId = vehicle.VehicleId
                            });
 
-            // create overdue by date reminder
+            // create "overdue by date" reminder
             vehicle.Reminders.Add(new Reminder
                            {
                                DueDate = lastFillup.Date.AddDays(-10),
@@ -180,7 +180,7 @@ namespace MileageStats.Data.InMemory
                                VehicleId = vehicle.VehicleId
                            });
 
-            // create to be done soon by mileage reminder
+            // create "to be done soon by mileage" reminder
             vehicle.Reminders.Add(new Reminder
                            {
                                DueDate = null,
@@ -191,7 +191,7 @@ namespace MileageStats.Data.InMemory
                                VehicleId = vehicle.VehicleId
                            });
 
-            // create to be done soon by date reminder
+            // create "to be done soon by date" reminder
             vehicle.Reminders.Add(new Reminder
                            {
                                DueDate = DateTime.Now.AddDays(+10),
