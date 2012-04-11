@@ -78,7 +78,6 @@
         <script src="//ajax.cdnjs.com/ajax/libs/modernizr/1.7/modernizr-1.7.min.js"></script>
         
         @* These are the 1.0 version of jqplot, currently cachedcommons.org has 0.97 *@
-        <![if gt IE 7]>
         <script src="@Url.Content("~/Scripts/jqPlot/excanvas.min.js")"></script>
         <script src="@Url.Content("~/Scripts/jqPlot/jquery.jqplot.min.js")"></script>
         <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasTextRenderer.min.js")"></script>
@@ -93,9 +92,10 @@
                 mstats.rootUrl = '@Url.Content("~")';
             } (this.mstats = this.mstats || {}));
         </script>
-        }        
-@if (User.Identity.IsAuthenticated && HttpContext.Current.IsDebuggingEnabled)
-{
+        
+    }        
+    @if (User.Identity.IsAuthenticated && HttpContext.Current.IsDebuggingEnabled)
+    {
         <script src="@Url.Content("~/Scripts/desktop-debug/mstats.validation.js")"></script>
         <script src="@Url.Content("~/Scripts/desktop-debug/mstats.utils.js")"></script>
         <script src="@Url.Content("~/Scripts/desktop-debug/mstats.events.js")"></script>
@@ -120,18 +120,16 @@
         <script src="@Url.Content("~/Scripts/desktop-debug/mstats.layout-manager.js")"></script>
         <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-dropdown-monitor.js")"></script>
         <script src="@Url.Content("~/Scripts/desktop-debug/mileagestats.js")"></script>
-}
-@if (User.Identity.IsAuthenticated && !HttpContext.Current.IsDebuggingEnabled)
-{
+    }
+    @if (User.Identity.IsAuthenticated && !HttpContext.Current.IsDebuggingEnabled)
+    {
         <script src="@Url.Content("~/Scripts/mileagestats.min.js")"></script>
-}
+    }
 
-@if (User.Identity.IsAuthenticated)
-{           
+    @if (User.Identity.IsAuthenticated)
+    {           
         @RenderSection("Scripts", false);
-        <![endif]>
-}
-
+    }
 
 </body>
 </html>

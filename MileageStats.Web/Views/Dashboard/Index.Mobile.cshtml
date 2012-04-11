@@ -1,18 +1,22 @@
 ﻿@model MileageStats.Web.Models.DashboardViewModel       
+
 @if (!Html.IsRenderingForMustache())
 {
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Dashboard";
 }
+
 <nav>
     <ol class="tabs">
         <li><a href="@Url.Action("Index", "Dashboard")" class="selected">Dashboard</a></li>
         <li><a href="@Url.Action("Index", "Chart")">Charts</a></li>
     </ol>
 </nav>
+
 @{ Html.RenderPartial("_Flash.Mobile"); }
+
 @using (var section  = Mustache.Section("Model")){
-<div class="view" id="view">
+    <div class="view" id="view">
     <h2>
         Statistics</h2>
     <div class="stats">
@@ -90,8 +94,8 @@
                 @foreach (var reminder in Mustache.Loop(m => m.ImminentReminders))
                 {
                     var reminderId = Mustache.Value(reminder, i => i.Reminder.ReminderId);
-                    var vehicleId = Mustache.Value(reminder, i=>i.VehicleId);
-                    var url = @Url.UnencodedAction("Details", "Reminder", new { id = reminderId, vehicleId });
+                    var vehicleId = Mustache.Value(reminder, i => i.VehicleId);
+                    var url = Url.UnencodedAction("Details", "Reminder", new { id = reminderId, vehicleId });
                     <tr>
                         <td>
                             <a href="@url">@Mustache.Value(reminder, i => i.Reminder.Title)</a>

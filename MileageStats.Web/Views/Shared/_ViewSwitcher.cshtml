@@ -1,7 +1,7 @@
 ﻿@using MileageStats.Web;
 @if (Request.Browser.IsMobileDevice)
 {
-    if (ViewContext.HttpContext.GetOverridenBrowser() == BrowserOverride.Mobile)
+    if (ViewContext.HttpContext.GetOverridenBrowser() == MileageStats.Web.BrowserOverride.Mobile)
     {
     <p class="switch">
         <a href="@Url.Action("SwitchView", "ViewSwitcher", new { mobile = false, returnUrl = Request.Url.PathAndQuery })" rel="external">

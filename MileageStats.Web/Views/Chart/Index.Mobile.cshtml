@@ -1,13 +1,15 @@
+@using System.Globalization
 @using System.Text
 @model MileageStats.Web.Models.ChartFormModel
 @{
     ViewBag.Title = "Charts";
     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
 
+    var forMustache = Html.IsRenderingForMustache();
     var vehicleIdQueryStringBuilder = new StringBuilder();
     var vehiclePositionQSBuilder = new StringBuilder();
     
-    if (!Html.IsRenderingForMustache())
+    if (!forMustache)
     {
         var listOfAllVehicleModels = Model.AllVehicleModels.ToList();
         
@@ -43,7 +45,7 @@
             <ul>
                 <li>
                     <h4>Chart Data</h4>
-                    @if (Html.IsRenderingForMustache())
+                    @if (forMustache)
                     {
                         <input type="hidden" id="GetChartImageUrl" value="@Url.UnencodedAction("GetChartImage", "Chart", new {UserId = Mustache.Value(m => m.UserId)})" />
                     }    
@@ -51,7 +53,7 @@
                     @Html.DropDownListFor(model => model.ChartName, SelectListFor.Charts())
                                                                              
                 </li>
-                @if (Html.IsRenderingForMustache())
+                @if (forMustache)
                 {
                     <li><img id="chartimage" style="display:none" /></li>
                 }
@@ -68,15 +70,12 @@
                     <ol class="legend">
                         @foreach (var vehicle in Mustache.Loop(m => m.AllVehicleModels))
                         {
-                            if (Html.IsRenderingForMustache())
-                            {
-                                <li><input name="VehicleIds" type="checkbox" value="@Html.Raw("{{VehicleId}}")">@Html.Raw("{{Name}}")</input></li>
-                            }
-                            else
-                            {
-                                <li><input name="VehicleIds" type="checkbox" value="@vehicle.VehicleId" @(Model.VehicleIds.Contains(vehicle.VehicleId) ? "checked" : "")>@vehicle.Name</input></li>
-                            }
-
+                            var value = forMustache ? Html.Raw("{{VehicleId}}") : new MvcHtmlString(vehicle.VehicleId.ToString(CultureInfo.InvariantCulture));
+                            var display = forMustache ? Html.Raw("{{Name}}") :  new MvcHtmlString(vehicle.Name);
+                            var isChecked = !forMustache && Model.VehicleIds.Contains(vehicle.VehicleId) ? "checked" : "";
+                            <li>
+                                <input name="VehicleIds" type="checkbox" value="@value" @isChecked/><span>@display</span>
+                            </li>
                         }
                     </ol>
                 </li>

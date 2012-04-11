@@ -29,7 +29,7 @@ namespace MileageStats.Web.App_Start
     {
         public static void Start()
         {
-            ViewEngines.Engines.Insert(0, new MobileCapableRazorViewEngine());
+            //ViewEngines.Engines.Insert(0, new MobileCapableRazorViewEngine());
         }
     }
     
