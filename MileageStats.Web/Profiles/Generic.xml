@@ -54,118 +54,12 @@
 		</test>
 	</feature>
 
-	<feature id="video" property="" default="1">
-		<name>HTML5 Video</name>
-		<description>Support for HTML5 video?</description>
-		<test type="text/javascript">
-			<![CDATA[
-		var video = +!!document.createElement('video').canPlayType;
-			if(video){
-				var v = document.createElement("video");
-				v.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"')?video+='-h264':false;
-				v.canPlayType('video/ogg; codecs="theora, vorbis"')?video+='-ogg':false;
-				v.canPlayType('video/webm; codecs="vp8, vorbis"')?video+='-webm':false;
-			}
-			return video;
-			]]>
-		</test>
-	</feature>
-
 	<feature id="geo" property="" default="0">
 		<name>HTML5 Location API</name>
 		<description>Support for HTML5 geo-location API</description>
 		<test type="text/javascript">
 			<![CDATA[
 			return +!!navigator.geolocation;	
-			]]>
-		</test>
-	</feature>
-
-	<feature id="swf" property="" default="0">
-		<name>Adobe Flash Player</name>
-		<description>Which version of the Adobe Flash Player (if any) is installed on this device.</description>
-		<data />
-		<test type="text/javascript">
-			<![CDATA[
-			try{
-				try{
-					var axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
-					try { axo.AllowScriptAccess = 'always'; }
-					catch(e) { return '6,0,0'; }
-				} catch(e) {}
-					var v = new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version').replace(/\D+/g, ',').match(/^,?(.+),?$/)[1] ;
-					return v.replace(/,/gi, '.');
-			}catch(e){
-				try{
-					if(navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin){
-						var v = (navigator.plugins["Shockwave Flash 2.0"] ||
-						navigator.plugins["Shockwave Flash"]).description.replace(/\D+/g, ",").match(/^,?(.+),?$/)[1];
-						return v.replace(/,/gi, '.');
-					}
-				}catch(e){}
-			}
-			return '0.0.0';
-			]]>
-		</test>
-	</feature>
-
-	<feature id="font" property="" default="0">
-		<name>Web Fonts</name>
-		<description>Ability to use web fonts.</description>
-		<data />
-		<test type="text/javascript">
-			<![CDATA[
-			var sheet,
-			head = document.head || document.getElementsByTagName('head')[0] || docElement,
-			style = document.createElement("style"),
-			impl = document.implementation || { hasFeature: function() { return false; } };
-			style.type = 'text/css';
-			head.insertBefore(style, head.firstChild);
-			sheet = style.sheet || style.styleSheet;
-			/* removing it crashes IE browsers */
-			/* head.removeChild(style); */
-			var supportAtRule = impl.hasFeature('CSS2', '') ?
-			function(rule){
-				if (!(sheet && rule)) return false;
-				var result = false;
-				try{
-					sheet.insertRule(rule, 0);
-					result = !(/unknown/i).test(sheet.cssRules[0].cssText);
-					sheet.deleteRule(sheet.cssRules.length - 1);
-				}catch(e){}
-				return +result;
-			} :
-			function(rule){
-				if (!(sheet && rule)) return false;
-				sheet.cssText = rule;	
-				return +sheet.cssText.length !== 0 && !(/unknown/i).test(sheet.cssText)&&sheet.cssText.replace(/\r+|\n+/g, '').indexOf(rule.split(' ')[0]) === 0;
-			};
-			return +supportAtRule('@font-face { font-family: "font"; src: "font.ttf"; }');
-			]]>
-		</test>
-	</feature>
-
-	<feature id="svg" property="" default="0">
-		<name>SVG Graphics</name>
-		<description>Are SVG graphics supported?</description>
-		<test type="text/javascript">
-			<![CDATA[
-			return +!!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
-			]]>
-		</test>
-	</feature>
-
-	<feature id="cvs" property="" default="0">
-		<name>HMTL5 Canvas</name>
-		<description>Is HTML5 canvas supported.</description>
-		<test type="text/javascript">
-			<![CDATA[
-			var canvas = +!!document.createElement('canvas').getContext;
-			if(canvas){
-				var c = document.createElement( 'canvas' ).getContext('2d');
-				typeof c.fillText=='function'?canvas+="-text":false;
-			}
-			return canvas;
 			]]>
 		</test>
 	</feature>
