@@ -9,14 +9,14 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="@Url.Content("~/Content/reset.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Content/stylesheet.css")" rel="stylesheet" />
+    <link href="~/Content/reset.css" rel="stylesheet" />
+    <link href="~/Content/stylesheet.css" rel="stylesheet" />
 
     <link href="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
     
-    <link href="@Url.Content("~/Scripts/jqPlot/jquery.jqplot.min.css")" rel="stylesheet" />    
-    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/favicon.ico")" />
-    <link rel="icon" type="image/ico" href="@Url.Content("~/favicon.ico")" />
+    <link href="~/Scripts/jqPlot/jquery.jqplot.min.css" rel="stylesheet" />    
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="icon" type="image/ico" href="~/favicon.ico" />
     <meta name="application-name" content="Mileage Stats" />
     <meta name="msapplication-tooltip" content="Mileage Stats Reference Implementation" />
     <meta name="msapplication-window" content="width=1100;height=800" />
@@ -78,12 +78,12 @@
         <script src="//ajax.cdnjs.com/ajax/libs/modernizr/1.7/modernizr-1.7.min.js"></script>
         
         @* These are the 1.0 version of jqplot, currently cachedcommons.org has 0.97 *@
-        <script src="@Url.Content("~/Scripts/jqPlot/excanvas.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/jqPlot/jquery.jqplot.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasTextRenderer.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.canvasAxisTickRenderer.min.js")"></script>    
-        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.dateAxisRenderer.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/jqPlot/plugins/jqplot.cursor.min.js")"></script>
+        <script src="~/Scripts/jqPlot/excanvas.min.js"></script>
+        <script src="~/Scripts/jqPlot/jquery.jqplot.min.js"></script>
+        <script src="~/Scripts/jqPlot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+        <script src="~/Scripts/jqPlot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>    
+        <script src="~/Scripts/jqPlot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+        <script src="~/Scripts/jqPlot/plugins/jqplot.cursor.min.js"></script>
  
         <script type="text/javascript">
             // allowing the server to set the root URL for the site, 
@@ -96,34 +96,34 @@
     }        
     @if (User.Identity.IsAuthenticated && HttpContext.Current.IsDebuggingEnabled)
     {
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.validation.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.utils.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.events.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.pubsub.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.data.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.status.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.header.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.tile.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-list.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-details.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.fillups.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.reminders.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.info-pane.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.registration.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-charts.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.charts.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.pinnedsite.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.statistics.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.imminent-reminders.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.summary.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.layout-manager.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mstats.vehicle-dropdown-monitor.js")"></script>
-        <script src="@Url.Content("~/Scripts/desktop-debug/mileagestats.js")"></script>
+        <script src="~/Scripts/desktop-debug/mstats.validation.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.utils.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.events.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.pubsub.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.data.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.status.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.header.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.tile.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.vehicle.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.vehicle-list.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.vehicle-details.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.fillups.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.reminders.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.info-pane.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.registration.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.vehicle-charts.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.charts.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.pinnedsite.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.statistics.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.imminent-reminders.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.summary.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.layout-manager.js"></script>
+        <script src="~/Scripts/desktop-debug/mstats.vehicle-dropdown-monitor.js"></script>
+        <script src="~/Scripts/desktop-debug/mileagestats.js"></script>
     }
     @if (User.Identity.IsAuthenticated && !HttpContext.Current.IsDebuggingEnabled)
     {
-        <script src="@Url.Content("~/Scripts/mileagestats.min.js")"></script>
+        <script src="~/Scripts/mileagestats.min.js"></script>
     }
 
     @if (User.Identity.IsAuthenticated)

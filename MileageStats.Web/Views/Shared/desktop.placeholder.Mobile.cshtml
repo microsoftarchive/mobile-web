@@ -13,11 +13,11 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
     <meta http-equiv="cleartype" content="on" />
     <!-- mobile first, responsive design stylesheets -->
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/default.css")" media="screen, handheld" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/extended.css")" media="only screen and (min-width: 640px)" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/default.css" media="screen, handheld" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/extended.css" media="only screen and (min-width: 640px)" />
     @if (Request.Browser.IsWow())
     {
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/enhanced.css")" media="only screen and (min-width: 320px) and (color)" />
+        <link rel="stylesheet" type="text/css" href="~/Content/css/enhanced.css" media="only screen and (min-width: 320px) and (color)" />
     }
 </head>
 <body>
@@ -44,7 +44,7 @@
                     well on most mobile devices. Instead of crashing your browser we thought we'd simply
                     show you a lovely picture of what the desktop site looks like.</p>
                 <figure style="margin: 1em 0;">
-                    <img src="@Url.Content("~/Content/mileagestats_desktop.jpg")" alt="Mileage Stats Desktop Application" />
+                    <img src="~/Content/mileagestats_desktop.jpg" alt="Mileage Stats Desktop Application" />
                     <figcaption style="font-size: .8em">The sign in page for the Mileage Stats desktop site. </figcaption>
                 </figure>
                 <p>

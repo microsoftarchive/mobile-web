@@ -4,7 +4,7 @@
         <div class="header">
             <form action="@HttpUtility.UrlDecode(Url.Action("Add", "Reminder", new { vehicleId = "${VehicleId}" }))" method="get">
                 <button data-action="reminder-add-selected" class="button generic small" type="submit">
-                    <img src="@Url.Content("~/Content/button-add.png")" title="Add Reminder" alt="Add" /></button>
+                    <img src="~/Content/button-add.png" title="Add Reminder" alt="Add" /></button>
             </form>
         </div>
         <div class="aside">
@@ -43,7 +43,7 @@
                 <form action="@HttpUtility.UrlDecode(Url.Action("Fulfill", "Reminder", new { vehicleId = "${SelectedReminder.VehicleId}", id = "${SelectedReminder.ReminderId}"}))" method="post">
                     {{if !SelectedReminder.IsFulfilled}}
                     <button data-action="reminder-fulfill-selected" data-action-url="@HttpUtility.UrlDecode(Url.Action("Fulfill", "Reminder", new { vehicleId = "${SelectedReminder.VehicleId}", id = "${SelectedReminder.ReminderId}"}))" class="button generic small" type="submit">
-                        <img src="@Url.Content("~/Content/button-fulfill.png")" title="Fulfill Reminder" alt="Fulfill" />
+                        <img src="~/Content/button-fulfill.png" title="Fulfill Reminder" alt="Fulfill" />
                     </button>
                     {{/if}}  
                 </form>

@@ -5,13 +5,13 @@
         <div class="header">
             <form action="@Url.UnencodedAction("Edit", "Vehicle", new { vehicleId = "${VehicleId}" })" method="get">
             <button data-action="vehicle-edit-selected" class="button generic small" type="submit">
-                <img src="@Url.Content("~/Content/button-edit.png")" title="Edit Vehicle" alt="Edit" />
+                <img src="~/Content/button-edit.png" title="Edit Vehicle" alt="Edit" />
             </button>
             </form>
             <form action="@Url.Action("Delete", "Vehicle")/${VehicleId}" method="post">
 				@Html.AntiForgeryToken()
 				<button data-action="vehicle-delete-selected" data-action-url="@Url.Action("Delete", "Vehicle")/${VehicleId}" class="button generic small" type="submit">
-					<img src="@Url.Content("~/Content/button-delete.png")" title="Delete Vehicle" alt="Delete" />
+					<img src="~/Content/button-delete.png" title="Delete Vehicle" alt="Delete" />
 				</button>
             </form>
         </div>

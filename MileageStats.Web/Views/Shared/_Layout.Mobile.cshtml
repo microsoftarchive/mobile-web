@@ -15,9 +15,9 @@
     <meta http-equiv="cleartype" content="on" />
 
     <!-- mobile first, responsive design stylesheets -->
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/default.css")" media="screen, handheld" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/extended.css")" media="only screen and (min-width: 640px)" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/enhanced.css")" media="only screen and (min-width: 320px) and (color)" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/default.css" media="screen, handheld" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/extended.css" media="only screen and (min-width: 640px)" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/enhanced.css" media="only screen and (min-width: 320px) and (color)" />
 </head>
     <body>
         @if (shouldEnableSpa)
@@ -76,27 +76,27 @@
             <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
             <script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"></script>
             <script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>
-            <script src="@Url.Content("~/Scripts/mustache.js")"></script>
+            <script src="~/Scripts/mustache.js"></script>
             
 			if (HttpContext.Current.IsDebuggingEnabled)
 			{
-				<script src="@Url.Content("~/Scripts/mobile-debug/ajax.js")"></script>
-				<script src="@Url.Content("~/Scripts/mobile-debug/app.js")"></script>
-                <script src="@Url.Content("~/Scripts/mobile-debug/charts.js")"></script>
-				<script src="@Url.Content("~/Scripts/mobile-debug/dashboard.js")"></script>
-				<script src="@Url.Content("~/Scripts/mobile-debug/expander.js")"></script>
-				<script src="@Url.Content("~/Scripts/mobile-debug/formSubmitter.js")"></script>
-                <script src="@Url.Content("~/Scripts/mobile-debug/fillup-add.js")"></script>
-                <script src="@Url.Content("~/Scripts/mobile-debug/reminder-add.js")"></script>
-                <script src="@Url.Content("~/Scripts/mobile-debug/reminder-fulfill.js")"></script>
-				<script src="@Url.Content("~/Scripts/mobile-debug/router.js")"></script>
-				<script src="@Url.Content("~/Scripts/mobile-debug/transition.js")"></script>
-                <script src="@Url.Content("~/Scripts/mobile-debug/vehicle.js")"></script>
-				<script src="@Url.Content("~/Scripts/mobile-debug/notifications.js")"></script>
+				<script src="~/Scripts/mobile-debug/ajax.js"></script>
+				<script src="~/Scripts/mobile-debug/app.js"></script>
+                <script src="~/Scripts/mobile-debug/charts.js"></script>
+				<script src="~/Scripts/mobile-debug/dashboard.js"></script>
+				<script src="~/Scripts/mobile-debug/expander.js"></script>
+				<script src="~/Scripts/mobile-debug/formSubmitter.js"></script>
+                <script src="~/Scripts/mobile-debug/fillup-add.js"></script>
+                <script src="~/Scripts/mobile-debug/reminder-add.js"></script>
+                <script src="~/Scripts/mobile-debug/reminder-fulfill.js"></script>
+				<script src="~/Scripts/mobile-debug/router.js"></script>
+				<script src="~/Scripts/mobile-debug/transition.js"></script>
+                <script src="~/Scripts/mobile-debug/vehicle.js"></script>
+				<script src="~/Scripts/mobile-debug/notifications.js"></script>
             }
             else
             {
-				<script src="@Url.Content("~/Scripts/MileageStats.Mobile.min.js")"></script>
+				<script src="~/Scripts/MileageStats.Mobile.min.js"></script>
 			}         
 			
 		}

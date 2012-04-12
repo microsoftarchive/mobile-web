@@ -24,7 +24,7 @@
                             <div class="header">
                                 @using (Html.BeginForm("Add", "Reminder", new { vehicleId = Html.RouteValue("vehicleId") }, FormMethod.Get))
                                 {
-                                    <button data-action="reminder-add-selected" class="button generic small" type="submit"><img src="@Url.Content("~/Content/button-add.png")" title="Add Reminder" alt="Add" /></button>
+                                    <button data-action="reminder-add-selected" class="button generic small" type="submit"><img src="~/Content/button-add.png" title="Add Reminder" alt="Add" /></button>
                                 }
                             </div>
                             <div class="aside">
@@ -36,7 +36,7 @@
                                 @using (Html.BeginForm("Fulfill", "Reminder", new { id = Model.ReminderId }, FormMethod.Post))
                                 {
                                     <button data-action="reminder-fulfill-selected" class="button generic small" type="submit">
-                                        <img src="@Url.Content("~/Content/button-fulfill.png")" title="Fulfill Reminder" alt="Save" />
+                                        <img src="~/Content/button-fulfill.png" title="Fulfill Reminder" alt="Save" />
                                     </button>                    
                                 }
                                 </div>                               
