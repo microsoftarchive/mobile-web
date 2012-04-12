@@ -17,15 +17,15 @@ limitations under the License. */
 
 (function (mstats) {
 
-	// this module searches the provided jQuery object 
+	// This module searches the provided jQuery object 
 	// for a form element, it takes the first one and 
 	// then sets up the unobstrusive validation that is
-	// part of ASP.NET MVC 3. after that, it wires an
+	// part of ASP.NET MVC 3. After that, it wires an
 	// event handler for submission of the form that
-	// results in an AJAX request to the url specified
+	// results in an Ajax request to the URL specified
 	// in the form's action.
-	// this has an implicit depedency on the jQuery 
-	// validation plugin
+	// This has an implicit depedency on the jQuery 
+	// validation plugin.
 
 	mstats.formSubmitter = function (require) {
 
@@ -34,8 +34,8 @@ limitations under the License. */
 			notifications = require('notifications');
 
 		function validate(form) {
-			// here we look for the validation object that has been
-			// attached to the form. this assumes the present of 
+			// Here we look for the validation object that has been
+			// attached to the form. This assumes the presence of 
 			// jQuery validation and MVC's unobtrusive validation scripts.
 			var validationInfo = $(form).data('unobtrusiveValidation');
 			return !validationInfo || !validationInfo.validate || validationInfo.validate();
@@ -46,15 +46,15 @@ limitations under the License. */
 			var errorList;
 			var msg;
 
-			// we want to visually associate any errors returned from
-			// server. (note that this differs from the client-side
-			// validation)
-			// this makes assumption about the structure of the markup
+			// We want to visually associate any errors returned from the 
+			// server. (Note that this differs from the client-side
+			// validation.)
+			// This makes assumptions about the structure of the markup.
 
 			for (item in errors) {
-				// `item` is the name of the field with the input error
+				// `item` is the name of the field with the input error.
 				// `errorList` is the list of validation errors associated 
-				// with that field
+				// with that field.
 				errorList = errors[item];
 				msg = '';
 
@@ -62,15 +62,15 @@ limitations under the License. */
 					msg = msg + errorList[i];
 				}
 
-				// `data-valmsg-for` is an attribute that is emit by
-				// the unobtrusive validation code
+				// `data-valmsg-for` is an attribute that is emitted by
+				// the unobtrusive validation code.
 				$('[data-valmsg-for="' + item + '"]').html(msg);
 			}
 		}
 
 		function onSuccess(callback) {
-			// we create this function in a closure
-			// in order to trap the callback
+			// We create this function in a closure
+			// in order to trap the callback.
 		    return function (res, status, xhr) {
 		        notifications.log(res);
 		        if (res.Errors) {

@@ -26,8 +26,8 @@ namespace MileageStats.Web.UnityExtensions
         //{
         //    if (HttpContext.Current.ApplicationInstance != null)
         //    {
-        //        // Note: We'd like to do this, but you cannot sign up for the EndRequest from
-        //        // from this application instance as it is actually different than the one the
+        //        // Note: We'd like to do this, but you cannot sign up for the EndRequest 
+        //        // from this application instance as it is actually different than the one 
         //        // the EndRequest handler is actually invoked from.
         //        //HttpContext.Current.ApplicationInstance.EndRequest += this.EndRequestHandler;
         //    }

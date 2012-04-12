@@ -49,7 +49,7 @@ namespace MileageStats.Web.Models
         public string Date { get; private  set; }
 
         /// <summary>
-        /// Date of the fillup. in MM/dd/yyyy format
+        /// Date of the fillup in MM/dd/yyyy format.
         /// </summary>
         public string DateShort { get; private set; }
 
@@ -71,24 +71,24 @@ namespace MileageStats.Web.Models
         public string TotalUnits { get; private  set; }
 
         /// <summary>
-        /// Name of the gas station
+        /// Name of the gas station.
         /// </summary>
         [Display(Name = "FillUpEntryVendorLabelText", ResourceType = typeof(Resources))]
         public string Vendor { get; private  set; }
 
         /// <summary>
-        /// Any additional transaction fees
+        /// Any additional transaction fees.
         /// </summary>
         [Display(Name = "FillupEntryTransactionFeeLabelText", ResourceType = typeof(Resources))]
         public string TransactionFee { get; private  set; }
 
         /// <summary>
-        /// Optional remarks for this fillup
+        /// Optional remarks for this fillup.
         /// </summary>
         public string Remarks { get; private  set; }
 
         /// <summary>
-        /// Total cost of the fillup (includes transaction fee)
+        /// Total cost of the fillup (includes transaction fee).
         /// </summary>
         [Display(Name = "FillupEntryTotalCostLabelText", ResourceType = typeof(Resources))]
         public string TotalCost { get; private  set; }

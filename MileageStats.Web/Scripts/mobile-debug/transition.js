@@ -68,10 +68,10 @@ limitations under the License. */
 
             var view, el;
 
-            // append route data to the model 
-            // we use the well known name '__route__'
+            // Append route data to the model. 
+            // We use the well known name '__route__'
             // assuming that it will be unlikely to
-            // collide with any existing properties
+            // collide with any existing properties.
             model.__route__ = target.params;
 
             if (registration.prerender) {

@@ -277,8 +277,8 @@ namespace MileageStats.Web.Controllers
 
         private Chart GetChartInstance(int chartWidth, int chartHeight, string theme)
         {
-            //Workaround for passing the HttpContextBase to the Chart constructor, which is internal
-            //The public constructor gets the current HttpContext, which can not be set in unit tests
+            //Workaround for passing the HttpContextBase to the Chart constructor, which is internal.
+            //The public constructor gets the current HttpContext, which cannot be set in unit tests.
             var constructors = typeof(Chart).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic);
                   
             var chart = (Chart)constructors[0].Invoke(new object[] { this.HttpContext,  null, 

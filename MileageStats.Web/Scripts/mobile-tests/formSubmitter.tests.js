@@ -144,8 +144,8 @@ limitations under the License. */
         form.triggerHandler('submit');
     });
 
-    // represents the api that the formSubmitter module
-    // expects to be present whenever `attach` is invoked
+    // Represents the API that the formSubmitter module
+    // expects to be present whenever `attach` is invoked.
     var stubUnobtrusive = {
         unobtrusive: {
             parse: function (form) {
@@ -153,8 +153,8 @@ limitations under the License. */
         }
     };
 
-    // returns a "validator" object, whose validate method
-    // returns the value specified
+    // Returns a "validator" object, whose validate method
+    // returns the value specified.
     function getValidatorThatReturns(isValid) {
         return {
             validate: function (form) {

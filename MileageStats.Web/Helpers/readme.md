@@ -1,19 +1,19 @@
 # Mustache
 
 Mustache, http://mustache.github.com/, is a templating library (somewhat like Razor) that 
-has been implmented in a number of languages. It has become a popular choice for _client-side_
+has been implmented in a number of languages. It has become a popular choice for client-side
 templating due to its simplicity and an implementation in JavaScript.
 
-We decided to use Mustache for the client-side templating. In the [legacy application}(http://silk.codeplex.com/),
+We decided to use Mustache for the client-side templating. In the [legacy application](http://silk.codeplex.com/),
 Project Silk had two sets of templates; one for the server-side rendering using Razor and
 another for the client-side rendering using the now deprecated [jQuery Templates](http://api.jquery.com/category/plugins/templates/).
  
-In Project Liike, we wanted to push on the idea of having one set of templates that could
-be shared between both the client and the server. We decided created a set of Razor templates
-that could be rendered _as_ Mustache templates. In order to do this, we had to create a 
+In Project Liike, we wanted to push the idea of having one set of templates that could
+be shared between both the client and the server. We decided to create a set of Razor templates
+that could be rendered as Mustache templates. In order to do this, we had to create  
 several helper methods that would enable us to generate a Mustache-compatibile template.
 
-For details about the impact of this choice, both positive and negative, see [Server side techniques for composing the views]().
+For details about the impact of this choice, both positive and negative, see [Server-side techniques for composing the views]().
 
 ## A few technical notes
 
@@ -21,14 +21,14 @@ For details about the impact of this choice, both positive and negative, see [Se
 `MileageStats.Web.WebViewPage<TModel>` class, which is designated as the base class for pages
 in \Views\Web.config.
 
-`MustacheTemplateExtensions` contains the bulk of the Mustache-related logic. Many of its method simply
+`MustacheTemplateExtensions` contains the bulk of the Mustache-related logic. Many of its methods simply
 mirror the ones found on the default `HtmlHelper`.
 
 The method `RenderAsMustacheTemplate` invokes the standard `RenderPartial` while overwritting the 
 `ViewDataDictionary` with a single well-known value. We then use the `IsRenderingForMustache` to 
-decide whether or not to render as in the Mustache format or to standard markup.
+decide whether or not to render in the Mustache format or to standard markup.
 
-Is it important to note is that there will be _no model_ when rendering for Mustache views.
+Is it important to note that there will be no model when rendering for Mustache views.
 This means that we will need to rely on [expressions](http://msdn.microsoft.com/en-us/library/bb397951.aspx)
 and not on an instance of the model. For example, if our Razor view contained
 
@@ -36,11 +36,11 @@ and not on an instance of the model. For example, if our Razor view contained
 
 we would receive a null reference exception when attempting to render it for Mustache.
 
-The method `Value` is the work around for this, as it resolves an expression into a Mustache formatted 
+The method `Value` is the workaround for this, as it resolves an expression into a Mustache formatted 
 field. In the case of standard rendering, it uses the expression to extract the corresponding value from
 the given model.
 
-These helpers also make a few assumption about the data that will eventually be bound to the Mustache 
+These helpers also make a few assumptions about the data that will eventually be bound to the Mustache 
 templates. For example, `RouteValue` assumes that the JSON object bound to the template will include a 
 property named `__route__` that contains data about the current route (see transtion.js for how that 
 is attached). Likewise, `ViewBag` assumes a property named `__view__` (see ContentTypeAwareResult.cs for 

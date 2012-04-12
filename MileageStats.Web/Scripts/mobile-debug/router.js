@@ -48,7 +48,7 @@ limitations under the License. */
     function register(route, registration) {
         registration = registration || {};
 
-        // assume that we'll fetch data unless we're told otherwise
+        // Assume that we'll fetch data unless we're told otherwise.
         if (!('fetch' in registration)) registration.fetch = true;
         if (!('route' in registration)) registration.route = route;
 
@@ -106,9 +106,9 @@ limitations under the License. */
 
     function overrideLinks() {
 
-        // rewriting the links this way is very heavy
-        // another approach would be to do this check
-        // in the click handler for the link
+        // Rewriting the links this way is very labor-intensive.
+        // Another approach would be to do this check
+        // in the click handler for the link.
 
         $('a[href]', document).each(function (i, a) {
             var anchor = $(a);
@@ -126,22 +126,22 @@ limitations under the License. */
         var pathname = window.location.pathname;
 
         if (!window.location.hash) {
-            // we normalize the path, because in some cases
-            // the trailing slash won't be present
+            // We normalize the path, because in some cases
+            // the trailing slash won't be present.
             if (pathname.substr(-1) !== '/') pathname = pathname + '/';
 
-            // the initial hit of the page, w/o any hash
+            // The initial hit of the page, w/o any hash.
             window.location.hash = '#/' + pathname.replace(rootUrl, '');
             overrideLinks();
 
         } else if (window.location.hash === '#/') {
-            // the root hash, probably the result of a refresh
+            // The root hash, probably the result of a refresh.
             window.onhashchange();
 
         } else {
-            // if the page is refresh, and the hash is something
+            // If the page is a refresh, and the hash is something
             // other than the root, then we don't want to load 
-            // the initial model
+            // the initial model.
             app.initialModel = null;
             window.onhashchange();
         }

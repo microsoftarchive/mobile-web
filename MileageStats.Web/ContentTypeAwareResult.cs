@@ -34,7 +34,7 @@ namespace MileageStats.Web
         public ContentTypeAwareResult()
             : this(null)
         {
-            // convenience constructor for when there is no model
+            // Convenience constructor for when there is no model.
         }
 
         public ContentTypeAwareResult(object model)
@@ -50,10 +50,10 @@ namespace MileageStats.Web
         {
             var output = new Dictionary<string, object>();
 
-            // We want to avoid sending a JSON array as a response
+            // We want to avoid sending a JSON array as a response.
             // See http://haacked.com/archive/2009/06/25/json-hijacking.aspx
-            // In cases were our model would be converted to an array,
-            // we wrap it in a object
+            // In cases where our model would be converted to an array,
+            // we wrap it in an object.
             object wrappedModel = (typeof(IEnumerable)).IsInstanceOfType(model) ? new { model } : model;
 
             output["Model"] = wrappedModel;
@@ -90,8 +90,8 @@ namespace MileageStats.Web
 
         private void SetupDefaultActionResultProviders(object model)
         {
-            // these should behave the same as calling the corresponding 
-            // convenience method on Controller
+            // These should behave the same as calling the corresponding 
+            // convenience method on Controller.
 
             WhenJson = (x, v, t) => new JsonResult
                                      {
@@ -114,7 +114,7 @@ namespace MileageStats.Web
 
         private ActionResult GetActionResultFor(ControllerContext context)
         {
-            // map supported content-types to a provider
+            // Map supported content-types to a provider.
             _supportedTypes = new Dictionary<string, Func<object, ViewDataDictionary, TempDataDictionary, ActionResult>>
                                   {
                                       {"application/json", WhenJson},
@@ -124,10 +124,10 @@ namespace MileageStats.Web
                                       {"*/*", WhenHtml}, 
                                   };
 
-            // mime types can follow a form like:
+            // Mime types can follow a form like:
             //  text/html; q=0.90
-            // in those cases we want to discard the portion
-            // after the semicolon when attempting to match
+            // In those cases we want to discard the portion
+            // after the semicolon when attempting to match.
             var types = (from type in context.HttpContext.Request.AcceptTypes
                         select type.Split(';')[0])
                         .ToList();
@@ -152,7 +152,7 @@ namespace MileageStats.Web
 
             if (providers.Any())
             {
-                //note: if more than one support type is found, what should we do?
+                //Note: if more than one support type is found, what should we do?
                 var getResult = providers.First();
                 return getResult(_model, context.Controller.ViewData, context.Controller.TempData);
             }
@@ -185,10 +185,10 @@ namespace MileageStats.Web
         }
     }
 
-    // this interface is used to hide a member of ContentTypeAwareResult
+    // This interface is used to hide a member of ContentTypeAwareResult
     // that is only meant to be used in unit tests.
-    // we named the interface with the prefix "Testable" in order to make
-    // the purpose more explicit
+    // We named the interface with the prefix "Testable" in order to make
+    // the purpose more explicit.
     public interface ITestableContentTypeAwareResult
     {
         ActionResult GetActionResultFor(ControllerContext context);

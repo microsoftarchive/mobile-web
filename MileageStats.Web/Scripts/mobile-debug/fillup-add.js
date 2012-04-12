@@ -46,7 +46,7 @@ limitations under the License. */
             if ($useGeoCoordinateToGetFillupStationsCheckbox.is(':checked') && navigator.geolocation) {
                 $fillupStationTextbox.attr('disabled', 'disabled');
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    //Get country name from GeoLocationController 
+                    //Get country name from GeoLocationController. 
                     var getGasStationsUrl = fillupStationsUrl + '?latitude=' + position.coords.latitude + "&longitude=" + position.coords.longitude;
                     $.getJSON(getGasStationsUrl, function (data) {
                         $fillupStationSelect.removeAttr('disabled');

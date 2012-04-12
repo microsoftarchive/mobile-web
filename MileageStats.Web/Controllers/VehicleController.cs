@@ -53,8 +53,8 @@ namespace MileageStats.Web.Controllers
                     Messages.VehicleController_VehicleNotFound);
             }
 
-            // we are limiting this to 3 reminders 
-            // after we retrieve the full set from the server
+            // We are limiting this to 3 reminders 
+            // after we retrieve the full set from the server.
             var overdue = Using<GetOverdueRemindersForVehicle>()
                 .Execute(vehicleId, DateTime.UtcNow, selected.Odometer ?? 0)
                 .Take(3);
@@ -300,8 +300,8 @@ namespace MileageStats.Web.Controllers
             var vehicle = Using<GetVehicleById>()
                 .Execute(CurrentUserId, vehicleId: id);
 
-            // we are limiting this to 3 reminders 
-            // after we retrieve the full set from the server
+            // We are limiting this to 3 reminders 
+            // after we retrieve the full set from the server.
             var overdue = Using<GetOverdueRemindersForVehicle>()
                 .Execute(id, DateTime.UtcNow, vehicle.Odometer ?? 0)
                 .Take(3);

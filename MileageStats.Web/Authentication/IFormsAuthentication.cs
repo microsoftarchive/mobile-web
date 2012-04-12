@@ -43,7 +43,7 @@ namespace MileageStats.Web.Authentication
         void SetAuthCookie(HttpContext httpContext, FormsAuthenticationTicket authenticationTicket);
 
         /// <summary>
-        /// Decrypts a ticket from a string and returns a <see cref="FormsAuthenticationTicket"/>
+        /// Decrypts a ticket from a string and returns a <see cref="FormsAuthenticationTicket"/>.
         /// </summary>
         /// <param name="encryptedTicket"></param>
         /// <returns></returns>

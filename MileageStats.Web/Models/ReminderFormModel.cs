@@ -35,7 +35,7 @@ namespace MileageStats.Web.Models
         private DateTime? date;
 
         /// <summary>
-        /// Gets or sets the entity ID of reminder.
+        /// Gets or sets the entity ID of the reminder.
         /// </summary>
         /// <value>
         /// An integer identifying the entity.
@@ -113,7 +113,7 @@ namespace MileageStats.Web.Models
         public string DueDateDay { get; set; }
 
         /// <summary>
-        /// Gets or sets the distance the reminder is due when reached
+        /// Gets or sets the odometer reading at which the reminder is due.
         /// </summary>
         /// <value>
         /// A number or null.
@@ -132,7 +132,7 @@ namespace MileageStats.Web.Models
         public bool IsFulfilled { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether the reminder is overdue (cached value based on vehicle odometer)
+        /// Gets a value indicating whether the reminder is overdue (cached value based on vehicle odometer).
         /// </summary>
         /// <value>
         ///   <c>true</c> if is overdue; otherwise, <c>false</c>.

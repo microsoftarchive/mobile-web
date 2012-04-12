@@ -8,9 +8,9 @@ using MileageStats.Domain.Properties;
 namespace MileageStats.Web.Helpers
 {
 
-    // assists with constructing select list for dates
-    // each helper takes a function for setting the 
-    // selected item on in the select list
+    // Assists with constructing select list for dates.
+    // Each helper takes a function for setting the 
+    // selected item on in the select list.
 
     public static class SelectListFor
     {

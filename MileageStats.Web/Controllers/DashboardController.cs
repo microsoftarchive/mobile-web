@@ -70,8 +70,8 @@ namespace MileageStats.Web.Controllers
                 FleetSummaryStatistics = new StatisticsViewModel(statistics)
             };
 
-            // the country list is placed in the viewbag soley to support
-            // the legacy desktop version of the application
+            // The country list is placed in the viewbag solely to support
+            // the legacy desktop version of the application.
             ViewBag.CountryList = getCountries.GetCountrySelectList();
 
             return new ContentTypeAwareResult(model);

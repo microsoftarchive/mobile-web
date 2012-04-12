@@ -88,7 +88,7 @@ limitations under the License. */
         //assert
         ok(view.find('#flashalert').html().length > 0, "Expect flashalert container has value.");
 
-        //simulate navigating to another SPA view
+        //Simulate navigating to another SPA view
         module.renderTo(view);
 
         //assert after navigation

@@ -51,15 +51,15 @@ namespace MileageStats.Web.Controllers
                     var parts = clientProfile["id"].Split('-');
                     if (parts.Length == 1 || parts[1] != model.Version)
                     {
-                        // The cookie version does not match so it needs 
-                        // to be refreshed
+                        // The cookie version does not match, so it needs 
+                        // to be refreshed.
                         Request.Cookies.Remove("profile");
                     }
                 }
                 else
                 {
-                    // The cookie does not contain an id so it needs to be
-                    // refreshed
+                    // The cookie does not contain an ID, so it needs to be
+                    // refreshed.
                     Request.Cookies.Remove("profile");
                 }
             }
@@ -70,7 +70,7 @@ namespace MileageStats.Web.Controllers
         }
 
         /// <summary>
-        /// Tries to get the profile from the cache before parsing the file in disk
+        /// Tries to get the profile from the cache before parsing the file on disk.
         /// </summary>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]

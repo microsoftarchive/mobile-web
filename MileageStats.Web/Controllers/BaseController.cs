@@ -57,7 +57,7 @@ namespace MileageStats.Web.Controllers
         }
 
         /// <summary>
-        /// Retrieves the CurrentUserId as stored in the <see cref="MileageStatsIdentity"/>
+        /// Retrieves the CurrentUserId as stored in the <see cref="MileageStatsIdentity"/>.
         /// </summary>
         /// <remarks>
         /// Using this method requires the user to be authorized.

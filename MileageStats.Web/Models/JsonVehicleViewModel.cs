@@ -50,7 +50,7 @@ namespace MileageStats.Web.Models
         /// Gets or sets the manufacturing year of the vehicle.
         /// </summary>
         /// <value>
-        /// An integer after 1896.
+        /// An integer greater than 1896.
         /// </value>    
         public int? Year { get; set; }
 
@@ -63,7 +63,7 @@ namespace MileageStats.Web.Models
         public string MakeName { get; set; }
 
         /// <summary>
-        /// Gets or sets the model of the vehicle (e.g. Camry, Fiesta)
+        /// Gets or sets the model of the vehicle (e.g. Camry, Fiesta).
         /// </summary>
         /// <value>
         /// A string.
@@ -76,7 +76,7 @@ namespace MileageStats.Web.Models
         public int? Odometer { get; set; }
 
         /// <summary>
-        /// The id of the vehicle's photo
+        /// The ID of the vehicle's photo.
         /// </summary>
         public int PhotoId { get; set; }
 

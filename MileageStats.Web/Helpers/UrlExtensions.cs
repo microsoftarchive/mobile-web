@@ -23,13 +23,13 @@ namespace MileageStats.Web.Helpers
 {
     public static class UrlExtensions
     {
-        // occasionally we need to generate a url that is publicly accessible
-        // for example, in the case of authenticating with a 3rd party we need to provide
-        // a return url for the 3rd party invoke. 
-        // in some circumstances, such as hosting the app with a service provider that handles
+        // Occasionally, we need to generate a url that is publicly accessible.
+        // For example, in the case of authenticating with a third party we need to provide
+        // a return url for the third-party invoke. 
+        // In some circumstances, such as hosting the app with a service provider that handles
         // load balances by forwarding the request internally on different ports, the standard 
-        // approach for generating a url in ASP.NET may use one of the internal ports. 
-        // ToPublicUrl helps us a create a url that will be publically accessible.
+        // approach for generating a URL in ASP.NET may use one of the internal ports. 
+        // ToPublicUrl helps us a create a URL that will be publically accessible.
         public static string ToPublicUrl(this UrlHelper urlHelper, string action, string controller)
         {
             var uri = new Uri(urlHelper.Action(action, controller), UriKind.Relative);
@@ -54,7 +54,7 @@ namespace MileageStats.Web.Helpers
             return ToPublicUrl(url.Host, url.Scheme, url.Port, request.IsLocal, relativeUri);
         }
 
-        //note: this assume that port 80 will always be used when not running locally
+        //Note: this assumeS that port 80 will always be used when not running locally.
         private static string ToPublicUrl(string host, string scheme, int port, bool isLocal, Uri relativeUri)
         {
             var uriBuilder = new UriBuilder

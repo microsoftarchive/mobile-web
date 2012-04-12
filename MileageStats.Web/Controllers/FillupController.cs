@@ -107,7 +107,7 @@ namespace MileageStats.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add(int vehicleId, FillupEntryFormModel model)
         {
-            // Vehicle does not need to validate here as we are using a forgery token
+            // Vehicle does not need to validate here as we are using a forgery token.
 
             if (ModelState.IsValid)
             {

@@ -16,16 +16,16 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 // ***
-// this mock helper is specific to the MileageStats application
+// This mock helper is specific to the MileageStats application
 // ***
 (function (module) {
 
-	// we'll generate a fresh instance of our mocks
-	// for each unit test
+	// We'll generate a fresh instance of our mocks
+	// for each unit test.
 	function generate(existing) {
 
-		// some of our mocks will record what they do
-		// so that we can verify behavior
+		// Some of our mocks will record what they do
+		// so that we can verify behavior.
 		var tracked = [];
 		tracked.contains = function (candidate) {
 			var i = tracked.length - 1;
@@ -46,9 +46,9 @@ limitations under the License. */
 			}
 		};
 
-        // return a hash of the objects we are mocking
-        // note: we're not actually mocking out jQuery 
-        // however it is included here, because some 
+        // Return a hash of the objects we are mocking.
+        // Note: we're not actually mocking out jQuery, 
+        // However, it is included here, because some 
 	    // modules require it.
         return merge({
             $:$,
@@ -77,26 +77,26 @@ limitations under the License. */
 		return target;
 	}
 
-	// the only exposed member of our mocks module
+	// The only exposed member of our mocks module
 	// is used to create a new set of mocks. 
-	// we can optionally provide some behaviors to 
+	// We can optionally provide some behaviors to 
 	// override.
 	module.create = function (existing, behaviors) {
 		var m = generate(existing, behaviors);
 		var prop;
 
-		// this emulates the service location in
-		// the main app.js file
+		// This emulates the service location in
+		// the main app.js file.
 		var fn = function (service) {
 			if (m[service]) return m[service];
 			throw new Error('Could not find a module registered as ' + service);
 		};
 
-		// for convenience we'll alias the individual
-		// mocks as members of the function
+		// For convenience we'll alias the individual
+		// mocks as members of the function.
 		for (prop in m) {
-			// this could be quite dangerous, for example
-			// we could override a default member of function
+			// This could be quite dangerous; for example,
+			// we could override a default member of function.
 			fn[prop] = m[prop];
 		}
 

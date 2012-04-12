@@ -142,7 +142,7 @@ limitations under the License. */
                 route: '/my/route/:id'
             }
         }, '#view', /:(\w)*/g);
-        // this regex is hard-coded into the router
+        // This regex is hard-coded into the router.
 
         var content = dom.find('#view').html();
         equal(content, 'template');
@@ -162,7 +162,7 @@ limitations under the License. */
                 route: '/my/route/:id/more'
             }
         }, '#view', /:(\w)*/g);
-        // this regex is hard-coded into the router
+        // This regex is hard-coded into the router.
 
         var content = dom.find('#view').html();
         equal(content, 'template');

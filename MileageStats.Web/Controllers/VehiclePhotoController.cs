@@ -42,7 +42,7 @@ namespace MileageStats.Web.Controllers
             if(photo != null)
                 return new FileStreamResult(new MemoryStream(photo.Image), photo.ImageMimeType);
             
-            //use the default image
+            //Use the default image.
             return new FilePathResult(Url.Content("~/Content/vehicle.png"), "image/png");
         }
 

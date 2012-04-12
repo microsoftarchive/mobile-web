@@ -25,7 +25,7 @@ namespace MileageStats.Web.Models
     public class VehicleFormModel : ICreateVehicleCommand
     {
         /// <summary>
-        /// Gets or sets the entity ID of vehicle.
+        /// Gets or sets the entity ID of the vehicle.
         /// </summary>
         /// <value>
         /// An integer identifying the entity.
@@ -48,7 +48,7 @@ namespace MileageStats.Web.Models
         /// Gets or sets the sort order relative to other vehicles.
         /// </summary>
         /// <value>
-        /// A positive number up to 10,000 or zero.
+        /// A positive number up to 10,000, or zero.
         /// </value>
         [Range(0, 10000, ErrorMessageResourceName = "VehicleSortOrderRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "VehicleSortOrderLabelText", ResourceType = typeof(Resources))]
@@ -60,7 +60,7 @@ namespace MileageStats.Web.Models
         /// Gets or sets the manufacturing year of the vehicle.
         /// </summary>
         /// <value>
-        /// An integer after 1896.
+        /// An integer greater than 1896.
         /// </value>    
         [Range(1900, 2100, ErrorMessageResourceName = "VehicleYearRangeValidationError", ErrorMessageResourceType = typeof(Resources))]
         [Display(Name = "VehicleYearLabelText", ResourceType = typeof(Resources))]
@@ -88,7 +88,7 @@ namespace MileageStats.Web.Models
         }
 
         /// <summary>
-        /// Gets or sets the model of the vehicle (e.g. Camry, Fiesta)
+        /// Gets or sets the model of the vehicle (e.g. Camry, Fiesta).
         /// </summary>
         /// <value>
         /// A string.

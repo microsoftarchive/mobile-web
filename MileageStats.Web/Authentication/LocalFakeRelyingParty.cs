@@ -29,7 +29,7 @@ namespace MileageStats.Web.Authentication
 {
     /// <summary>
     /// A fake OpenIdRelyingParty to provide an 'offline' authentication capability.
-    /// This is a sample only to allow easily running the RI without needing an openID.
+    /// This is a sample only to allow YOU TO easily run the RI without needing an openID.
     /// Do _not_ use this in a production application.
     /// </summary>
     /// <remarks>

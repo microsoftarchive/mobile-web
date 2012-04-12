@@ -54,7 +54,7 @@ namespace MileageStats.Web.Controllers
             if (Request.IsAuthenticated)
                 return RedirectToAction("Index", "Dashboard");
 
-            // for convenience we fill in the url for a fake openid provider
+            // For convenience we fill in the url for a fake openid provider
             ViewData["providerUrl"] = "http://not/a/real/openid/url";
 
             return View();

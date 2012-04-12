@@ -57,7 +57,7 @@ limitations under the License. */
         router.setDefaultRegion('#view');
         router.register('/my/route');
 
-        // simulate hash change
+        // Simulate hash change
         m.window.location = {
             hash: '#/my/route'
         };
@@ -76,7 +76,7 @@ limitations under the License. */
         router.setDefaultRegion('#view');
         router.register('/my/route');
 
-        // simulate hash change
+        // Simulate hash change
         m.window.location = {
             hash: '#/my/route'
         };
@@ -99,7 +99,7 @@ limitations under the License. */
         router.setDefaultRegion('#view');
         router.register('/my/route/:id');
 
-        // simulate hash change
+        // Simulate hash change
         router.register('/something/unrelated');
         m.window.location = {
             hash: '#/something/unrelated'
@@ -124,7 +124,7 @@ limitations under the License. */
         module.setDefaultRegion('#view');
         module.register('/inital/page');
 
-        // simulate hash change
+        // Simulate hash change
         m.window.location = {
             hash: '#/inital/page'
         };
@@ -149,7 +149,7 @@ limitations under the License. */
         router.setDefaultRegion('#view');
         router.register('/inital/page');
 
-        // simulate hash change
+        // Simulate hash change
         m.window.location = {
             hash: '',
             pathname: ''
@@ -177,7 +177,7 @@ limitations under the License. */
         router.setDefaultRegion('#view');
         router.register('/my/route/:id');
 
-        // simulate hash change
+        // Simulate hash change
         m.window.location = {
             hash: '#/my/route/123'
         };
@@ -198,7 +198,7 @@ limitations under the License. */
         router.setDefaultRegion('#view');
         router.register('/inital/page');
 
-        // simulate hash change
+        // Simulate hash change
         m.window.location = {
             hash: '#/inital/page'
         };
@@ -224,7 +224,7 @@ limitations under the License. */
         router.setDefaultRegion('#view');
         router.register('/inital/page');
 
-        // simulate hash change
+        // Simulate hash change
         m.window.location = {
             hash: '#/'
         };
@@ -249,7 +249,7 @@ limitations under the License. */
         router.setDefaultRegion('#view');
         router.register('/my/route');
 
-        // simulate hash change
+        // Simulate hash change
         router.register('/something/unrelated');
         m.window.location = {
             hash: '#/something/unrelated'

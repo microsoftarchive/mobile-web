@@ -19,11 +19,11 @@ using MileageStats.Web.Helpers;
 
 namespace MileageStats.Web
 {
-    // this is a custom version of the WebViewPage that
+    // This is a custom version of the WebViewPage that
     // enables us to reference the Mustache helper 
     // directly in our views. 
-    // we've modified the web.config inside the ~/Views
-    // folder to reference this class
+    // We've modified the web.config inside the ~/Views
+    // folder to reference this class.
 
     public abstract class WebViewPage<TModel> : System.Web.Mvc.WebViewPage<TModel>
     {

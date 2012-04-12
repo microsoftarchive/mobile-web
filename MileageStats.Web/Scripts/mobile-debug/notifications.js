@@ -17,8 +17,8 @@ limitations under the License. */
 
 (function (mstats) {
 
-    // this module persist message notifications across different
-    // ajax calls, so they can be correctly rendered in the views
+    // This module persists message notifications across different
+    // Ajax calls, so they can be correctly rendered in the views.
 
     mstats.notifications = function (require) {
 
@@ -56,7 +56,7 @@ limitations under the License. */
                 context.find('nav').first().after(newContainer);
             }
         } else {
-            //Clear out flash message
+            //Clear out flash message.
             if (flashContainer.length > 0) {
                 flashContainer.text('');
             }

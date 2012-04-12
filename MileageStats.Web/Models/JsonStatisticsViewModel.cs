@@ -1,4 +1,4 @@
-/*  
+﻿/*  
 Copyright Microsoft Corporation
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -33,12 +33,12 @@ namespace MileageStats.Web.Models
         public double AverageFillupPrice { get; set; }
 
         /// <summary>
-        /// Gets the average fuel efficiency (e.g. Miles/Gallon or Kilomter / Litre)
+        /// Gets the average fuel efficiency (e.g. Miles/Gallon or Kilomter/Litre).
         /// </summary>
         public double AverageFuelEfficiency { get; set; }
 
         /// <summary>
-        /// Gets the average cost to drive per distance (e.g. $/Mile or €/Kilometer)
+        /// Gets the average cost to drive per distance (e.g. $/Mile or €/Kilometer).
         /// </summary>
         public double AverageCostToDrive { get; set; }
 
@@ -68,7 +68,7 @@ namespace MileageStats.Web.Models
         public double TotalUnits { get; set; }
 
         /// <summary>
-        /// Gets the total cost of all fillup entries including transaction fees and service entries.
+        /// Gets the total cost of all fillup entries, including transaction fees and service entries.
         /// </summary>
         public double TotalCost { get; set; }
 

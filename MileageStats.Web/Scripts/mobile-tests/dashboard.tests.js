@@ -78,7 +78,7 @@ limitations under the License. */
 
         expect(1);
 
-        // the view and response are inconsequential for this test
+        // The view and response are inconsequential for this test
         var view = $('<div/>');
 
         var response = {

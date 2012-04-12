@@ -38,14 +38,14 @@ namespace MileageStats.Web
             // We are choosing to perform most of the Unity configuration here,
             // rather than in the config file. The justification for this choice
             // is that:
-            // * these registration rarely change
-            // * the is no anticipated need to swap items at run-time
-            // * performing the registrations in code allows the compiler to catch typos
+            // * these registrations rarely change
+            // * the is no anticipated need to swap items at run time
+            // * performing the registrations in code allows the compiler to catch typos.
             
-            // register services
+            // Register services
             RegisterPerRequest<IChartDataService, ChartDataService>(container);
 
-            // register repositories
+            // Register repositories
             RegisterPerRequest<IUserRepository, UserRepository>(container);
             RegisterPerRequest<ICountryRepository, CountryRepository>(container);
             RegisterPerRequest<IVehicleRepository, VehicleRepository>(container);
@@ -54,24 +54,24 @@ namespace MileageStats.Web
             RegisterPerRequest<IVehiclePhotoRepository, VehiclePhotoRepository>(container);
             RegisterPerRequest<IVehicleManufacturerRepository, VehicleManufacturerRepository>(container);
             
-            // register authorization components
+            // Register authorization components
             RegisterPerRequest<IFormsAuthentication, DefaultFormsAuthentication>(container);
 
-            // register device profile components
+            // Register device profile components
             RegisterPerRequest<IProfileManifestRepository, XmlProfileManifestRepository>(container);
             RegisterPerRequest<IProfileCookieEncoder, ProfileCookieEncoder>(container);
             
-            // register map service
+            // Register map service
             RegisterPerRequest<IMapService, MockMapService>(container);
             //RegisterPerRequest<IMapService, BingMapService>(container);
 
-            // authentication provider
+            // Authentication provider
             RegisterPerRequest<IOpenIdRelyingParty, LocalFakeRelyingParty>(container);
             // RegisterPerRequest<IOpenIdRelyingParty, DefaultOpenIdRelyingParty>(container);
             return container;
         }
 
-        // convenience method, makes the list of registrations easier to read
+        // Convenience method; makes the list of registrations easier to read.
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
             "CA2000:Dispose objects before losing scope", Justification = "Container has the scope of the application.")
         ]

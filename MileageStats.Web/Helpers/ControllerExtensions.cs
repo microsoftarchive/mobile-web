@@ -27,7 +27,7 @@ namespace MileageStats.Web
     public static class ControllerExtensions
     {
         /// <summary>
-        /// Adds a model errors for each validation result from the business service.
+        /// Adds a model error for each validation result from the business service.
         /// </summary>
         /// <param name="validationResults">The validation results from a business service.</param>
         /// <param name="controller">The controller.</param>
@@ -55,7 +55,7 @@ namespace MileageStats.Web
         }
 
         /// <summary>
-        /// Adds a model errors for each validation result from the business service.
+        /// Adds a model error for each validation result from the business service.
         /// </summary>
         /// <param name="validationResults">The validation results from a business service.</param>
         /// <param name="modelState">The model state dictionary used to add errors.</param>

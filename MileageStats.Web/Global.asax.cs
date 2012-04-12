@@ -174,13 +174,13 @@ namespace MileageStats.Web
 
             InitializeDependencyInjectionContainer();
 
-            // Sets a custom controller factory for overriding the default settings like the TempDataProvider
+            // Sets a custom controller factory for overriding the default settings like the TempDataProvider.
             ControllerBuilder.Current.SetControllerFactory(new CustomControllerFactory());
 
-            // Injects the custom BrowserCapabilitiesProvider into the ASP.NET pipeline
+            // Injects the custom BrowserCapabilitiesProvider into the ASP.NET pipeline.
             HttpCapabilitiesBase.BrowserCapabilitiesProvider = container.Resolve<MobileCapabilitiesProvider>();
 
-            // Injects the custom metadata provider
+            // Injects the custom metadata provider.
             ModelMetadataProviders.Current = new CustomMetadataProvider();
         }
 
@@ -210,7 +210,7 @@ namespace MileageStats.Web
                 var mileageStatsIdentity = new MileageStatsIdentity(ticket);
 
                 //Implemented workaround for the scenario where the user is not found in the repository
-                // but the cookie exists
+                // but the cookie exists.
                 var getUser = ServiceLocator.Current.GetInstance<GetUserByClaimId>();
                 if (getUser.Execute(mileageStatsIdentity.Name) == null)
                 {
