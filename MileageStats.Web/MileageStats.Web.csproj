@@ -103,12 +103,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="WebActivator">
+    <Reference Include="WebActivator, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivator.1.5\lib\net40\WebActivator.dll</HintPath>
-    </Reference>
-    <Reference Include="WURFL, Version=1.3.2.0, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WURFL_Official_API.1.3.3\Lib\WURFL.dll</HintPath>
     </Reference>
     <Reference Include="Yahoo.Yui.Compressor, Version=1.7.0.0, Culture=neutral, PublicKeyToken=f8b4b81ec75097e2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -120,7 +116,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\MobileAwareViewEngineBootstrapper.cs" />
     <Compile Include="Authentication\UserAuthenticationTicketBuilder.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
     <Compile Include="Helpers\DisposableSection.cs" />
@@ -130,7 +125,6 @@
     <Compile Include="Infrastructure\SuppressFormsAuthenticationRedirectModule.cs" />
     <Compile Include="Models\ReminderListViewModel.cs" />
     <Compile Include="Models\FillupListViewModel.cs" />
-    <Compile Include="Helpers\BrowserExtensions.cs" />
     <Compile Include="Helpers\ControllerExtensions.cs" />
     <Compile Include="Authentication\DefaultFormsAuthentication.cs" />
     <Compile Include="Authentication\DefaultOpenIdRelyingParty.cs" />
@@ -270,7 +264,9 @@
     <Content Include="Content\yahoo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Profiles\Generic.xml" />
+    <Content Include="Profiles\Generic.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\jQuery.Simulate\jquery.simulate.js" />
     <Content Include="Scripts\MileageStats.Mobile.min.js" />
     <Content Include="Scripts\desktop-debug\mstats.tile.js" />
@@ -357,7 +353,6 @@
     <Content Include="Scripts\desktop-tests\tests.htm" />
     <Content Include="Views\Chart\Index.Mobile.cshtml" />
     <Content Include="Views\Browser\Index.cshtml" />
-    <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Content\readme.md" />
     <None Include="Helpers\readme.md" />
     <None Include="Scripts\readme.md" />
@@ -526,7 +521,9 @@
   <ItemGroup>
     <Content Include="Views\Reminder\Add.Mobile.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Fillup\Details.Mobile.cshtml" />

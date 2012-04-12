@@ -1,15 +1,14 @@
 ﻿@using MileageStats.Web;
-@if (Request.Browser.IsMobileDevice)
+@using System.Web.WebPages;
+
+@if (ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice)
 {
-    if (ViewContext.HttpContext.GetOverridenBrowser() == MileageStats.Web.BrowserOverride.Mobile)
-    {
-    <p class="switch">
-        <a href="@Url.Action("SwitchView", "ViewSwitcher", new { mobile = false, returnUrl = Request.Url.PathAndQuery })" rel="external">
-            <span>Switch to desktop site</span> </a>
-    </p>
-    }
-    else
-    {
-    @Html.ActionLink("[ Switch to Mobile ]", "SwitchView", "ViewSwitcher", new { mobile = true, returnUrl = Request.Url.PathAndQuery }, new { id = "view_switcher", rel = "external" })
-    }
+<p class="switch">
+    <a href="@Url.Action("SwitchView", "ViewSwitcher", new { mobile = false, returnUrl = Request.Url.PathAndQuery })" rel="external">
+        <span>Switch to desktop site</span> </a>
+</p>
+}
+else
+{
+@Html.ActionLink("[ Switch to Mobile ]", "SwitchView", "ViewSwitcher", new { mobile = true, returnUrl = Request.Url.PathAndQuery }, new { id = "view_switcher", rel = "external" })
 }

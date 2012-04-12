@@ -16,16 +16,20 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace MileageStats.Web.Controllers
 {
     public class ViewSwitcherController : Controller
     {
-        public ActionResult SwitchView(bool mobile, string returnUrl)
+        public RedirectResult SwitchView(bool mobile, string returnUrl)
         {
-            HttpContext.SetOverriddenBrowser(mobile ? BrowserOverride.Mobile : BrowserOverride.Desktop);
+            if (Request.Browser.IsMobileDevice == mobile)
+                HttpContext.ClearOverriddenBrowser();
+            else
+                HttpContext.SetOverriddenBrowser(mobile ? BrowserOverride.Mobile : BrowserOverride.Desktop);
+
             return Redirect(returnUrl);
         }
-
     }
 }

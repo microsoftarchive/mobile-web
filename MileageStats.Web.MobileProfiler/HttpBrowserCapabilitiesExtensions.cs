@@ -25,11 +25,6 @@ namespace System.Web
 {
     public static class HttpBrowserCapabilitiesExtensions
     {
-        public static bool SupportsJavascript(this HttpBrowserCapabilitiesBase httpBrowser)
-        {
-            return httpBrowser[AllCapabilities.Javascript] == "true";
-        }
-
         public static bool SupportsJSON(this HttpBrowserCapabilitiesBase httpBrowser)
         {
             return httpBrowser[AllCapabilities.JSON] == "1" ||
@@ -41,27 +36,16 @@ namespace System.Web
             return httpBrowser[AllCapabilities.DOMManipulation] == "true";
         }
 
-        public static bool SupportsFileUploads(this HttpBrowserCapabilitiesBase httpBrowser)
-        {
-            return httpBrowser[AllCapabilities.FileUpload] != "not_supported";
-        }
-
         public static bool SupportsHashChangeEvent(this HttpBrowserCapabilitiesBase httpBrowser)
         {
             return httpBrowser[AllCapabilities.HashChange] == "true";
         }
 
-        public static bool IsWorks(this HttpBrowserCapabilitiesBase httpBrowser)
-        {
-            return httpBrowser.IsMobileDevice;
-        }
-
         public static bool IsWow(this HttpBrowserCapabilitiesBase httpBrowser)
         {
             return httpBrowser.IsMobileDevice &&
-                   httpBrowser.SupportsJavascript() && 
                    httpBrowser.SupportsJSON() &&
-                   httpBrowser.SupportsDOMManipulation() &&
+                   //httpBrowser.SupportsDOMManipulation() &&
                    httpBrowser.SupportsXmlHttp && 
                    httpBrowser.SupportsHashChangeEvent();
         }

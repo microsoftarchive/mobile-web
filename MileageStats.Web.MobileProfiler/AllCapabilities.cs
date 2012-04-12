@@ -27,7 +27,7 @@ namespace MileageStats.Web.MobileProfiler
         public const string XHR = "xhr";
         public const string XHRType = "ajax_xhr_type";
         public const string Javascript = "ajax_support_javascript";
-        public const string MobileDevice = "is_wireless_device";
+        public const string MobileDevice = "isMobileDevice";
         public const string DOMManipulation = "ajax_manipulate_dom";
         public const string JSON = "json";
         public const string Cookies = "cookie_support";

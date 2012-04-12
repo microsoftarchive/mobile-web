@@ -17,19 +17,16 @@ limitations under the License. */
 
 using System.Collections.Generic;
 using System.Web;
-using System.Collections;
 
 namespace MileageStats.Web.MobileProfiler
 {
     public class MobileBrowserCapabilities : HttpBrowserCapabilities
     {
         readonly IDictionary<string, string> _deviceCapabilities;
-        readonly IDictionary _baseCapabilities;
 
-        public MobileBrowserCapabilities(IDictionary baseCapabilities, IDictionary<string, string> deviceCapabilities)
+        public MobileBrowserCapabilities(IDictionary<string, string> deviceCapabilities)
         {
             _deviceCapabilities = deviceCapabilities;
-            _baseCapabilities = baseCapabilities;
         }
 
         public override string this[string key]
@@ -44,44 +41,29 @@ namespace MileageStats.Web.MobileProfiler
         {
             switch (key)
             {
-                case "javascript":
-                    return _deviceCapabilities.TryGetValue(AllCapabilities.Javascript);
                 case "supportsXmlHttp":
+                    if (_deviceCapabilities.ContainsKey(AllCapabilities.XHR) &&
+                        _deviceCapabilities[AllCapabilities.XHR] == "1")
                     {
-                        if (_deviceCapabilities.ContainsKey(AllCapabilities.XHR) &&
-                            _deviceCapabilities[AllCapabilities.XHR] == "1")
-                        {
-                            return "true";
-                        }
-                        else if (_deviceCapabilities.ContainsKey(AllCapabilities.XHRType) &&
-                            !_deviceCapabilities[AllCapabilities.XHRType].Equals("none"))
-                        {
-                            return "true";
-                        }
-
-                        return null;
+                        return "true";
                     }
-                case "isMobileDevice":
-                    return _deviceCapabilities.TryGetValue(AllCapabilities.MobileDevice);
-                case "cookies":
-                    return _deviceCapabilities.TryGetValue(AllCapabilities.Cookies);
+                    else if (_deviceCapabilities.ContainsKey(AllCapabilities.XHRType) &&
+                        !_deviceCapabilities[AllCapabilities.XHRType].Equals("none"))
+                    {
+                        return "true";
+                    }
+
+                    return null;
+
                 case "screenPixelsWidth":
-                    {
-                        if (_deviceCapabilities.ContainsKey(AllCapabilities.Width))
-                        {
-                            return _deviceCapabilities[AllCapabilities.Width];
-                        }
-                        return AllCapabilities.DefaultWidth.ToString();
-                    }
+                    return _deviceCapabilities.ContainsKey(AllCapabilities.Width) 
+                        ? _deviceCapabilities[AllCapabilities.Width] 
+                        : AllCapabilities.DefaultWidth.ToString();
+
                 default:
-                    {
-                        string capability = null;
-
-                        if (_deviceCapabilities.TryGetValue(key, out capability))
-                            return capability;
-
-                        return (string)_baseCapabilities[key];
-                    }
+                    string capability = null;
+                    _deviceCapabilities.TryGetValue(key, out capability);
+                    return capability;
             }
         }
     }

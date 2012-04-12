@@ -18,9 +18,9 @@ limitations under the License. */
 using System;
 using System.Security.Principal;
 using System.Web;
+using System.Web.WebPages;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using MileageStats.Web.Models;
@@ -30,8 +30,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Web.Configuration;
 using MileageStats.Web.MobileProfiler;
-using WURFL;
-using WURFL.Config;
 using MileageStats.Web.MobileProfiler.ClientProfile;
 using MileageStats.Domain.Handlers;
 using MileageStats.Web.Infrastructure;
@@ -180,12 +178,8 @@ namespace MileageStats.Web
             // Sets a custom controller factory for overriding the default settings like the TempDataProvider
             ControllerBuilder.Current.SetControllerFactory(new CustomControllerFactory());
 
-            // Initializes the manager that represents the entry point for the WURLF database
-            container.RegisterType<IWURFLManager>( new InjectionFactory(c => InitializeWURFLManager()));
-            var provider = container.Resolve<MobileCapabilitiesProvider>();
-
             // Injects the custom BrowserCapabilitiesProvider into the ASP.NET pipeline
-            HttpCapabilitiesBase.BrowserCapabilitiesProvider = provider;
+            HttpCapabilitiesBase.BrowserCapabilitiesProvider = container.Resolve<MobileCapabilitiesProvider>();
 
             // Injects the custom metadata provider
             ModelMetadataProviders.Current = new CustomMetadataProvider();
@@ -253,16 +247,6 @@ namespace MileageStats.Web
             container.RegisterInstance<IProfileManifestRepository>(
                 new XmlProfileManifestRepository("~/Profiles/",
                     (path) => HttpContext.Current.Server.MapPath(path)));
-        }
-
-        private static IWURFLManager InitializeWURFLManager()
-        {
-            // Initializes the WURFL manager that represents the entry point for the database
-            var configurer = new ApplicationConfigurer();
-
-            var manager = WURFLManagerBuilder.Build(configurer);
-
-            return manager;
         }
     }
 }

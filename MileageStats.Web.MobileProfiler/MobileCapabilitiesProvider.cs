@@ -17,110 +17,98 @@ limitations under the License. */
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Web.Configuration;
 using System.Web;
-using WURFL;
+using System.Web.Configuration;
+using System.Web.WebPages;
 using MileageStats.Web.MobileProfiler.ClientProfile;
 
 namespace MileageStats.Web.MobileProfiler
 {
     // note: we break encapsulation and expose internal logic as public static readonly fields
-    // in order to facilitate testing. this is primarily due to the difficult in mocking
+    // in order to facilitate testing. this is primarily due to the difficulty in mocking
     // the http request object
     public class MobileCapabilitiesProvider : HttpCapabilitiesDefaultProvider
     {
-        readonly IWURFLManager _manager;
-        readonly IProfileCookieEncoder _encoder;
+        private readonly IProfileCookieEncoder _encoder;
 
-        public MobileCapabilitiesProvider(IWURFLManager manager, IProfileCookieEncoder encoder)
+        public MobileCapabilitiesProvider(IProfileCookieEncoder encoder)
         {
-            if (manager == null)
-                throw new ArgumentNullException("manager");
-
             if (encoder == null)
                 throw new ArgumentNullException("encoder");
 
-            _manager = manager;
             _encoder = encoder;
         }
 
-        public static readonly Func<HttpRequestBase, IWURFLManager, IDictionary<string, string>> DetermineCapsByWurfl = (request, manager) =>
-        {
-            // The user agent string in the current http request is used for getting
-            // the device capabilities from the WURFL database
-            var device = manager.GetDeviceForRequest(request.UserAgent);
-            return device.GetCapabilities();
-        };
-
-        public static readonly Func<HttpRequestBase, IProfileCookieEncoder, IDictionary<string, string>> DetermineCapsByProfilingClient = (request, encoder) =>
-        {
-            // The profile cookie is parsed for getting the device capabilities inferred on
-            // the client side
-            var profileCookie = request.Cookies["profile"];
-
-            return (profileCookie != null)
-                ? encoder.GetDeviceCapabilities(profileCookie)
-                : new Dictionary<string, string> { {AllCapabilities.Javascript, "false"} };
-        };
-
-        public static readonly Func<HttpRequestBase, IDictionary<string, string>> DetermineCapsByAlgorithm = request =>
-        {
-            // we have some special cases where we can identify a device as 'mobile' 
-            // even though it does not currently have an entry in our user agent
-            // database (WURFL).
-            var caps = new Dictionary<string, string>();
-            if (request.UserAgent.Contains("Windows Phone OS"))
-            {
-                caps[AllCapabilities.MobileDevice] = "true";
-                caps[AllCapabilities.Javascript] = "true";
-                caps[AllCapabilities.DOMManipulation] = "true";
-                caps[AllCapabilities.XHRType] = "standard";
-            }
-            return caps;
-        };
-
         public override HttpBrowserCapabilities GetBrowserCapabilities(HttpRequest request)
         {
-            var @base = base.GetBrowserCapabilities(request);
+            var httpContext = request.RequestContext.HttpContext;
 
-            var capabilities = GetBrowserCapabilities(new HttpRequestWrapper(request));
+            var capabilities = GetBaseCapabilities(base.GetBrowserCapabilities(request));
+            
+            capabilities.Merge(GetAdditionalCapabilities(httpContext));
 
-            return new MobileBrowserCapabilities(@base.Capabilities, capabilities);
+            return new MobileBrowserCapabilities(capabilities);
         }
 
-        public virtual IDictionary<string, string> GetBrowserCapabilities(HttpRequestBase request)
+        public virtual IDictionary<string, string> GetAdditionalCapabilities(HttpContextBase context)
         {
+            var capabilities = new Dictionary<string, string>();
+
+            if (BrowserOverrideStores.Current.GetOverriddenUserAgent(context) != null) return capabilities;
+
             // the capabilities are merged in a specific order
             // because later sets override earlier sets
-            var capabilities = new Dictionary<string, string>();
-            capabilities.Merge(DetermineCapsByWurfl(request, _manager));
-            capabilities.Merge(DetermineCapsByProfilingClient(request, _encoder));
-            capabilities.Merge(DetermineCapsByAlgorithm(request));
-            capabilities.Merge(DetermineIsMobileByWhiteList(request));
+            capabilities.Merge(DetermineCapsBy3rdPartyDatabase(context));
+            capabilities.Merge(DetermineCapsByProfilingClient(context.Request, _encoder));
 
             return capabilities;
         }
 
-        public static readonly Func<HttpRequestBase, IDictionary<string, string>> DetermineIsMobileByWhiteList =
-            request =>
+        public static readonly Func<HttpContextBase, IDictionary<string, string>> DetermineCapsBy3rdPartyDatabase =
+            context =>
+            {
+                // We're not actually using a 3rd party database, but if you are (and you need
+                // to manually merge in the capabilities) then you could do so here.
+                // In this simulated database, we look for a known OS to determine if it is a desktop browser.
+                // This is not meant to represent production code - only to simulate what
+                // a 3rd party database would provide you with
+                var caps = new Dictionary<string, string>();
+                var ua = context.Request.UserAgent;
+                if (ua.Contains("Windows NT") || ua.Contains("Macintosh") || ua.Contains("Windows+XP"))
                 {
-                    // Identify desktop OS to determine if it is a desktop browser
-                    // This will probably need to be updated in the future to accomodate other 
-                    // desktop browsers. 
-                    // Also, will need to decide what experience (mobile/desktop) to give tablets
-                    // that run on OS's that are considered "desktop"
-                    var caps = new Dictionary<string, string>();
-                    if (request.UserAgent.Contains("Windows NT") || request.UserAgent.Contains("(Macintosh;"))
-                    {
-                        caps[AllCapabilities.MobileDevice] = "false";
-                    }
-                    else
-                    {
-                        caps[AllCapabilities.MobileDevice] = "true";
-                    }
-                    return caps;
-                };
+                    caps[AllCapabilities.MobileDevice] = "false";
+                }
+                else
+                {
+                    caps[AllCapabilities.MobileDevice] = "true";
+                }
+                return caps;
+            };
+
+        public static readonly Func<HttpRequestBase, IProfileCookieEncoder, IDictionary<string, string>> DetermineCapsByProfilingClient =
+            (request, encoder) =>
+            {
+                // The profile cookie is parsed for getting the device capabilities inferred on
+                // the client side
+                var profileCookie = request.Cookies["profile"];
+
+                return (profileCookie != null)
+                        ? encoder.GetDeviceCapabilities(profileCookie)
+                        : new Dictionary<string, string>();
+            };
+
+        private static IDictionary<string, string> GetBaseCapabilities(HttpBrowserCapabilities source)
+        {
+            var output = new Dictionary<string, string>();
+            foreach (var key in source.Capabilities.Keys)
+            {
+                var value = source.Capabilities[key];
+                output.Add(key.ToString(), (value == null) ? null : value.ToString());
+            }
+
+            return output;
+        }
     }
 }

@@ -32,25 +32,12 @@ namespace MileageStats.Web.MobileProfiler.Tests
         {
             var deviceCapabilities = new Dictionary<string, string> 
             {
-                {AllCapabilities.MobileDevice, "true"}
+                { AllCapabilities.MobileDevice, "true" }
             };
 
-            var capabilities = new MobileBrowserCapabilities(new Hashtable(), deviceCapabilities);
+            var capabilities = new MobileBrowserCapabilities(deviceCapabilities);
             
             Assert.True(capabilities.IsMobileDevice);
-        }
-
-        [Fact]
-        public void WhenJavascriptRequested_ThenMobileDeviceCapabilityIsReturned()
-        {
-            var deviceCapabilities = new Dictionary<string, string> 
-            {
-                {AllCapabilities.Javascript, "true"},
-            };
-
-            var capabilities = new MobileBrowserCapabilities(new Hashtable(), deviceCapabilities);
-
-            Assert.True(capabilities.JavaScript);
         }
 
         [Fact]
@@ -61,7 +48,7 @@ namespace MileageStats.Web.MobileProfiler.Tests
                 {AllCapabilities.DOMManipulation, "true"},
             };
 
-            var capabilities = new MobileBrowserCapabilities(new Hashtable(), deviceCapabilities);
+            var capabilities = new MobileBrowserCapabilities(deviceCapabilities);
 
             Assert.Equal("true", capabilities[AllCapabilities.DOMManipulation]);
         }
@@ -74,22 +61,9 @@ namespace MileageStats.Web.MobileProfiler.Tests
                 {AllCapabilities.XHR, "1"},
             };
 
-            var capabilities = new MobileBrowserCapabilities(new Hashtable(), deviceCapabilities);
+            var capabilities = new MobileBrowserCapabilities(deviceCapabilities);
 
             Assert.True(capabilities.SupportsXmlHttp);
-        }
-
-        [Fact]
-        public void WhenCookieSupportRequested_ThenMobileDeviceCapabilityIsReturned()
-        {
-            var deviceCapabilities = new Dictionary<string, string> 
-            {
-                {AllCapabilities.Cookies, "true"},
-            };
-
-            var capabilities = new MobileBrowserCapabilities(new Hashtable(), deviceCapabilities);
-
-            Assert.True(capabilities.Cookies);
         }
 
         [Fact]
@@ -100,24 +74,9 @@ namespace MileageStats.Web.MobileProfiler.Tests
                 {AllCapabilities.XHRType, "standard"},
             };
 
-            var capabilities = new MobileBrowserCapabilities(new Hashtable(), deviceCapabilities);
+            var capabilities = new MobileBrowserCapabilities(deviceCapabilities);
 
             Assert.True(capabilities.SupportsXmlHttp);
-        }
-
-        [Fact]
-        public void WhenMobileCapabilityNotFound_ThenBaseCapabilityIsReturned()
-        {
-            var deviceCapabilities = new Dictionary<string, string> 
-            {
-            };
-
-            var baseCapabilities = new Hashtable();
-            baseCapabilities.Add("canSendMail", "true");
-
-            var capabilities = new MobileBrowserCapabilities(baseCapabilities, deviceCapabilities);
-
-            Assert.Equal(true, capabilities.CanSendMail);
         }
     }
 }

@@ -20,7 +20,6 @@ using Moq;
 using Xunit;
 using System;
 using MileageStats.Web.MobileProfiler.ClientProfile;
-using WURFL;
 using System.Collections.Generic;
 
 namespace MileageStats.Web.MobileProfiler.Tests
@@ -28,36 +27,8 @@ namespace MileageStats.Web.MobileProfiler.Tests
     public class MobileCapabilitiesProviderFixture
     {
         [Fact]
-        public void WhenConstructingWithNullWURLManager_ThenThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new MobileCapabilitiesProvider(null,
-                new Mock<IProfileCookieEncoder>().Object));
-        }
-
-        [Fact]
-        public void WhenConstructingWithNullProfileCookieEncoder_ThenThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new MobileCapabilitiesProvider(new Mock<IWURFLManager>().Object,
-                null));
-        }
-
-        [Fact]
-        public void WhenCapabilitiesRequestedFromWURFL_ThenWURLManagerIsInvoked()
-        {
-            var device = new Mock<IDevice>();
-
-            device.Setup(d => d.GetCapabilities())
-                .Returns(new Dictionary<string, string> { { "capKey", "capValue" } });
-
-            var manager = new Mock<IWURFLManager>();
-            manager.Setup(m => m.GetDeviceForRequest("android"))
-                .Returns(device.Object);
-
-            var request = Mock.Of<HttpRequestBase>(r => r.UserAgent == "android");
-
-            var caps = MobileCapabilitiesProvider.DetermineCapsByWurfl(request, manager.Object);
-
-            Assert.True(caps["capKey"] == "capValue");
+        public void WhenConstructingWithNullProfileCookieEncoder_ThenThrowsArgumentNullException()        {
+            Assert.Throws<ArgumentNullException>(() => new MobileCapabilitiesProvider(null));
         }
 
         [Fact]
@@ -92,110 +63,19 @@ namespace MileageStats.Web.MobileProfiler.Tests
 
             var caps = MobileCapabilitiesProvider.DetermineCapsByProfilingClient(request, encoder.Object);
 
-            Assert.True(caps.ContainsKey(AllCapabilities.Javascript));
-            Assert.Equal("false", caps[AllCapabilities.Javascript]);
+            Assert.Equal(0, caps.Count);
         }
 
-        [Fact]
-        public void WhenCapabilitiesRequested_ThenCapabilitiesShouldBeAggregated()
-        {
-            var cookie = new HttpCookie("profile");
-            var cookies = new HttpCookieCollection();
-
-            var encoder = new Mock<IProfileCookieEncoder>();
-
-            encoder.Setup(e => e.GetDeviceCapabilities(cookie))
-                .Returns(new Dictionary<string, string> { { "profileK", "profileV" } });
-
-            cookies.Add(cookie);
-
-            var device = new Mock<IDevice>();
-
-            device.Setup(d => d.GetCapabilities())
-                .Returns(new Dictionary<string, string> { { "wurlfK", "wurlfV" } });
-
-            var manager = new Mock<IWURFLManager>();
-            manager.Setup(m => m.GetDeviceForRequest("unimportant stuff; Windows Phone OS 7.5; more stuff"))
-                .Returns(device.Object);
-
-            var request = new Mock<HttpRequestBase>();
-
-            request
-              .SetupGet(x => x.UserAgent)
-              .Returns("unimportant stuff; Windows Phone OS 7.5; more stuff");
-
-            request.SetupGet(r => r.Cookies)
-                .Returns(cookies);
-
-            var provider = new MobileCapabilitiesProvider(manager.Object, encoder.Object);
-            var caps = provider.GetBrowserCapabilities(request.Object);
-
-            Assert.True(caps["wurlfK"] == "wurlfV");
-            Assert.True(caps["profileK"] == "profileV");
-            Assert.Equal(caps[AllCapabilities.MobileDevice], "true");
-        }
-
-        [Fact]
-        public void WhenUserAgentContaintWP7_ThenReportAsWirelessDevice()
-        {
-            var request = new Mock<HttpRequestBase>();
-            request
-                .SetupGet(x => x.UserAgent)
-                .Returns("unimportant stuff; Windows Phone OS 7.5; more stuff");
-
-            var caps = MobileCapabilitiesProvider.DetermineCapsByAlgorithm(request.Object);
-
-            Assert.Equal(caps[AllCapabilities.MobileDevice], "true");
-        }
-
-        [Fact]
-        public void WhenUserAgentContaintWP7_ThenReportStandardXHRSupport()
-        {
-            var request = new Mock<HttpRequestBase>();
-            request
-                .SetupGet(x => x.UserAgent)
-                .Returns("unimportant stuff; Windows Phone OS 7.5; more stuff");
-
-            var caps = MobileCapabilitiesProvider.DetermineCapsByAlgorithm(request.Object);
-
-            Assert.Equal(caps[AllCapabilities.XHRType], "standard");
-        }
-
-        [Fact]
-        public void WhenUserAgentContaintWP7_ThenReportJavascriptSupport()
-        {
-            var request = new Mock<HttpRequestBase>();
-            request
-                .SetupGet(x => x.UserAgent)
-                .Returns("unimportant stuff; Windows Phone OS 7.5; more stuff");
-
-            var caps = MobileCapabilitiesProvider.DetermineCapsByAlgorithm(request.Object);
-
-            Assert.Equal(caps[AllCapabilities.Javascript], "true");
-        }
-
-        [Fact]
-        public void WhenUserAgentContaintWP7_ThenReportDOMManipulationSupport()
-        {
-            var request = new Mock<HttpRequestBase>();
-            request
-                .SetupGet(x => x.UserAgent)
-                .Returns("unimportant stuff; Windows Phone OS 7.5; more stuff");
-
-            var caps = MobileCapabilitiesProvider.DetermineCapsByAlgorithm(request.Object);
-
-            Assert.Equal(caps[AllCapabilities.DOMManipulation], "true");
-        }
 
         [Fact]
         public void WhenUserAgentContaintWinNT_ThenReportAsNOTWirelessDevice()
         {
-            var request = new Mock<HttpRequestBase>();
-            request
-                .SetupGet(x => x.UserAgent)
+            var context = new Mock<HttpContextBase>();
+            context
+                .SetupGet(x => x.Request.UserAgent)
                 .Returns("unimportant stuff; Windows NT; more stuff");
 
-            var caps = MobileCapabilitiesProvider.DetermineIsMobileByWhiteList(request.Object);
+            var caps = MobileCapabilitiesProvider.DetermineCapsBy3rdPartyDatabase(context.Object);
 
             Assert.Equal(caps[AllCapabilities.MobileDevice], "false");
         }
@@ -203,12 +83,12 @@ namespace MileageStats.Web.MobileProfiler.Tests
         [Fact]
         public void WhenUserAgentContainMacintosh_ThenReportAsNOTWirelessDevice()
         {
-            var request = new Mock<HttpRequestBase>();
-            request
-                .SetupGet(x => x.UserAgent)
+            var context = new Mock<HttpContextBase>();
+            context
+                .SetupGet(x => x.Request.UserAgent)
                 .Returns("unimportant stuff; (Macintosh; more stuff");
 
-            var caps = MobileCapabilitiesProvider.DetermineIsMobileByWhiteList(request.Object);
+            var caps = MobileCapabilitiesProvider.DetermineCapsBy3rdPartyDatabase(context.Object);
 
             Assert.Equal(caps[AllCapabilities.MobileDevice], "false");
         }
@@ -216,12 +96,12 @@ namespace MileageStats.Web.MobileProfiler.Tests
         [Fact]
         public void WhenUserAgentContainUnknownPlatform_ThenReportAsWirelessDevice()
         {
-            var request = new Mock<HttpRequestBase>();
-            request
-                .SetupGet(x => x.UserAgent)
+            var context = new Mock<HttpContextBase>();
+            context
+                .SetupGet(x => x.Request.UserAgent)
                 .Returns("unimportant stuff; previously unknown platform; more stuff");
 
-            var caps = MobileCapabilitiesProvider.DetermineIsMobileByWhiteList(request.Object);
+            var caps = MobileCapabilitiesProvider.DetermineCapsBy3rdPartyDatabase(context.Object);
 
             Assert.Equal(caps[AllCapabilities.MobileDevice], "true");
         }
