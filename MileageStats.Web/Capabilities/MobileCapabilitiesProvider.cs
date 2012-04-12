@@ -17,14 +17,12 @@ limitations under the License. */
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.WebPages;
-using MileageStats.Web.MobileProfiler.ClientProfile;
+using MileageStats.Web.ClientProfile;
 
-namespace MileageStats.Web.MobileProfiler
+namespace MileageStats.Web.Capabilities
 {
     // note: we break encapsulation and expose internal logic as public static readonly fields
     // in order to facilitate testing. this is primarily due to the difficulty in mocking

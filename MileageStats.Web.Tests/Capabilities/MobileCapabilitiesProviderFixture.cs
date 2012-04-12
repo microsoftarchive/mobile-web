@@ -16,18 +16,20 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System.Web;
+using MileageStats.Web.Capabilities;
+using MileageStats.Web.ClientProfile;
 using Moq;
 using Xunit;
 using System;
-using MileageStats.Web.MobileProfiler.ClientProfile;
 using System.Collections.Generic;
 
-namespace MileageStats.Web.MobileProfiler.Tests
+namespace MileageStats.Web.Tests.Capabilities
 {
     public class MobileCapabilitiesProviderFixture
     {
         [Fact]
-        public void WhenConstructingWithNullProfileCookieEncoder_ThenThrowsArgumentNullException()        {
+        public void WhenConstructingWithNullProfileCookieEncoder_ThenThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new MobileCapabilitiesProvider(null));
         }
 

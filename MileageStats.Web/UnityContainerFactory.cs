@@ -15,18 +15,14 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-using System.Linq;
-using System.Reflection;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
-using MileageStats.Data;
 using MileageStats.Data.InMemory;
 using MileageStats.Domain;
 using MileageStats.Domain.Contracts;
 using MileageStats.Domain.Contracts.Data;
 using MileageStats.Web.Authentication;
+using MileageStats.Web.ClientProfile;
 using MileageStats.Web.UnityExtensions;
-using MileageStats.Web.MobileProfiler.ClientProfile;
 
 namespace MileageStats.Web
 {

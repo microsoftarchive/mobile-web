@@ -18,19 +18,18 @@ limitations under the License. */
 using System;
 using System.Security.Principal;
 using System.Web;
-using System.Web.WebPages;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using MileageStats.Web.Capabilities;
+using MileageStats.Web.ClientProfile;
 using MileageStats.Web.Models;
 using MileageStats.Web.Authentication;
 using MileageStats.Web.UnityExtensions;
 using System.Linq;
 using System.Collections.Generic;
 using System.Web.Configuration;
-using MileageStats.Web.MobileProfiler;
-using MileageStats.Web.MobileProfiler.ClientProfile;
 using MileageStats.Domain.Handlers;
 using MileageStats.Web.Infrastructure;
 using System.Net;
@@ -245,7 +244,7 @@ namespace MileageStats.Web
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 
             container.RegisterInstance<IProfileManifestRepository>(
-                new XmlProfileManifestRepository("~/Profiles/",
+                new XmlProfileManifestRepository("~/ClientProfile/",
                     (path) => HttpContext.Current.Server.MapPath(path)));
         }
     }

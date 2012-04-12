@@ -15,12 +15,7 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MileageStats.Web.MobileProfiler
+namespace MileageStats.Web.Capabilities
 {
     public static class AllCapabilities
     {

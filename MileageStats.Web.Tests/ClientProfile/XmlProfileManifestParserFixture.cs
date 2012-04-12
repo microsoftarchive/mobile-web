@@ -15,17 +15,14 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using MileageStats.Web.ClientProfile;
+using MileageStats.Web.ClientProfile.Model;
 using Xunit;
-using MileageStats.Web.MobileProfiler.ClientProfile.Model;
 using System.Xml;
 using System.IO;
-using MileageStats.Web.MobileProfiler.ClientProfile;
 
-namespace MileageStats.Web.MobileProfiler.Tests.ClientProfile
+namespace MileageStats.Web.Tests.ClientProfile
 {
     public class XmlProfileManifestParserFixture
     {
@@ -34,7 +31,7 @@ namespace MileageStats.Web.MobileProfiler.Tests.ClientProfile
         {
             ProfileManifest model = null;
 
-            using (var sr = new StreamReader("Profiles\\Generic.xml"))
+            using (var sr = new StreamReader("ClientProfile\\Generic.xml"))
             using (var reader = XmlReader.Create(sr))
             {
                 model = XmlProfileManifestParser.Parse(reader);

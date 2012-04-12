@@ -16,14 +16,9 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using MileageStats.Web.MobileProfiler;
-using System.Web.Script.Serialization;
-using MileageStats.Web.MobileProfiler.ClientProfile;
-using MileageStats.Web.MobileProfiler.ClientProfile.Model;
+using MileageStats.Web.ClientProfile;
+using MileageStats.Web.ClientProfile.Model;
 using System.Web.Caching;
 
 namespace MileageStats.Web.Controllers

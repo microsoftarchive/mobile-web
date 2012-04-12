@@ -15,19 +15,16 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MileageStats.Web.MobileProfiler.ClientProfile.Model;
-
-namespace MileageStats.Web.MobileProfiler.ClientProfile
+namespace MileageStats.Web.ClientProfile.Model
 {
-    public interface IProfileManifestRepository
+     public class Feature
     {
-        string GetManifestPath(string name);
-
-        ProfileManifest GetProfile(string name);
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Test { get; set; }
+        public string Value { get; set; }
+        public string Property { get; set; }
         
     }
 }

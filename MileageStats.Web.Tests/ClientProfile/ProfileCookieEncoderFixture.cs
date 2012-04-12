@@ -16,14 +16,11 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MileageStats.Web.ClientProfile;
 using Xunit;
-using MileageStats.Web.MobileProfiler.ClientProfile;
 using System.Web;
 
-namespace MileageStats.Web.MobileProfiler.Tests.ClientProfile
+namespace MileageStats.Web.Tests.ClientProfile
 {
     public class ProfileCookieEncoderFixture
     {

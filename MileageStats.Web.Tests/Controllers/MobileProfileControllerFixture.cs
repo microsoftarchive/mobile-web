@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MileageStats.Web.ClientProfile;
+using MileageStats.Web.ClientProfile.Model;
 using Xunit;
 using Moq;
-using MileageStats.Web.MobileProfiler.ClientProfile;
 using MileageStats.Web.Controllers;
 using MileageStats.Web.Tests.Mocks;
-using MileageStats.Web.MobileProfiler.ClientProfile.Model;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Caching;
 
 namespace MileageStats.Web.Tests.Controllers
 {

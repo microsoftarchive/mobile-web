@@ -117,6 +117,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\UserAuthenticationTicketBuilder.cs" />
+    <Compile Include="Capabilities\AllCapabilities.cs" />
+    <Compile Include="Infrastructure\DictionaryExtensions.cs" />
+    <Compile Include="Capabilities\HttpBrowserCapabilitiesExtensions.cs" />
+    <Compile Include="Capabilities\MobileBrowserCapabilities.cs" />
+    <Compile Include="Capabilities\MobileCapabilitiesProvider.cs" />
+    <Compile Include="ClientProfile\IProfileCookieEncoder.cs" />
+    <Compile Include="ClientProfile\IProfileManifestRepository.cs" />
+    <Compile Include="ClientProfile\Model\Feature.cs" />
+    <Compile Include="ClientProfile\Model\ProfileManifest.cs" />
+    <Compile Include="ClientProfile\ProfileCookieEncoder.cs" />
+    <Compile Include="ClientProfile\XmlProfileManifestParser.cs" />
+    <Compile Include="ClientProfile\XmlProfileManifestRepository.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
     <Compile Include="Helpers\DisposableSection.cs" />
     <Compile Include="Helpers\SelectListFor.cs" />
@@ -196,6 +208,7 @@
     <Compile Include="WebViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientProfile\Generic.xml" />
     <Content Include="Content\account-pane.jpg" />
     <Content Include="Content\add-vehicle-pane.jpg" />
     <Content Include="Content\application-background.png" />
@@ -264,9 +277,6 @@
     <Content Include="Content\yahoo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Profiles\Generic.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Scripts\jQuery.Simulate\jquery.simulate.js" />
     <Content Include="Scripts\MileageStats.Mobile.min.js" />
     <Content Include="Scripts\desktop-debug\mstats.tile.js" />
@@ -398,10 +408,6 @@
     <ProjectReference Include="..\MileageStats.Domain\MileageStats.Domain.csproj">
       <Project>{A90A6E16-E9F0-49DC-88B2-82882DF86DC3}</Project>
       <Name>MileageStats.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MileageStats.Web.MobileProfiler\MileageStats.Web.MobileProfiler.csproj">
-      <Project>{7AAEC221-B98D-427A-9B3A-2C22F4956224}</Project>
-      <Name>MileageStats.Web.MobileProfiler</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

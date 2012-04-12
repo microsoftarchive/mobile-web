@@ -18,7 +18,7 @@ limitations under the License. */
 using System.Collections.Generic;
 using System.Web;
 
-namespace MileageStats.Web.MobileProfiler
+namespace MileageStats.Web.Capabilities
 {
     public class MobileBrowserCapabilities : HttpBrowserCapabilities
     {

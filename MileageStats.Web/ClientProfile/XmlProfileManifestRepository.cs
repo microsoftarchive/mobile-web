@@ -16,19 +16,17 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
-using MileageStats.Web.MobileProfiler.ClientProfile.Model;
+using MileageStats.Web.ClientProfile.Model;
 
-namespace MileageStats.Web.MobileProfiler.ClientProfile
+namespace MileageStats.Web.ClientProfile
 {
     public class XmlProfileManifestRepository : IProfileManifestRepository
     {
-        Func<string, string> _virtualPathResolver;
-        string _virtualPath;
+        readonly Func<string, string> _virtualPathResolver;
+        readonly string _virtualPath;
 
         public XmlProfileManifestRepository(string virtualPath, Func<string, string> virtualPathResolver)
         {
@@ -41,6 +39,7 @@ namespace MileageStats.Web.MobileProfiler.ClientProfile
             return _virtualPathResolver(_virtualPath + name + ".xml");
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         public ProfileManifest GetProfile(string name)
         {
             var filePath = GetManifestPath(name);

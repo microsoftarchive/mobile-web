@@ -77,6 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionResults\ContentTypeAwareResultFixture.cs" />
+    <Compile Include="Capabilities\MobileBrowserCapabilitiesFixture.cs" />
+    <Compile Include="Capabilities\MobileCapabilitiesProviderFixture.cs" />
+    <Compile Include="ClientProfile\ProfileCookieEncoderFixture.cs" />
+    <Compile Include="ClientProfile\XmlProfileManifestParserFixture.cs" />
+    <Compile Include="ClientProfile\XmlProfileManifestRepositoryFixture.cs" />
     <Compile Include="Controllers\AuthControllerFixture.cs" />
     <Compile Include="Controllers\ChartControllerFixture.cs" />
     <Compile Include="Controllers\DashboardControllerFixture.cs" />
@@ -86,7 +91,6 @@
     <Compile Include="Controllers\MakeAndModelControllerFixture.cs" />
     <Compile Include="Controllers\MobileProfileControllerFixture.cs" />
     <Compile Include="Controllers\VehiclePhotoControllerFixture.cs" />
-    <Compile Include="Controllers\ViewSwitcherControllerFixture.cs" />
     <Compile Include="Controllers\YearsMakesAndModelsFor.cs" />
     <Compile Include="DefaultFormsAuthenticationFixture.cs" />
     <Compile Include="Controllers\ProfileControllerFixture.cs" />
@@ -113,10 +117,6 @@
       <Project>{A90A6E16-E9F0-49DC-88B2-82882DF86DC3}</Project>
       <Name>MileageStats.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MileageStats.Web.MobileProfiler\MileageStats.Web.MobileProfiler.csproj">
-      <Project>{7AAEC221-B98D-427A-9B3A-2C22F4956224}</Project>
-      <Name>MileageStats.Web.MobileProfiler</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MileageStats.Web\MileageStats.Web.csproj">
       <Project>{ED7C8B4E-16C3-405A-9079-26D6CF8EF3AD}</Project>
       <Name>MileageStats.Web</Name>
@@ -135,7 +135,11 @@
   <ItemGroup>
     <EmbeddedResource Include="TestContent\FileTooBig.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ClientProfile\Generic.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

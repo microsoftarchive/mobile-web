@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MileageStats.Web.MobileProfiler;
+using MileageStats.Web.Capabilities;
 
 namespace System.Web
 {

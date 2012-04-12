@@ -15,22 +15,18 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MileageStats.Web.ClientProfile;
 using Xunit;
-using MileageStats.Web.MobileProfiler.ClientProfile;
 using System.IO;
 
-namespace MileageStats.Web.MobileProfiler.Tests.ClientProfile
+namespace MileageStats.Web.Tests.ClientProfile
 {
     public class XmlProfileManifestRepositoryFixture
     {
         [Fact]
         public void WhenGettingExistingProfile_ThenProfileManifestIsReturned()
         {
-            var reader = new XmlProfileManifestRepository("Profiles\\", (path) => path);
+            var reader = new XmlProfileManifestRepository("ClientProfile\\", (path) => path);
             var profile = reader.GetProfile("Generic");
 
             Assert.NotNull(profile);
