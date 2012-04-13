@@ -592,7 +592,6 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\wurfl-assets.targets" />
   <Import Project="$(SolutionDir)\javascript-via-nuget-assets.targets" />
   <Import Project="$(SolutionDir)\minify.targets" />
 </Project>
