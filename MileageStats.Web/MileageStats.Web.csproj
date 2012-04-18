@@ -364,6 +364,7 @@
     <Content Include="Views\Chart\Index.Mobile.cshtml" />
     <Content Include="Views\Browser\Index.cshtml" />
     <None Include="Content\readme.md" />
+    <None Include="Controllers\readme.md" />
     <None Include="Helpers\readme.md" />
     <None Include="Scripts\readme.md" />
     <None Include="Views\Error\Index.cshtml" />
