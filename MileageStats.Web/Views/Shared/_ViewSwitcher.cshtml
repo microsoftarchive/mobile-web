@@ -1,6 +1,10 @@
 ﻿@using MileageStats.Web;
 @using System.Web.WebPages;
 
+@{
+    var isOverriden = ViewContext.HttpContext.GetOverriddenUserAgent() != ViewContext.HttpContext.Request.UserAgent;
+}
+
 @if (ViewContext.HttpContext.GetOverriddenBrowser().IsMobileDevice)
 {
 <p class="switch">
@@ -8,7 +12,7 @@
         <span>Switch to desktop site</span> </a>
 </p>
 }
-else
+else if (isOverriden)
 {
 @Html.ActionLink("[ Switch to Mobile ]", "SwitchView", "ViewSwitcher", new { mobile = true, returnUrl = Request.Url.PathAndQuery }, new { id = "view_switcher", rel = "external" })
 }

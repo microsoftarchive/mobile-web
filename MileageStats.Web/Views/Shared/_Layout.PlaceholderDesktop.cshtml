@@ -76,9 +76,18 @@
     </div>
     <!-- application footer region -->
     <footer>
-        @Html.Partial("_ViewSwitcher")
         <p>
             &copy; Copyright 2012 Microsoft</p>
     </footer>
+    
+    <div style="display:none;">
+        @*
+        We have to render the body or else Razor will throw an exception. 
+        However, we don't really care about the content in this place holder
+        for the desktop, so we'll just hide the output.
+        *@
+        @RenderBody()
+    </div>
+
 </body>
 </html>

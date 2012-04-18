@@ -24,10 +24,10 @@ namespace MileageStats.Web.Controllers
     {
         public RedirectResult SwitchView(bool mobile, string returnUrl)
         {
-            if (Request.Browser.IsMobileDevice == mobile)
+            if (mobile)
                 HttpContext.ClearOverriddenBrowser();
             else
-                HttpContext.SetOverriddenBrowser(mobile ? BrowserOverride.Mobile : BrowserOverride.Desktop);
+                HttpContext.SetOverriddenBrowser(BrowserOverride.Desktop);
 
             return Redirect(returnUrl);
         }

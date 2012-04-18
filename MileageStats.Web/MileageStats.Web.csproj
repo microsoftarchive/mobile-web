@@ -391,7 +391,7 @@
     <Content Include="Views\Shared\_spaTemplates.cshtml" />
     <Content Include="Views\Reminder\List.Mobile.cshtml" />
     <Content Include="Views\Shared\_spa.mobile.cshtml" />
-    <Content Include="Views\Shared\desktop.placeholder.Mobile.cshtml" />
+    <Content Include="Views\Shared\_Layout.PlaceholderDesktop.cshtml" />
     <None Include="Views\readme.md" />
   </ItemGroup>
   <ItemGroup>

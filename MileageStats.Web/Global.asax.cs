@@ -16,10 +16,12 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System;
+using System.Diagnostics;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.WebPages;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using MileageStats.Web.Capabilities;
@@ -182,6 +184,15 @@ namespace MileageStats.Web
 
             // Injects the custom metadata provider.
             ModelMetadataProviders.Current = new CustomMetadataProvider();
+
+            // When the user decides to explicitly switch to the desktop view, we
+            // want to display a placeholder page rather than the actual desktop.
+            // We can identify that this is the case when the actual user agent
+            // doesn't match the overriden user agent.
+            DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("PlaceholderDesktop")
+            {
+                ContextCondition = context => context.GetOverriddenUserAgent() != context.Request.UserAgent
+            });
         }
 
         private void EndRequestHandler(object sender, EventArgs e)
