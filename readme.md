@@ -77,31 +77,30 @@ You have a couple of options.
 
 - Issue #419 HTC(Status) does not give a pop up message to share location access.
 Repo: 
-1. login to app. 
-2. Add a vehicle. 
-3. Add fill ups
+	1. login to app. 
+	2. Add a vehicle. 
+	3. Add fill ups
 Here click on "Locate near by fill-up station" . 
 We don't get any pop up message to "share the locations" in these two devices.
 
 - Issue #377 Successfully added fillup, reminder flash message shows on Dashboard,Fillup,chart page in Blackberry curve 9300 3G(RIM OS 5.0).
 Repo:	
-1. Add a vehicle.
-2. Add a reminder.
-3. Go to Dashboard.
- "Successfully added reminder shows up"
-4. Go to Fill up page
- "Successfully added reminder shows up"
-5. Go to charts
- "Successfully added reminder shows up"
-Its happening only in this work device.
+	1. Add a vehicle.
+	2. Add a reminder.
+	3. Go to Dashboard.
+	 "Successfully added reminder shows up"
+	4. Go to Fill up page
+	 "Successfully added reminder shows up"
+	5. Go to charts
+	 "Successfully added reminder shows up"
+	Its happening only in this work device.
 
 - Issue #325 BlackBerry 9300(Curve 3G OS 5.0) Reminder Page shows more white space for added reminders.
 
 - Issue #243 iOS 5 - Placeholders not going away when typing text instead of integers
 Repro:
-1. Select Add Fillup page on iPhone 4S
-2. In the price per unit textbox, type "test", the placeholder "0" does not go away (it disappears when typing a number)
-Logging it as a known issue
+	1. Select Add Fillup page on iPhone 4S
+	2. In the price per unit textbox, type "test", the placeholder "0" does not go away (it disappears when typing a number)
 
 - Issue #179 Some Android phones status renders select list incorrectly. 	all controls with drop down are incorrectly rendered in this wow device
 
@@ -113,7 +112,8 @@ Can we alter the output from the helper? We don't want to have the style inline.
 - Issue #48 Alternate Authentication using ACS. I consider this a lower priority task, but I anticipate that the dev team will have extra time to fill.
 Based on the last advisory board meeting, it seemed the majority of the advisers were not too concerned, however at least some were vocal about their interest. 
 I would like to keep the main source free of dependencies as much as possible, so here are two possibilities:
-•	maintain a branch on github that uses ACS, but allow the master branch to continue with the current auth
-•	have a pluggable auth system where we can change a config option to switch between the current auth and the ACS based auth
-The first option has the drawback that we'll have to periodically merge the master back in.
+	- maintain a branch on github that uses ACS, but allow the master branch to continue with the current auth 
+	- have a pluggable auth system where we can change a config option to switch between the current auth and the ACS based auth
+
+	The first option has the drawback that we'll have to periodically merge the master back in.
 The second option would also need to try to partition the dependencies as much as possible. For example, perhaps the ACS-based auth provider could live in a separate repo.|

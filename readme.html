@@ -382,8 +382,7 @@ Repro:</p>
 
 <ol>
 <li>Select Add Fillup page on iPhone 4S</li>
-<li>In the price per unit textbox, type "test", the placeholder "0" does not go away (it disappears when typing a number)
-Logging it as a known issue</li>
+<li>In the price per unit textbox, type "test", the placeholder "0" does not go away (it disappears when typing a number)</li>
 </ol></li>
 <li><p>Issue #179 Some Android phones status renders select list incorrectly.    all controls with drop down are incorrectly rendered in this wow device</p></li>
 <li><p>Issue #156 validation summary markup.
@@ -393,10 +392,14 @@ Can we alter the output from the helper? We don't want to have the style inline.
 </code></pre></li>
 <li><p>Issue #48 Alternate Authentication using ACS. I consider this a lower priority task, but I anticipate that the dev team will have extra time to fill.
 Based on the last advisory board meeting, it seemed the majority of the advisers were not too concerned, however at least some were vocal about their interest. 
-I would like to keep the main source free of dependencies as much as possible, so here are two possibilities:
-•   maintain a branch on github that uses ACS, but allow the master branch to continue with the current auth
-•   have a pluggable auth system where we can change a config option to switch between the current auth and the ACS based auth
-The first option has the drawback that we'll have to periodically merge the master back in.
+I would like to keep the main source free of dependencies as much as possible, so here are two possibilities:</p>
+
+<ul>
+<li>maintain a branch on github that uses ACS, but allow the master branch to continue with the current auth </li>
+<li>have a pluggable auth system where we can change a config option to switch between the current auth and the ACS based auth</li>
+</ul>
+
+<p>The first option has the drawback that we'll have to periodically merge the master back in.
 The second option would also need to try to partition the dependencies as much as possible. For example, perhaps the ACS-based auth provider could live in a separate repo.|</p></li>
 </ul>
 
