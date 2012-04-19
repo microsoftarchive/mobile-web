@@ -101,7 +101,6 @@
     <Compile Include="Helpers\MustacheHelpersFixture.cs" />
     <Compile Include="Helpers\VehicleHelperFixture.cs" />
     <Compile Include="Infrastructure\CookieTempDataProviderFixture.cs" />
-    <Compile Include="Infrastructure\HtmlHelperExtensionsFixture.cs" />
     <Compile Include="MileageStatsIdentityFixture.cs" />
     <Compile Include="Mocks\ControllerMockHelpers.cs" />
     <Compile Include="Mocks\MockRelyingParty.cs" />
