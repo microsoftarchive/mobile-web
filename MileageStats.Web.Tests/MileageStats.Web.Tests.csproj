@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionResults\ContentTypeAwareResultFixture.cs" />
-    <Compile Include="Capabilities\MobileBrowserCapabilitiesFixture.cs" />
     <Compile Include="Capabilities\MobileCapabilitiesProviderFixture.cs" />
     <Compile Include="ClientProfile\ProfileCookieEncoderFixture.cs" />
     <Compile Include="ClientProfile\XmlProfileManifestParserFixture.cs" />

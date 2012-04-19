@@ -19,16 +19,11 @@ namespace MileageStats.Web.Capabilities
 {
     public static class AllCapabilities
     {
-        public const string XHR = "xhr";
-        public const string XHRType = "ajax_xhr_type";
-        public const string Javascript = "ajax_support_javascript";
         public const string MobileDevice = "isMobileDevice";
         public const string DOMManipulation = "ajax_manipulate_dom";
         public const string JSON = "json";
-        public const string Cookies = "cookie_support";
-        public const string FileUpload = "xhtml_file_upload";
         public const string HashChange = "hashchange";
-        public const string Width = "width";
+        public const string Width = "screenPixelsWidth";
         public const int DefaultWidth = 320;
     }
 }

@@ -120,7 +120,6 @@
     <Compile Include="Capabilities\AllCapabilities.cs" />
     <Compile Include="Infrastructure\DictionaryExtensions.cs" />
     <Compile Include="Capabilities\HttpBrowserCapabilitiesExtensions.cs" />
-    <Compile Include="Capabilities\MobileBrowserCapabilities.cs" />
     <Compile Include="Capabilities\MobileCapabilitiesProvider.cs" />
     <Compile Include="ClientProfile\IProfileCookieEncoder.cs" />
     <Compile Include="ClientProfile\IProfileManifestRepository.cs" />

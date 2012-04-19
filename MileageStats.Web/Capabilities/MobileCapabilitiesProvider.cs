@@ -16,7 +16,9 @@ See the Apache 2 License for the specific language governing permissions and
 limitations under the License. */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.WebPages;
@@ -42,15 +44,23 @@ namespace MileageStats.Web.Capabilities
         public override HttpBrowserCapabilities GetBrowserCapabilities(HttpRequest request)
         {
             var httpContext = request.RequestContext.HttpContext;
+            var browser = base.GetBrowserCapabilities(request);
 
-            var capabilities = GetBaseCapabilities(base.GetBrowserCapabilities(request));
-            
-            capabilities.Merge(GetAdditionalCapabilities(httpContext));
+            SetDefaults(browser);
 
-            return new MobileBrowserCapabilities(capabilities);
+            // The default HttpBrowserCapabilities is optimized to only
+            // retrieved the values from the underlying dictionary once.
+            // This means that if you examine it in the debugger prior to 
+            // merging in the additional capabilities, you won't see
+            // the new values when accessing them through the convenience
+            // properties, even though the correct values are present in
+            // the underlying dictionary.
+            browser.Capabilities.Merge(GetAdditionalCapabilities(httpContext));
+
+            return browser;
         }
 
-        public virtual IDictionary<string, string> GetAdditionalCapabilities(HttpContextBase context)
+        public virtual IDictionary GetAdditionalCapabilities(HttpContextBase context)
         {
             var capabilities = new Dictionary<string, string>();
 
@@ -97,16 +107,14 @@ namespace MileageStats.Web.Capabilities
                         : new Dictionary<string, string>();
             };
 
-        private static IDictionary<string, string> GetBaseCapabilities(HttpBrowserCapabilities source)
+        private static void SetDefaults(HttpCapabilitiesBase source)
         {
-            var output = new Dictionary<string, string>();
-            foreach (var key in source.Capabilities.Keys)
-            {
-                var value = source.Capabilities[key];
-                output.Add(key.ToString(), (value == null) ? null : value.ToString());
-            }
-
-            return output;
+            // We'll assume a reasonable width for the browser, but we'll
+            // do so before any other capabilities are detected. This way
+            // our default will be overriden if an actual value is found 
+            // in one of our sources.
+            if(!source.Capabilities.Contains(AllCapabilities.Width))
+                source.Capabilities[AllCapabilities.Width] = AllCapabilities.DefaultWidth.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

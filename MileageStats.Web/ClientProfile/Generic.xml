@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<profile title="Generic" id="generic" version="1.2">
+<profile title="Generic" id="generic" version="1.3">
 	<feature id="json" property="" default="0">
 		<name>JSON</name>
 		<description>Native JSON Object</description>
@@ -41,7 +41,7 @@
 		</test>
 	</feature>
 
-	<feature id="xhr" property="" default="1">
+	<feature id="supportsXmlHttp" property="" default="false">
 		<name>XMLHttpRequest API</name>
 		<description>Is an XMLHttpRequest object available on this device.</description>
 		<test type="text/javascript">
@@ -49,7 +49,7 @@
 			try { xhr = new XMLHttpRequest(); } catch (e) {}
 			try { xhr = new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) {}
 			try { xhr = new ActiveXObject("Msxml2.XMLHTTP"); } catch (e) {}
-			return +(xhr!=null);
+			return (xhr!==null);
 			]]>
 		</test>
 	</feature>
@@ -73,11 +73,6 @@
 			catch(e){return 0;}
 			]]>
 		</test>
-	</feature>
-
-	<feature id="desktop" property="" default="0">
-		<name>Desktop</name>
-		<description>Desktop browser</description>
 	</feature>
 
 	<feature id="hashchange" property="" default="0">
