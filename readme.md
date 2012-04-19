@@ -62,8 +62,8 @@ You have a couple of options.
 
 - Issue #442 Unhandled exception in baseController getvehiclename for desktop experience. The reason because OnActionExecuted event when views are loaded we check for non null vehicleid. however filterContext.RouteData.Values["vehicleId"] returns zero for non existant vehicles then gevehicle name throws a no matching element. the fix is to check for non null and non zero
 
- $exception	{"Sequence contains no matching element"}	System.Exception {System.InvalidOperationException}
-
+	 $exception	{"Sequence contains no matching element"}	System.Exception {System.InvalidOperationException}
+	
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var vehicleId = filterContext.RouteData.Values["vehicleId"];
@@ -71,7 +71,6 @@ You have a couple of options.
             {
                 ViewBag.VehicleName = GetVehicleName(int.Parse(vehicleId.ToString()));
             }
-
             base.OnActionExecuted(filterContext);
         }
 
