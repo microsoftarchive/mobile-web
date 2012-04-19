@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>readme.md</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+body{
+    margin: 0 auto;
+    font-family: Georgia, Palatino, serif;
+    color: #444444;
+    line-height: 1;
+    max-width: 960px;
+    padding: 5px;
+}
+h1, h2, h3, h4 {
+    color: #111111;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, p {
+    margin-bottom: 16px;
+    padding: 0;
+}
+h1 {
+    font-size: 28px;
+}
+h2 {
+    font-size: 22px;
+    margin: 20px 0 6px;
+}
+h3 {
+    font-size: 21px;
+}
+h4 {
+    font-size: 18px;
+}
+h5 {
+    font-size: 16px;
+}
+a {
+    color: #0099ff;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+a:hover {
+    text-decoration: none;
+    color: #ff6600;
+}
+a:visited {
+    color: purple;
+}
+ul, ol {
+    padding: 0;
+    margin: 0;
+}
+li {
+    line-height: 24px;
+    margin-left: 44px;
+}
+li ul, li ul {
+    margin-left: 24px;
+}
+p, ul, ol {
+    font-size: 14px;
+    line-height: 20px;
+    max-width: 540px;
+}
+pre {
+    padding: 0px 24px;
+    max-width: 800px;
+    white-space: pre-wrap;
+}
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.5;
+    font-size: 13px;
+}
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote {
+    border-left:.5em solid #eee;
+    padding: 0 2em;
+    margin-left:0;
+    max-width: 476px;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {  
+    color: #666;
+    max-width: 460px;
+}
+hr {
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+}
+
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle;
+}
+button, input {
+  line-height: normal;
+  *overflow: visible;
+}
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+}
+/* override default chrome & firefox settings */
+input:not([type="image"]), textarea {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+label,
+input,
+select,
+textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: normal;
+  margin-bottom: 18px;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+input[type=text],
+input[type=password],
+textarea,
+select {
+  display: inline-block;
+  width: 210px;
+  padding: 4px;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  height: 18px;
+  color: #808080;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+select, input[type=file] {
+  height: 27px;
+  line-height: 27px;
+}
+textarea {
+  height: auto;
+}
+
+/* grey out placeholders */
+:-moz-placeholder {
+  color: #bfbfbf;
+}
+::-webkit-input-placeholder {
+  color: #bfbfbf;
+}
+
+input[type=text],
+input[type=password],
+select,
+textarea {
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+  outline: none;
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+/* buttons */
+button {
+  display: inline-block;
+  padding: 4px 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #0064cd;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
+  background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
+  background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -o-linear-gradient(top, #049cdb, #0064cd);
+  background-image: linear-gradient(top, #049cdb, #0064cd);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border: 1px solid #004b9a;
+  border-bottom-color: #003f81;
+  -webkit-transition: 0.1s linear all;
+  -moz-transition: 0.1s linear all;
+  transition: 0.1s linear all;
+  border-color: #0064cd #0064cd #003f81;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+button:hover {
+  color: #fff;
+  background-position: 0 -15px;
+  text-decoration: none;
+}
+button:active {
+  -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+/* CSS stylesheet is based on Kevin Burke's Markdown.css project (http://kevinburke.bitbucket.org/markdowncss) */
+</style>
+</head>
+<body>
+<h1>Exploring the Mobile Web</h1>
+
+<h2>Mileage Stats Mobile</h2>
+
+<p>This is a  reference application and part of <a href="http://liike.github.com/"><em>Project Liike</em></a>.</p>
+
+<p>Project Liike is an effort by the <a href="http://msdn.microsoft.com/practices">Microsoft patterns &amp; practices</a> team to produce guidance to help organizations build mobile web experiences based off of existing web applications. Its focus is on delivering HTML5 applications to a wide variety devices.</p>
+
+<p>This reference application, which we call <em>Mileage Stats Mobile</em>, began with the source from a previous effort <a href="http://silk.codeplex.com/">Project Silk</a>. Project Silk was about building cross-browser web applications with a focus on client-side interactivity. However, it was optimized for desktop browser. Project Silk's reference application was simply called Mileage Stats. In the context of Project Liike we'll refer to it as the <em>legacy desktop experience</em>.</p>
+
+<p>Project Liike is about extending and enhancing Mileage Stats with a mobile experience.</p>
+
+<h2>Notes from the Journey</h2>
+
+<p>Mileage Stats Mobile is just one part of Project Liike. It's a journey and a learning experience for our team to build the application. We are recording our learning, insights, and frustrations along the way. We'll be publishing the distillation of these into our <a href="https://github.com/liike/docs">docs repository</a>.</p>
+
+<p>We want your <a href="https://github.com/liike/reference-application/issues">feedback, comments, and questions</a>. Keep us honest.</p>
+
+<h2>Three Experiences</h2>
+
+<p>We think of the application as providing three <em>experiences</em>.</p>
+
+<p>The first is the <em>Legacy</em> experience mentioned above. We deliver this if the server determines that the client browser is <em>not</em> a mobile browser.</p>
+
+<p>The second is the <em>Works</em> experience. We deliver this as the standard baseline experience or when the server knows little about the client browser's capabilities. It is intended to work well on devices with limited resources (including network, CPU, screen size, etc.).</p>
+
+<p>The third is the <em>Wow</em> experience. We deliver this when it is determined that the client browser can support JavaScript, JSON, XHR, and DOM manipulation. The Wow and Works experiences are closely related however. Works is a subset of Wow, and generally follows a pattern of <a href="http://en.wikipedia.org/wiki/Progressive_Enhancement">Progressive Enhancement</a>. A key enhancement of Wow is providing the application as a <a href="http://en.wikipedia.org/wiki/Single_Page_Application">Single Page Application</a> (SPA).</p>
+
+<p>When running the application, the text "SPA" will appear in header when that mode is enabled.</p>
+
+<h2>Running the Reference Application</h2>
+
+<p>The minimum requirement for building and running Mileage Stats Mobile is:</p>
+
+<ul>
+<li>Visual Studio 2010 Express with SP1</li>
+<li>ASP.NET MVC 4</li>
+<li><a href="https://nuget.org/">Nuget 1.6+</a></li>
+</ul>
+
+<p>The simplest way to get Visual Studio and MVC is to use the <a href="http://www.microsoft.com/web/downloads/platform.aspx">Web Platform Installer</a>.</p>
+
+<p>Once everything is installed and you've downloaded the source, you'll need to make sure that all of the project's dependencies are present.</p>
+
+<h3>Installing Dependencies</h3>
+
+<p>You have a couple of options.</p>
+
+<ul>
+<li><p>Open the solution in Visual Studio, and right-click on the Solution node in the Solution Explorer and select <em>Enable Package Restore</em>. This will configure Nuget to download the dependencies when building the solution. You can read more about this option in the <a href="http://docs.nuget.org/docs/workflows/using-nuget-without-committing-packages">Nuget documentation</a>. </p></li>
+<li><p>If you have the <a href="http://www.nuget.org/packages/NuGet.CommandLine">Nuget CommandLine</a> installed, then you can use PowerShell to run the <code>install-packages.ps1</code> script in the root directory of the project.</p></li>
+</ul>
+
+<h2>Project Principles</h2>
+
+<ul>
+<li>This project values open, standards-based development</li>
+<li>We value the great work already available from others and intend to thank existing thought-leaders through attribution</li>
+<li>This work should happen in the open so everyone is able to follow along</li>
+<li>This project represents a conversation not a dictation</li>
+<li>We would like to meet the community where it is - using what it's using</li>
+<li>The guidance should be based on the best thinking available for the scenarios customers care about</li>
+<li>Will use the best open source libraries/frameworks available when appropriate</li>
+</ul>
+
+<h2>Known Issues</h2>
+
+<ul>
+<li><p>Issue #442 Unhandled exception in baseController getvehiclename for desktop experience. The reason because OnActionExecuted event when views are loaded we check for non null vehicleid. however filterContext.RouteData.Values["vehicleId"] returns zero for non existant vehicles then gevehicle name throws a no matching element. the fix is to check for non null and non zero</p>
+
+<p>$exception {"Sequence contains no matching element"}   System.Exception {System.InvalidOperationException}</p>
+
+<pre><code>protected override void OnActionExecuted(ActionExecutedContext filterContext)
+{
+    var vehicleId = filterContext.RouteData.Values["vehicleId"];
+    if (vehicleId != null &amp;&amp; string.IsNullOrEmpty(ViewBag.VehicleName))
+    {
+        ViewBag.VehicleName = GetVehicleName(int.Parse(vehicleId.ToString()));
+    }
+
+
+<pre><code>base.OnActionExecuted(filterContext);
+</code></pre>
+
+}
+</code></pre></li>
+<li><p>Issue #419 HTC(Status) does not give a pop up message to share location access.
+Repo: </p>
+
+<ol>
+<li>login to app. </li>
+<li>Add a vehicle. </li>
+<li>Add fill ups
+Here click on "Locate near by fill-up station" . 
+We don't get any pop up message to "share the locations" in these two devices.</li>
+</ol></li>
+<li><p>Issue #377 Successfully added fillup, reminder flash message shows on Dashboard,Fillup,chart page in Blackberry curve 9300 3G(RIM OS 5.0).
+Repo:   </p>
+
+<ol>
+<li>Add a vehicle.</li>
+<li>Add a reminder.</li>
+<li>Go to Dashboard.
+"Successfully added reminder shows up"</li>
+<li>Go to Fill up page
+"Successfully added reminder shows up"</li>
+<li>Go to charts
+"Successfully added reminder shows up"
+Its happening only in this work device.</li>
+</ol></li>
+<li><p>Issue #325 BlackBerry 9300(Curve 3G OS 5.0) Reminder Page shows more white space for added reminders.</p></li>
+<li><p>Issue #243 iOS 5 - Placeholders not going away when typing text instead of integers
+Repro:</p>
+
+<ol>
+<li>Select Add Fillup page on iPhone 4S</li>
+<li>In the price per unit textbox, type "test", the placeholder "0" does not go away (it disappears when typing a number)
+Logging it as a known issue</li>
+</ol></li>
+<li><p>Issue #179 Some Android phones status renders select list incorrectly.    all controls with drop down are incorrectly rendered in this wow device</p></li>
+<li><p>Issue #156 validation summary markup.
+Can we alter the output from the helper? We don't want to have the style inline.</p>
+
+<pre><code>&lt;div class="validation-summary-errors"&gt;&lt;ul&gt;&lt;li style="display:none"&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+</code></pre></li>
+<li><p>Issue #48 Alternate Authentication using ACS. I consider this a lower priority task, but I anticipate that the dev team will have extra time to fill.
+Based on the last advisory board meeting, it seemed the majority of the advisers were not too concerned, however at least some were vocal about their interest. 
+I would like to keep the main source free of dependencies as much as possible, so here are two possibilities:
+•   maintain a branch on github that uses ACS, but allow the master branch to continue with the current auth
+•   have a pluggable auth system where we can change a config option to switch between the current auth and the ACS based auth
+The first option has the drawback that we'll have to periodically merge the master back in.
+The second option would also need to try to partition the dependencies as much as possible. For example, perhaps the ACS-based auth provider could live in a separate repo.|</p></li>
+</ul>
+
+</body>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
+</html>
