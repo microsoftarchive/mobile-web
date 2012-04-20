@@ -365,6 +365,7 @@
     <None Include="Controllers\readme.md" />
     <None Include="Helpers\readme.md" />
     <None Include="Scripts\readme.md" />
+    <Content Include="Views\Auth\Index.PlaceholderDesktop.cshtml" />
     <None Include="Views\Error\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
