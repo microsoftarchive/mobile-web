@@ -43,9 +43,9 @@ namespace System.Web
 
         public static bool IsWow(this HttpBrowserCapabilitiesBase httpBrowser)
         {
-            // We should also check for supporting DOM manipulation, however
+            // We should also check for supporting DOM manipulation; however,
             // we currently don't have a source for that particular capability.
-            // If you use a 3rd party database for feature detection, then
+            // If you use a third-party database for feature detection, then
             // you should consider adding a test for this.
             return httpBrowser.IsMobileDevice &&
                    httpBrowser.SupportsJSON() &&

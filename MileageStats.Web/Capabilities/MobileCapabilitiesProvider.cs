@@ -26,9 +26,9 @@ using MileageStats.Web.ClientProfile;
 
 namespace MileageStats.Web.Capabilities
 {
-    // note: we break encapsulation and expose internal logic as public static readonly fields
-    // in order to facilitate testing. this is primarily due to the difficulty in mocking
-    // the http request object
+    // Note: we break encapsulation and expose internal logic as public static readonly fields
+    // in order to facilitate testing. This is primarily due to the difficulty in mocking
+    // the http request object.
     public class MobileCapabilitiesProvider : HttpCapabilitiesDefaultProvider
     {
         private readonly IProfileCookieEncoder _encoder;
@@ -49,7 +49,7 @@ namespace MileageStats.Web.Capabilities
             SetDefaults(browser);
 
             // The default HttpBrowserCapabilities is optimized to only
-            // retrieved the values from the underlying dictionary once.
+            // retrieve the values from the underlying dictionary once.
             // This means that if you examine it in the debugger prior to 
             // merging in the additional capabilities, you won't see
             // the new values when accessing them through the convenience
@@ -66,8 +66,8 @@ namespace MileageStats.Web.Capabilities
 
             if (BrowserOverrideStores.Current.GetOverriddenUserAgent(context) != null) return capabilities;
 
-            // the capabilities are merged in a specific order
-            // because later sets override earlier sets
+            // The capabilities are merged in a specific order
+            // because later sets override earlier sets.
             capabilities.Merge(DetermineCapsBy3rdPartyDatabase(context));
             capabilities.Merge(DetermineCapsByProfilingClient(context.Request, _encoder));
 
@@ -77,11 +77,11 @@ namespace MileageStats.Web.Capabilities
         public static readonly Func<HttpContextBase, IDictionary<string, string>> DetermineCapsBy3rdPartyDatabase =
             context =>
             {
-                // We're not actually using a 3rd party database, but if you are (and you need
-                // to manually merge in the capabilities) then you could do so here.
+                // We're not actually using a third-party database, but if you are (and you need
+                // to manually merge in the capabilities), then you could do so here.
                 // In this simulated database, we look for a known OS to determine if it is a desktop browser.
                 // This is not meant to represent production code - only to simulate what
-                // a 3rd party database would provide you with
+                // a third-party database would provide you with.
                 var caps = new Dictionary<string, string>();
                 var ua = context.Request.UserAgent;
                 if (ua.Contains("Windows NT") || ua.Contains("Macintosh") || ua.Contains("Windows+XP"))
@@ -99,7 +99,7 @@ namespace MileageStats.Web.Capabilities
             (request, encoder) =>
             {
                 // The profile cookie is parsed for getting the device capabilities inferred on
-                // the client side
+                // the client side.
                 var profileCookie = request.Cookies["profile"];
 
                 return (profileCookie != null)
