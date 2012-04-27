@@ -72,7 +72,7 @@ namespace MileageStats.Data.InMemory
             countries.Add(new Country { Name = "Chile" });
             countries.Add(new Country { Name = "China" });
             countries.Add(new Country { Name = "Christmas Island" });
-            countries.Add(new Country { Name = "Cocos Islands" });
+            countries.Add(new Country { Name = "Cocos (Keeling) Islands" });
             countries.Add(new Country { Name = "Colombia" });
             countries.Add(new Country { Name = "Comoros" });
             countries.Add(new Country { Name = "Congo" });
@@ -93,7 +93,7 @@ namespace MileageStats.Data.InMemory
             countries.Add(new Country { Name = "Eritrea" });
             countries.Add(new Country { Name = "Estonia" });
             countries.Add(new Country { Name = "Ethiopia" });
-            countries.Add(new Country { Name = "Falkland Islands" });
+            countries.Add(new Country { Name = "Falkland Islands (Islas Malvinas)" });
             countries.Add(new Country { Name = "Faroe Islands" });
             countries.Add(new Country { Name = "Fiji" });
             countries.Add(new Country { Name = "Finland" });
@@ -150,7 +150,7 @@ namespace MileageStats.Data.InMemory
             countries.Add(new Country { Name = "Lithuania" });
             countries.Add(new Country { Name = "Luxembourg" });
             countries.Add(new Country { Name = "Macao SAR" });
-            countries.Add(new Country { Name = "Macedonia, Former Yugoslav Republic of" });
+            countries.Add(new Country { Name = "Macedonia, FYRO" });
             countries.Add(new Country { Name = "Madagascar" });
             countries.Add(new Country { Name = "Malawi" });
             countries.Add(new Country { Name = "Malaysia" });
@@ -176,7 +176,6 @@ namespace MileageStats.Data.InMemory
             countries.Add(new Country { Name = "Nauru" });
             countries.Add(new Country { Name = "Nepal" });
             countries.Add(new Country { Name = "Netherlands" });
-            countries.Add(new Country { Name = "Netherlands Antilles" });
             countries.Add(new Country { Name = "New Caledonia" });
             countries.Add(new Country { Name = "New Zealand" });
             countries.Add(new Country { Name = "Nicaragua" });
@@ -204,14 +203,14 @@ namespace MileageStats.Data.InMemory
             countries.Add(new Country { Name = "Romania" });
             countries.Add(new Country { Name = "Russia" });
             countries.Add(new Country { Name = "Rwanda" });
-            countries.Add(new Country { Name = "Saint Helena" });
+            countries.Add(new Country { Name = "Saint Helena, Ascension and Tristan da Cunha" });
             countries.Add(new Country { Name = "Saint Kitts and Nevis" });
             countries.Add(new Country { Name = "Saint Lucia" });
             countries.Add(new Country { Name = "Saint Pierre and Miquelon" });
             countries.Add(new Country { Name = "Saint Vincent and the Grenadines" });
             countries.Add(new Country { Name = "Samoa" });
             countries.Add(new Country { Name = "San Marino" });
-            countries.Add(new Country { Name = "Sao Tome and Principe" });
+            countries.Add(new Country { Name = "São Tomé and Príncipe" });
             countries.Add(new Country { Name = "Saudi Arabia" });
             countries.Add(new Country { Name = "Senegal" });
             countries.Add(new Country { Name = "Serbia" });
@@ -254,16 +253,16 @@ namespace MileageStats.Data.InMemory
             countries.Add(new Country { Name = "Uruguay" });
             countries.Add(new Country { Name = "Uzbekistan" });
             countries.Add(new Country { Name = "Vanuatu" });
-            countries.Add(new Country { Name = "Holy See" });
+            countries.Add(new Country { Name = "Holy See (Vatican City)" });
             countries.Add(new Country { Name = "Venezuela" });
             countries.Add(new Country { Name = "Vietnam" });
-            countries.Add(new Country { Name = "Virgin Islands, British" });
-            countries.Add(new Country { Name = "Virgin Islands" });
+            countries.Add(new Country { Name = "British Virgin Islands" });
+            countries.Add(new Country { Name = "U.S. Virgin Islands" });
             countries.Add(new Country { Name = "Wallis and Futuna" });
             countries.Add(new Country { Name = "Yemen" });
             countries.Add(new Country { Name = "Zambia" });
             countries.Add(new Country { Name = "Zimbabwe" });
-            countries.Add(new Country { Name = "Saint Barthelemy" });
+            countries.Add(new Country { Name = "Saint Barthélemy" });
             countries.Add(new Country { Name = "Saint Martin" });
         }
 
