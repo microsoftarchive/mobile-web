@@ -12,9 +12,9 @@ Project Liike is about extending and enhancing Mileage Stats with a mobile exper
 
 ## Notes from the Journey
 
-Mileage Stats Mobile is just one part of Project Liike. It's a journey and a learning experience for our team to build the application. We are recording our learning, insights, and frustrations along the way. We'll be publishing the distillation of these into our [docs repository](https://github.com/liike/docs).
+Mileage Stats Mobile is just one part of Project Liike. It's a journey and a learning experience for our team to build the application. We are recording our learning, insights, and frustrations along the way. We've be published the distillation of these onto [our MSDN site](http://aka.ms/mobile-web).
 
-We want your [feedback, comments, and questions](https://github.com/liike/reference-application/issues). Keep us honest.
+We want your feedback, comments, and questions. Keep us honest.
 
 ## Three Experiences
 
