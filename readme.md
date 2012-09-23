@@ -2,7 +2,7 @@
 
 ## Mileage Stats Mobile
 
-This is a  reference application and part of [_Project Liike_](http://liike.github.com/).
+This is a  reference application and part of [_Project Liike_](http://aka.ms/mobile-web/) or __Building Modern Mobile Web Apps__.
 
 Project Liike is an effort by the [Microsoft patterns & practices](http://msdn.microsoft.com/practices) team to produce guidance to help organizations build mobile web experiences based off of existing web applications. Its focus is on delivering HTML5 applications to a wide variety devices.
 
