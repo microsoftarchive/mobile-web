@@ -1,14 +1,14 @@
 # Exploring the Mobile Web
 
-## Mileage Stats Mobile
+:warning: _This project has not been updated since 2012. The majority of the principles still hold, but a lot has changed in this space since the last update. Proceed with caution._ :warning:
 
-This is a  reference application and part of [_Project Liike_](http://aka.ms/mobile-web) or __Building Modern Mobile Web Apps__.
+This is a reference application and part of [__Building Modern Mobile Web Apps__](http://aka.ms/mobile-web).
 
-Project Liike is an effort by the [Microsoft patterns & practices](http://msdn.microsoft.com/practices) team to produce guidance to help organizations build mobile web experiences based off of existing web applications. Its focus is on delivering HTML5 applications to a wide variety devices.
+The project is an effort by the [Microsoft patterns & practices](http://msdn.microsoft.com/practices) team to produce guidance to help organizations build mobile web experiences based off of existing web applications. Its focus is on delivering HTML5 applications to a wide variety devices.
 
 This reference application, which we call _Mileage Stats Mobile_, began with the source from a previous effort [Project Silk](http://silk.codeplex.com/). Project Silk was about building cross-browser web applications with a focus on client-side interactivity. However, it was optimized for desktop browser. Project Silk's reference application was simply called Mileage Stats. In the context of Project Liike we'll refer to it as the _legacy desktop experience_.
 
-Project Liike is about extending and enhancing Mileage Stats with a mobile experience.
+This project is about extending and enhancing Mileage Stats with a mobile experience.
 
 ## Notes from the Journey
 
